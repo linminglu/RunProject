@@ -1,0 +1,89 @@
+//
+//  PGCProjectContactScrollView.m
+//  跑工程
+//
+//  Created by leco on 2016/10/27.
+//  Copyright © 2016年 Mac. All rights reserved.
+//
+
+#import "PGCProjectContactScrollView.h"
+#import "PGCProjectDetailTagView.h"
+#import "PGCProjectContactCell.h"
+
+@interface PGCProjectContactScrollView () <UITableViewDataSource>
+
+@property (strong, nonatomic) UITableView *contactTableView;
+
+- (void)initUserInterface; /** 初始化用户界面 */
+
+@end
+
+@implementation PGCProjectContactScrollView
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        
+        [self initUserInterface];
+    }
+    return self;
+}
+
+- (void)initUserInterface {
+    UIScrollView *scrollView = [[UIScrollView alloc] init];
+    scrollView.backgroundColor = [UIColor whiteColor];
+    scrollView.showsHorizontalScrollIndicator = false;
+    scrollView.showsVerticalScrollIndicator = false;
+    [self.contentView addSubview:scrollView];
+    scrollView.sd_layout.spaceToSuperView(UIEdgeInsetsZero);
+    
+    // 项目概况
+    PGCProjectDetailTagView *contactView = [[PGCProjectDetailTagView alloc] initWithFrame:CGRectZero title:@"联系人及其联系方式"];
+    [scrollView addSubview:contactView];
+    // 开始自动布局
+    contactView.sd_layout
+    .topSpaceToView(scrollView, 0)
+    .leftSpaceToView(scrollView, 0)
+    .rightSpaceToView(scrollView, 0)
+    .heightIs(40);
+    
+    // 联系人表格视图
+    UITableView *contactTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    contactTableView.bounces = false;
+    contactTableView.dataSource = self;
+    [contactTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kProjectContactCell];
+    self.contactTableView = contactTableView;
+    [scrollView addSubview:contactTableView];
+    // 开始自动布局
+    contactTableView.sd_layout
+    .topSpaceToView(contactView, 0)
+    .leftSpaceToView(scrollView, 0)
+    .rightSpaceToView(scrollView, 0)
+    .heightIs(44 * 5);
+    
+    [scrollView setupAutoContentSizeWithBottomView:contactTableView bottomMargin:10];
+}
+
+
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 5;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kProjectContactCell forIndexPath:indexPath];
+    
+    return cell;
+}
+
+/*
+// Only override drawRect: if you perform custom drawing.
+// An empty implementation adversely affects performance during animation.
+- (void)drawRect:(CGRect)rect {
+    // Drawing code
+}
+*/
+
+@end

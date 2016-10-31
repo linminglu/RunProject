@@ -1,0 +1,109 @@
+//
+//  PGCProjectRootViewController.m
+//  跑工程
+//
+//  Created by leco on 2016/10/27.
+//  Copyright © 2016年 Mac. All rights reserved.
+//
+
+#import "PGCProjectRootViewController.h"
+
+static NSString *const kUITableViewCell = @"UITableViewCell";
+
+@interface PGCProjectRootViewController () <UITableViewDataSource, UITableViewDelegate>
+
+- (void)initializeUserInterface; /** 初始化用户界面 */
+
+@end
+
+@implementation PGCProjectRootViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    [self initializeUserInterface];
+}
+
+- (void)initializeUserInterface {
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.automaticallyAdjustsScrollViewInsets = false;
+
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:[self barButtonItem]];
+    
+    [self.view addSubview:self.tableView];
+}
+
+- (UIButton *)barButtonItem {
+    UIButton *button = [[UIButton alloc] init];
+    button.bounds = CGRectMake(0, 0, 60, 40);
+    [button setImage:[UIImage imageNamed:@"编辑"] forState:UIControlStateNormal];
+    [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
+    [button setTitle:@"编辑" forState:UIControlStateNormal];
+    [button setTitleColor:PGCTextColor forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(respondsToEdit:) forControlEvents:UIControlEventTouchUpInside];
+    
+    CGFloat labelInset = [button.titleLabel intrinsicContentSize].width - button.imageView.width - button.width;
+    CGFloat imageInset = button.imageView.width - button.width - button.titleLabel.width;
+    
+    button.titleEdgeInsets = UIEdgeInsetsMake(0, labelInset, 0, 0);
+    button.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, imageInset);
+    
+    return button;
+}
+
+- (void)respondsToEdit:(UIButton *)sender {
+    _isEditing = !_isEditing;
+    self.tableView.editing = _isEditing;
+}
+
+
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.dataSources.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kUITableViewCell forIndexPath:indexPath];
+    // 点击cell不变色
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    return cell;
+}
+
+
+#pragma mark - UITableViewDelegate
+
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 120;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return true;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleNone;
+}
+
+
+#pragma mark - Getters
+
+- (UITableView *)tableView {
+    if (!_tableView) {
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, STATUS_AND_NAVIGATION_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - STATUS_AND_NAVIGATION_HEIGHT) style:UITableViewStylePlain];
+        _tableView.dataSource = self;
+        _tableView.delegate = self;
+        [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kUITableViewCell];
+    }
+    return _tableView;
+}
+
+- (NSMutableArray *)dataSources {
+    if (!_dataSources) {
+        _dataSources = [NSMutableArray array];
+    }
+    return _dataSources;
+}
+
+@end

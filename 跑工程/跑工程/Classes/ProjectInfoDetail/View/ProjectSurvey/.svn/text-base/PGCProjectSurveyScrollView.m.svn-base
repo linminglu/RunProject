@@ -1,0 +1,148 @@
+//
+//  PGCProjectSurveyScrollView.m
+//  跑工程
+//
+//  Created by leco on 2016/10/27.
+//  Copyright © 2016年 Mac. All rights reserved.
+//
+
+#import "PGCProjectSurveyScrollView.h"
+#import "PGCProjectDetailTagView.h"
+
+static NSString *const kSurveyTableCell = @"SurveyTableCell";
+static NSString *const kOtherTableCell = @"OtherTableCell";
+
+@interface PGCProjectSurveyScrollView () <UITableViewDataSource>
+
+//项目概况表格视图
+@property (strong, nonatomic) UITableView *surveyTableView;
+//可能用到的设置、材料表格视图
+@property (strong, nonatomic) UITableView *otherTableView;
+
+- (void)initUserInterface; /** 初始化用户界面 */
+
+@end
+
+@implementation PGCProjectSurveyScrollView
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        
+        [self initUserInterface];
+    }
+    return self;
+}
+
+// 子控件布局
+- (void)initUserInterface {
+    UIScrollView *scrollView = [[UIScrollView alloc] init];
+    scrollView.backgroundColor = [UIColor whiteColor];
+    scrollView.showsHorizontalScrollIndicator = false;
+    scrollView.showsVerticalScrollIndicator = false;
+    [self.contentView addSubview:scrollView];
+    scrollView.sd_layout.spaceToSuperView(UIEdgeInsetsZero);
+    
+    // 项目概况
+    PGCProjectDetailTagView *surveyView = [[PGCProjectDetailTagView alloc] initWithFrame:CGRectZero title:@"项目概况"];
+    [scrollView addSubview:surveyView];
+    // 开始自动布局
+    surveyView.sd_layout
+    .topSpaceToView(scrollView, 0)
+    .leftSpaceToView(scrollView, 0)
+    .rightSpaceToView(scrollView, 0)
+    .heightIs(40);
+    
+    // 项目概况表格视图
+    UITableView *surveyTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    surveyTableView.bounces = false;
+    surveyTableView.dataSource = self;
+    [surveyTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kSurveyTableCell];
+    self.surveyTableView = surveyTableView;
+    [scrollView addSubview:surveyTableView];
+    // 开始自动布局
+    surveyTableView.sd_layout
+    .topSpaceToView(surveyView, 0)
+    .leftSpaceToView(scrollView, 0)
+    .rightSpaceToView(scrollView, 0)
+    .heightIs(44 * 5);
+    
+    // 项目简介
+    PGCProjectDetailTagView *introView = [[PGCProjectDetailTagView alloc] initWithFrame:CGRectZero title:@"项目简介"];
+    [scrollView addSubview:introView];
+    // 开始自动布局
+    introView.sd_layout
+    .topSpaceToView(surveyTableView, 0)
+    .leftSpaceToView(scrollView, 0)
+    .rightSpaceToView(scrollView, 0)
+    .heightIs(40);
+    
+    // 项目简介内容
+    UILabel *introContentLabel = [[UILabel alloc] init];
+    introContentLabel.text = @"项目的简单介绍，主要做什么的，什么类型的项目，现在是什么项目阶段";
+    introContentLabel.textColor = RGB(51, 51, 51);
+    [scrollView addSubview:introContentLabel];
+    // 开始自动布局
+    introContentLabel.sd_layout
+    .topSpaceToView(introView, 14)
+    .leftSpaceToView(scrollView, 15)
+    .rightSpaceToView(scrollView, 15)
+    .autoHeightRatio(0);
+    
+    // 其他
+    PGCProjectDetailTagView *otherView = [[PGCProjectDetailTagView alloc] initWithFrame:CGRectZero title:@"可能用到的设备，材料"];
+    [scrollView addSubview:otherView];
+    // 开始自动布局
+    otherView.sd_layout
+    .topSpaceToView(introContentLabel, 14)
+    .leftSpaceToView(scrollView, 0)
+    .rightSpaceToView(scrollView, 0)
+    .heightIs(40);
+    
+    //可能用到的设置、材料表格视图
+    UITableView *otherTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    otherTableView.bounces = false;
+    otherTableView.dataSource = self;
+    [otherTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kOtherTableCell];
+    self.otherTableView = otherTableView;
+    [scrollView addSubview:otherTableView];
+    // 开始自动布局
+    otherTableView.sd_layout
+    .topSpaceToView(otherView, 0)
+    .leftSpaceToView(scrollView, 0)
+    .rightSpaceToView(scrollView, 0)
+    .heightIs(44 * 5);
+    
+    [scrollView setupAutoContentSizeWithBottomView:otherTableView bottomMargin:10];
+}
+
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (tableView == _surveyTableView) {
+        return 5;
+    } else {
+        return 4;
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = nil;
+    
+    if (tableView == _surveyTableView) {
+        cell = [tableView dequeueReusableCellWithIdentifier:kSurveyTableCell forIndexPath:indexPath];
+        cell.textLabel.text = @"项目概况的cell";
+    } else {
+        cell = [tableView dequeueReusableCellWithIdentifier:kOtherTableCell forIndexPath:indexPath];
+        cell.textLabel.text = @"可能用到的设备，材料cell";
+    }
+    
+    // 点击cell不变色
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    return cell;
+}
+
+
+@end

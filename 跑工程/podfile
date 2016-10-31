@@ -1,0 +1,11 @@
+platform:ios, '8.0'
+use_frameworks!
+
+target '跑工程' do
+    pod 'SDAutoLayout'
+    pod 'AFNetworking'
+    pod 'SDWebImage'
+    pod 'Masonry'
+    pod 'MJRefresh'
+    pod 'MBProgressHUD'
+end

@@ -1,0 +1,72 @@
+//
+//  PGCProjectContactCell.m
+//  跑工程
+//
+//  Created by leco on 2016/10/27.
+//  Copyright © 2016年 Mac. All rights reserved.
+//
+
+#import "PGCProjectContactCell.h"
+
+@interface PGCProjectContactCell ()
+
+- (void)initUserInterface; /** 初始化用户界面 */
+
+@end
+
+@implementation PGCProjectContactCell
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        
+        [self initUserInterface];
+    }
+    return self;
+}
+
+- (void)initUserInterface {
+//    // 联系人标签
+//    UILabel *contactLabel = [[UILabel alloc] init];
+//    // 手机标签
+//    UILabel *mobileLabel = [[UILabel alloc] init];
+//    // 电话标签
+//    UILabel *phoneLabel = [[UILabel alloc] init];
+//    // 传真标签
+//    UILabel *faxLabel = [[UILabel alloc] init];
+//    // 单位标签
+//    UILabel *unitLabel = [[UILabel alloc] init];
+//    // 地址标签
+//    UILabel *addressLabel = [[UILabel alloc] init];
+    
+}
+
+- (UILabel *)makeLabelWithTitle:(NSString *)title content:(NSString *)content {
+    UILabel *labelA = [[UILabel alloc] initWithFrame:CGRectZero];
+    labelA.textColor = RGB(51, 51, 51);
+    labelA.text = title;
+    [self.contentView addSubview:labelA];
+    labelA.sd_layout
+    .topSpaceToView(self.contentView, 15)
+    .leftSpaceToView(self.contentView, 15)
+    .widthIs(80)
+    .autoHeightRatio(0);
+    
+//    UILabel *labelB = [[UILabel alloc] initWithFrame:CGRectZero];
+    
+    return labelA;
+}
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    // Initialization code
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+
+    // Configure the view for the selected state
+}
+
+@end
