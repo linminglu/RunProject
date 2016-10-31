@@ -8,7 +8,6 @@
 
 #import "PGCProjectContactCell.h"
 #import "NSString+Size.h"
-#import "PGCAlertView.h"
 
 @interface PGCProjectContactCell ()
 
@@ -31,8 +30,8 @@
 - (void)initUserInterface {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    NSArray *contents = @[@"***先生/女士", @"188********", @"023-********", @"023-********", @"重庆市******公司", @"重庆市江北区******"];
-    NSArray *titles = @[@"联系人：", @"手   机：", @"电   话：", @"传   真：", @"单   位：", @"地   址："];
+    NSArray *contents = @[@"***先生/女士", @"188********", @"023-********", @"重庆市******公司", @"重庆市江北区******"];
+    NSArray *titles = @[@"联系人：", @"手   机：", @"传   真：", @"单   位：", @"地   址："];
     for (int i = 0; i < titles.count; i++) {
         [self setLabelWithSuperView:self.contentView index:i title:titles[i] content:contents[i]];
     }
@@ -85,12 +84,12 @@
         .widthIs(1);
         
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button setTitleColor:PGCThemeColor forState:UIControlStateNormal];
+        [button setTitleColor:PGCTintColor forState:UIControlStateNormal];
         [button setTitle:@"点击查看" forState:UIControlStateNormal];
         [button.titleLabel setFont:SetFont(11)];
         [button.layer setMasksToBounds:true];
         [button.layer setCornerRadius:8.0];
-        [button.layer setBorderColor:PGCThemeColor.CGColor];
+        [button.layer setBorderColor:PGCTintColor.CGColor];
         [button.layer setBorderWidth:1];
         [button addTarget:self action:@selector(respondsToCheckButton:) forControlEvents:UIControlEventTouchUpInside];
         [superView addSubview:button];
@@ -100,14 +99,37 @@
         .heightRatioToView(line, 1)
         .widthIs(60);
     }
+    if (index == 4) {
+        labelB.userInteractionEnabled = true;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(respondsToAddressGesture:)];
+        [labelB addGestureRecognizer:tap];
+    }
+}
+
+//- (BOOL)gestureRecognizer:(UIGestureRecognizer*)gestureRecognizer shouldReceiveTouch:(UITouch*)touch {
+//    
+//    if ([touch.view isKindOfClass:[UIScrollView class]]) {
+//        
+//        return true;
+//    }
+//    return false;
+//}
+
+#pragma mark - Gesture
+
+- (void)respondsToAddressGesture:(UITapGestureRecognizer *)gesture {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(projectContactCell:address:)]) {
+        [self.delegate projectContactCell:self address:gesture];
+    }
 }
 
 
 #pragma mark - Events
 
 - (void)respondsToCheckButton:(UIButton *)sender {
-    PGCAlertView *alert = [[PGCAlertView alloc] initWithTitle:@"查看项目详情，需要您开通会员服务，如果您需要开通会员服务，请点击确定"];
-    [alert showAlertView];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(projectContactCell:phone:)]) {
+        [self.delegate projectContactCell:self phone:sender];
+    }
 }
 
 

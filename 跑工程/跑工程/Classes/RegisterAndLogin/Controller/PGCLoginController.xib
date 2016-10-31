@@ -1,8 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,8 +21,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xat-r2-KP0">
+                    <rect key="frame" x="0.0" y="75" width="375" height="70"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="手机号" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rL3-1E-3qe">
+                            <rect key="frame" x="20" y="28" width="50" height="14"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="14" id="Van-Op-oMm"/>
                                 <constraint firstAttribute="width" constant="50" id="tKv-HW-TBD"/>
@@ -41,6 +46,7 @@
                             </variation>
                         </label>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入您的手机号" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jUG-wg-UIr">
+                            <rect key="frame" x="80" y="20" width="200" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="hO0-Wk-e5y"/>
                                 <constraint firstAttribute="width" constant="200" id="hQ6-jP-U4e"/>
@@ -97,8 +103,10 @@
                     </variation>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="50n-Z1-1Un">
+                    <rect key="frame" x="0.0" y="155" width="375" height="70"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="密   码" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W7C-tv-8qz">
+                            <rect key="frame" x="20" y="28" width="50" height="14"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="14" id="8Sk-lO-TKe"/>
                                 <constraint firstAttribute="width" constant="50" id="A5y-2n-7oe"/>
@@ -120,6 +128,7 @@
                             </variation>
                         </label>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入您的密码" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PJ4-pC-SBr">
+                            <rect key="frame" x="80" y="20" width="200" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="AKh-y8-kuu"/>
                                 <constraint firstAttribute="width" constant="200" id="dWc-vd-Nut"/>
@@ -176,11 +185,12 @@
                     </variation>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GKx-zP-Ntz">
-                    <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <rect key="frame" x="25" y="260" width="325" height="60"/>
+                    <color key="backgroundColor" red="0.98039215686274506" green="0.45882352941176469" blue="0.039215686274509803" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="60" id="EJL-vl-4uF"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <state key="normal" title="登  录">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
@@ -196,6 +206,7 @@
                     </variation>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CWh-Kd-aWv">
+                    <rect key="frame" x="300" y="622" width="60" height="30"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="60" id="MtX-FI-wXk"/>
                         <constraint firstAttribute="height" constant="30" id="Mxv-ti-s6k"/>
@@ -221,6 +232,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4bM-ja-tMz">
+                    <rect key="frame" x="25" y="622" width="60" height="30"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="60" id="AoL-IM-BwL"/>
                         <constraint firstAttribute="height" constant="30" id="FYD-7i-EqZ"/>
@@ -259,7 +271,7 @@
                 <constraint firstItem="4bM-ja-tMz" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="25" id="Sir-Uz-Yeb"/>
                 <constraint firstAttribute="trailing" secondItem="GKx-zP-Ntz" secondAttribute="trailing" constant="25" id="ZNT-bo-pur"/>
                 <constraint firstItem="Xat-r2-KP0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="b8Z-qg-ctE"/>
-                <constraint firstItem="GKx-zP-Ntz" firstAttribute="top" secondItem="50n-Z1-1Un" secondAttribute="bottom" constant="20" id="c3D-ri-3C4"/>
+                <constraint firstItem="GKx-zP-Ntz" firstAttribute="top" secondItem="50n-Z1-1Un" secondAttribute="bottom" constant="35" id="c3D-ri-3C4"/>
                 <constraint firstAttribute="trailing" secondItem="50n-Z1-1Un" secondAttribute="trailing" id="eJd-zR-cQa"/>
                 <constraint firstItem="50n-Z1-1Un" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="iHb-fi-GLz"/>
                 <constraint firstItem="50n-Z1-1Un" firstAttribute="top" secondItem="Xat-r2-KP0" secondAttribute="bottom" constant="10" id="rHp-CG-W1h"/>
@@ -275,14 +287,14 @@
                 <mask key="constraints">
                     <exclude reference="K9w-tX-VQL"/>
                     <exclude reference="Sir-Uz-Yeb"/>
+                    <exclude reference="eJd-zR-cQa"/>
+                    <exclude reference="iHb-fi-GLz"/>
+                    <exclude reference="rHp-CG-W1h"/>
                     <exclude reference="5EE-ka-GRb"/>
                     <exclude reference="EfM-6m-2U3"/>
                     <exclude reference="409-Io-hTR"/>
                     <exclude reference="ZNT-bo-pur"/>
                     <exclude reference="c3D-ri-3C4"/>
-                    <exclude reference="eJd-zR-cQa"/>
-                    <exclude reference="iHb-fi-GLz"/>
-                    <exclude reference="rHp-CG-W1h"/>
                     <exclude reference="D5s-fX-eit"/>
                     <exclude reference="HD9-dJ-han"/>
                     <exclude reference="b8Z-qg-ctE"/>
@@ -299,14 +311,14 @@
                 <mask key="constraints">
                     <include reference="K9w-tX-VQL"/>
                     <include reference="Sir-Uz-Yeb"/>
+                    <include reference="eJd-zR-cQa"/>
+                    <include reference="iHb-fi-GLz"/>
+                    <include reference="rHp-CG-W1h"/>
                     <include reference="5EE-ka-GRb"/>
                     <include reference="EfM-6m-2U3"/>
                     <include reference="409-Io-hTR"/>
                     <include reference="ZNT-bo-pur"/>
                     <include reference="c3D-ri-3C4"/>
-                    <include reference="eJd-zR-cQa"/>
-                    <include reference="iHb-fi-GLz"/>
-                    <include reference="rHp-CG-W1h"/>
                     <include reference="D5s-fX-eit"/>
                     <include reference="HD9-dJ-han"/>
                     <include reference="b8Z-qg-ctE"/>

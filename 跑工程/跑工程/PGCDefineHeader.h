@@ -48,6 +48,7 @@
 
 // APP的主题色
 #define PGCTintColor RGB(250, 117, 10)
+
 #define PGCThemeColor RGB(249, 136, 46)
 // APP的文字颜色
 #define PGCTextColor RGB(51, 51, 51)

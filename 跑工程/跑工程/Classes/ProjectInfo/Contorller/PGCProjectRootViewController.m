@@ -61,18 +61,9 @@ static NSString *const kUITableViewCell = @"UITableViewCell";
     _isEditing = !_isEditing;
     self.tableView.editing = _isEditing;
     
-    if (_isEditing) {
-        [self.view addSubview:self.bottomView];
-        [UIView animateWithDuration:0.2 animations:^{
-            self.bottomView.center = CGPointMake(self.view.center.x, SCREEN_HEIGHT - 25);
-        }];
-    } else {
-        [UIView animateWithDuration:0.2 animations:^{
-            self.bottomView.center = CGPointMake(self.view.center.x, SCREEN_HEIGHT);
-        } completion:^(BOOL finished) {
-            [self.bottomView removeFromSuperview];
-        }];
-    }
+    [self animateBottomView:self.bottomView show:_isEditing complete:^{
+        
+    }];
 }
 
 
@@ -102,14 +93,6 @@ static NSString *const kUITableViewCell = @"UITableViewCell";
     return UITableViewCellEditingStyleDelete;
 }
 
-- (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewRowAction *rowAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:nil handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
-        
-    }];
-    
-    return @[rowAction];
-}
-
 
 #pragma mark - UIButton Events
 - (void)respondsToDelete:(UIButton *)sender {
@@ -124,11 +107,32 @@ static NSString *const kUITableViewCell = @"UITableViewCell";
     _isEditing = false;
     self.tableView.editing = false;
     
-    [UIView animateWithDuration:0.2 animations:^{
-        self.bottomView.center = CGPointMake(self.view.center.x, SCREEN_HEIGHT);
-    } completion:^(BOOL finished) {
-        [self.bottomView removeFromSuperview];
+    [self animateBottomView:self.bottomView show:_isEditing complete:^{
+        
     }];
+}
+
+
+#pragma mark - Animation
+
+- (void)animateBottomView:(UIView *)bottomView show:(BOOL)show complete:(void(^)())complete {
+    if (show) {
+        [UIView animateWithDuration:0.25 animations:^{
+            self.bottomView.frame = CGRectMake(0, SCREEN_HEIGHT - TAB_BAR_HEIGHT, SCREEN_WIDTH, TAB_BAR_HEIGHT);
+            [self.view addSubview:bottomView];
+            
+            self.tableView.frame = CGRectMake(0, STATUS_AND_NAVIGATION_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - STATUS_AND_NAVIGATION_HEIGHT - TAB_BAR_HEIGHT);
+        }];
+    } else {
+        [UIView animateWithDuration:0.25 animations:^{
+            self.bottomView.frame = CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, TAB_BAR_HEIGHT);
+            
+            self.tableView.frame = CGRectMake(0, STATUS_AND_NAVIGATION_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - STATUS_AND_NAVIGATION_HEIGHT);
+        } completion:^(BOOL finished) {
+            [bottomView removeFromSuperview];
+        }];
+    }
+    complete();
 }
 
 
@@ -154,10 +158,10 @@ static NSString *const kUITableViewCell = @"UITableViewCell";
 
 - (UIView *)bottomView {
     if (!_bottomView) {
-        _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 50)];
+        _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, TAB_BAR_HEIGHT)];
         _bottomView.backgroundColor = [UIColor whiteColor];
         UIButton *delete = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, _bottomView.width / 2, _bottomView.height)];
-        delete.backgroundColor = PGCThemeColor;
+        delete.backgroundColor = PGCTintColor;
         [delete setTitle:_bottomBtnTitle forState:UIControlStateNormal];
         [delete setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [delete addTarget:self action:@selector(respondsToDelete:) forControlEvents:UIControlEventTouchUpInside];

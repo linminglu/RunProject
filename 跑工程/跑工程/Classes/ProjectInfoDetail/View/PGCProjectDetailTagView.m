@@ -27,7 +27,7 @@
 
 - (void)addSubviewsWithTitle:(NSString *)title {
     UIView *squareView = [[UIView alloc] init];
-    squareView.backgroundColor = RGB(250, 117, 10);
+    squareView.backgroundColor = PGCTintColor;
     [self addSubview:squareView];
     // 开始自动布局
     squareView.sd_layout

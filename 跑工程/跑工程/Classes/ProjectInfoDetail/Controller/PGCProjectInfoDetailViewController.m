@@ -38,7 +38,7 @@
 }
 
 - (void)initializeUserInterface {
-    self.view.backgroundColor = RGB(240, 240, 240);
+    self.view.backgroundColor = RGB(244, 244, 244);
     self.navigationItem.title = @"项目详情";
         
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:[self collectBarItem]];
@@ -48,7 +48,7 @@
     
     for (int i = 0; i < btnTitles.count; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
-        button.frame = CGRectMake(i * (buttonWidth + 1), 64 + 2, buttonWidth, 40);
+        button.frame = CGRectMake(i * (buttonWidth + 1), 64, buttonWidth, 40);
         button.backgroundColor = [UIColor whiteColor];
         button.tag = SegmentBtnTag + i;
         [button setTitle:btnTitles[i] forState:UIControlStateNormal];
@@ -66,7 +66,7 @@
     [self.view addSubview:projectTitleView];
     // 开始自动布局
     projectTitleView.sd_layout
-    .topSpaceToView(self.view, STATUS_AND_NAVIGATION_HEIGHT + 43)
+    .topSpaceToView(self.view, STATUS_AND_NAVIGATION_HEIGHT + 41)
     .leftSpaceToView(self.view, 0)
     .rightSpaceToView(self.view, 0)
     .heightIs(50);

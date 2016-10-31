@@ -12,7 +12,8 @@
 
 @interface PGCProjectSurveyScrollView () <UITableViewDataSource>
 
-@property (strong, nonatomic) NSArray *dataSource;
+
+@property (strong, nonatomic) NSArray *dataSource;/** 可能用到的设置、材料数据源 */
 
 - (void)initDataSource; /** 初始化数据源 */
 - (void)initUserInterface; /** 初始化用户界面 */
@@ -31,6 +32,9 @@
     }
     return self;
 }
+
+
+#pragma mark - Init method
 
 - (void)initDataSource {
     _dataSource = @[@"1、绿化设施相关的设备以及材料。", @"2、消防设施，安全防范电线电缆等设备材料", @"3、消防设施，安全防范电线电缆等设备材料", @"4、消防设施，安全防范电线电缆等设备材料"];
@@ -131,6 +135,7 @@
     
 }
 
+/* 自定义创建标签方法 */
 - (void)setLabelWithSuperView:(UIView *)superView index:(NSInteger)index title:(NSString *)title content:(NSString *)content {
 
     CGSize sizeA = [title sizeWithFont:SetFont(14) constrainedToSize:CGSizeMake(MAXFLOAT, 0)];
@@ -170,12 +175,12 @@
         .widthIs(1);
         
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button setTitleColor:PGCThemeColor forState:UIControlStateNormal];
+        [button setTitleColor:PGCTintColor forState:UIControlStateNormal];
         [button setTitle:@"点击查看" forState:UIControlStateNormal];
         [button.titleLabel setFont:SetFont(11)];
         [button.layer setMasksToBounds:true];
         [button.layer setCornerRadius:8.0];
-        [button.layer setBorderColor:PGCThemeColor.CGColor];
+        [button.layer setBorderColor:PGCTintColor.CGColor];
         [button.layer setBorderWidth:1];
         [button addTarget:self action:@selector(respondsToCheckButton:) forControlEvents:UIControlEventTouchUpInside];
         [superView addSubview:button];

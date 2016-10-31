@@ -10,6 +10,13 @@
 
 @interface PGCProjectDetailTagView : UIView
 
+/**
+ 初始化方法
+
+ @param frame
+ @param title
+ @return
+ */
 - (instancetype)initWithFrame:(CGRect)frame title:(NSString *)title;
 
 @end

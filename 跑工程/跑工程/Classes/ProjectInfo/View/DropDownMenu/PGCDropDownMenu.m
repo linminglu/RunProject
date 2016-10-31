@@ -23,6 +23,7 @@
 @property (nonatomic, assign) CGPoint origin;
 @property (nonatomic, strong) UIView *backGroundView;
 @property (nonatomic, strong) UIView *bottomShadow;
+
 @property (nonatomic, strong) UITableView *leftTableView;
 @property (nonatomic, strong) UITableView *rightTableView;
 @property (nonatomic, strong) UICollectionView *collectionView;
@@ -60,28 +61,27 @@
         
         #pragma mark *** tableView ***
         _leftTableView = [[UITableView alloc] initWithFrame:CGRectMake(origin.x, self.frame.origin.y + self.frame.size.height, 0, 0) style:UITableViewStylePlain];
-        _leftTableView.rowHeight = 40;
+        _leftTableView.backgroundColor = [UIColor whiteColor];
+        _leftTableView.rowHeight = 45;
         _leftTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _leftTableView.dataSource = self;
         _leftTableView.delegate = self;
         
         _rightTableView = [[UITableView alloc] initWithFrame:CGRectMake(self.frame.size.width, self.frame.origin.y + self.frame.size.height, 0, 0) style:UITableViewStylePlain];
-        _rightTableView.rowHeight = 40;
+        _rightTableView.backgroundColor = BackColor;
+        _rightTableView.rowHeight = 45;
         _rightTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _rightTableView.dataSource = self;
         _rightTableView.delegate = self;
         
         #pragma mark *** collectionView ***
         UICollectionViewFlowLayout *flowLayout=[[UICollectionViewFlowLayout alloc] init];
-        flowLayout.minimumLineSpacing = 0.5;
-        flowLayout.minimumInteritemSpacing = 0;
+        flowLayout.itemSize = CGSizeMake((self.frame.size.width - 10 * 4) / 3, 40);
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width, 0) collectionViewLayout:flowLayout];
-        
-        [_collectionView registerClass:[PGCCollectionViewCell class] forCellWithReuseIdentifier:kPGCCollectionViewCell];
         _collectionView.backgroundColor = [UIColor whiteColor];
+        [_collectionView registerClass:[PGCCollectionViewCell class] forCellWithReuseIdentifier:kPGCCollectionViewCell];
         _collectionView.dataSource = self;
         _collectionView.delegate = self;
-        
         
         self.autoresizesSubviews = NO;
         _leftTableView.autoresizesSubviews = NO;
@@ -132,7 +132,7 @@
     
     layer.path = path.CGPath;
     layer.lineWidth = 1.0;
-    layer.fillColor = color.CGColor;
+    layer.fillColor = PGCTextColor.CGColor;
     
     CGPathRef bound = CGPathCreateCopyByStrokingPath(layer.path, nil, layer.lineWidth, kCGLineCapButt, kCGLineJoinMiter, layer.miterLimit);
     layer.bounds = CGPathGetBoundingBox(bound);
@@ -153,7 +153,7 @@
     
     layer.path = path.CGPath;
     layer.lineWidth = 1.0;
-    layer.strokeColor = color.CGColor;
+    layer.strokeColor = [UIColor whiteColor].CGColor;
     
     CGPathRef bound = CGPathCreateCopyByStrokingPath(layer.path, nil, layer.lineWidth, kCGLineCapButt, kCGLineJoinMiter, layer.miterLimit);
     layer.bounds = CGPathGetBoundingBox(bound);
@@ -175,7 +175,7 @@
     layer.string = string;
     layer.fontSize = 14.0;
     layer.alignmentMode = kCAAlignmentCenter;
-    layer.foregroundColor = color.CGColor;
+    layer.foregroundColor = PGCTextColor.CGColor;
     
     layer.contentsScale = [[UIScreen mainScreen] scale];
     
@@ -341,7 +341,9 @@
 
 #pragma mark - Animation method
 
-- (void)animateIndicator:(CAShapeLayer *)indicator Forward:(BOOL)forward complete:(void(^)())complete {
+- (void)animateIndicator:(CAShapeLayer *)indicator
+                 Forward:(BOOL)forward
+                complete:(void(^)())complete {
     [CATransaction begin];
     [CATransaction setAnimationDuration:0.25];
     [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithControlPoints:0.4 :0.0 :0.2 :1.0]];
@@ -361,13 +363,15 @@
     complete();
 }
 
-- (void)animateBackGroundView:(UIView *)view show:(BOOL)show complete:(void(^)())complete {
+- (void)animateBackGroundView:(UIView *)view
+                         show:(BOOL)show
+                     complete:(void(^)())complete {
     if (show) {
         [self.superview addSubview:view];
         [view.superview addSubview:self];
         
         [UIView animateWithDuration:0.2 animations:^{
-            view.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.3];
+            view.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.0];
         }];
     } else {
         [UIView animateWithDuration:0.2 animations:^{
@@ -382,7 +386,10 @@
 /**
  *   动画显示下拉菜单
  */
-- (void)animateLeftTableView:(UITableView *)leftTableView rightTableView:(UITableView *)rightTableView show:(BOOL)show complete:(void(^)())complete {
+- (void)animateLeftTableView:(UITableView *)leftTableView
+              rightTableView:(UITableView *)rightTableView
+                        show:(BOOL)show
+                    complete:(void(^)())complete {
     
     CGFloat ratio = [_dataSource widthRatioOfLeftColumn:_currentSelectedMenudIndex];
     
@@ -394,30 +401,35 @@
         
         if (leftTableView) {
             
-            leftTableView.frame = CGRectMake(_origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width*ratio, 0);
+            leftTableView.frame = CGRectMake(_origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width * ratio, 0);
             [self.superview addSubview:leftTableView];
             
-            leftTableViewHeight = ([leftTableView numberOfRowsInSection:0] > 8) ? (8 * leftTableView.rowHeight) : ([leftTableView numberOfRowsInSection:0] * leftTableView.rowHeight);
+            leftTableViewHeight = self.superview.height * 0.6;
+            
+//            leftTableViewHeight = ([leftTableView numberOfRowsInSection:0] > 8) ? (8 * leftTableView.rowHeight) : ([leftTableView numberOfRowsInSection:0] * leftTableView.rowHeight);
             
         }
         
         if (rightTableView) {
             
-            rightTableView.frame = CGRectMake(_origin.x+leftTableView.frame.size.width, self.frame.origin.y + self.frame.size.height, self.frame.size.width*(1-ratio), 0);
+            rightTableView.frame = CGRectMake(_origin.x + leftTableView.frame.size.width, self.frame.origin.y + self.frame.size.height, self.frame.size.width*(1-ratio), 0);
             
             [self.superview addSubview:rightTableView];
             
-            rightTableViewHeight = ([rightTableView numberOfRowsInSection:0] > 8) ? (8 * rightTableView.rowHeight) : ([rightTableView numberOfRowsInSection:0] * rightTableView.rowHeight);
+            rightTableViewHeight = self.superview.height * 0.6;
+            
+//            rightTableViewHeight = ([rightTableView numberOfRowsInSection:0] > 8) ? (8 * rightTableView.rowHeight) : ([rightTableView numberOfRowsInSection:0] * rightTableView.rowHeight);
+            
         }
         
         CGFloat tableViewHeight = MAX(leftTableViewHeight, rightTableViewHeight);
         
         [UIView animateWithDuration:0.2 animations:^{
             if (leftTableView) {
-                leftTableView.frame = CGRectMake(_origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width*ratio, tableViewHeight);
+                leftTableView.frame = CGRectMake(_origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width * ratio, tableViewHeight);
             }
             if (rightTableView) {
-                rightTableView.frame = CGRectMake(_origin.x+leftTableView.frame.size.width, self.frame.origin.y + self.frame.size.height, self.frame.size.width*(1-ratio), tableViewHeight);
+                rightTableView.frame = CGRectMake(_origin.x + leftTableView.frame.size.width, self.frame.origin.y + self.frame.size.height, self.frame.size.width * (1 - ratio), tableViewHeight);
             }
         }];
     } else {
@@ -446,7 +458,9 @@
 /**
  *  动画显示下拉菜单
  */
-- (void)animateCollectionView:(UICollectionView *)collectionView show:(BOOL)show complete:(void(^)())complete {
+- (void)animateCollectionView:(UICollectionView *)collectionView
+                         show:(BOOL)show
+                     complete:(void(^)())complete {
     
     if (show) {
         
@@ -457,7 +471,9 @@
             collectionView.frame = CGRectMake(_origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width, 0);
             [self.superview addSubview:collectionView];
             
-            collectionViewHeight = ([collectionView numberOfItemsInSection:0] > 10) ? (5 * 40) : (ceil([collectionView numberOfItemsInSection:0]/2) * 40);
+            collectionViewHeight = 40 * 3 + 10 * 4;
+            
+//            collectionViewHeight = ([collectionView numberOfItemsInSection:0] > 10) ? (5 * 40) : (ceil([collectionView numberOfItemsInSection:0]/2) * 40);
         }
         
         [UIView animateWithDuration:0.2 animations:^{
@@ -481,14 +497,22 @@
     complete();
 }
 
-- (void)animateTitle:(CATextLayer *)title show:(BOOL)show complete:(void(^)())complete {
+- (void)animateTitle:(CATextLayer *)title
+                show:(BOOL)show
+            complete:(void(^)())complete {
     CGSize size = [self calculateTitleSizeWithString:title.string];
     CGFloat sizeWidth = (size.width < (self.frame.size.width / _numOfMenu) - 25) ? size.width : self.frame.size.width / _numOfMenu - 25;
     title.bounds = CGRectMake(0, 0, sizeWidth, size.height);
     complete();
 }
 
-- (void)animateIdicator:(CAShapeLayer *)indicator background:(UIView *)background leftTableView:(UITableView *)leftTableView rightTableView:(UITableView *)rightTableView title:(CATextLayer *)title forward:(BOOL)forward complecte:(void(^)())complete{
+- (void)animateIdicator:(CAShapeLayer *)indicator
+             background:(UIView *)background
+          leftTableView:(UITableView *)leftTableView
+         rightTableView:(UITableView *)rightTableView
+                  title:(CATextLayer *)title
+                forward:(BOOL)forward
+              complecte:(void(^)())complete{
     
     [self animateIndicator:indicator Forward:forward complete:^{
         [self animateTitle:title show:forward complete:^{
@@ -502,7 +526,12 @@
     complete();
 }
 
-- (void)animateIdicator:(CAShapeLayer *)indicator background:(UIView *)background collectionView:(UICollectionView *)collectionView title:(CATextLayer *)title forward:(BOOL)forward complecte:(void(^)())complete{
+- (void)animateIdicator:(CAShapeLayer *)indicator
+             background:(UIView *)background
+         collectionView:(UICollectionView *)collectionView
+                  title:(CATextLayer *)title
+                forward:(BOOL)forward
+              complecte:(void(^)())complete{
     
     [self animateIndicator:indicator Forward:forward complete:^{
         [self animateTitle:title show:forward complete:^{
@@ -733,6 +762,7 @@
     }
 }
 
+
 - (void)confiMenuWithSelectRow:(NSInteger)row {
     CATextLayer *title = (CATextLayer *)_titles[_currentSelectedMenudIndex];
     title.string = [self.dataSource menu:self titleForRowAtIndexPath:[PGCIndexPath indexPathWithCol:self.currentSelectedMenudIndex leftOrRight:-1 leftRow:-1 row:row]];
@@ -807,7 +837,7 @@
         
         #pragma mark *** bgLayer ***
         CGPoint bgLayerPosition = CGPointMake((i + 0.5) * bgLayerInterval, self.frame.size.height / 2);
-        CALayer *bgLayer = [self createBgLayerWithColor:[UIColor whiteColor] andPosition:bgLayerPosition];
+        CALayer *bgLayer = [self createBgLayerWithColor:BackColor andPosition:bgLayerPosition];
         [self.layer addSublayer:bgLayer];
         [tempBgLayers addObject:bgLayer];
         
