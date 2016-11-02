@@ -200,11 +200,19 @@
 //取消搜索
 - (void) cancelSearch
 {
-    [_cancelBtn setHidden:YES];
+    [_cancelBtn setHidden:true];
     self.searchBar.frame = CGRectMake(10, 75, SCREEN_WIDTH - 20, 40);
     self.searchBar.text = nil;
+    self.searchBar.userActivity = false;
     self.searchDataSourceArray = nil;
     [self.tableView reloadData];
+}
+
+
+#pragma mark - Touches
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self.tableView endEditing:true];
 }
 
 @end

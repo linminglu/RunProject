@@ -12,7 +12,6 @@
 @protocol PGCAlertViewDelegate <NSObject>
 
 @optional
-
 /**
  确定按钮代理方法
 
@@ -20,7 +19,6 @@
  @param confirm
  */
 - (void)alertView:(PGCAlertView *)alertView confirm:(UIButton *)confirm;
-
 /**
  呼叫联系人代理方法
 
@@ -28,7 +26,6 @@
  @param phone
  */
 - (void)alertView:(PGCAlertView *)alertView phone:(UIButton *)phone;
-
 /**
  添加联系人代理方法
 
@@ -43,7 +40,6 @@
 @interface PGCAlertView : UIView
 
 @property (weak, nonatomic) id <PGCAlertViewDelegate> delegate;
-
 /**
  初始化判断alert view
 
@@ -51,7 +47,6 @@
  @return
  */
 - (instancetype)initWithTitle:(NSString *)title;
-
 /**
  初始化按钮alert view
 
@@ -59,7 +54,6 @@
  @return
  */
 - (instancetype)initWithModel:(id)model;
-
 /**
  显示alert view
  */

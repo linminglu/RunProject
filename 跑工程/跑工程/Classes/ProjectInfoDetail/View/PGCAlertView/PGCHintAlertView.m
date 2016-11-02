@@ -38,8 +38,8 @@
 
 - (void)setupSubviewsWithContent:(NSString *)content {
     self.bounds = CGRectMake(0, 0, SCREEN_WIDTH * 0.7, SCREEN_WIDTH * 0.35);
-    self.center = CGPointMake(PGCKeyWindow.centerX, PGCKeyWindow.centerY - 25);
-    self.backgroundColor = RGB(244, 244, 244);
+    self.center = CGPointMake(KeyWindow.centerX, KeyWindow.centerY - 25);
+    self.backgroundColor = [UIColor whiteColor];
     
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.textColor = PGCTintColor;
@@ -53,25 +53,36 @@
     .widthRatioToView(self, 1)
     .heightIs(40);
     
+    UIView *line = [[UIView alloc] init];
+    line.backgroundColor = RGB(244, 244, 244);
+    [self addSubview:line];
+    line.sd_layout
+    .topSpaceToView(titleLabel, 0)
+    .leftSpaceToView(self, 0)
+    .rightSpaceToView(self, 0)
+    .heightIs(1);
+    
+    UIView *centerView = [[UIView alloc] init];
+    centerView.backgroundColor = [UIColor whiteColor];
+    [self addSubview:centerView];
+    centerView.sd_layout
+    .leftSpaceToView(self, 0)
+    .rightSpaceToView(self, 0)
+    .topSpaceToView(line, 0)
+    .heightRatioToView(self, 0.6);
+    
     UILabel *contentLabel = [[UILabel alloc] init];
     contentLabel.textColor = PGCTextColor;
     contentLabel.text = content;
     contentLabel.font = SetFont(13);
-    [self addSubview:contentLabel];
+    contentLabel.numberOfLines = 0;
+    contentLabel.textAlignment = NSTextAlignmentCenter;
+    [centerView addSubview:contentLabel];
     contentLabel.sd_layout
-    .topSpaceToView(titleLabel, 1)
-    .centerXEqualToView(self)
-    .widthRatioToView(self, 1)
-    .heightRatioToView(self, 0.5);
-    
-    UIView *line = [[UIView alloc] init];
-    line.backgroundColor = PGCTintColor;
-    [self addSubview:line];
-    line.sd_layout
-    .topSpaceToView(contentLabel, 0)
-    .leftSpaceToView(self, 0)
-    .rightSpaceToView(self, 0)
-    .heightIs(1);
+    .centerYEqualToView(centerView)
+    .centerXEqualToView(centerView)
+    .widthRatioToView(centerView, 0.9)
+    .autoHeightRatio(0);
     
     UIButton *okButton = [[UIButton alloc] init];
     okButton.backgroundColor = PGCTintColor;
@@ -81,7 +92,7 @@
     [okButton addTarget:self action:@selector(respondsToHintAlertDelete:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:okButton];
     okButton.sd_layout
-    .topSpaceToView(line, 0)
+    .topSpaceToView(centerView, 0)
     .leftSpaceToView(self, 0)
     .rightSpaceToView(self, 0)
     .heightIs(40);
@@ -92,7 +103,7 @@
 
 - (void)setupSubviewsWithTitle:(NSString *)title {
     self.bounds = CGRectMake(0, 0, SCREEN_WIDTH * 0.7, SCREEN_WIDTH * 0.35);
-    self.center = CGPointMake(PGCKeyWindow.centerX, PGCKeyWindow.centerY - 25);
+    self.center = CGPointMake(KeyWindow.centerX, KeyWindow.centerY - 25);
     self.backgroundColor = RGB(244, 244, 244);
     
     UILabel *titleLabel = [[UILabel alloc] init];
@@ -164,8 +175,8 @@
 
 - (void)showHintAlertView {
     [UIView animateWithDuration:0.25f animations:^{
-        [PGCKeyWindow addSubview:self.backView];
-        [PGCKeyWindow addSubview:self];
+        [KeyWindow addSubview:self.backView];
+        [KeyWindow addSubview:self];
         
         self.backView.alpha = 0.7;
     }];

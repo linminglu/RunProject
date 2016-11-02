@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-static NSString *const kPGCProjectInfoCell = @"PGCProjectInfoCell";
+static NSString *const kProjectInfoCell = @"ProjectInfoCell";
 
 @interface PGCProjectInfoCell : UITableViewCell
+
 
 @end

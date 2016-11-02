@@ -12,7 +12,6 @@
 @protocol PGCPayViewDelegate <NSObject>
 
 @optional
-
 /**
  微信代理方法
 
@@ -20,8 +19,6 @@
  @param weChat
  */
 - (void)payView:(PGCPayView *)payView weChat:(UIButton *)weChat;
-
-
 /**
  支付宝代理方法
 
@@ -32,23 +29,20 @@
 
 @end
 
+
 @interface PGCPayView : UIView
 
 @property (weak, nonatomic) id <PGCPayViewDelegate> delegate;
-
-
 /**
  初始化支付成功提示框
 
  @return
  */
 - (instancetype)initWithSuccessPay;
-
 /**
  显示选择支付视图
  */
 - (void)showPayView;
-
 /**
  显示支付成功视图
  */

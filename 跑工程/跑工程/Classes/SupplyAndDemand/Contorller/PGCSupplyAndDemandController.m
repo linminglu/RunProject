@@ -7,234 +7,299 @@
 //
 
 #import "PGCSupplyAndDemandController.h"
-#import "PGCProjectInfoCell.h"
+#import "PGCSupplyAndDemandCell.h"
+#import "NSString+Size.h"
+#import "PGCSupplyAndDemandDetailVC.h"
+
+#import "PGCDemandCollectVC.h"
+#import "PGCSupplyCollectVC.h"
+
+#import "PGCDemandIntroduceVC.h"
+#import "PGCSupplyIntroduceVC.h"
+
+#define TopButtonTag 500
+#define CenterButtonTag 400
+#define ChooseButtonTag 300
 
 @interface PGCSupplyAndDemandController () <UITableViewDelegate, UITableViewDataSource>
 
-#pragma mark - 控件X
 
-// 顶部需求按钮X
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *demandBtnX;
-// 分割线X
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *SeparatorViewX;
-// 顶部供应按钮X
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *supplyBtnX;
+#pragma mark - 控件约束属性
 
-// 搜索条宽度
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchBarW;
-// 我的发布按钮X
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *introduceBtnX;
-// 我的收藏按钮X
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *collectionBtnX;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *demandBtnX;// 顶部需求按钮X
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *SeparatorViewX;// 分割线X
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *supplyBtnX;// 顶部供应按钮X
 
-// 选择地区按钮X
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *chooseZoneBtnX;
-// 选择类型按钮X
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *chooseTypeBtnX;
-// 选择时间按钮X
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *chooseTimeBtnX;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchBarW;// 搜索条宽度
 
-#pragma mark - 控件
-// 顶部需求按钮
-@property (weak, nonatomic) IBOutlet UIButton *demandBtn;
-// 顶部供应按钮
-@property (weak, nonatomic) IBOutlet UIButton *supplyBtn;
-// 我的收藏按钮
-@property (weak, nonatomic) IBOutlet UIButton *conllectionBtn;
-// 我的发布按钮
-@property (weak, nonatomic) IBOutlet UIButton *introduceBtn;
-// 搜索条
-@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
-// 选择地区按钮
-@property (weak, nonatomic) IBOutlet UIButton *chooseZoneBtn;
-// 选择类型按钮
-@property (weak, nonatomic) IBOutlet UIButton *chooseTypeBtn;
-// 选择时间按钮
-@property (weak, nonatomic) IBOutlet UIButton *chooseTimeBtn;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *introduceBtnX;// 我的发布按钮X
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *collectionBtnX;// 我的收藏按钮X
 
-// 选择地区按钮内的箭头
-@property (nonatomic, strong) UIImageView *zoneArrowImage;
-// 选择类型按钮内的箭头
-@property (nonatomic, strong) UIImageView *typeArrowImage;
-// 选择时间按钮内的箭头
-@property (nonatomic, strong) UIImageView *timeArrowImage;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *chooseZoneBtnX;// 选择地区按钮X
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *chooseTypeBtnX;// 选择类型按钮X
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *chooseTimeBtnX;// 选择时间按钮X
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *buttonWidth;// 按钮的宽度
 
-#pragma mark - 按钮状态标记
-// 选择按钮是否被点击
-@property (nonatomic, assign) BOOL zoneArrowAImageChange;
-@property (nonatomic, assign) BOOL typeArrowAImageChange;
-@property (nonatomic, assign) BOOL timeArrowAImageChange;
+
+#pragma mark - 控件属性
+
+@property (weak, nonatomic) IBOutlet UIButton *demandBtn;// 顶部需求按钮
+@property (weak, nonatomic) IBOutlet UIButton *supplyBtn;// 顶部供应按钮
+
+@property (weak, nonatomic) IBOutlet UIButton *conllectionBtn;// 我的收藏按钮
+@property (weak, nonatomic) IBOutlet UIButton *introduceBtn;// 我的发布按钮
+
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;// 搜索条
+
+@property (weak, nonatomic) IBOutlet UIButton *chooseZoneBtn;// 选择地区按钮
+@property (weak, nonatomic) IBOutlet UIButton *chooseTypeBtn;// 选择类型按钮
+@property (weak, nonatomic) IBOutlet UIButton *chooseTimeBtn;// 选择时间按钮
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;// 表格视图
+
+@property (nonatomic, assign) BOOL isSelected;// 选择按钮是否被点击
+
+@property (assign, nonatomic) BOOL demandNotSupply;// 是否为需求信息
+
+
+- (void)initializeDataSource; /** 初始化数据源 */
+- (void)initializeUserInterface; /** 初始化用户界面 */
 
 @end
 
 @implementation PGCSupplyAndDemandController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBar.hidden = true;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    self.navigationController.navigationBar.hidden = false;
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self initializeDataSource];
+    [self initializeUserInterface];
+}
+
+- (void)initializeDataSource {
+    _isSelected = false;
+    _demandNotSupply = true;
+    
+    
+}
+
+- (void)initializeUserInterface {
     self.navigationController.navigationBar.hidden = true;
     // 控件布局
     [self layoutSubView];
+    
     // 设置需求按钮初始状态为选中，用户交互停用
-    self.demandBtn.selected = YES;
-    self.demandBtn.userInteractionEnabled = NO;
+    self.demandBtn.selected = true;
+    self.demandBtn.userInteractionEnabled = false;
     
-    // 设置搜索条背景为透明和两个按钮的圆角
-    UIImage *image = [UIImage imageNamed:@"透明"];
-    self.searchBar.backgroundImage = image;
-    self.conllectionBtn.layer.cornerRadius = 15;
-    self.conllectionBtn.layer.masksToBounds = YES;
-    self.introduceBtn.layer.cornerRadius = 15;
-    self.introduceBtn.layer.masksToBounds = YES;
+    // 设置搜索条背景为透明
+    self.searchBar.backgroundImage = [UIImage imageNamed:@"透明"];
     
-    // 在选择地区，选择类型，选择时间按钮中添加子控件
-    [self chooseBtnAddSubView];
-    
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    [self.tableView registerClass:[PGCProjectInfoCell class] forCellReuseIdentifier:@"PGCProjectInfoCell"];
+    [self.tableView registerClass:[PGCSupplyAndDemandCell class] forCellReuseIdentifier:kSupplyAndDemandCell];
 }
 
-// 控件布局
-- (void) layoutSubView
-{
-    self.demandBtnX.constant = (SCREEN_WIDTH / 2 - 100 ) / 2;
+// 控件约束布局
+- (void)layoutSubView {
+    self.demandBtnX.constant = (SCREEN_WIDTH / 2 - 100) / 2;
     self.SeparatorViewX.constant = SCREEN_WIDTH / 2 ;
-    self.supplyBtnX.constant = (SCREEN_WIDTH / 2 - 100 ) / 2;
+    self.supplyBtnX.constant = (SCREEN_WIDTH / 2 - 100) / 2;
     self.searchBarW.constant = SCREEN_WIDTH / 2;
     self.introduceBtnX.constant =(SCREEN_WIDTH / 2 - 140) / 3;
     self.collectionBtnX.constant =(SCREEN_WIDTH / 2 - 140) / 3;
     
-    self.chooseZoneBtnX.constant = (SCREEN_WIDTH - 240) / 4;
-    self.chooseTypeBtnX.constant = (SCREEN_WIDTH - 240) / 4;
-    self.chooseTimeBtnX.constant = (SCREEN_WIDTH - 240) / 4;
+    CGFloat buttonW = [@"地区" sizeWithFont:SetFont(14) constrainedToSize:CGSizeMake(MAXFLOAT, 0)].width + [UIImage imageNamed:@"方向-right"].size.width;
+    self.buttonWidth.constant = buttonW;
+    self.chooseZoneBtnX.constant = (SCREEN_WIDTH - buttonW * 3) / 4;
+    self.chooseTypeBtnX.constant = (SCREEN_WIDTH - buttonW * 3) / 4;
+    self.chooseTimeBtnX.constant = (SCREEN_WIDTH - buttonW * 3) / 4;
+    
+    CGFloat labelInset = [self.chooseZoneBtn.titleLabel intrinsicContentSize].width - self.chooseZoneBtn.width - self.chooseZoneBtn.imageView.width;
+    CGFloat imageInset = self.chooseZoneBtn.imageView.width - self.chooseZoneBtn.width - self.chooseZoneBtn.titleLabel.width;
+    
+    self.chooseZoneBtn.titleEdgeInsets = UIEdgeInsetsMake(0, labelInset, 0, 0);
+    self.chooseZoneBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, imageInset);
+    
+    self.chooseTypeBtn.titleEdgeInsets = UIEdgeInsetsMake(0, labelInset, 0, 0);
+    self.chooseTypeBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, imageInset);
+    
+    self.chooseTimeBtn.titleEdgeInsets = UIEdgeInsetsMake(0, labelInset, 0, 0);
+    self.chooseTimeBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, imageInset);
 }
 
-// 给选择地区等3个按钮添加子控件
-- (void)chooseBtnAddSubView;
-{
-    UILabel *zoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 30, 20)];
-    zoneLabel.font = [UIFont systemFontOfSize:14];
-    zoneLabel.text = @"地区";
-    [self.chooseZoneBtn addSubview:zoneLabel];
-    _zoneArrowImage = [[UIImageView alloc] initWithFrame:CGRectMake(60, 15, 5, 10)];
-    _zoneArrowImage.image = [UIImage imageNamed:@"right"];
-    [self.chooseZoneBtn addSubview:_zoneArrowImage];
-    
-    
-    UILabel *typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 30, 20)];
-    typeLabel.font = [UIFont systemFontOfSize:14];
-    typeLabel.text = @"类型";
-    [self.chooseTypeBtn addSubview:typeLabel];
-    _typeArrowImage = [[UIImageView alloc] initWithFrame:CGRectMake(60, 15, 5, 10)];
-    _typeArrowImage.image = [UIImage imageNamed:@"right"];
-    [self.chooseTypeBtn addSubview:_typeArrowImage];
-    
-    
-    UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 30, 20)];
-    timeLabel.font = [UIFont systemFontOfSize:14];
-    timeLabel.text = @"时间";
-    [self.chooseTimeBtn addSubview:timeLabel];
-    _timeArrowImage = [[UIImageView alloc] initWithFrame:CGRectMake(60, 15, 5, 10)];
-    _timeArrowImage.image = [UIImage imageNamed:@"right"];
-    [self.chooseTimeBtn addSubview:_timeArrowImage];
-
-}
 
 #pragma mark - UITableViewDataSource
-- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+
+- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 20;
 }
 
-#pragma mark - UITableViewDelegate
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    PGCProjectInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PGCProjectInfoCell" forIndexPath:indexPath];
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    PGCSupplyAndDemandCell *cell = [tableView dequeueReusableCellWithIdentifier:kSupplyAndDemandCell];
     // 点击cell不变色
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     return cell;
 }
 
-- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 120;
+
+#pragma mark - UITableViewDelegate
+
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [tableView cellHeightForIndexPath:indexPath model:nil keyPath:nil cellClass:[PGCSupplyAndDemandCell class] contentViewWidth:SCREEN_WIDTH];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"%ld-%ld", indexPath.row, indexPath.section);
-}
-
-#pragma mark xib按钮点击事件
-// 顶部需求信息按钮点击事件
-- (IBAction)demandBtnClick:(id)sender {
+    PGCSupplyAndDemandDetailVC *detailVC = [PGCSupplyAndDemandDetailVC new];
+        
+    if (_demandNotSupply) {
+        detailVC.detailVCTitle = @"需求信息详情";
+    } else {
+        detailVC.detailVCTitle = @"供应信息详情";
+    }
     
-    self.demandBtn.userInteractionEnabled = NO;
-    self.supplyBtn.userInteractionEnabled = YES;
-    self.demandBtn.selected = YES;
-    self.supplyBtn.selected = NO;
+    [self.navigationController pushViewController:detailVC animated:true];
 }
 
-// 顶部供应信息按钮点击事件
-- (IBAction)supplyBtnClick:(id)sender {
-    self.demandBtn.userInteractionEnabled = YES;
-    self.supplyBtn.userInteractionEnabled = NO;
-    self.demandBtn.selected = NO;
-    self.supplyBtn.selected = YES;
+
+#pragma mark - xib按钮点击事件
+
+- (void)actionWithButton:(UIButton *)button
+             otherButton:(UIButton *)otherButton
+                 enabled:(BOOL)enabled
+                selected:(BOOL)selected {
+    button.userInteractionEnabled = enabled;
+    otherButton.userInteractionEnabled = !button.userInteractionEnabled;
+    
+    button.selected = selected;
+    otherButton.selected = !button.selected;
 }
 
-// 我的收藏按钮点击事件
-- (IBAction)conllectionBtnClick:(id)sender {
-    self.conllectionBtn.userInteractionEnabled = NO;
-    self.introduceBtn.userInteractionEnabled = YES;
-    self.conllectionBtn.selected = YES;
-    self.introduceBtn.selected = NO;
-}
+/**
+ 需求和供应信息按钮点击事件
 
-// 我的发布按钮点击事件
-- (IBAction)introduceBtnClick:(id)sender {
-    self.conllectionBtn.userInteractionEnabled = YES;
-    self.introduceBtn.userInteractionEnabled = NO;
-    self.conllectionBtn.selected = NO;
-    self.introduceBtn.selected = YES;
-}
-
-// 选择地区按钮点击事件
-- (IBAction)chooseZoneBtnClick:(id)sender {
-    // 新的frame和image
-    self.zoneArrowImage.image = [UIImage imageNamed:@"方向-bottom"];
-    self.zoneArrowImage.frame = CGRectMake(55, 17.5, 10, 5);
-    _zoneArrowAImageChange = !_zoneArrowAImageChange;
-    if (!_zoneArrowAImageChange) {
-        self.zoneArrowImage.image = [UIImage imageNamed:@"right"];
-        self.zoneArrowImage.frame = CGRectMake(60, 15, 5, 10);
+ @param sender 
+ */
+- (IBAction)demandAndSupplyBtn:(UIButton *)sender {
+    
+    switch (sender.tag) {
+        case TopButtonTag:
+        {
+            [self actionWithButton:self.demandBtn
+                       otherButton:self.supplyBtn
+                           enabled:false
+                          selected:true];
+            _demandNotSupply = true;
+        }
+            break;
+        case TopButtonTag + 1:
+        {
+            [self actionWithButton:self.demandBtn
+                       otherButton:self.supplyBtn
+                           enabled:true
+                          selected:false];
+            _demandNotSupply = false;
+        }
+            break;
+        default:
+            break;
     }
 }
 
-// 选择类型按钮点击事件
-- (IBAction)chooseTypeBtnClick:(id)sender {
-    // 新的frame和image
-    self.typeArrowImage.image = [UIImage imageNamed:@"方向-bottom"];
-    self.typeArrowImage.frame = CGRectMake(55, 17.5, 10, 5);
-    _typeArrowAImageChange = !_typeArrowAImageChange;
-    if (!_typeArrowAImageChange) {
-        self.typeArrowImage.image = [UIImage imageNamed:@"right"];
-        self.typeArrowImage.frame = CGRectMake(60, 15, 5, 10);
+/**
+ 我的收藏和发布按钮点击事件
+
+ @param sender
+ */
+- (IBAction)collectionAndIntroduceBtn:(UIButton *)sender {
+    
+    switch (sender.tag) {
+        case CenterButtonTag:
+        {
+            if (_demandNotSupply) {
+                // 推送到 需求->我的收藏 界面
+                PGCDemandCollectVC *demandCollectVC = [PGCDemandCollectVC new];
+                
+                [self.navigationController pushViewController:demandCollectVC animated:true];
+                
+            } else {
+                // 推送到 供应->我的收藏 界面
+                PGCSupplyCollectVC *supplyCollectVC = [PGCSupplyCollectVC new];
+                
+                [self.navigationController pushViewController:supplyCollectVC animated:true];
+            }            
+        }
+            break;
+        case CenterButtonTag + 1:
+        {
+            if (_demandNotSupply) {
+                // 推送到 需求->我的发布 界面
+                PGCDemandIntroduceVC *demandIntroduceVC = [PGCDemandIntroduceVC new];
+                
+                [self.navigationController pushViewController:demandIntroduceVC animated:true];
+                
+            } else {
+                // 推送到 供应->我的发布 界面
+                PGCSupplyIntroduceVC *supplyIntroduceVC = [PGCSupplyIntroduceVC new];
+                
+                [self.navigationController pushViewController:supplyIntroduceVC animated:true];
+            }
+        }
+            break;
+        default:
+            break;
     }
 }
 
-// 选择时间按钮点击事件
-- (IBAction)chooseTimeBtnClick:(id)sender {
-    // 新的frame和image
-    self.timeArrowImage.image = [UIImage imageNamed:@"方向-bottom"];
-    self.timeArrowImage.frame = CGRectMake(55, 17.5, 10, 5);
-    _timeArrowAImageChange = !_timeArrowAImageChange;
-    if (!_timeArrowAImageChange) {
-        self.timeArrowImage.image = [UIImage imageNamed:@"right"];
-        self.timeArrowImage.frame = CGRectMake(60, 15, 5, 10);
+/**
+ 三个选择按钮的点击事件
+
+ @param sender
+ */
+- (IBAction)chooseBtnClick:(UIButton *)sender {
+    sender.selected = !sender.selected;
+    
+    _isSelected = sender.selected;
+    
+    switch (sender.tag) {
+        case ChooseButtonTag:
+        {
+            
+        }
+            break;
+        case ChooseButtonTag + 1:
+        {
+            
+        }
+            break;
+        case ChooseButtonTag + 2:
+        {
+            
+        }
+            break;
+        default:
+            break;
     }
+}
+
+
+#pragma mark - Touches
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self.view endEditing:true];
 }
 
 @end

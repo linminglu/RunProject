@@ -7,7 +7,6 @@
 //
 
 #import "PGCRecordViewController.h"
-#import "PGCProjectInfoCell.h"
 #import "PGCProjectInfoDetailViewController.h"
 
 @interface PGCRecordViewController ()
@@ -27,7 +26,6 @@
 - (void)initUserInterface {
     self.navigationItem.title = @"浏览记录";
     self.bottomBtnTitle = @"删除";
-    [self.tableView registerClass:[PGCProjectInfoCell class] forCellReuseIdentifier:kPGCProjectInfoCell];
 }
 
 #pragma mark - UITableViewDataSource
@@ -37,7 +35,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    PGCProjectInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:kPGCProjectInfoCell forIndexPath:indexPath];
+    PGCProjectInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:kProjectInfoCell];
     
     return cell;
 }
@@ -49,6 +47,8 @@
     if (tableView.editing) {
         return;
     }
+    [[tableView cellForRowAtIndexPath:indexPath] setSelected:false];
+    
     [self.navigationController pushViewController:[[PGCProjectInfoDetailViewController alloc] init] animated:true];
 }
 

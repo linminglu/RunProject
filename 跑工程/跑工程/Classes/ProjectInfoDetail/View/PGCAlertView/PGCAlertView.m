@@ -40,7 +40,7 @@
 
 - (void)setupSubviewsWithModel:(id)model {
     self.bounds = CGRectMake(0, 0, SCREEN_WIDTH * 0.7, SCREEN_WIDTH * 0.35);
-    self.center = CGPointMake(PGCKeyWindow.centerX, PGCKeyWindow.centerY - 25);
+    self.center = CGPointMake(KeyWindow.centerX, KeyWindow.centerY - 25);
     self.backgroundColor = RGB(244, 244, 244);
     
     // 联系人标签
@@ -105,7 +105,7 @@
 
 - (void)setupSubviewsWithTitle:(NSString *)title {
     self.bounds = CGRectMake(0, 0, SCREEN_WIDTH * 0.7, SCREEN_WIDTH * 0.35);
-    self.center = CGPointMake(PGCKeyWindow.centerX, PGCKeyWindow.centerY - 25);
+    self.center = CGPointMake(KeyWindow.centerX, KeyWindow.centerY - 25);
     self.backgroundColor = [UIColor whiteColor];
     
     UILabel *titleLabel = [[UILabel alloc] init];
@@ -185,8 +185,8 @@
 
 - (void)showAlertView {
     [UIView animateWithDuration:0.25f animations:^{
-        [PGCKeyWindow addSubview:self.backView];
-        [PGCKeyWindow addSubview:self];
+        [KeyWindow addSubview:self.backView];
+        [KeyWindow addSubview:self];
         
         self.backView.alpha = 0.7;
     }];

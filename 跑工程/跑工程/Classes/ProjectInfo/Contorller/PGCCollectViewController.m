@@ -7,7 +7,6 @@
 //
 
 #import "PGCCollectViewController.h"
-#import "PGCProjectInfoCell.h"
 #import "PGCProjectInfoDetailViewController.h"
 
 @interface PGCCollectViewController ()
@@ -28,7 +27,6 @@
 - (void)initUserInterface {
     self.navigationItem.title = @"我的收藏";
     self.bottomBtnTitle = @"取消收藏";
-    [self.tableView registerClass:[PGCProjectInfoCell class] forCellReuseIdentifier:kPGCProjectInfoCell];
 }
 
 
@@ -39,7 +37,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    PGCProjectInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:kPGCProjectInfoCell forIndexPath:indexPath];
+    PGCProjectInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:kProjectInfoCell];
     
     return cell;
 }
@@ -51,11 +49,13 @@
     if (tableView.editing) {
         return;
     }
+    [[tableView cellForRowAtIndexPath:indexPath] setSelected:false];
+    
     [self.navigationController pushViewController:[[PGCProjectInfoDetailViewController alloc] init] animated:true];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    NSLog(@"%@", NSStringFromSelector(_cmd));
 }
 
 

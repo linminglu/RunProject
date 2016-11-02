@@ -12,7 +12,7 @@
 @protocol PGCProjectInfoNavigationBarDelegate <NSObject>
 
 @optional
-- (void)projectInfoNavigationBar:(PGCProjectInfoNavigationBar *)PGCProjectInfoNavigationBar tapItem:(NSInteger)tag;
+- (void)projectInfoNavigationBar:(PGCProjectInfoNavigationBar *)projectInfoNavigationBar tapItem:(NSInteger)tag;
 
 @end
 

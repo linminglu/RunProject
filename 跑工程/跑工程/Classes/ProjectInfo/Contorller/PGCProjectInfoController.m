@@ -83,9 +83,10 @@
     
     // 表格视图
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     tableView.delegate = self;
     tableView.dataSource = self;
-    [tableView registerClass:[PGCProjectInfoCell class] forCellReuseIdentifier:kPGCProjectInfoCell];
+    [tableView registerClass:[PGCProjectInfoCell class] forCellReuseIdentifier:kProjectInfoCell];
     [self.view addSubview:tableView];
     self.tableView = tableView;
     // 开始自动布局
@@ -94,14 +95,18 @@
     .leftSpaceToView(self.view, 0)
     .rightSpaceToView(self.view, 0)
     .bottomSpaceToView(self.view, TAB_BAR_HEIGHT);
-
 }
 
+#pragma mark - 自动布局
+
+- (void)setViewAutoLayout {
+    
+}
 
 
 #pragma mark - PGCProjectInfoNavigationBarDelegate
 
-- (void)projectInfoNavigationBar:(PGCProjectInfoNavigationBar *)PGCProjectInfoNavigationBar tapItem:(NSInteger)tag {
+- (void)projectInfoNavigationBar:(PGCProjectInfoNavigationBar *)projectInfoNavigationBar tapItem:(NSInteger)tag {
     switch (tag) {
         case mapItemTag:
         {
@@ -272,10 +277,9 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    PGCProjectInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:kPGCProjectInfoCell forIndexPath:indexPath];
-    
-    // 点击cell不变色
+    PGCProjectInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:kProjectInfoCell];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     return cell;
 }
 
@@ -283,13 +287,13 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 120;
+    return [tableView cellHeightForIndexPath:indexPath model:nil keyPath:nil cellClass:[PGCProjectInfoCell class] contentViewWidth:SCREEN_WIDTH];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     [self.navigationController pushViewController:[PGCProjectInfoDetailViewController new] animated:true];
 }
-
 
 
 - (void)initializeDataSource {

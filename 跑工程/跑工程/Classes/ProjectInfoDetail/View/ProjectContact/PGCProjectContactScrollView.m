@@ -63,6 +63,7 @@
     
     // 联系人表格视图
     UITableView *contactTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    contactTableView.showsVerticalScrollIndicator = false;
     contactTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     contactTableView.rowHeight = 34 * 5 + 1;
     contactTableView.dataSource = self;
@@ -83,11 +84,11 @@
     [button setTitleColor:PGCTintColor forState:UIControlStateNormal];
     [button addTarget:self action:@selector(respondsToCheckContact:) forControlEvents:UIControlEventTouchUpInside];
     
-    CGFloat labelInset = [button.titleLabel intrinsicContentSize].width / 2 - button.imageView.width;
     CGFloat imageInset = button.imageView.width;
+    CGFloat titleInset = [button.titleLabel intrinsicContentSize].width / 2 - imageInset;
     
-    button.titleEdgeInsets = UIEdgeInsetsMake(0, labelInset, 0, 0);
-    button.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, imageInset);
+    button.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -titleInset);
+    button.imageEdgeInsets = UIEdgeInsetsMake(0, -imageInset, 0, 0);
     
     return button;
 }
@@ -96,7 +97,7 @@
 #pragma mark - Events
 
 - (void)respondsToCheckContact:(UIButton *)sender {
-    
+    NSLog(@"%@", NSStringFromSelector(_cmd));
 }
 
 

@@ -15,17 +15,26 @@
 
 @interface PGCProjectInfoDetailViewController () <UICollectionViewDataSource>
 
+/**
+ 集合视图
+ */
 @property (strong, nonatomic) UICollectionView *collectionView;
-
-//当前选中按钮
+/**
+ 当前选中按钮
+ */
 @property (strong, nonatomic) UIButton *previousBtn;
-//存放按钮的数组
+/**
+ 存放按钮的数组
+ */
 @property (strong, nonatomic) NSMutableArray *segmentBtns;
-//项目名称背景视图
+/**
+ 项目名称背景视图
+ */
 @property (strong, nonatomic) UIView *projectTitleView;
-
-
-- (void)initializeUserInterface; /** 初始化用户界面 */
+/**
+ 初始化用户界面
+ */
+- (void)initializeUserInterface;
 
 @end
 
@@ -85,12 +94,13 @@
 }
 
 - (UIButton *)collectBarItem {
-    UIButton *button = [[UIButton alloc] init];
-    button.bounds = CGRectMake(0, 0, 100, 36);
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+    button.bounds = CGRectMake(0, 0, 90, 40);
     [button setImage:[UIImage imageNamed:@"heart"] forState:UIControlStateNormal];
     [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
     [button setTitle:@"收藏此项目" forState:UIControlStateNormal];
     [button setTitleColor:PGCTextColor forState:UIControlStateNormal];
+    [button setTintColor:PGCTextColor];
     [button addTarget:self action:@selector(respondsToCollect:) forControlEvents:UIControlEventTouchUpInside];
     
     CGFloat labelInset = [button.titleLabel intrinsicContentSize].width - button.imageView.width - button.width;
@@ -127,6 +137,11 @@
     }];
 }
 
+/**
+ 收藏此项目按钮的点击事件
+
+ @param sender
+ */
 - (void)respondsToCollect:(UIBarButtonItem *)sender {
     
 }

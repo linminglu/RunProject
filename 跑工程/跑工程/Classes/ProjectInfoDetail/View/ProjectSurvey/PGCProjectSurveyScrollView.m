@@ -12,11 +12,18 @@
 
 @interface PGCProjectSurveyScrollView () <UITableViewDataSource>
 
-
-@property (strong, nonatomic) NSArray *dataSource;/** 可能用到的设置、材料数据源 */
-
-- (void)initDataSource; /** 初始化数据源 */
-- (void)initUserInterface; /** 初始化用户界面 */
+/**
+ 可能用到的设置、材料数据源
+ */
+@property (strong, nonatomic) NSArray *dataSource;
+/**
+ 初始化数据源
+ */
+- (void)initDataSource;
+/**
+ 初始化用户界面
+ */
+- (void)initUserInterface;
 
 @end
 
@@ -37,7 +44,10 @@
 #pragma mark - Init method
 
 - (void)initDataSource {
-    _dataSource = @[@"1、绿化设施相关的设备以及材料。", @"2、消防设施，安全防范电线电缆等设备材料", @"3、消防设施，安全防范电线电缆等设备材料", @"4、消防设施，安全防范电线电缆等设备材料"];
+    _dataSource = @[@"1、绿化设施相关的设备以及材料。",
+                    @"2、消防设施，安全防范电线电缆等设备材料",
+                    @"3、消防设施，安全防范电线电缆等设备材料",
+                    @"4、消防设施，安全防范电线电缆等设备材料"];
 }
 
 // 子控件布局
@@ -131,9 +141,6 @@
     [scrollView setupAutoContentSizeWithBottomView:otherTableView bottomMargin:10];
 }
 
-- (void)setupOtherSubviews {
-    
-}
 
 /* 自定义创建标签方法 */
 - (void)setLabelWithSuperView:(UIView *)superView index:(NSInteger)index title:(NSString *)title content:(NSString *)content {

@@ -8,4 +8,5 @@ target '跑工程' do
     pod 'Masonry'
     pod 'MJRefresh'
     pod 'MBProgressHUD'
+    pod 'IQKeyboardManager'
 end

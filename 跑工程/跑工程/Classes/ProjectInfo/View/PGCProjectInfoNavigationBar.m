@@ -11,7 +11,6 @@
 #define ITEM_WIDTH 50
 #define PADDING 5
 
-// PGCProjectInfoBarItem
 @implementation PGCProjectInfoBarItem
 
 - (instancetype)initWithImage:(UIImage *)image title:(NSString *)title {
@@ -41,7 +40,7 @@
     [self addSubview:label];
     label.textColor = [UIColor whiteColor];
     label.textAlignment = NSTextAlignmentCenter;
-    label.font = SetFont(10);
+    label.font = SetFont(11);
     label.sd_layout
     .leftSpaceToView(self, 0)
     .rightSpaceToView(self, 0)
@@ -55,8 +54,9 @@
 
 
 @interface PGCProjectInfoNavigationBar ()
-
-// 地图模式
+/**
+ 地图模式
+ */
 @property (strong, nonatomic) UIView *mapModeView;
 
 

@@ -37,9 +37,12 @@
     return self;
 }
 
+/**
+ 支付成功子视图布局
+ */
 - (void)setupSubviewsWithSuccessPay {
     self.bounds = CGRectMake(0, 0, SCREEN_WIDTH * 0.4, SCREEN_WIDTH * 0.4);
-    self.center = CGPointMake(PGCKeyWindow.centerX, PGCKeyWindow.centerY - 25);
+    self.center = CGPointMake(KeyWindow.centerX, KeyWindow.centerY - 25);
     self.backgroundColor = RGB(244, 244, 244);
     
     CGFloat width = self.bounds.size.width;
@@ -58,6 +61,9 @@
     [self addSubview:label];
 }
 
+/**
+ 三方支付按钮子视图布局
+ */
 - (void)setupSubviews {
     self.frame = CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_WIDTH / 2);
     self.backgroundColor = [UIColor whiteColor];
@@ -181,8 +187,8 @@
 
 - (void)showPayView {
     [UIView animateWithDuration:0.25f animations:^{
-        [PGCKeyWindow addSubview:self.backView];
-        [PGCKeyWindow addSubview:self];
+        [KeyWindow addSubview:self.backView];
+        [KeyWindow addSubview:self];
         
         self.backView.alpha = 0.7;
         self.frame = CGRectMake(0, SCREEN_HEIGHT - SCREEN_WIDTH / 2, SCREEN_WIDTH, SCREEN_WIDTH / 2);
@@ -191,8 +197,8 @@
 
 - (void)showPayViewWithGCD {
     [UIView animateWithDuration:0.25f animations:^{
-        [PGCKeyWindow addSubview:self.backView];
-        [PGCKeyWindow addSubview:self];
+        [KeyWindow addSubview:self.backView];
+        [KeyWindow addSubview:self];
         
         self.backView.alpha = 0.7;
     }];

@@ -10,14 +10,16 @@
 #define PGCDefineHeader_h
 
 
-#define PGCKeyWindow [UIApplication sharedApplication].keyWindow
+#define KeyWindow [UIApplication sharedApplication].keyWindow
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds
 
-//屏幕高度
+#define SCREEN_SIZE [UIScreen mainScreen].bounds.size
+
 #define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
-//屏幕宽度
+
 #define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
+
 //状态栏高度
 #define STATUS_BAR_HEIGHT 20
 //NavBar高度

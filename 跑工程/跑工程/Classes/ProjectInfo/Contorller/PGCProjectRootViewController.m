@@ -9,9 +9,7 @@
 #import "PGCProjectRootViewController.h"
 #import "JCAlertView.h"
 
-static NSString *const kUITableViewCell = @"UITableViewCell";
-
-@interface PGCProjectRootViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface PGCProjectRootViewController ()
 
 @property (strong, nonatomic) UIView *bottomView;
 
@@ -35,17 +33,16 @@ static NSString *const kUITableViewCell = @"UITableViewCell";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:[self barButtonItem]];
     
     [self.view addSubview:self.tableView];
-
-    
 }
 
 - (UIButton *)barButtonItem {
-    UIButton *button = [[UIButton alloc] init];
-    button.bounds = CGRectMake(0, 0, 60, 40);
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+    button.bounds = CGRectMake(0, 0, 55, 40);
     [button setImage:[UIImage imageNamed:@"编辑"] forState:UIControlStateNormal];
-    [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
+    [button.titleLabel setFont:[UIFont systemFontOfSize:15]];
     [button setTitle:@"编辑" forState:UIControlStateNormal];
     [button setTitleColor:PGCTextColor forState:UIControlStateNormal];
+    [button setTintColor:PGCTextColor];
     [button addTarget:self action:@selector(respondsToEdit:) forControlEvents:UIControlEventTouchUpInside];
     
     CGFloat labelInset = [button.titleLabel intrinsicContentSize].width - button.imageView.width - button.width;
@@ -70,11 +67,14 @@ static NSString *const kUITableViewCell = @"UITableViewCell";
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+    
     return self.dataSources.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kUITableViewCell forIndexPath:indexPath];    
+    PGCProjectInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:kProjectInfoCell];
+    
     return cell;
 }
 
@@ -82,7 +82,7 @@ static NSString *const kUITableViewCell = @"UITableViewCell";
 #pragma mark - UITableViewDelegate
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 120;
+    return [tableView cellHeightForIndexPath:indexPath model:nil keyPath:nil cellClass:[PGCProjectInfoCell class] contentViewWidth:SCREEN_WIDTH];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -92,7 +92,6 @@ static NSString *const kUITableViewCell = @"UITableViewCell";
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
     return UITableViewCellEditingStyleDelete;
 }
-
 
 #pragma mark - UIButton Events
 - (void)respondsToDelete:(UIButton *)sender {
@@ -142,9 +141,10 @@ static NSString *const kUITableViewCell = @"UITableViewCell";
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, STATUS_AND_NAVIGATION_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - STATUS_AND_NAVIGATION_HEIGHT) style:UITableViewStylePlain];
         _tableView.allowsMultipleSelectionDuringEditing = true;
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.dataSource = self;
         _tableView.delegate = self;
-        [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kUITableViewCell];
+        [_tableView registerClass:[PGCProjectInfoCell class] forCellReuseIdentifier:kProjectInfoCell];
     }
     return _tableView;
 }

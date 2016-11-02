@@ -12,7 +12,6 @@
 @protocol PGCHintAlertViewDelegate <NSObject>
 
 @optional
-
 /**
  确定按钮代理方法
 
@@ -27,7 +26,6 @@
 @interface PGCHintAlertView : UIView
 
 @property (weak, nonatomic) id <PGCHintAlertViewDelegate> delegate;
-
 /**
  初始化判断alert view
 
@@ -35,7 +33,6 @@
  @return
  */
 - (instancetype)initWithTitle:(NSString *)title;
-
 /**
  初始化判断alert view
 
@@ -43,7 +40,6 @@
  @return
  */
 - (instancetype)initWithContent:(NSString *)content;
-
 /**
  显示alert view 
  */

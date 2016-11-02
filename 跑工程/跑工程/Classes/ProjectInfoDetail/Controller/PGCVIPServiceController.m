@@ -11,10 +11,18 @@
 
 @interface PGCVIPServiceController () <UITableViewDataSource, PGCPayViewDelegate>
 
+/**
+ 表格视图数据源
+ */
 @property (copy, nonatomic) NSArray *dataSource;
-
-- (void)initializeDataSource; /** 初始化数据源 */
-- (void)initializeUserInterface; /** 初始化用户界面 */
+/**
+ 初始化数据源
+ */
+- (void)initializeDataSource;
+/**
+ 初始化用户界面
+ */
+- (void)initializeUserInterface;
 
 @end
 

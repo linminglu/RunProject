@@ -12,7 +12,6 @@
 @protocol PGCProjectContactCellDelegate <NSObject>
 
 @optional
-
 /**
  点击手机的协议方法
 
@@ -21,7 +20,6 @@
  */
 - (void)projectContactCell:(PGCProjectContactCell *)projectContactCell
                   phone:(id)phone;
-
 /**
  点击地址的协议方法
 
