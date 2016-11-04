@@ -14,9 +14,10 @@
 
 @implementation PGCProjectDetailTagView
 
-- (instancetype)initWithFrame:(CGRect)frame title:(NSString *)title
+
+- (instancetype)initWithTitle:(NSString *)title
 {
-    self = [super initWithFrame:frame];
+    self = [super init];
     if (self) {
         self.backgroundColor = RGB(240, 240, 240);
         
@@ -39,6 +40,7 @@
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.text = title;
     titleLabel.textColor = [UIColor darkGrayColor];
+    titleLabel.font = SetFont(16);
     [self addSubview:titleLabel];
     // 开始自动布局
     titleLabel.sd_layout

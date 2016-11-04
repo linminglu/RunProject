@@ -82,8 +82,8 @@
     
     // 3.badgeView
     // 3.badgeView
-    self.badgeView.x = self.width - self.badgeView.width - 10;
-    self.badgeView.y = 0;
+    self.badgeView.left = self.width - self.badgeView.width - 10;
+    self.badgeView.top = 0;
 }
 
 

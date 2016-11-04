@@ -93,25 +93,6 @@
     .autoHeightRatio(0);
 }
 
-- (UIButton *)collectBarItem {
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
-    button.bounds = CGRectMake(0, 0, 90, 40);
-    [button setImage:[UIImage imageNamed:@"heart"] forState:UIControlStateNormal];
-    [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
-    [button setTitle:@"收藏此项目" forState:UIControlStateNormal];
-    [button setTitleColor:PGCTextColor forState:UIControlStateNormal];
-    [button setTintColor:PGCTextColor];
-    [button addTarget:self action:@selector(respondsToCollect:) forControlEvents:UIControlEventTouchUpInside];
-    
-    CGFloat labelInset = [button.titleLabel intrinsicContentSize].width - button.imageView.width - button.width;
-    CGFloat imageInset = button.imageView.width - button.width - button.titleLabel.width;
-    
-    button.titleEdgeInsets = UIEdgeInsetsMake(0, labelInset, 0, 0);
-    button.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, imageInset);
-    
-    return button;
-}
-
 #pragma mark - Events
 
 - (void)respondsToSegmentButton:(UIButton *)sender {
@@ -142,8 +123,10 @@
 
  @param sender
  */
-- (void)respondsToCollect:(UIBarButtonItem *)sender {
-    
+- (void)respondsToCollect:(UIButton *)sender {
+    static BOOL select = false;
+    select = !select;
+    [sender setTitle:select ? @"取消收藏":@"收藏此项目" forState:UIControlStateNormal];
 }
 
 
@@ -195,5 +178,29 @@
     }
     return _collectionView;
 }
+
+
+
+#pragma mark - Other
+
+- (UIButton *)collectBarItem {
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+    button.bounds = CGRectMake(0, 0, 90, 40);
+    [button setImage:[UIImage imageNamed:@"heart"] forState:UIControlStateNormal];
+    [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
+    [button setTitle:@"收藏此项目" forState:UIControlStateNormal];
+    [button setTitleColor:PGCTextColor forState:UIControlStateNormal];
+    [button setTintColor:PGCTextColor];
+    [button addTarget:self action:@selector(respondsToCollect:) forControlEvents:UIControlEventTouchUpInside];
+    
+    CGFloat labelInset = [button.titleLabel intrinsicContentSize].width - button.imageView.width - button.width;
+    CGFloat imageInset = button.imageView.width - button.width - button.titleLabel.width;
+    
+    button.titleEdgeInsets = UIEdgeInsetsMake(0, labelInset, 0, 0);
+    button.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, imageInset);
+    
+    return button;
+}
+
 
 @end

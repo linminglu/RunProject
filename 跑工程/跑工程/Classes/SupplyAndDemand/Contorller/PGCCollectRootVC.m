@@ -2,13 +2,22 @@
 //  PGCCollectRootVC.m
 //  跑工程
 //
-//  Created by leco on 2016/11/1.
+//  Created by leco on 2016/11/4.
 //  Copyright © 2016年 Mac. All rights reserved.
 //
 
 #import "PGCCollectRootVC.h"
+#import "PGCNavigationItem.h"
+
+typedef NS_ENUM(NSUInteger, ButtonTag) {
+    ShareBtnTag,
+    HeartBtnTag
+};
 
 @interface PGCCollectRootVC ()
+
+@property (strong, nonatomic) PGCNavigationItem *shareBtn;
+@property (strong, nonatomic) PGCNavigationItem *heartBtn;
 
 @end
 
@@ -20,34 +29,58 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = false;
     
-    [self.view addSubview:self.collectTableView];
+    
+    self.shareBtn = [[PGCNavigationItem alloc] initWithImage:[UIImage imageNamed:@"share"] title:@"分享"];
+    self.shareBtn.bounds = CGRectMake(0, 0, 40, 40);
+    self.shareBtn.itemLabel.textColor = PGCTextColor;
+    self.shareBtn.tag = ShareBtnTag;
+    [self.shareBtn addTarget:self action:@selector(respondsToDetailItem:) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.heartBtn = [[PGCNavigationItem alloc] initWithImage:[UIImage imageNamed:@"heart"] title:@"取消收藏"];
+    self.heartBtn.bounds = CGRectMake(0, 0, 60, 40);
+    self.heartBtn.itemLabel.textColor = PGCTextColor;
+    self.heartBtn.tag = HeartBtnTag;
+    [self.heartBtn addTarget:self action:@selector(respondsToDetailItem:) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.navigationItem.rightBarButtonItems = @[[[UIBarButtonItem alloc] initWithCustomView:self.shareBtn],
+                                                [[UIBarButtonItem alloc] initWithCustomView:self.heartBtn]];
 }
 
 
-#pragma mark -  UITableViewDataSource
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 0;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [tableView dequeueReusableCellWithIdentifier:@"cell"];
-}
-
-
-#pragma mark - Getter
-
-- (UITableView *)collectTableView {
-    if (!_collectTableView) {
-        _collectTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, STATUS_AND_NAVIGATION_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - STATUS_AND_NAVIGATION_HEIGHT) style:UITableViewStylePlain];
-        _collectTableView.backgroundColor = RGB(244, 244, 244);
-        _collectTableView.allowsMultipleSelectionDuringEditing = true;
-        _collectTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        _collectTableView.dataSource = self;
-        _collectTableView.delegate = self;
-        [_collectTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+#pragma mark - Events
+/**
+ 导航栏右边按钮点击事件
+ */
+- (void)respondsToDetailItem:(PGCNavigationItem *)sender {
+    static BOOL selected = true;
+    
+    if (sender.tag == HeartBtnTag) {
+        
+        selected = !selected;
+        
+        [self showCollectHUDWith:self.view title:selected ? @"收藏成功!":@"取消收藏成功!"];
+        
+        self.heartBtn.itemLabel.text = selected ? @"取消收藏":@"收藏";
+        
+    } else {
+        PGCSupplyAndDemandShareView *shareView = [[PGCSupplyAndDemandShareView alloc] init];
+        shareView.delegate = self;
+        [shareView showShareView];
     }
-    return _collectTableView;
 }
+
+
+
+#pragma mark - Public
+
+- (void)showCollectHUDWith:(UIView *)view title:(NSString *)title {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:true];
+    hud.animationType = MBProgressHUDAnimationFade;
+    hud.mode = MBProgressHUDModeText;
+    hud.label.text = title;
+    
+    [hud hideAnimated:true afterDelay:1.5f];
+}
+
 
 @end

@@ -9,6 +9,7 @@
 #import "PGCDemandIntroduceVC.h"
 #import "PGCSupplyAndDemandCell.h"
 #import "PGCRemandIntroduceDetailVC.h"
+#import "PGCDemandIntroduceInfoVC.h"
 
 @interface PGCDemandIntroduceVC ()
 
@@ -31,11 +32,11 @@
 }
 
 - (void)initializeUserInterface {
-    self.navigationItem.title = @"我的需求发布";
+    self.navigationItem.title = @"我的发布";
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:[self barButtonItem]];
     
-    [self.introduceTableView registerClass:[PGCSupplyAndDemandCell class] forCellReuseIdentifier:kSupplyAndDemandCell];
+    [self.rootTableView registerClass:[PGCSupplyAndDemandCell class] forCellReuseIdentifier:kSupplyAndDemandCell];
 }
 
 - (UIButton *)barButtonItem {
@@ -57,7 +58,7 @@
 #pragma mark - Events
 
 - (void)respondsToIntroduceInfo:(UIBarButtonItem *)sender {
-    
+    [self.navigationController pushViewController:[PGCDemandIntroduceInfoVC new] animated:true];
 }
 
 #pragma mark - UITableViewDataSource

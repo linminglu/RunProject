@@ -7,16 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PGCSupplyAndDemandShareView.h"
 
-@interface PGCSupplyAndDemandDetailVC : UIViewController
-/**
- 需求和供应详情界面标题
- */
-@property (copy, nonatomic) NSString *detailVCTitle;
+@interface PGCSupplyAndDemandDetailVC : UIViewController <PGCSupplyAndDemandShareViewDelegate>
 
 /**
- 需求和供应的模型
+ 弹出框
+
+ @param view
+ @param title
  */
-@property (strong, nonatomic) id detailModel;
+- (void)showDetailHUDWith:(UIView *)view title:(NSString *)title;
 
 @end

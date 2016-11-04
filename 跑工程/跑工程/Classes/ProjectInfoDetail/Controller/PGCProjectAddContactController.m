@@ -121,7 +121,7 @@
         
         return cell;
     }
-    return nil;
+    return [UITableViewCell new];
 }
 
 
@@ -135,7 +135,9 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    PGCProjectDetailTagView *tagView = [[PGCProjectDetailTagView alloc] initWithFrame:CGRectMake(0, 0, tableView.width, 40) title:_headerTitles[section]];
+    PGCProjectDetailTagView *tagView = [[PGCProjectDetailTagView alloc] initWithTitle:_headerTitles[section]];
+    tableView.frame = CGRectMake(0, 0, tableView.width, 40);
+    
     return tagView;
 }
 
@@ -188,6 +190,7 @@
 
 - (UIButton *)makeButton {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.backgroundColor = [UIColor whiteColor];
     [button setImage:[UIImage imageNamed:@"加号"] forState:UIControlStateNormal];
     [button.titleLabel setFont:SetFont(14)];
     [button setTitle:@"添加其他的联系方式" forState:UIControlStateNormal];

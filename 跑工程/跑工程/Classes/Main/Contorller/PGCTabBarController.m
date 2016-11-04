@@ -10,6 +10,7 @@
 #import "PGCTabBar.h"
 #import "PGCTabBarButton.h"
 #import "PGCNavigationController.h"
+#import "UIImage+Image.h"
 // rootViewController
 #import "PGCProjectInfoController.h"
 #import "PGCSupplyAndDemandController.h"
@@ -19,11 +20,6 @@
 @interface PGCTabBarController ()<PGCTabBarDelegate>
 
 @property (nonatomic, strong) NSMutableArray *items;
-
-@property (nonatomic, strong) PGCProjectInfoController *projectInfoController;
-@property (nonatomic, strong) PGCSupplyAndDemandController *supplyAndDemandController;
-@property (nonatomic, strong) PGCContactsController *contactsController;
-@property (nonatomic, strong) PGCProfileController *profileController;
 
 @property (strong, nonatomic) PGCTabBar *pGCTabBar;
 
@@ -114,23 +110,18 @@
     // 工程信息
     PGCProjectInfoController *projectInfoController = [[PGCProjectInfoController alloc] init];
     [self setUpOneChildViewController:projectInfoController image:[UIImage imageNamed:@"项目nor"] selectedImage:[UIImage imageWithOriginalName:@"项目down"] title:@"工程信息"];
-    _projectInfoController = projectInfoController;
     
     // 供与需
     PGCSupplyAndDemandController *supplyAndDemandController = [[PGCSupplyAndDemandController alloc] init];
     [self setUpOneChildViewController:supplyAndDemandController image:[UIImage imageNamed:@"找供需nor"] selectedImage:[UIImage imageWithOriginalName:@"找供需down"] title:@"找供需"];
-    _supplyAndDemandController = supplyAndDemandController;
     
     // 联系人
     PGCContactsController *contactsController = [[PGCContactsController alloc] init];
     [self setUpOneChildViewController:contactsController image:[UIImage imageNamed:@"通讯录nor"] selectedImage:[UIImage imageWithOriginalName:@"通讯录down"] title:@"通讯录"];
-    _contactsController =contactsController;
     
     // 我
     PGCProfileController *profileController = [[PGCProfileController alloc] init];
     [self setUpOneChildViewController:profileController image:[UIImage imageNamed:@"我nor"] selectedImage:[UIImage imageWithOriginalName:@"我down"] title:@"我"];
-    _profileController = profileController;
-    
 }
 
 // navigationItem决定导航条上的内容
@@ -139,13 +130,6 @@
 #pragma mark - 添加一个子控制器
 
 - (void)setUpOneChildViewController:(UIViewController *)vc image:(UIImage *)image selectedImage:(UIImage *)selectedImage title:(NSString *)title {
-    /***
-    // navigationItem模型
-    vc.navigationItem.title = title;
-
-    // 设置子控件对应tabBarItem的模型属性
-    vc.tabBarItem.title = title;
-     ***/
     
     vc.title = title;
     vc.tabBarItem.image = image;

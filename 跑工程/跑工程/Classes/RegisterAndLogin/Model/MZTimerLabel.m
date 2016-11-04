@@ -300,9 +300,12 @@
 
 
 -(void)updateLabel{
-
-    NSTimeInterval timeDiff = [[NSDate date] timeIntervalSinceDate:startCountDate];
-    NSDate *timeToShow = [NSDate date];
+    NSDate *date = [NSDate date];
+    
+    NSTimeInterval timeDiff = [date timeIntervalSinceDate:startCountDate];
+    
+    NSDate *timeToShow = date;
+    
     BOOL timerEnded = false;
     
     /***MZTimerLabelTypeStopWatch Logic***/

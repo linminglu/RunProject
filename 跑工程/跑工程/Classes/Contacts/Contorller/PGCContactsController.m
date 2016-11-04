@@ -212,7 +212,7 @@
 #pragma mark - Touches
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [self.tableView endEditing:true];
+    [self.view endEditing:true];
 }
 
 @end

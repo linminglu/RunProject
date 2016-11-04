@@ -7,51 +7,10 @@
 //
 
 #import "PGCProjectInfoNavigationBar.h"
+#import "PGCNavigationItem.h"
 
 #define ITEM_WIDTH 50
 #define PADDING 5
-
-@implementation PGCProjectInfoBarItem
-
-- (instancetype)initWithImage:(UIImage *)image title:(NSString *)title {
-    self = [super init];
-    if (self) {
-        
-        [self setupSubviewsWithImage:image text:title];
-    }
-    return self;
-}
-
-- (void)setupSubviewsWithImage:(UIImage *)image text:(NSString *)text {
-    UIImageView *imageView = [[UIImageView alloc] init];
-    imageView.image = image;
-    [self addSubview:imageView];
-    CGSize imageSize = image.size;
-    imageView.sd_layout
-    .centerXEqualToView(self)
-    .topSpaceToView(self, 6)
-    .widthIs(imageSize.width)
-    .heightIs(imageSize.height);
-    
-    self.barItemImage = imageView;
-    
-    UILabel *label = [[UILabel alloc] init];
-    label.text = text;
-    [self addSubview:label];
-    label.textColor = [UIColor whiteColor];
-    label.textAlignment = NSTextAlignmentCenter;
-    label.font = SetFont(11);
-    label.sd_layout
-    .leftSpaceToView(self, 0)
-    .rightSpaceToView(self, 0)
-    .topSpaceToView(imageView, 5)
-    .autoHeightRatio(0);
-    
-    self.barItemLabel = label;
-}
-
-@end
-
 
 @interface PGCProjectInfoNavigationBar ()
 /**
@@ -66,9 +25,9 @@
 
 @implementation PGCProjectInfoNavigationBar
 
-- (instancetype)initWithFrame:(CGRect)frame
+- (instancetype)init
 {
-    self = [super initWithFrame:frame];
+    self = [super init];
     if (self) {
         
         [self initUserInterface];
@@ -78,8 +37,9 @@
 
 - (void)initUserInterface {
     self.backgroundColor = PGCThemeColor;
+    self.frame = CGRectMake(0, 0, SCREEN_WIDTH, STATUS_AND_NAVIGATION_HEIGHT);
     
-    PGCProjectInfoBarItem *mapBarItem = [[PGCProjectInfoBarItem alloc] initWithImage:[UIImage imageNamed:@"地图"] title:@"地图模式"];
+    PGCNavigationItem *mapBarItem = [[PGCNavigationItem alloc] initWithImage:[UIImage imageNamed:@"地图"] title:@"地图模式"];
     [self addSubview:mapBarItem];
     mapBarItem.tag = mapItemTag;
     [mapBarItem addTarget:self action:@selector(respondsToNavigationItemEvent:) forControlEvents:UIControlEventTouchUpInside];
@@ -89,7 +49,7 @@
     .bottomSpaceToView(self, 0)
     .widthIs(ITEM_WIDTH);
     
-    PGCProjectInfoBarItem *searchItem = [[PGCProjectInfoBarItem alloc] initWithImage:[UIImage imageNamed:@"项目搜索"] title:@"搜索"];
+    PGCNavigationItem *searchItem = [[PGCNavigationItem alloc] initWithImage:[UIImage imageNamed:@"项目搜索"] title:@"搜索"];
     [self addSubview:searchItem];
     searchItem.tag = searchItemTag;
     [searchItem addTarget:self action:@selector(respondsToNavigationItemEvent:) forControlEvents:UIControlEventTouchUpInside];
@@ -99,7 +59,7 @@
     .bottomSpaceToView(self, 0)
     .widthIs(ITEM_WIDTH);
     
-    PGCProjectInfoBarItem *collectItem = [[PGCProjectInfoBarItem alloc] initWithImage:[UIImage imageNamed:@"我的收藏"] title:@"我的收藏"];
+    PGCNavigationItem *collectItem = [[PGCNavigationItem alloc] initWithImage:[UIImage imageNamed:@"我的收藏"] title:@"我的收藏"];
     [self addSubview:collectItem];
     collectItem.tag = collectItemTag;
     [collectItem addTarget:self action:@selector(respondsToNavigationItemEvent:) forControlEvents:UIControlEventTouchUpInside];
@@ -109,7 +69,7 @@
     .bottomSpaceToView(self, 0)
     .widthIs(ITEM_WIDTH);
     
-    PGCProjectInfoBarItem *checkRecordItem = [[PGCProjectInfoBarItem alloc] initWithImage:[UIImage imageNamed:@"查看记录"] title:@"查看记录"];
+    PGCNavigationItem *checkRecordItem = [[PGCNavigationItem alloc] initWithImage:[UIImage imageNamed:@"查看记录"] title:@"查看记录"];
     [self addSubview:checkRecordItem];
     checkRecordItem.tag = recordItemTag;
     [checkRecordItem addTarget:self action:@selector(respondsToNavigationItemEvent:) forControlEvents:UIControlEventTouchUpInside];
@@ -120,7 +80,7 @@
     .widthIs(ITEM_WIDTH);
 }
 
-- (void)respondsToNavigationItemEvent:(PGCProjectInfoBarItem *)sender {
+- (void)respondsToNavigationItemEvent:(PGCNavigationItem *)sender {
     if (self.delegate && [self.delegate respondsToSelector:@selector(projectInfoNavigationBar:tapItem:)]) {
         [self.delegate projectInfoNavigationBar:self tapItem:sender.tag];
     }

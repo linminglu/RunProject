@@ -9,4 +9,7 @@ target '跑工程' do
     pod 'MJRefresh'
     pod 'MBProgressHUD'
     pod 'IQKeyboardManager'
+    pod 'AMap2DMap'
+    pod 'AMapSearch'
+    pod 'AMapLocation'
 end

@@ -55,10 +55,10 @@
 }
 
 - (void)respondsToEdit:(UIButton *)sender {
-    _isEditing = !_isEditing;
-    self.tableView.editing = _isEditing;
     
-    [self animateBottomView:self.bottomView show:_isEditing complete:^{
+    [self.tableView setEditing:!self.tableView.editing animated:true];
+    
+    [self animateBottomView:self.bottomView show:self.tableView.editing complete:^{
         
     }];
 }
@@ -103,10 +103,8 @@
 }
 
 - (void)respondsToCancel:(UIButton *)sender {
-    _isEditing = false;
-    self.tableView.editing = false;
-    
-    [self animateBottomView:self.bottomView show:_isEditing complete:^{
+    [self.tableView setEditing:false animated:true];
+    [self animateBottomView:self.bottomView show:false complete:^{
         
     }];
 }

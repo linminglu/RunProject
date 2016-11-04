@@ -6,8 +6,8 @@
 //  Copyright © 2016年 Mac. All rights reserved.
 //
 
-#import "PGCIntroduceRootVC.h"
+#import "PGCSupplyAndDemandRootVC.h"
 
-@interface PGCDemandIntroduceVC : PGCIntroduceRootVC
+@interface PGCDemandIntroduceVC : PGCSupplyAndDemandRootVC
 
 @end

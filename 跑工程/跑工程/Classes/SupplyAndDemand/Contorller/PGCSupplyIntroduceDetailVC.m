@@ -8,6 +8,7 @@
 
 #import "PGCSupplyIntroduceDetailVC.h"
 
+
 @interface PGCSupplyIntroduceDetailVC ()
 
 - (void)initializeDataSource; /** 初始化数据源 */
@@ -29,7 +30,7 @@
 }
 
 - (void)initializeUserInterface {
-    self.navigationItem.title = @"供应发布详情";
+    self.navigationItem.title = @"供应信息";
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = false;
     

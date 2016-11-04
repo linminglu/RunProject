@@ -6,8 +6,8 @@
 //  Copyright © 2016年 Mac. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "PGCCollectRootVC.h"
 
-@interface PGCSupplyCollectDetailVC : UIViewController
+@interface PGCSupplyCollectDetailVC : PGCCollectRootVC
 
 @end

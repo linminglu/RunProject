@@ -65,7 +65,7 @@
     self.contentLabel = [[UILabel alloc] init];
     self.contentLabel.font = [UIFont systemFontOfSize:14];
     self.contentLabel.textColor = RGB(102, 102, 102);
-    self.contentLabel.text = @"需求和供应信息的标题，需求和供应信息的内容；需求和供应信息的标题，需求和供应信息的内容；需求和供应信息的标题，需求和供应信息的内容；需求和供应信息的标题，需求和供应信息的内容；需求和供应信息的标题，需求和供应信息的内容。";
+    self.contentLabel.text = @"需求和供应信息的标题，需求和供应信息的内容；需求和供应信息的标题，需求和供应信息的内容；需求和供应信息的标题，需求和供应信息的内容；需求和供应信息的标题。";
     self.contentLabel.numberOfLines = 0;
     [self.contentView addSubview:self.contentLabel];
     
