@@ -8,6 +8,7 @@
 
 #import "PGCProjectAddContactController.h"
 #import "PGCAddContactTableCell.h"
+#import "PGCAddContactRemarkCell.h"
 #import "PGCProjectDetailTagView.h"
 #import "PGCHintAlertView.h"
 
@@ -24,6 +25,10 @@
  文本输入框的提示语
  */
 @property (copy, nonatomic) NSArray *placeholders;
+/**
+ 联系人名字标签
+ */
+@property (strong, nonatomic) UILabel *nameLabel;
 /**
  表格视图
  */
@@ -53,11 +58,11 @@
     
     _dataSource = @[@[@"电   话：", @"传   真：", @"座   机：", @"邮   箱："],
                     @[@"职   位：", @"公   司：", @"地   址："],
-                    @[@""]];
+                    @[@"备注"]];
     
     _placeholders = @[@[@"请输入电话", @"请输入传真", @"请输入座机", @"请输入邮箱"],
                       @[@"未填写", @"未填写", @"未填写"],
-                      @[@""]];
+                      @[@"请输入备注"]];
 }
 
 - (void)initializeUserInterface {
@@ -65,27 +70,28 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleDone target:self action:@selector(respondsToBarItemSave:)];
     
-    UILabel *nameLabel = [[UILabel alloc] init];
-    nameLabel.textColor = PGCTextColor;
-    nameLabel.font = SetFont(16);
-    nameLabel.text = @"姓名：夏先生";
-    [self.view addSubview:nameLabel];
-    nameLabel.sd_layout
+    self.nameLabel = [[UILabel alloc] init];
+    self.nameLabel.textColor = PGCTextColor;
+    self.nameLabel.font = SetFont(16);
+    self.nameLabel.text = @"姓名：夏先生";
+    [self.view addSubview:self.nameLabel];
+    self.nameLabel.sd_layout
     .topSpaceToView(self.view, STATUS_AND_NAVIGATION_HEIGHT)
     .leftSpaceToView(self.view, 15)
     .rightSpaceToView(self.view, 15)
     .heightIs(50);
     
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-    tableView.backgroundColor = [UIColor whiteColor];
-    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    tableView.showsVerticalScrollIndicator = false;
-    tableView.dataSource = self;
-    tableView.delegate = self;
-    [self.view addSubview:tableView];
-    self.tableView = tableView;
-    tableView.sd_layout
-    .topSpaceToView(nameLabel, 0)
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    self.tableView.backgroundColor = [UIColor whiteColor];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.showsVerticalScrollIndicator = false;
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    [self.tableView registerClass:[PGCAddContactTableCell class] forCellReuseIdentifier:kAddContactTableCell];
+    [self.tableView registerClass:[PGCAddContactRemarkCell class] forCellReuseIdentifier:kAddContactRemarkCell];
+    [self.view addSubview:self.tableView];
+    self.tableView.sd_layout
+    .topSpaceToView(self.nameLabel, 0)
     .leftSpaceToView(self.view, 0)
     .rightSpaceToView(self.view, 0)
     .bottomSpaceToView(self.view, 0);
@@ -103,11 +109,10 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     if (indexPath.section < 2) {
         PGCAddContactTableCell *cell = [tableView dequeueReusableCellWithIdentifier:kAddContactTableCell];
-        if (!cell) {
-            cell = [[PGCAddContactTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kAddContactTableCell];
-        }
+        
         cell.addContactTitle.text = _dataSource[indexPath.section][indexPath.row];
         cell.addContactTF.placeholder = _placeholders[indexPath.section][indexPath.row];
         
@@ -115,10 +120,6 @@
     }
     else if (indexPath.section == 2) {
         PGCAddContactRemarkCell *cell = [tableView dequeueReusableCellWithIdentifier:kAddContactRemarkCell];
-        if (!cell) {
-            cell = [[PGCAddContactRemarkCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kAddContactRemarkCell];
-        }
-        
         return cell;
     }
     return [UITableViewCell new];
@@ -136,14 +137,38 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     PGCProjectDetailTagView *tagView = [[PGCProjectDetailTagView alloc] initWithTitle:_headerTitles[section]];
-    tableView.frame = CGRectMake(0, 0, tableView.width, 40);
+    tagView.frame = CGRectMake(0, 0, tableView.width, 40);
     
     return tagView;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    UIView *footerView = [[UIView alloc] init];
+    footerView.frame = CGRectMake(0, 0, tableView.width, 40);
+    footerView.backgroundColor = [UIColor whiteColor];
+    
     if (section == 0) {
-        return [self makeButton];
+        UIImage *image = [UIImage imageNamed:@"加号"];
+        NSString *title = @"添加其他的联系方式";
+        CGSize titleSize = [title sizeWithFont:SetFont(14) constrainedToSize:CGSizeMake(MAXFLOAT, 0)];
+        
+        UIButton *checkMoreContactBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [checkMoreContactBtn setImage:image forState:UIControlStateNormal];
+        [checkMoreContactBtn.titleLabel setFont:SetFont(14)];
+        [checkMoreContactBtn setTitle:title forState:UIControlStateNormal];
+        [checkMoreContactBtn setTitleColor:PGCTintColor forState:UIControlStateNormal];
+        [checkMoreContactBtn addTarget:self action:@selector(respondsToAddOtherContact:) forControlEvents:UIControlEventTouchUpInside];
+        [footerView addSubview:checkMoreContactBtn];
+        checkMoreContactBtn.sd_layout
+        .centerXEqualToView(footerView)
+        .centerYEqualToView(footerView)
+        .heightIs(40)
+        .widthIs(image.size.width + titleSize.width + 30);
+        
+        checkMoreContactBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -15);
+        checkMoreContactBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -15, 0, 0);
+        
+        return footerView;
     }
     return nil;
 }
@@ -187,24 +212,6 @@
     }
 }
 
-
-- (UIButton *)makeButton {
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.backgroundColor = [UIColor whiteColor];
-    [button setImage:[UIImage imageNamed:@"加号"] forState:UIControlStateNormal];
-    [button.titleLabel setFont:SetFont(14)];
-    [button setTitle:@"添加其他的联系方式" forState:UIControlStateNormal];
-    [button setTitleColor:PGCTintColor forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(respondsToAddOtherContact:) forControlEvents:UIControlEventTouchUpInside];
-    
-    CGFloat imageInset = button.imageView.width;
-    CGFloat titleInset = [button.titleLabel intrinsicContentSize].width / 2 - imageInset;
-    
-    button.imageEdgeInsets = UIEdgeInsetsMake(0, -imageInset, 0, 0);
-    button.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -titleInset);
-    
-    return button;
-}
 
 
 #pragma mark - Events

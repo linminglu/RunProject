@@ -7,11 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+@class PGCDetailSubviewBottom;
+
+@protocol PGCDetailSubviewBottomDelegate <NSObject>
+
+@optional
+- (void)detailSubviewBottom:(PGCDetailSubviewBottom *)bottom callPhone:(UIButton *)callPhone;
+- (void)detailSubviewBottom:(PGCDetailSubviewBottom *)bottom checkMoreContact:(UIButton *)checkMoreContact;
+
+@end
 
 @interface PGCDetailSubviewBottom : UIView
 
-- (instancetype)initWithModel:(id)model;
+@property (weak, nonatomic) id <PGCDetailSubviewBottomDelegate> delegate;
 
-- (void)addDetailTarget:(id)target action:(SEL)action;
+- (instancetype)initWithModel:(id)model;
 
 @end

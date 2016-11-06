@@ -9,10 +9,9 @@
 #import "PGCDemandDetailVC.h"
 #import "PGCDetailSubviewTop.h"
 #import "PGCDetailSubviewBottom.h"
-#import "PGCProjectDetailTagView.h"
-#import "PGCDetailContactCell.h"
 
-@interface PGCDemandDetailVC ()  <UITableViewDataSource, UITableViewDelegate, PGCDetailContactCellDelegate>
+
+@interface PGCDemandDetailVC ()  < PGCDetailSubviewBottomDelegate>
 /**
  版块0 底部滚动视图
  */
@@ -22,17 +21,9 @@
  */
 @property (strong, nonatomic) PGCDetailSubviewTop *topView;
 /**
- 联系人表格视图
- */
-@property (strong, nonatomic) UITableView *contactTableView;
-/**
  板块视图2
  */
 @property (strong, nonatomic) PGCDetailSubviewBottom *bottomView;
-/**
- 联系人数组
- */
-@property (strong, nonatomic) NSMutableArray *dataSource;
 
 
 - (void)initializeDataSource; /** 初始化数据源 */
@@ -50,8 +41,6 @@
 }
 
 - (void)initializeDataSource {
-    self.dataSource = [NSMutableArray array];
-    [self.dataSource addObject:@{@"name":@"某某", @"phone":@"188-8888-8888"}];
     
 }
 
@@ -79,19 +68,10 @@
     // 版块1
     self.topView = [[PGCDetailSubviewTop alloc] initWithModel:model];
     [self.scrollView addSubview:self.topView];
-    
-    self.contactTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-    self.contactTableView.showsVerticalScrollIndicator = false;
-    self.contactTableView.showsHorizontalScrollIndicator = false;
-    self.contactTableView.bounces = false;
-    self.contactTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.contactTableView.dataSource = self;
-    self.contactTableView.delegate = self;
-    [self.contactTableView registerClass:[PGCDetailContactCell class] forCellReuseIdentifier:kPGCDetailContactCell];
-    [self.scrollView addSubview:self.contactTableView];
 
     // 版块2
     self.bottomView = [[PGCDetailSubviewBottom alloc] initWithModel:nil];
+    self.bottomView.delegate = self;
     [self.scrollView addSubview:self.bottomView];
     
     [self setPlateViewAutoLayout];
@@ -113,17 +93,10 @@
     .leftSpaceToView(self.scrollView, 0)
     .rightSpaceToView(self.scrollView, 0)
     .heightIs(10);// 给定初始高度，后面根据自身子视图计算高度
-
-    // 联系人表格视图布局
-    self.contactTableView.sd_layout
-    .topSpaceToView(self.topView, 0)
-    .leftSpaceToView(self.scrollView, 0)
-    .rightSpaceToView(self.scrollView, 0)
-    .heightIs(40 + 80);
     
     // 第2个版块布局
     self.bottomView.sd_layout
-    .topSpaceToView(self.contactTableView, 0)
+    .topSpaceToView(self.topView, 0)
     .leftSpaceToView(self.scrollView, 0)
     .rightSpaceToView(self.scrollView, 0)
     .heightIs(10);
@@ -132,43 +105,14 @@
 }
 
 
-#pragma mark - UITableViewDataSource
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.dataSource.count;
+#pragma mark - PGCDetailSubviewBottomDelegate
+
+- (void)detailSubviewBottom:(PGCDetailSubviewBottom *)bottom checkMoreContact:(UIButton *)checkMoreContact {
+    NSLog(@"%@", NSStringFromSelector(_cmd));
 }
 
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    PGCDetailContactCell *cell = [tableView dequeueReusableCellWithIdentifier:kPGCDetailContactCell];
-    cell.delegate = self;
-    cell.contactDic = self.dataSource[indexPath.row];
-    
-    return cell;
-}
-
-
-#pragma mark - UITableViewDelegate
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 80;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 40;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    PGCProjectDetailTagView *contact = [[PGCProjectDetailTagView alloc] initWithTitle:@"联系人"];
-    contact.frame = CGRectMake(0, 0, tableView.width, 40);
-    
-    return contact;
-}
-
-
-#pragma mark - PGCDetailContactCellDelegate
-
-- (void)contactCell:(PGCDetailContactCell *)contactCell callBtn:(UIButton *)callBtn {
+- (void)detailSubviewBottom:(PGCDetailSubviewBottom *)bottom callPhone:(UIButton *)callPhone {
     NSLog(@"%@", NSStringFromSelector(_cmd));
 }
 

@@ -11,7 +11,7 @@
 #import "PGCIntroduceDetailBottomView.h"
 #import "PGCAreaAndTypeRootVC.h"
 
-@interface PGCRemandIntroduceDetailVC () <PGCIntroduceDetailTopViewDelegate>
+@interface PGCRemandIntroduceDetailVC () <PGCIntroduceDetailTopViewDelegate, PGCIntroduceDetailBottomViewDelegate>
 /**
  版块0 底部滚动视图
  */
@@ -67,6 +67,7 @@
     
     // 版块2
     self.bottomView = [[PGCIntroduceDetailBottomView alloc] initWithModel:nil];
+    self.bottomView.delegate = self;
     [self.scrollView addSubview:self.bottomView];
     
     
@@ -143,5 +144,25 @@
     
     [self.navigationController pushViewController:vc animated:true];
 }
+
+
+#pragma mark - PGCIntroduceDetailBottomViewDelegate
+
+- (void)introduceDetailBottomView:(PGCIntroduceDetailBottomView *)topView deleteContact:(UIButton *)deleteContact {
+    
+}
+
+- (void)introduceDetailBottomView:(PGCIntroduceDetailBottomView *)topView addContact:(UIButton *)addContact {
+    
+}
+
+- (void)introduceDetailBottomView:(PGCIntroduceDetailBottomView *)topView addImage:(UIButton *)addImage {
+    
+}
+
+- (void)introduceDetailBottomView:(PGCIntroduceDetailBottomView *)topView deleteImage:(UIButton *)deleteImage {
+    
+}
+
 
 @end

@@ -47,7 +47,7 @@
     [button setTitle:@"发布信息" forState:UIControlStateNormal];
     [button setTitleColor:PGCTextColor forState:UIControlStateNormal];
     [button setTintColor:PGCTextColor];
-    [button addTarget:self action:@selector(respondsToIntroduceInfo:) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(introduceDemandInfo:) forControlEvents:UIControlEventTouchUpInside];
     
     button.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 20);
     
@@ -57,7 +57,7 @@
 
 #pragma mark - Events
 
-- (void)respondsToIntroduceInfo:(UIBarButtonItem *)sender {
+- (void)introduceDemandInfo:(UIButton *)sender {
     [self.navigationController pushViewController:[PGCDemandIntroduceInfoVC new] animated:true];
 }
 

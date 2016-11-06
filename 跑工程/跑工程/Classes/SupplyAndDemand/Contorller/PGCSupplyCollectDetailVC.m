@@ -9,10 +9,9 @@
 #import "PGCSupplyCollectDetailVC.h"
 #import "PGCSupplySubviewTop.h"
 #import "PGCDetailSubviewBottom.h"
-#import "PGCProjectDetailTagView.h"
-#import "PGCDetailContactCell.h"
 
-@interface PGCSupplyCollectDetailVC ()  <UITableViewDataSource, UITableViewDelegate, PGCDetailContactCellDelegate>
+
+@interface PGCSupplyCollectDetailVC ()  <PGCDetailSubviewBottomDelegate>
 /**
  版块0 底部滚动视图
  */
@@ -22,17 +21,9 @@
  */
 @property (strong, nonatomic) PGCSupplySubviewTop *topView;
 /**
- 联系人表格视图
- */
-@property (strong, nonatomic) UITableView *contactTableView;
-/**
  板块视图2
  */
 @property (strong, nonatomic) PGCDetailSubviewBottom *bottomView;
-/**
- 联系人数组
- */
-@property (strong, nonatomic) NSMutableArray *dataSource;
 
 - (void)initializeDataSource; /** 初始化数据源 */
 - (void)initializeUserInterface; /** 初始化用户界面 */
@@ -49,8 +40,6 @@
 }
 
 - (void)initializeDataSource {
-    self.dataSource = [NSMutableArray array];
-    [self.dataSource addObject:@{@"name":@"某某", @"phone":@"188-8888-8888"}];
     
 }
 
@@ -77,18 +66,9 @@
     self.topView = [[PGCSupplySubviewTop alloc] initWithModel:model];
     [self.scrollView addSubview:self.topView];
     
-    self.contactTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-    self.contactTableView.showsVerticalScrollIndicator = false;
-    self.contactTableView.showsHorizontalScrollIndicator = false;
-    self.contactTableView.bounces = false;
-    self.contactTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.contactTableView.dataSource = self;
-    self.contactTableView.delegate = self;
-    [self.contactTableView registerClass:[PGCDetailContactCell class] forCellReuseIdentifier:kPGCDetailContactCell];
-    [self.scrollView addSubview:self.contactTableView];
-    
     // 版块2
     self.bottomView = [[PGCDetailSubviewBottom alloc] initWithModel:nil];
+    self.bottomView.delegate = self;
     [self.scrollView addSubview:self.bottomView];
     
     [self setPlateViewAutoLayout];
@@ -112,16 +92,9 @@
     .rightSpaceToView(self.scrollView, 0)
     .heightIs(10);// 给定初始高度，后面根据自身子视图计算高度
     
-    // 联系人表格视图布局
-    self.contactTableView.sd_layout
-    .topSpaceToView(self.topView, 0)
-    .leftSpaceToView(self.scrollView, 0)
-    .rightSpaceToView(self.scrollView, 0)
-    .heightIs(40 + 80);
-    
     // 第2个版块布局
     self.bottomView.sd_layout
-    .topSpaceToView(self.contactTableView, 0)
+    .topSpaceToView(self.topView, 0)
     .leftSpaceToView(self.scrollView, 0)
     .rightSpaceToView(self.scrollView, 0)
     .heightIs(10);
@@ -131,44 +104,14 @@
 }
 
 
-#pragma mark - UITableViewDataSource
+#pragma mark - PGCDetailSubviewBottomDelegate
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.dataSource.count;
-}
-
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    PGCDetailContactCell *cell = [tableView dequeueReusableCellWithIdentifier:kPGCDetailContactCell];
-    cell.delegate = self;
-    cell.contactDic = self.dataSource[indexPath.row];
+- (void)detailSubviewBottom:(PGCDetailSubviewBottom *)bottom checkMoreContact:(UIButton *)checkMoreContact {
     
-    return cell;
 }
 
-
-#pragma mark - UITableViewDelegate
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 80;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 40;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    PGCProjectDetailTagView *contact = [[PGCProjectDetailTagView alloc] initWithTitle:@"联系人"];
-    contact.bounds = CGRectMake(0, 0, tableView.width, 40);
+- (void)detailSubviewBottom:(PGCDetailSubviewBottom *)bottom callPhone:(UIButton *)callPhone {
     
-    return contact;
-}
-
-
-#pragma mark - PGCDetailContactCellDelegate
-
-- (void)contactCell:(PGCDetailContactCell *)contactCell callBtn:(UIButton *)callBtn {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
 }
 
 

@@ -40,6 +40,7 @@
 
 - (void)initializeUI {
     self.view.backgroundColor = [UIColor whiteColor];
+    self.automaticallyAdjustsScrollViewInsets = false;
     
     self.leftTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     self.leftTableView.backgroundColor = [UIColor whiteColor];
@@ -62,7 +63,7 @@
     self.rightTableView.dataSource = self;
     self.rightTableView.delegate = self;
     [self.rightTableView registerClass:[PGCDropRightCell class] forCellReuseIdentifier:kPGCDropRightCell];
-    [self.view addSubview:self.leftTableView];
+    [self.view addSubview:self.rightTableView];
     self.rightTableView.sd_layout
     .rightSpaceToView(self.view, 0)
     .topSpaceToView(self.view, STATUS_AND_NAVIGATION_HEIGHT)
@@ -76,7 +77,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return 6;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -45,7 +45,10 @@
     .heightIs(1);
 }
 
-- (void)setLabelWithSuperView:(UIView *)superView index:(NSInteger)index title:(NSString *)title content:(NSString *)content {
+- (void)setLabelWithSuperView:(UIView *)superView
+                        index:(NSInteger)index
+                        title:(NSString *)title
+                      content:(NSString *)content {
         
     CGSize sizeA = [title sizeWithFont:SetFont(14) constrainedToSize:CGSizeMake(MAXFLOAT, 0)];
     CGSize sizeB = [content sizeWithFont:SetFont(14) constrainedToSize:CGSizeMake(MAXFLOAT, 0)];

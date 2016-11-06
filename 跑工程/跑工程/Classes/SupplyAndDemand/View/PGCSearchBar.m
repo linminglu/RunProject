@@ -14,7 +14,10 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        
         self.font = [UIFont systemFontOfSize:13];
+        self.borderStyle = UITextBorderStyleNone;
+        self.textColor = RGB(102, 102, 102);
         self.placeholder = @"请输入关键字";
         self.background = [UIImage imageNamed:@"搜索框背景"];
         

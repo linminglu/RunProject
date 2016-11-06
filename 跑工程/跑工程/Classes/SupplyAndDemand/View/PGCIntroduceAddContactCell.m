@@ -1,31 +1,30 @@
 //
-//  PGCDetailContactCell.m
+//  PGCIntroduceAddContactCell.m
 //  跑工程
 //
-//  Created by leco on 2016/11/4.
+//  Created by leco on 2016/11/6.
 //  Copyright © 2016年 Mac. All rights reserved.
 //
 
-#import "PGCDetailContactCell.h"
+#import "PGCIntroduceAddContactCell.h"
 
-@interface PGCDetailContactCell ()
+@interface PGCIntroduceAddContactCell ()
 /**
- 姓名标签
+ 姓名输入框
  */
-@property (strong, nonatomic) UILabel *nameLabel;
+@property (strong, nonatomic) UITextField *nameTextField;
 /**
- 电话标签
+ 电话输入框
  */
-@property (strong, nonatomic) UILabel *phoneLabel;
+@property (strong, nonatomic) UITextField *phoneTextField;
 /**
- 打电话按钮
+ 右上角删除按钮
  */
-@property (strong, nonatomic) UIButton *callBtn;
+@property (strong, nonatomic) UIButton *deleteBtn;
 
 @end
 
-@implementation PGCDetailContactCell
-
+@implementation PGCIntroduceAddContactCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -41,25 +40,16 @@
 
 - (void)createUI
 {
-    UIImage *image = [UIImage imageNamed:@"phone-0"];
-    self.callBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.callBtn.backgroundColor = [UIColor clearColor];
-    [self.callBtn setImage:image forState:UIControlStateNormal];
-    [self.contentView addSubview:self.callBtn];
-    self.callBtn.sd_layout
-    .centerYEqualToView(self.contentView)
-    .rightSpaceToView(self.contentView, 30)
+    UIImage *image = [UIImage imageNamed:@"删除"];
+    self.deleteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.deleteBtn.backgroundColor = [UIColor clearColor];
+    [self.deleteBtn setImage:image forState:UIControlStateNormal];
+    [self.contentView addSubview:self.deleteBtn];
+    self.deleteBtn.sd_layout
+    .topSpaceToView(self.contentView, 10)
+    .rightSpaceToView(self.contentView, 15)
     .heightIs(image.size.height)
     .widthIs(image.size.width);
-    
-    UIView *lineH = [[UIView alloc] init];
-    lineH.backgroundColor = PGCTintColor;
-    [self.contentView addSubview:lineH];
-    lineH.sd_layout
-    .centerYEqualToView(self.callBtn)
-    .rightSpaceToView(self.callBtn, 30)
-    .heightRatioToView(self.callBtn, 1.5)
-    .widthIs(1.5);
     
     
     UIView *lineCenter = [[UIView alloc] init];
@@ -68,54 +58,58 @@
     lineCenter.sd_layout
     .centerYEqualToView(self.contentView)
     .leftSpaceToView(self.contentView, 15)
-    .rightSpaceToView(lineH, 20)
+    .rightSpaceToView(self.contentView, 15)
     .heightIs(1);
     
     // 姓名标签
     UILabel *name = [[UILabel alloc] init];
     name.text = @"姓名：";
     name.textColor = RGB(51, 51, 51);
-    name.font = SetFont(15);
+    name.font = SetFont(14);
     [self.contentView addSubview:name];
     name.sd_layout
     .bottomSpaceToView(lineCenter, 10)
     .leftSpaceToView(self.contentView, 15)
-    .widthIs([name.text sizeWithFont:SetFont(15) constrainedToSize:CGSizeMake(MAXFLOAT, 0)].width)
+    .widthIs([name.text sizeWithFont:SetFont(14) constrainedToSize:CGSizeMake(MAXFLOAT, 0)].width)
     .autoHeightRatio(0);
     
     // 姓名内容标签
-    self.nameLabel = [[UILabel alloc] init];
-    self.nameLabel.textColor = RGB(102, 102, 102);
-    self.nameLabel.font = SetFont(15);
-    [self.contentView addSubview:self.nameLabel];
-    self.nameLabel.sd_layout
+    self.nameTextField = [[UITextField alloc] init];
+    self.nameTextField.borderStyle = UITextBorderStyleNone;
+    self.nameTextField.placeholder = @"请输入姓名";
+    self.nameTextField.textColor = RGB(102, 102, 102);
+    self.nameTextField.font = SetFont(14);
+    [self.contentView addSubview:self.nameTextField];
+    self.nameTextField.sd_layout
     .centerYEqualToView(name)
     .leftSpaceToView(name, 10)
-    .rightSpaceToView(lineH, 20)
-    .autoHeightRatio(0);
+    .rightSpaceToView(self.deleteBtn, 20)
+    .heightIs(30);
     
     // 电话标签
     UILabel *phone = [[UILabel alloc] init];
     phone.text = @"电话：";
     phone.textColor = RGB(51, 51, 51);
-    phone.font = SetFont(15);
+    phone.font = SetFont(14);
     [self.contentView addSubview:phone];
     phone.sd_layout
     .topSpaceToView(lineCenter, 10)
     .leftSpaceToView(self.contentView, 15)
-    .widthIs([phone.text sizeWithFont:SetFont(15) constrainedToSize:CGSizeMake(MAXFLOAT, 0)].width)
+    .widthIs([phone.text sizeWithFont:SetFont(14) constrainedToSize:CGSizeMake(MAXFLOAT, 0)].width)
     .autoHeightRatio(0);
     
     // 电话内容标签
-    self.phoneLabel = [[UILabel alloc] init];
-    self.phoneLabel.textColor = RGB(102, 102, 102);
-    self.phoneLabel.font = SetFont(15);
-    [self.contentView addSubview:self.phoneLabel];
-    self.phoneLabel.sd_layout
+    self.phoneTextField = [[UITextField alloc] init];
+    self.phoneTextField.borderStyle = UITextBorderStyleNone;
+    self.phoneTextField.placeholder = @"请输入电话";
+    self.phoneTextField.textColor = RGB(102, 102, 102);
+    self.phoneTextField.font = SetFont(14);
+    [self.contentView addSubview:self.phoneTextField];
+    self.phoneTextField.sd_layout
     .centerYEqualToView(phone)
     .leftSpaceToView(phone, 10)
-    .rightSpaceToView(lineH, 20)
-    .autoHeightRatio(0);
+    .widthRatioToView(self.nameTextField, 1.0)
+    .heightIs(30);
     
     UIView *bottomLine = [[UIView alloc] init];
     bottomLine.backgroundColor = RGB(210, 210, 210);
@@ -130,20 +124,9 @@
 
 #pragma mark - Event
 
-- (void)addTarget:(id)target action:(SEL)action {
-    [self.callBtn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+- (void)addContactTarget:(id)target action:(SEL)action {
+    [self.deleteBtn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
 }
-
-
-#pragma mark - Setter
-
-- (void)setContactDic:(NSDictionary *)contactDic {
-    _contactDic = contactDic;
-    
-    self.nameLabel.text = contactDic[@"name"];
-    self.phoneLabel.text = contactDic[@"phone"];
-}
-
 
 
 - (void)awakeFromNib {

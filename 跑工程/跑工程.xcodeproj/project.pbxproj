@@ -87,7 +87,8 @@
 		8475AE6D1DCC7D31004A15A5 /* PGCAreaAndTypeRootVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8475AE6C1DCC7D31004A15A5 /* PGCAreaAndTypeRootVC.m */; };
 		8475AE701DCC842A004A15A5 /* PGCIntroducePublicView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8475AE6F1DCC842A004A15A5 /* PGCIntroducePublicView.m */; };
 		8475AE731DCC8DA6004A15A5 /* PGCIntroduceSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8475AE721DCC8DA6004A15A5 /* PGCIntroduceSelectView.m */; };
-		8475AE751DCC94BB004A15A5 /* PGCDemandIntroduceInfoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8475AE741DCC94BB004A15A5 /* PGCDemandIntroduceInfoVC.xib */; };
+		849BECEC1DCF27A3007936B0 /* PGCAddContactRemarkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 849BECEB1DCF27A3007936B0 /* PGCAddContactRemarkCell.m */; };
+		849BECF01DCF44F3007936B0 /* PGCIntroduceAddContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 849BECEF1DCF44F3007936B0 /* PGCIntroduceAddContactCell.m */; };
 		849C79FA1DC884F900C229DF /* PGCSupplyAndDemandDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C79F91DC884F900C229DF /* PGCSupplyAndDemandDetailVC.m */; };
 		849C7A171DC89F4F00C229DF /* PGCSupplyCollectVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C7A161DC89F4F00C229DF /* PGCSupplyCollectVC.m */; };
 		849C7A1A1DC89F6600C229DF /* PGCSupplyIntroduceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C7A191DC89F6600C229DF /* PGCSupplyIntroduceVC.m */; };
@@ -292,7 +293,10 @@
 		8475AE6F1DCC842A004A15A5 /* PGCIntroducePublicView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCIntroducePublicView.m; sourceTree = "<group>"; };
 		8475AE711DCC8DA6004A15A5 /* PGCIntroduceSelectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCIntroduceSelectView.h; sourceTree = "<group>"; };
 		8475AE721DCC8DA6004A15A5 /* PGCIntroduceSelectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCIntroduceSelectView.m; sourceTree = "<group>"; };
-		8475AE741DCC94BB004A15A5 /* PGCDemandIntroduceInfoVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PGCDemandIntroduceInfoVC.xib; sourceTree = "<group>"; };
+		849BECEA1DCF27A3007936B0 /* PGCAddContactRemarkCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCAddContactRemarkCell.h; sourceTree = "<group>"; };
+		849BECEB1DCF27A3007936B0 /* PGCAddContactRemarkCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCAddContactRemarkCell.m; sourceTree = "<group>"; };
+		849BECEE1DCF44F3007936B0 /* PGCIntroduceAddContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCIntroduceAddContactCell.h; sourceTree = "<group>"; };
+		849BECEF1DCF44F3007936B0 /* PGCIntroduceAddContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCIntroduceAddContactCell.m; sourceTree = "<group>"; };
 		849C79F81DC884F900C229DF /* PGCSupplyAndDemandDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCSupplyAndDemandDetailVC.h; sourceTree = "<group>"; };
 		849C79F91DC884F900C229DF /* PGCSupplyAndDemandDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCSupplyAndDemandDetailVC.m; sourceTree = "<group>"; };
 		849C7A151DC89F4F00C229DF /* PGCSupplyCollectVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCSupplyCollectVC.h; sourceTree = "<group>"; };
@@ -761,13 +765,12 @@
 		845938EF1DBF625B0086DD53 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				849BECED1DCF28BC007936B0 /* 添加联系人cell */,
 				8475AE2E1DCC2B87004A15A5 /* 联系人 */,
 				8475AE331DCC2B87004A15A5 /* 项目概况 */,
 				8475AE421DCC2B8C004A15A5 /* 自定义弹出框 */,
 				84AA70461DC0B3E000150CFC /* PGCProjectDetailTagView.h */,
 				84AA70471DC0B3E000150CFC /* PGCProjectDetailTagView.m */,
-				845B41EC1DC824C5000351D7 /* PGCAddContactTableCell.h */,
-				845B41ED1DC824C5000351D7 /* PGCAddContactTableCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -854,8 +857,6 @@
 				849C7A4B1DC9900D00C229DF /* PGCSupplyAndDemandCell.m */,
 				84B9C3CC1DCB5AE400035064 /* PGCSearchBar.h */,
 				84B9C3CD1DCB5AE400035064 /* PGCSearchBar.m */,
-				8475AE4C1DCC4386004A15A5 /* PGCDetailContactCell.h */,
-				8475AE4D1DCC4386004A15A5 /* PGCDetailContactCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -904,8 +905,21 @@
 				8475AE691DCC7CD2004A15A5 /* PGCIntroduceDetailBottomView.m */,
 				8475AE711DCC8DA6004A15A5 /* PGCIntroduceSelectView.h */,
 				8475AE721DCC8DA6004A15A5 /* PGCIntroduceSelectView.m */,
+				849BECEE1DCF44F3007936B0 /* PGCIntroduceAddContactCell.h */,
+				849BECEF1DCF44F3007936B0 /* PGCIntroduceAddContactCell.m */,
 			);
 			name = "发布详情子视图";
+			sourceTree = "<group>";
+		};
+		849BECED1DCF28BC007936B0 /* 添加联系人cell */ = {
+			isa = PBXGroup;
+			children = (
+				845B41EC1DC824C5000351D7 /* PGCAddContactTableCell.h */,
+				845B41ED1DC824C5000351D7 /* PGCAddContactTableCell.m */,
+				849BECEA1DCF27A3007936B0 /* PGCAddContactRemarkCell.h */,
+				849BECEB1DCF27A3007936B0 /* PGCAddContactRemarkCell.m */,
+			);
+			name = "添加联系人cell";
 			sourceTree = "<group>";
 		};
 		849C79DE1DC8772700C229DF /* 地图模式 */ = {
@@ -1025,7 +1039,6 @@
 				849C7A321DC8AFD700C229DF /* PGCRemandIntroduceDetailVC.m */,
 				849C7A6D1DC9CF4200C229DF /* PGCDemandIntroduceInfoVC.h */,
 				849C7A6E1DC9CF4200C229DF /* PGCDemandIntroduceInfoVC.m */,
-				8475AE741DCC94BB004A15A5 /* PGCDemandIntroduceInfoVC.xib */,
 			);
 			name = "需求发布";
 			sourceTree = "<group>";
@@ -1057,10 +1070,12 @@
 				8475AE441DCC2CC9004A15A5 /* PGCDetailTitleView.m */,
 				8475AE551DCC64F7004A15A5 /* PGCSupplySubviewTop.h */,
 				8475AE561DCC64F7004A15A5 /* PGCSupplySubviewTop.m */,
-				8475AE591DCC6F7D004A15A5 /* PGCDetailSubviewBottom.h */,
-				8475AE5A1DCC6F7D004A15A5 /* PGCDetailSubviewBottom.m */,
 				8475AE5B1DCC6F7D004A15A5 /* PGCDetailSubviewTop.h */,
 				8475AE5C1DCC6F7D004A15A5 /* PGCDetailSubviewTop.m */,
+				8475AE591DCC6F7D004A15A5 /* PGCDetailSubviewBottom.h */,
+				8475AE5A1DCC6F7D004A15A5 /* PGCDetailSubviewBottom.m */,
+				8475AE4C1DCC4386004A15A5 /* PGCDetailContactCell.h */,
+				8475AE4D1DCC4386004A15A5 /* PGCDetailContactCell.m */,
 			);
 			name = "详情子视图";
 			sourceTree = "<group>";
@@ -1266,7 +1281,6 @@
 				8459391B1DBF625B0086DD53 /* PGCChooseCompanyController.xib in Resources */,
 				845939251DBF625B0086DD53 /* PGCUserInfoController.xib in Resources */,
 				8459391D1DBF625B0086DD53 /* PGCChooseJobController.xib in Resources */,
-				8475AE751DCC94BB004A15A5 /* PGCDemandIntroduceInfoVC.xib in Resources */,
 				845939371DBF625B0086DD53 /* PGCResetPasswordController.xib in Resources */,
 				845939351DBF625B0086DD53 /* PGCRegisterController.xib in Resources */,
 				8459390A1DBF625B0086DD53 /* PGCContactInfoController.xib in Resources */,
@@ -1386,6 +1400,7 @@
 				849C7A331DC8AFD700C229DF /* PGCRemandIntroduceDetailVC.m in Sources */,
 				849C7BC41DC9D36000C229DF /* UITableView+FDKeyedHeightCache.m in Sources */,
 				845939201DBF625B0086DD53 /* PGCSettingController.m in Sources */,
+				849BECF01DCF44F3007936B0 /* PGCIntroduceAddContactCell.m in Sources */,
 				849C7A4F1DC9977700C229DF /* PGCSupplyDetailVC.m in Sources */,
 				849C7A4C1DC9900D00C229DF /* PGCSupplyAndDemandCell.m in Sources */,
 				8475AE3E1DCC2B87004A15A5 /* PGCProjectSurveyScrollView.m in Sources */,
@@ -1424,6 +1439,7 @@
 				0483E2D41DAF33D200EF89F0 /* main.m in Sources */,
 				849C7A6F1DC9CF4200C229DF /* PGCDemandIntroduceInfoVC.m in Sources */,
 				845939111DBF625B0086DD53 /* PGCProjectCell.m in Sources */,
+				849BECEC1DCF27A3007936B0 /* PGCAddContactRemarkCell.m in Sources */,
 				8416DB941DCAFBD5006FEC56 /* PGCDropLeftCell.m in Sources */,
 				84B9C3CE1DCB5AE400035064 /* PGCSearchBar.m in Sources */,
 				8416DB991DCAFC45006FEC56 /* PGCIndexPath.m in Sources */,

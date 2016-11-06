@@ -34,7 +34,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="MEh-Dh-Lg1"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <state key="normal" title="需求信息">
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -51,7 +51,7 @@
                 </button>
                 <button opaque="NO" tag="501" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A23-Dt-5Cc">
                     <rect key="frame" x="187.5" y="30" width="187.5" height="30"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <state key="normal" title="供应信息">
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -87,11 +87,11 @@
                     <rect key="frame" x="0.0" y="64" width="375" height="40"/>
                     <subviews>
                         <button opaque="NO" tag="401" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ukq-Gh-LNH">
-                            <rect key="frame" x="285" y="5" width="70" height="30"/>
+                            <rect key="frame" x="285" y="5" width="70" height="32"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="70" id="S35-sl-Y4F"/>
-                                <constraint firstAttribute="height" constant="30" id="rBg-H0-XgY"/>
+                                <constraint firstAttribute="height" constant="32" id="rBg-H0-XgY"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                             <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -128,10 +128,10 @@
                             </connections>
                         </button>
                         <button opaque="NO" tag="400" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GZG-FB-gST">
-                            <rect key="frame" x="205" y="5" width="70" height="30"/>
+                            <rect key="frame" x="205" y="5" width="70" height="32"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="30" id="eAz-Of-XrZ"/>
+                                <constraint firstAttribute="height" constant="32" id="eAz-Of-XrZ"/>
                                 <constraint firstAttribute="width" constant="70" id="h1x-3B-zd5"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -171,11 +171,11 @@
                     </subviews>
                     <color key="backgroundColor" red="0.83521407842636108" green="0.83535194396972656" blue="0.83518481254577637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstItem="GZG-FB-gST" firstAttribute="top" secondItem="bHi-pm-RfW" secondAttribute="top" constant="5" id="9Y3-l5-hYW"/>
                         <constraint firstAttribute="trailing" secondItem="Ukq-Gh-LNH" secondAttribute="trailing" constant="20" id="Irr-IU-st7"/>
-                        <constraint firstItem="Ukq-Gh-LNH" firstAttribute="top" secondItem="bHi-pm-RfW" secondAttribute="top" constant="5" id="WkK-Sb-1Z3"/>
+                        <constraint firstItem="Ukq-Gh-LNH" firstAttribute="centerY" secondItem="bHi-pm-RfW" secondAttribute="centerY" constant="1" id="N9Q-hm-MpV"/>
                         <constraint firstAttribute="height" constant="40" id="ceA-KR-dzv"/>
                         <constraint firstItem="Ukq-Gh-LNH" firstAttribute="leading" secondItem="GZG-FB-gST" secondAttribute="trailing" constant="10" id="cjn-bd-okX"/>
+                        <constraint firstItem="GZG-FB-gST" firstAttribute="centerY" secondItem="bHi-pm-RfW" secondAttribute="centerY" constant="1" id="ew0-HH-STc"/>
                     </constraints>
                     <variation key="default">
                         <mask key="subviews">
@@ -184,9 +184,7 @@
                         </mask>
                         <mask key="constraints">
                             <exclude reference="ceA-KR-dzv"/>
-                            <exclude reference="9Y3-l5-hYW"/>
                             <exclude reference="Irr-IU-st7"/>
-                            <exclude reference="WkK-Sb-1Z3"/>
                             <exclude reference="cjn-bd-okX"/>
                         </mask>
                     </variation>
@@ -197,9 +195,7 @@
                         </mask>
                         <mask key="constraints">
                             <include reference="ceA-KR-dzv"/>
-                            <include reference="9Y3-l5-hYW"/>
                             <include reference="Irr-IU-st7"/>
-                            <include reference="WkK-Sb-1Z3"/>
                             <include reference="cjn-bd-okX"/>
                         </mask>
                     </variation>

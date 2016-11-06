@@ -31,7 +31,7 @@
 }
 
 - (void)initializeUserInterface {
-    self.navigationItem.title = @"需求信息";
+    self.navigationItem.title = @"供应信息";
     self.view.backgroundColor = [UIColor whiteColor];
     
 }

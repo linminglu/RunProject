@@ -116,17 +116,15 @@
     self.demandBtn.userInteractionEnabled = false;
     
     // 添加游标
-    self.filterView = [[UIView alloc] init];
-    self.filterView.bounds = CGRectMake(0, 0, SCREEN_WIDTH / 2 - 4, 2);
-    self.filterView.center = CGPointMake(self.demandBtn.centerX, STATUS_AND_NAVIGATION_HEIGHT - 1);
+    self.filterView = [[UIView alloc] initWithFrame:CGRectMake(1, STATUS_AND_NAVIGATION_HEIGHT - 2, SCREEN_WIDTH / 2 - 2, 2)];
     self.filterView.backgroundColor = PGCTintColor;
     [self.view addSubview:self.filterView];
     
     // 设置搜索条
     self.searchBar = [[PGCSearchBar alloc] init];
-    self.searchBar.bounds = CGRectMake(0, 0, SCREEN_WIDTH / 2 - 20, 32);
-    self.searchBar.center = CGPointMake(self.centerBackView.width / 4, self.centerBackView.height / 2);
-    self.searchBar.layer.cornerRadius = 15;
+    self.searchBar.bounds = CGRectMake(0, 0, SCREEN_WIDTH / 2 - 20, 34);
+    self.searchBar.center = CGPointMake(SCREEN_WIDTH / 4, self.centerBackView.height / 2);
+    self.searchBar.layer.cornerRadius = 20;
     self.searchBar.layer.masksToBounds = true;
     [self.centerBackView addSubview:self.searchBar];
     

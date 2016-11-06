@@ -27,6 +27,7 @@
     self.centerTitleLabel = [[UILabel alloc] init];
     self.centerTitleLabel.textColor = RGB(102, 102, 102);
     self.centerTitleLabel.font = SetFont(15);
+    self.centerTitleLabel.numberOfLines = 1;
     [self.contentView addSubview:self.centerTitleLabel];
 }
 

@@ -7,13 +7,24 @@
 //
 
 #import "PGCDemandIntroduceInfoVC.h"
+#import "PGCIntroduceDetailTopView.h"
+#import "PGCIntroduceDetailBottomView.h"
+#import "PGCAreaAndTypeRootVC.h"
 
-@interface PGCDemandIntroduceInfoVC ()
+@interface PGCDemandIntroduceInfoVC () <PGCIntroduceDetailTopViewDelegate, PGCIntroduceDetailBottomViewDelegate>
 
 /**
  版块0 底部滚动视图
  */
 @property (strong, nonatomic) UIScrollView *scrollView;
+/**
+ 板块视图1
+ */
+@property (strong, nonatomic) PGCIntroduceDetailTopView *topView;
+/**
+ 板块视图2
+ */
+@property (strong, nonatomic) PGCIntroduceDetailBottomView *bottomView;
 /**
  底部发布按钮
  */
@@ -48,6 +59,17 @@
     self.scrollView.showsVerticalScrollIndicator = false;
     [self.view addSubview:self.scrollView];
     
+    // 版块1
+    self.topView = [[PGCIntroduceDetailTopView alloc] initWithModel:nil];
+    self.topView.delegate = self;
+    [self.scrollView addSubview:self.topView];
+    
+    
+    // 版块2
+    self.bottomView = [[PGCIntroduceDetailBottomView alloc] initWithModel:nil];
+    self.bottomView.delegate = self;
+    [self.scrollView addSubview:self.bottomView];
+    
     // 发布按钮
     self.introduceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     self.introduceBtn.backgroundColor = PGCTintColor;
@@ -77,12 +99,65 @@
     .bottomSpaceToView(self.introduceBtn, 0);
     
     
+    // 第1个版块布局
+    self.topView.sd_layout
+    .topSpaceToView(self.scrollView, 0)
+    .leftSpaceToView(self.scrollView, 0)
+    .rightSpaceToView(self.scrollView, 0)
+    .heightIs(10);// 给定初始高度，后面根据自身子视图计算高度
+    
+    // 第2个版块布局
+    self.bottomView.sd_layout
+    .topSpaceToView(self.topView, 0)
+    .leftSpaceToView(self.scrollView, 0)
+    .rightSpaceToView(self.scrollView, 0)
+    .heightIs(10);
+    
+    [self.scrollView setupAutoHeightWithBottomView:self.bottomView bottomMargin:0];
 }
 
 
 #pragma mark - Event
 
 - (void)respondsToIntroduceBtn:(UIButton *)sender {
+    
+}
+
+
+#pragma mark - PGCIntroduceDetailTopViewDelegate
+
+- (void)introduceDetailTopView:(PGCIntroduceDetailTopView *)topView selectArea:(UIButton *)sender
+{
+    PGCAreaAndTypeRootVC *vc = [[PGCAreaAndTypeRootVC alloc] init];
+    vc.navigationItem.title = @"地区";
+    
+    [self.navigationController pushViewController:vc animated:true];
+}
+
+- (void)introduceDetailTopView:(PGCIntroduceDetailTopView *)topView slectDemand:(UIButton *)demand
+{
+    PGCAreaAndTypeRootVC *vc = [[PGCAreaAndTypeRootVC alloc] init];
+    vc.navigationItem.title = @"需求";
+    
+    [self.navigationController pushViewController:vc animated:true];
+}
+
+
+#pragma mark - PGCIntroduceDetailBottomViewDelegate
+
+- (void)introduceDetailBottomView:(PGCIntroduceDetailBottomView *)topView deleteContact:(UIButton *)deleteContact {
+    
+}
+
+- (void)introduceDetailBottomView:(PGCIntroduceDetailBottomView *)topView addContact:(UIButton *)addContact {
+    
+}
+
+- (void)introduceDetailBottomView:(PGCIntroduceDetailBottomView *)topView addImage:(UIButton *)addImage {
+    
+}
+
+- (void)introduceDetailBottomView:(PGCIntroduceDetailBottomView *)topView deleteImage:(UIButton *)deleteImage {
     
 }
 

@@ -8,10 +8,18 @@
 
 #import "PGCDetailSubviewBottom.h"
 #import "PGCProjectDetailTagView.h"
+#import "PGCDetailContactCell.h"
 
-@interface PGCDetailSubviewBottom ()
+@interface PGCDetailSubviewBottom () <UITableViewDataSource, UITableViewDelegate>
 
-@property (strong, nonatomic) UIButton *checkMoreContactBtn;
+/**
+ 联系人表格视图
+ */
+@property (strong, nonatomic) UITableView *tableView;
+/**
+ 联系人数组
+ */
+@property (strong, nonatomic) NSMutableArray *dataSource;
 
 @end
 
@@ -30,34 +38,33 @@
 
 - (void)setupSubviewsWithModel:(id)model
 {
-    UIImage *image = [UIImage imageNamed:@"加号"];
-    NSString *title = @"查看更多联系人";
-    CGSize titleSize = [title sizeWithFont:SetFont(14) constrainedToSize:CGSizeMake(MAXFLOAT, 0)];
-    
-    UIButton *checkMoreContactBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [checkMoreContactBtn setImage:image forState:UIControlStateNormal];
-    [checkMoreContactBtn.titleLabel setFont:SetFont(14)];
-    [checkMoreContactBtn setTitle:title forState:UIControlStateNormal];
-    [checkMoreContactBtn setTitleColor:PGCTintColor forState:UIControlStateNormal];
-    self.checkMoreContactBtn = checkMoreContactBtn;
-    [self addSubview:checkMoreContactBtn];
-    checkMoreContactBtn.sd_layout
-    .centerXEqualToView(self)
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    self.tableView.showsVerticalScrollIndicator = false;
+    self.tableView.showsHorizontalScrollIndicator = false;
+    self.tableView.bounces = false;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.sectionHeaderHeight = 40;
+    self.tableView.sectionFooterHeight = 40;
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    [self.tableView registerClass:[PGCDetailContactCell class] forCellReuseIdentifier:kPGCDetailContactCell];
+    [self addSubview:self.tableView];
+    // 联系人表格视图布局
+    self.tableView.sd_layout
     .topSpaceToView(self, 0)
-    .heightIs(40)
-    .widthIs(image.size.width + titleSize.width + 30);
-    
-    checkMoreContactBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -15);
-    checkMoreContactBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -15, 0, 0);
+    .leftSpaceToView(self, 0)
+    .rightSpaceToView(self, 0)
+    .heightIs(40 + 40 + 80);
     
     
     PGCProjectDetailTagView *introduce = [[PGCProjectDetailTagView alloc] initWithTitle:@"详细介绍"];
     [self addSubview:introduce];
     introduce.sd_layout
-    .topSpaceToView(checkMoreContactBtn, 0)
+    .topSpaceToView(self.tableView, 0)
     .leftSpaceToView(self, 0)
     .rightSpaceToView(self, 0)
     .heightIs(40);
+    
     
     // 详细介绍的内容
     UILabel *introduceLabel = [[UILabel alloc] init];
@@ -71,6 +78,7 @@
     .leftSpaceToView(self, 15)
     .rightSpaceToView(self, 15)
     .autoHeightRatio(0);
+    
     
     PGCProjectDetailTagView *imageIntroduce = [[PGCProjectDetailTagView alloc] initWithTitle:@"图片介绍"];
     [self addSubview:imageIntroduce];
@@ -100,8 +108,87 @@
 }
 
 
-- (void)addDetailTarget:(id)target action:(SEL)action {
-    [self.checkMoreContactBtn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.dataSource.count;
 }
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    PGCDetailContactCell *cell = [tableView dequeueReusableCellWithIdentifier:kPGCDetailContactCell];
+    cell.contactDic = self.dataSource[indexPath.row];
+    [cell addTarget:self action:@selector(cellCallPhoneBtn:)];
+    
+    return cell;
+}
+
+
+#pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 80;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    PGCProjectDetailTagView *contact = [[PGCProjectDetailTagView alloc] initWithTitle:@"联系人"];
+    contact.frame = CGRectMake(0, 0, tableView.width, 40);
+    
+    return contact;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.width, 40)];
+    footerView.backgroundColor = [UIColor whiteColor];
+    
+    UIImage *image = [UIImage imageNamed:@"加号"];
+    NSString *title = @"查看更多联系人";
+    CGSize titleSize = [title sizeWithFont:SetFont(14) constrainedToSize:CGSizeMake(MAXFLOAT, 0)];
+    
+    UIButton *checkMoreContactBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [checkMoreContactBtn setImage:image forState:UIControlStateNormal];
+    [checkMoreContactBtn.titleLabel setFont:SetFont(14)];
+    [checkMoreContactBtn setTitle:title forState:UIControlStateNormal];
+    [checkMoreContactBtn setTitleColor:PGCTintColor forState:UIControlStateNormal];
+    [checkMoreContactBtn addTarget:self action:@selector(cellCheckMore:) forControlEvents:UIControlEventTouchUpInside];
+    [footerView addSubview:checkMoreContactBtn];
+    checkMoreContactBtn.sd_layout
+    .centerXEqualToView(footerView)
+    .topSpaceToView(footerView, 0)
+    .heightIs(40)
+    .widthIs(image.size.width + titleSize.width + 30);
+    
+    checkMoreContactBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -15);
+    checkMoreContactBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -15, 0, 0);
+    
+    return footerView;
+}
+
+
+#pragma mark - Event
+
+- (void)cellCheckMore:(UIButton *)sender {
+    if (self.delegate || [self.delegate respondsToSelector:@selector(detailSubviewBottom:checkMoreContact:)]) {
+        [self.delegate detailSubviewBottom:self checkMoreContact:sender];
+    }
+}
+
+- (void)cellCallPhoneBtn:(UIButton *)sender {
+    if (self.delegate || [self.delegate respondsToSelector:@selector(detailSubviewBottom:callPhone:)]) {
+        [self.delegate detailSubviewBottom:self callPhone:sender];
+    }
+}
+
+#pragma mark - Getter
+
+- (NSMutableArray *)dataSource {
+    if (!_dataSource) {
+        _dataSource = [NSMutableArray array];
+        [_dataSource addObject:@{@"name":@"某某", @"phone":@"188-8888-8888"}];
+    }
+    return _dataSource;
+}
+
 
 @end

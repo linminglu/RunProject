@@ -8,68 +8,13 @@
 
 #import "PGCAddContactTableCell.h"
 
-@implementation PGCAddContactRemarkCell
-
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        self.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        UITextView *textView = [[UITextView alloc] init];
-        textView.textColor = RGB(102, 102, 102);
-        textView.font = SetFont(15);        
-        textView.returnKeyType = UIReturnKeyDefault;
-        textView.enablesReturnKeyAutomatically = true;
-        textView.delegate = self;
-        [self.contentView addSubview:textView];
-        self.addRemarkTextView = textView;
-        textView.sd_layout
-        .topSpaceToView(self, 8)
-        .leftSpaceToView(self, 15)
-        .rightSpaceToView(self, 15)
-        .bottomSpaceToView(self, 0);
-        
-        UILabel *label = [[UILabel alloc] init];
-        label.textColor = RGB(153, 153, 153);
-        label.text = @"请输入备注";
-        label.font = SetFont(15);
-        [textView addSubview:label];
-        self.textViewPlaceholder = label;
-        label.sd_layout
-        .topSpaceToView(textView, 2)
-        .leftSpaceToView(textView, 15)
-        .rightSpaceToView(textView, 15)
-        .heightIs(30);
-    }
-    return self;
-}
-
-
-#pragma mark - UITextViewDelegate
-
-- (void)textViewDidChange:(UITextView *)textView {
-    if (textView.text.length > 0) {
-        self.textViewPlaceholder.hidden = true;
-    } else {
-        self.textViewPlaceholder.hidden = false;
-    }
-    CGSize size = [textView sizeThatFits:CGSizeMake(textView.width, CGFLOAT_MAX)];
-    if (size.height > 100) {
-        textView.height = size.height;
-    }
-}
-
-@end
-
-
-
 @implementation PGCAddContactTableCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.contentView.backgroundColor = [UIColor whiteColor];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
         [self setupSubviews];

@@ -68,7 +68,7 @@
     [self.view addSubview:navigationBar];
     
     
-    PGCDropMenu *menu = [[PGCDropMenu alloc] initWithOrigin:CGPointMake(0, navigationBar.bottom) height:45];
+    PGCDropMenu *menu = [[PGCDropMenu alloc] initWithOrigin:CGPointMake(0, navigationBar.bottom) height:40];
     menu.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:menu];
     menu.dropTitles = @[@"地区", @"类别", @"阶段"];

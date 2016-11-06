@@ -49,7 +49,6 @@
     
     // 内容输入框
     self.contentTF = [[UITextField alloc] init];
-    self.contentTF.textAlignment = NSTextAlignmentLeft;
     self.contentTF.borderStyle = UITextBorderStyleNone;
     self.contentTF.placeholder = @"请输入文字";
     self.contentTF.textColor = RGB(102, 102, 102);

@@ -43,7 +43,7 @@
     self.collectionLabel.sd_layout
     .centerYEqualToView(self.centerView)
     .leftSpaceToView(self.centerView, 20)
-    .rightSpaceToView(self.centerView, 20)
+    .rightSpaceToView(self.centerView, 0)
     .autoHeightRatio(0);
 }
 

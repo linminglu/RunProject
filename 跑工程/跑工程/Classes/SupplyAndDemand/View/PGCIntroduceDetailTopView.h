@@ -13,9 +13,7 @@
 @protocol PGCIntroduceDetailTopViewDelegate <NSObject>
 
 @optional
-
 - (void)introduceDetailTopView:(PGCIntroduceDetailTopView *)topView selectArea:(UIButton *)sender;
-
 - (void)introduceDetailTopView:(PGCIntroduceDetailTopView *)topView slectDemand:(UIButton *)demand;
 
 @end

@@ -7,21 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-@class PGCDetailContactCell;
 
-@protocol PGCDetailContactCellDelegate <NSObject>
-
-@optional
-- (void)contactCell:(PGCDetailContactCell *)contactCell callBtn:(UIButton *)callBtn;
-
-@end
 
 static NSString *const kPGCDetailContactCell = @"PGCDetailContactCell";
 
 @interface PGCDetailContactCell : UITableViewCell
 
-@property (weak, nonatomic) id <PGCDetailContactCellDelegate> delegate;
-
 @property (copy, nonatomic) NSDictionary *contactDic;
+
+- (void)addTarget:(id)target action:(SEL)action;
 
 @end

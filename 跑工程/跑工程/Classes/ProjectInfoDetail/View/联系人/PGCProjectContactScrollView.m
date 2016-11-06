@@ -198,7 +198,7 @@
     if ([nextResponder isKindOfClass:[UITabBarController class]]){
         UITabBarController * tabbar = (UITabBarController *)nextResponder;
         UINavigationController * nav = (UINavigationController *)tabbar.viewControllers[tabbar.selectedIndex];
-        // UINavigationController * nav = tabbar.selectedViewController ; 上下两种写法都行
+        // UINavigationController *nav = tabbar.selectedViewController ; 上下两种写法都行
         result=nav.childViewControllers.lastObject;
         
     }else if ([nextResponder isKindOfClass:[UINavigationController class]]){
