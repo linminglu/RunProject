@@ -8,7 +8,7 @@
 
 #import "PGCSupplyAndDemandController.h"
 #import "PGCSupplyAndDemandCell.h"
-#import "PGCDropMenu.h"
+#import "JSDropDownMenu.h"
 #import "PGCSearchBar.h"
 #import "PGCSupplyDetailVC.h"
 #import "PGCDemandDetailVC.h"
@@ -16,19 +16,21 @@
 #import "PGCSupplyCollectVC.h"
 #import "PGCDemandIntroduceVC.h"
 #import "PGCSupplyIntroduceVC.h"
+#import "PGCProvince.h"
+#import "PGCMaterialServiceTypes.h"
 
 #define TopButtonTag 500
 #define CenterButtonTag 400
 
-@interface PGCSupplyAndDemandController () <UITableViewDelegate, UITableViewDataSource, PGCDropMenuDataSource, PGCDropMenuDelegate>
+@interface PGCSupplyAndDemandController () <UITableViewDelegate, UITableViewDataSource, JSDropDownMenuDataSource, JSDropDownMenuDelegate>
 {
-    NSMutableArray *_data1;
-    NSMutableArray *_data2;
-    NSMutableArray *_data3;
+    NSArray *_areaDatas;
+    NSArray *_typeDatas;
+    NSArray *_timeDatas;
     
-    NSInteger _currentData1Index;
-    NSInteger _currentData2Index;
-    NSInteger _currentData3Index;
+    NSInteger _areaCurrentIndex;
+    NSInteger _typeCurrentIndex;
+    NSInteger _timeCurrentIndex;
 }
 
 #pragma mark - 控件约束属性
@@ -79,31 +81,9 @@
     _isSelected = false;
     _demandNotSupply = true;
     
-    _data1 = [NSMutableArray arrayWithArray:@[@{@"title":@"全国", @"data":@[@"全国", @"1", @"2"]},
-                                              @{@"title":@"当前城市", @"data":@[@"全国", @"10", @"20"]},
-                                              @{@"title":@"热门城市", @"data":@[@"全国", @"100", @"200"]},
-                                              @{@"title":@"重庆", @"data":@[@"重庆", @"1000", @"2000"]},
-                                              @{@"title":@"四川", @"data":@[@"成都", @"10000", @"20000"]},
-                                              @{@"title":@"贵州", @"data":@[@"贵阳", @"300", @"400"]},
-                                              @{@"title":@"云南", @"data":@[@"昆明", @"500", @"600"]},
-                                              @{@"title":@"广西", @"data":@[@"西宁", @"700", @"800"]},
-                                              @{@"title":@"广东", @"data":@[@"广州", @"900", @"1100"]},
-                                              @{@"title":@"福建", @"data":@[@"福州", @"1200", @"1300"]},
-                                              @{@"title":@"浙江", @"data":@[@"杭州", @"1400", @"1500"]},
-                                              @{@"title":@"江苏", @"data":@[@"南京", @"1600", @"1700"]}]];
-    
-    _data2 = [NSMutableArray arrayWithArray:@[@{@"stage":@"基础材料", @"data":@[@"基础材料1", @"基础材料2", @"基础材料3"]},
-                                              @{@"stage":@"砖墙、门窗材料", @"data":@[@"砖墙", @"门窗", @"砖墙、门窗材料"]},
-                                              @{@"stage":@"机电设备", @"data":@[@"机电设备1", @"机电设备2", @"机电设备3", @"机电设备4"]},
-                                              @{@"stage":@"防水保温材料", @"data":@[@"防水保温材料1", @"防水保温材料2", @"防水保温材料3"]},
-                                              @{@"stage":@"照明系统相关材料", @"data":@[@"照明系统1", @"照明系统2", @"照明系统3"]},
-                                              @{@"stage":@"环保绿化材料", @"data":@[@"环保绿化1", @"环保绿化2", @"环保绿化3"]},
-                                              @{@"stage":@"洪水管标阀门", @"data":@[@"洪水管标1", @"洪水管标2", @"洪水管标3"]},
-                                              @{@"stage":@"其他", @"data":@[@"其他1", @"其他2", @"其他3"]},
-                                              @{@"stage":@"找分包", @"data":@[@"找分包1", @"找分包2"]},
-                                              @{@"stage":@"找设计", @"data":@[@"找设计1", @"找设计2"]}]];
-    
-    _data3 = [NSMutableArray arrayWithArray:@[@"一天", @"三天", @"一周", @"一个月", @"三个月", @"半年", @"一年"]];
+    _areaDatas = [PGCProvince province].areaArray;
+    _typeDatas = [PGCMaterialServiceTypes materialServiceTypes].typeArray;    
+    _timeDatas = @[@"一天", @"三天", @"一周", @"一个月", @"三个月", @"半年", @"一年"];
 }
 
 - (void)initializeUserInterface {
@@ -128,9 +108,8 @@
     self.searchBar.layer.masksToBounds = true;
     [self.centerBackView addSubview:self.searchBar];
     
-    PGCDropMenu *menu = [[PGCDropMenu alloc] initWithOrigin:CGPointMake(0, self.centerBackView.bottom) height:40];
+    JSDropDownMenu *menu = [[JSDropDownMenu alloc] initWithOrigin:CGPointMake(0, self.centerBackView.bottom) andHeight:40];
     menu.backgroundColor = [UIColor whiteColor];
-    menu.dropTitles = @[@"地区", @"类别", @"时间"];
     menu.dataSource = self;
     menu.delegate = self;
     [self.view addSubview:menu];
@@ -239,112 +218,154 @@
 }
 
 
-#pragma mark - PGCDropMenuDataSource
+#pragma mark - PGCDropMenuDaJSDropDownMenuDataSource
 
-- (NSInteger)dropMenu:(PGCDropMenu *)dropMenu numberOfRowsInColumn:(NSInteger)column leftOrRight:(NSInteger)leftOrRight leftSelectedRow:(NSInteger)leftSelectedRow {
-    if (column == 0) {
-        if (leftOrRight == 1) {
-            return _data1.count;
-            
-        }
-        if (leftOrRight == 2) {
-            return [_data1[leftSelectedRow][@"data"] count];
-        }
-    }
-    else if (column == 1) {
-        if (leftOrRight == 1) {
-            return _data2.count;
-            
-        }
-        if (leftOrRight == 2) {
-            return [_data2[leftSelectedRow][@"data"] count];
-        }
-    }
-    else if (column == 2) {
-        return _data3.count;
-        
-    }
-    return 0;
+- (NSInteger)numberOfColumnsInMenu:(JSDropDownMenu *)menu {
+    
+    return 3;
 }
 
-- (NSString *)dropMenu:(PGCDropMenu *)dropMenu titleForRowAtIndexPath:(PGCIndexPath *)indexPath {
-    if (indexPath.column == 0) {
-        if (indexPath.leftOrRight == 1) {
-            NSDictionary *menuDic = [_data1 objectAtIndex:indexPath.row];
-            
-            return [menuDic objectForKey:@"title"];
-        }
-        if (indexPath.leftOrRight == 2)  {
-            NSInteger leftRow = indexPath.leftRow;
-            NSDictionary *menuDic = [_data1 objectAtIndex:leftRow];
-            
-            return [[menuDic objectForKey:@"data"] objectAtIndex:indexPath.row];
-        }
+- (BOOL)haveRightTableViewInColumn:(NSInteger)column {
+    
+    if (column < 2) {
+        return true;
     }
-    else if (indexPath.column == 1) {
-        if (indexPath.leftOrRight == 1) {
-            NSDictionary *menuDic = [_data2 objectAtIndex:indexPath.row];
-            
-            return [menuDic objectForKey:@"stage"];
-        }
-        if (indexPath.leftOrRight == 2)  {
-            NSInteger leftRow = indexPath.leftRow;
-            NSDictionary *menuDic = [_data2 objectAtIndex:leftRow];
-            
-            return [[menuDic objectForKey:@"data"] objectAtIndex:indexPath.row];
-        }
-    }
-    else if (indexPath.column == 2) {
-        return _data3[indexPath.row];
-    }
-    return nil;
+    return false;
 }
 
-- (BOOL)haveRightInColumn:(NSInteger)column {
-    if (column == 0) {
-        return true;
+- (CGFloat)widthRatioOfLeftColumn:(NSInteger)column {
+    
+    if (column < 2) {
+        return 0.5;
     }
-    else if (column == 1) {
-        return true;
-    }
-    else {
-        return false;
-    }
+    return 1;
 }
 
 - (NSInteger)currentLeftSelectedRow:(NSInteger)column {
     
     if (column == 0) {
-        return _currentData1Index;
+        
+        return _areaCurrentIndex;
         
     }
     if (column == 1) {
-        return _currentData2Index;
+        
+        return _typeCurrentIndex;
     }
+    
+    return _timeCurrentIndex;
+}
+
+- (NSInteger)menu:(JSDropDownMenu *)menu numberOfRowsInColumn:(NSInteger)column leftOrRight:(NSInteger)leftOrRight leftRow:(NSInteger)leftRow {
+    
+    if (column == 0) {
+        if (leftOrRight == 0) {
+            
+            return _areaDatas.count;
+        }
+        else {
+            PGCProvince *province = _areaDatas[leftRow];
+            NSArray *arr = province.city;
+            
+            return arr.count;
+        }
+    }
+    else if (column == 1) {
+        
+        if (leftOrRight == 0) {
+            return _typeDatas.count;
+            
+        }
+        else {
+            PGCMaterialServiceTypes *type = _typeDatas[leftRow];
+            return type.secondArray.count;
+        }
+        
+    }
+    else if (column == 2) {
+        return _timeDatas.count;
+    }
+    
     return 0;
 }
 
+- (NSString *)menu:(JSDropDownMenu *)menu titleForColumn:(NSInteger)column{
+    
+    switch (column) {
+        case 0: return @"地区";
+            break;
+        case 1: return @"类型";
+            break;
+        case 2: return @"时间";
+            break;
+        default:
+            return nil;
+            break;
+    }
+}
 
-#pragma mark - PGCDropDownMenuDelegate
+- (NSString *)menu:(JSDropDownMenu *)menu titleForRowAtIndexPath:(JSIndexPath *)indexPath {
+    
+    if (indexPath.column == 0) {
+        
+        if (indexPath.leftOrRight==0) {
+            PGCProvince *province = _areaDatas[indexPath.row];
+            return province.province;
+            
+        }
+        else {
+            PGCProvince *province = _areaDatas[indexPath.leftRow];
+            NSArray *rightArr = province.city;
+            PGCCity *city = rightArr[indexPath.row];
 
-- (void)dropMenu:(PGCDropMenu *)dropMenu didSelectRowAtIndexPath:(PGCIndexPath *)indexPath {
+            return city.city;
+        }
+    }
+    else if (indexPath.column == 1) {
+        
+        if (indexPath.leftOrRight == 0) {
+            PGCMaterialServiceTypes *type = _typeDatas[indexPath.row];
+            return type.name;
+            
+        }
+        else{
+            PGCMaterialServiceTypes *type = _typeDatas[indexPath.leftRow];
+            PGCMaterialServiceTypes *secondType = type.secondArray[indexPath.row];
+
+            return secondType.name;
+        }
+    }
+    else {        
+        return _timeDatas[indexPath.row];
+    }
+}
+
+
+
+#pragma mark - JSDropDownMenuDelegatetaSource
+
+- (void)menu:(JSDropDownMenu *)menu didSelectRowAtIndexPath:(JSIndexPath *)indexPath {
     
     if (indexPath.column == 0) {
         
         if (indexPath.leftOrRight == 0) {
             
-            _currentData1Index = indexPath.row;
+            _areaCurrentIndex = indexPath.row;
             
             return;
         }
+    }
+    else if (indexPath.column == 1) {
         
-    } else if (indexPath.column == 1) {
-        
-        _currentData2Index = indexPath.row;
-        
-    } else{
-        
-        _currentData3Index = indexPath.row;
+        if (indexPath.leftOrRight == 0) {
+            
+            _typeCurrentIndex = indexPath.row;
+            
+            return;
+        }
+    }
+    else{
+        _timeCurrentIndex = indexPath.row;
     }
 }
 

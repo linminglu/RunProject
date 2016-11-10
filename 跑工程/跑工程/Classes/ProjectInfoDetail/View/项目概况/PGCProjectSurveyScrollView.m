@@ -8,14 +8,21 @@
 
 #import "PGCProjectSurveyScrollView.h"
 #import "PGCProjectDetailTagView.h"
-#import "NSString+Size.h"
+#import "PGCProjectInfo.h"
 
 @interface PGCProjectSurveyScrollView () <UITableViewDataSource>
-
+{
+    NSArray *_dataSource;// 可能用到的设置、材料数据源
+    NSArray *_surveyTitles;// 项目概况标题数组
+}
 /**
- 可能用到的设置、材料数据源
+ 项目概况标签视图数组
  */
-@property (strong, nonatomic) NSArray *dataSource;
+@property (strong, nonatomic) NSMutableArray<NSDictionary *> *surveyLabels;
+/**
+ 项目简介
+ */
+@property (strong, nonatomic) UILabel *introContentLabel;
 /**
  初始化数据源
  */
@@ -44,6 +51,8 @@
 #pragma mark - Init method
 
 - (void)initDataSource {
+    _surveyTitles = @[@"工程地区：", @"项目类别：", @"项目阶段：", @"建筑周期：", @"项目地址："];
+    
     _dataSource = @[@"1、绿化设施相关的设备以及材料。",
                     @"2、消防设施，安全防范电线电缆等设备材料",
                     @"3、消防设施，安全防范电线电缆等设备材料",
@@ -81,9 +90,10 @@
     .heightIs(40 * 5);
     
     NSArray *contents = @[@"重庆市江北区", @"行政办公，文体娱乐", @"施工招标", @"2017年1月 至 2018年1月", @"重庆市江北区******"];
-    NSArray *titles = @[@"工程地区：", @"项目类别：", @"项目阶段：", @"建筑周期：", @"项目地址："];
-    for (int i = 0; i < titles.count; i++) {
-        [self setLabelWithSuperView:backView index:i title:titles[i] content:contents[i]];
+    
+    for (int i = 0; i < _surveyTitles.count; i++) {
+        UILabel *label = [self setLabelWithSuperView:backView index:i title:_surveyTitles[i] content:contents[i]];
+        [self.surveyLabels addObject:@{_surveyTitles[i]:label}];
     }
     
     // 项目简介
@@ -104,11 +114,11 @@
     
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:introContentLabel.text];
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-//    [paragraphStyle setLineSpacing:5];
+    [paragraphStyle setLineSpacing:8];
     [attributedString addAttributes:@{NSParagraphStyleAttributeName:paragraphStyle} range:NSMakeRange(0, [introContentLabel.text length])];
     [introContentLabel setAttributedText:attributedString];
-    
     [scrollView addSubview:introContentLabel];
+    self.introContentLabel = introContentLabel;
     // 开始自动布局
     introContentLabel.sd_layout
     .topSpaceToView(introView, 10)
@@ -143,7 +153,7 @@
 
 
 /* 自定义创建标签方法 */
-- (void)setLabelWithSuperView:(UIView *)superView index:(NSInteger)index title:(NSString *)title content:(NSString *)content {
+- (UILabel *)setLabelWithSuperView:(UIView *)superView index:(NSInteger)index title:(NSString *)title content:(NSString *)content {
 
     CGSize sizeA = [title sizeWithFont:SetFont(14) constrainedToSize:CGSizeMake(MAXFLOAT, 0)];
     CGSize sizeB = [content sizeWithFont:SetFont(14) constrainedToSize:CGSizeMake(MAXFLOAT, 0)];
@@ -197,6 +207,7 @@
         .heightRatioToView(line, 1)
         .widthIs(60);
     }
+    return labelB;
 }
 
 
@@ -204,6 +215,63 @@
 
 - (void)respondsToCheckButton:(UIButton *)sender {
     
+}
+
+
+#pragma mark - Public
+
+- (void)setSurveyInfoWithModel:(id)model {
+    if (!model) {
+        return;
+    }
+    PGCProjectInfo *projectInfo = (PGCProjectInfo *)model;
+    
+    self.introContentLabel.text = projectInfo.desc;
+
+    for (NSDictionary *dic in self.surveyLabels) {
+        for (int i = 0; i < _surveyTitles.count; i++) {
+            switch (i) {
+                case 0:
+                    ((UILabel *)dic[_surveyTitles[i]]).text = [projectInfo.province stringByAppendingString:projectInfo.city];
+                    break;
+                case 1:
+                    ((UILabel *)dic[_surveyTitles[i]]).text = projectInfo.type_name;
+                    break;
+                case 2:
+                    ((UILabel *)dic[_surveyTitles[i]]).text = projectInfo.progress_name;
+                    break;
+                case 3:
+                {
+                    NSString *startStr = [self stringFromDate:[self dateFromString:projectInfo.start_time]];
+                    NSString *endStr = [self stringFromDate:[self dateFromString:projectInfo.end_time]];
+                    
+                    ((UILabel *)dic[_surveyTitles[i]]).text = [NSString stringWithFormat:@"%@ 至 %@", startStr, endStr];
+                }
+                    break;
+                case 4:
+                    ((UILabel *)dic[_surveyTitles[i]]).text = projectInfo.address;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+}
+
+- (NSDate *)dateFromString:(NSString *)string
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    
+    return [formatter dateFromString:string];
+}
+
+- (NSString *)stringFromDate:(NSDate *)date
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy年MM月"];
+    
+    return [formatter stringFromDate:date];
 }
 
 
@@ -225,6 +293,15 @@
     cell.textLabel.text = _dataSource[indexPath.row];
     
     return cell;
+}
+
+#pragma mark - Getter
+
+- (NSMutableArray<NSDictionary *> *)surveyLabels {
+    if (!_surveyLabels) {
+        _surveyLabels = [NSMutableArray array];
+    }
+    return _surveyLabels;
 }
 
 @end

@@ -13,21 +13,28 @@
 #import "PGCRecordViewController.h"
 #import "PGCCollectViewController.h"
 #import "PGCProjectInfoDetailViewController.h"
-#import "PGCDropMenu.h"
+#import "JSDropDownMenu.h"
+#import "PGCProvince.h"
+#import "PGCProjectType.h"
+#import "PGCProjectProgress.h"
+#import "PGCProjectInfoAPIManager.h"
+#import "PGCProjectInfo.h"
 
-
-@interface PGCProjectInfoController () <UITableViewDataSource, UITableViewDelegate, PGCProjectInfoNavigationBarDelegate, PGCDropMenuDataSource, PGCDropMenuDelegate>
+@interface PGCProjectInfoController () <UITableViewDataSource, UITableViewDelegate, JSDropDownMenuDataSource, JSDropDownMenuDelegate, PGCProjectInfoNavigationBarDelegate>
 {
-    NSMutableArray *_data1;
-    NSMutableArray *_data2;
-    NSMutableArray *_data3;
+    NSArray *_areaDatas;
+    NSArray *_typeDatas;
+    NSArray *_stageDatas;
     
-    NSInteger _currentData1Index;
-    NSInteger _currentData2Index;
-    NSInteger _currentData3Index;
+    NSInteger _currentAreaIndex;
+    NSInteger _currenttypeIndex;
+    NSInteger _currentstageIndex;
 }
 
-@property (strong, nonatomic) UITableView *tableView;
+@property (strong, nonatomic) UITableView *tableView;/** 表格视图 */
+@property (strong, nonatomic) NSMutableArray *dataSource;/** 表格数据源 */
+@property (assign, nonatomic) int page;/** 查询页数 */
+@property (assign, nonatomic) int pageSize;/** 查询最大页数 */
 
 - (void)initializeDataSource; /** 初始化数据 */
 - (void)initializeUserInterface; /** 初始化用户界面 */
@@ -58,6 +65,34 @@
 
 #pragma mark - Initialize
 
+- (void)initializeDataSource {
+    AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];
+    [manager startMonitoring];
+    
+    _areaDatas = [PGCProvince province].areaArray;
+    _typeDatas = [PGCProjectType projectType].projectTypes;
+    _stageDatas = [PGCProjectProgress projectProgress].progressArray;
+    
+    [PGCProjectInfoAPIManager getProjectsRequestWithParameters:@{@"page":@(1), @"page_size":@(20)} responds:^(RespondsStatus status, NSString *message, id resultData) {
+        if (status == RespondsStatusSuccess) {
+            
+            NSArray *resultArray = resultData[@"result"];
+            
+            NSLog(@"%@", PGCCachesPath);
+            
+            for (id value in resultArray) {
+                PGCProjectInfo *project = [PGCProjectInfo mj_objectWithKeyValues:value];
+                
+                [self.dataSource addObject:project];
+            }
+            if (self.dataSource.count > 20) {
+                self.tableView.mj_footer.hidden = false;
+            }
+            [self.tableView reloadData];
+        }
+    }];
+}
+
 - (void)initializeUserInterface {
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = false;
@@ -68,12 +103,11 @@
     [self.view addSubview:navigationBar];
     
     
-    PGCDropMenu *menu = [[PGCDropMenu alloc] initWithOrigin:CGPointMake(0, navigationBar.bottom) height:40];
+    JSDropDownMenu *menu = [[JSDropDownMenu alloc] initWithOrigin:CGPointMake(0, navigationBar.bottom) andHeight:40];
     menu.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:menu];
-    menu.dropTitles = @[@"地区", @"类别", @"阶段"];
     menu.dataSource = self;
     menu.delegate = self;
+    [self.view addSubview:menu];
     
     // 表格视图
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
@@ -81,23 +115,86 @@
     tableView.delegate = self;
     tableView.dataSource = self;
     [tableView registerClass:[PGCProjectInfoCell class] forCellReuseIdentifier:kProjectInfoCell];
+    // 设置表格视图下拉刷新和上拉加载
+    tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadProjectData)];
+    tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    tableView.mj_footer.automaticallyHidden = true;
     [self.view addSubview:tableView];
-    self.tableView = tableView;
     // 开始自动布局
     tableView.sd_layout
     .topSpaceToView(menu, 0)
     .leftSpaceToView(self.view, 0)
     .rightSpaceToView(self.view, 0)
     .bottomSpaceToView(self.view, TAB_BAR_HEIGHT);
-}
-
-#pragma mark - 自动布局
-
-- (void)setViewAutoLayout {
     
+    self.tableView = tableView;
 }
 
 
+
+#pragma mark - 
+#pragma mark - 加载数据
+
+- (void)loadProjectData {
+    [self.dataSource removeAllObjects];
+    
+    [PGCProjectInfoAPIManager getProjectsRequestWithParameters:@{@"page":@(1), @"page_size":@(20)} responds:^(RespondsStatus status, NSString *message, id resultData) {
+        if (status == RespondsStatusSuccess) {
+            
+            NSArray *resultArray = resultData[@"result"];
+            
+            for (id value in resultArray) {
+                PGCProjectInfo *project = [PGCProjectInfo mj_objectWithKeyValues:value];
+                [self.dataSource addObject:project];
+            }
+            [self.tableView reloadData];
+            [self.tableView.mj_header endRefreshing];
+        }
+    }];
+}
+
+- (void)loadMoreData {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.tableView.mj_footer endRefreshing];
+    });
+}
+
+#pragma mark -
+#pragma mark - UITableViewDataSource
+
+- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.dataSource.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    PGCProjectInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:kProjectInfoCell];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [cell loadProjectWithModel:self.dataSource[indexPath.row]];
+    
+    return cell;
+}
+
+
+
+#pragma mark -
+#pragma mark - UITableViewDelegate
+
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [tableView cellHeightForIndexPath:indexPath model:nil keyPath:nil cellClass:[PGCProjectInfoCell class] contentViewWidth:SCREEN_WIDTH];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    PGCProjectInfoDetailViewController *detailVC = [[PGCProjectInfoDetailViewController alloc] init];
+    
+    detailVC.projectInfoDetail = self.dataSource[indexPath.row];
+    
+    [self.navigationController pushViewController:detailVC animated:true];
+}
+
+
+
+#pragma mark -
 #pragma mark - PGCProjectInfoNavigationBarDelegate
 
 - (void)projectInfoNavigationBar:(PGCProjectInfoNavigationBar *)projectInfoNavigationBar tapItem:(NSInteger)tag {
@@ -119,7 +216,7 @@
             break;
         case searchItemTag:
         {
-            PGCLog(@"搜索");
+            NSLog(@"搜索");
         }
             break;
         default:
@@ -128,147 +225,154 @@
 }
 
 
-#pragma mark - PGCDropMenuDataSource
+#pragma mark -
+#pragma mark - PGCDropMenuDaJSDropDownMenuDataSource
 
-- (NSInteger)dropMenu:(PGCDropMenu *)dropMenu numberOfRowsInColumn:(NSInteger)column leftOrRight:(NSInteger)leftOrRight leftSelectedRow:(NSInteger)leftSelectedRow {
-    if (column == 0) {
-        if (leftOrRight == 1) {
-            return _data1.count;
-            
-        }
-        if (leftOrRight == 2) {
-            return [_data1[leftSelectedRow][@"data"] count];
-        }
-    }
-    else if (column == 1) {
-        return _data2.count;
-        
-    }
-    else if (column == 2) {
-        return _data3.count;
-        
-    }
-    return 0;
-}
-
-- (NSString *)dropMenu:(PGCDropMenu *)dropMenu titleForRowAtIndexPath:(PGCIndexPath *)indexPath {
-    if (indexPath.column == 0) {
-        if (indexPath.leftOrRight == 1) {
-            NSDictionary *menuDic = [_data1 objectAtIndex:indexPath.row];
-            
-            return [menuDic objectForKey:@"title"];
-        }
-        if (indexPath.leftOrRight == 2)  {
-            NSInteger leftRow = indexPath.leftRow;
-            NSDictionary *menuDic = [_data1 objectAtIndex:leftRow];
-            
-            return [[menuDic objectForKey:@"data"] objectAtIndex:indexPath.row];
-        }
-    }
-    else if (indexPath.column == 1) {
-        return _data2[indexPath.row];
-        
-    }
-    else if (indexPath.column == 2) {        
-        return _data3[indexPath.row];
-    }
-    return nil;
-}
-
-- (BOOL)haveRightInColumn:(NSInteger)column {    
-    if (column == 0) {
-        return true;
-    }
-    return false;
-}
-
-- (NSInteger)currentLeftSelectedRow:(NSInteger)column {
+- (NSInteger)numberOfColumnsInMenu:(JSDropDownMenu *)menu {
     
-    if (column == 0) {
-        return _currentData1Index;
-        
-    }
-    if (column == 1) {
-        return _currentData2Index;
-    }    
-    return 0;
+    return 3;
 }
 
-- (BOOL)displayCollectionViewInColumn:(NSInteger)column {
+- (BOOL)displayByCollectionViewInColumn:(NSInteger)column{
     if (column == 2) {
         return true;
     }
     return false;
 }
 
-
-#pragma mark - PGCDropDownMenuDelegate
-
-- (void)dropMenu:(PGCDropMenu *)dropMenu didSelectRowAtIndexPath:(PGCIndexPath *)indexPath {
+- (BOOL)haveRightTableViewInColumn:(NSInteger)column {
     
-    if (indexPath.column == 0) {
+    if (column == 0) {
+        return true;
+    }
+    return false;
+}
+
+- (CGFloat)widthRatioOfLeftColumn:(NSInteger)column {
+    
+    if (column == 0) {
+        return 0.5;
+    }
+    return 1;
+}
+
+- (NSInteger)currentLeftSelectedRow:(NSInteger)column {
+    
+    if (column==0) {
         
-        if(indexPath.leftOrRight == 0){
+        return _currentAreaIndex;
+        
+    }
+    if (column==1) {
+        
+        return _currenttypeIndex;
+    }
+    
+    return 0;
+}
+
+- (NSInteger)menu:(JSDropDownMenu *)menu numberOfRowsInColumn:(NSInteger)column leftOrRight:(NSInteger)leftOrRight leftRow:(NSInteger)leftRow {
+    
+    if (column==0) {
+        if (leftOrRight==0) {
             
-            _currentData1Index = indexPath.row;
+            return _areaDatas.count;
+        } else{
+            PGCProvince *province = _areaDatas[leftRow];
+            NSArray *arr = province.city;
             
-            return;
+            return arr.count;
         }
+    }
+    else if (column==1) {
         
-    } else if(indexPath.column == 1){
+        return _typeDatas.count;
+    }
+    else if (column==2) {
         
-        _currentData2Index = indexPath.row;
-        
-    } else{
-        
-        _currentData3Index = indexPath.row;
+        return _stageDatas.count;
+    }
+    
+    return 0;
+}
+
+- (NSString *)menu:(JSDropDownMenu *)menu titleForColumn:(NSInteger)column{
+    
+    switch (column) {
+        case 0: return @"地区";
+            break;
+        case 1: return @"类别";
+            break;
+        case 2: return @"阶段";
+            break;
+        default:
+            return nil;
+            break;
     }
 }
 
-#pragma mark - UITableViewDataSource
-
-- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 8;
+- (NSString *)menu:(JSDropDownMenu *)menu titleForRowAtIndexPath:(JSIndexPath *)indexPath {
+    
+    if (indexPath.column==0) {
+        if (indexPath.leftOrRight==0) {
+            PGCProvince *province = _areaDatas[indexPath.row];
+            
+            return province.province;
+            
+        } else {
+            PGCProvince *province = _areaDatas[indexPath.leftRow];
+            NSArray *rightArr = province.city;
+            PGCCity *city = rightArr[indexPath.row];
+            
+            return city.city;
+        }
+    }
+    else if (indexPath.column==1) {
+        PGCProjectType *type = _typeDatas[indexPath.row];
+        
+        return type.name;
+    }
+    else {
+        PGCProjectProgress *progress = _stageDatas[indexPath.row];
+        
+        return progress.name;
+    }
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    PGCProjectInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:kProjectInfoCell];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
+#pragma mark -
+#pragma mark - JSDropDownMenuDelegatetaSource
+
+- (void)menu:(JSDropDownMenu *)menu didSelectRowAtIndexPath:(JSIndexPath *)indexPath {
     
-    return cell;
+    if (indexPath.column == 0) {
+        
+        if (indexPath.leftOrRight == 0) {
+            
+            _currentAreaIndex = indexPath.row;
+            
+            return;
+        }
+    }
+    else if (indexPath.column == 1) {
+        
+        _currenttypeIndex = indexPath.row;
+    }
+    else{
+        _currentstageIndex = indexPath.row;
+    }
 }
 
 
-#pragma mark - UITableViewDelegate
 
-- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [tableView cellHeightForIndexPath:indexPath model:nil keyPath:nil cellClass:[PGCProjectInfoCell class] contentViewWidth:SCREEN_WIDTH];
-}
+#pragma mark -
+#pragma mark - Getter
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    [self.navigationController pushViewController:[PGCProjectInfoDetailViewController new] animated:true];
-}
-
-
-- (void)initializeDataSource {
-    _data1 = [NSMutableArray arrayWithArray:@[@{@"title":@"全国", @"data":@[@"全国", @"1", @"2"]},
-                                              @{@"title":@"当前城市", @"data":@[@"全国", @"10", @"20"]},
-                                              @{@"title":@"热门城市", @"data":@[@"全国", @"100", @"200"]},
-                                              @{@"title":@"重庆", @"data":@[@"重庆", @"1000", @"2000"]},
-                                              @{@"title":@"四川", @"data":@[@"成都", @"10000", @"20000"]},
-                                              @{@"title":@"贵州", @"data":@[@"贵阳", @"300", @"400"]},
-                                              @{@"title":@"云南", @"data":@[@"昆明", @"500", @"600"]},
-                                              @{@"title":@"广西", @"data":@[@"西宁", @"700", @"800"]},
-                                              @{@"title":@"广东", @"data":@[@"广州", @"900", @"1100"]},
-                                              @{@"title":@"福建", @"data":@[@"福州", @"1200", @"1300"]},
-                                              @{@"title":@"浙江", @"data":@[@"杭州", @"1400", @"1500"]},
-                                              @{@"title":@"江苏", @"data":@[@"南京", @"1600", @"1700"]}
-                                              ]];
-    
-    _data2 = [NSMutableArray arrayWithArray:@[@"水利设施", @"基础设施（路灯照明）", @"道路桥梁（道路、桥梁、轨道、隧道）", @"工业建设（加工厂、仓库、厂房车间等）", @"住宅社区（住宅小区、公寓楼、别墅等）", @"行政办公（办公楼、行政楼、综合楼）", @"文体娱乐（教学楼、图书馆、体育馆、医院等）", @"商业综合（酒店商务、超市百货、广场等）"]];
-    
-    _data3 = [NSMutableArray arrayWithArray:@[@"工程筹备", @"勘探设计", @"施工招标", @"主体在建", @"设备安装", @"内外装修", @"竣工"]];
+- (NSMutableArray *)dataSource {
+    if (!_dataSource) {
+        _dataSource = [NSMutableArray array];
+    }
+    return _dataSource;
 }
 
 

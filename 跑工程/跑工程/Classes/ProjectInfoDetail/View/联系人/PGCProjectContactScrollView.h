@@ -12,4 +12,6 @@ static NSString *const kProjectContactScrollView = @"PGCProjectContactScrollView
 
 @interface PGCProjectContactScrollView : UICollectionViewCell
 
+- (void)setContactInfoWithModel:(id)model;
+
 @end

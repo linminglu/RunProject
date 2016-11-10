@@ -12,4 +12,6 @@ static NSString *const kProjectSurveyScrollView = @"PGCProjectSurveyScrollView";
 
 @interface PGCProjectSurveyScrollView : UICollectionViewCell
 
+- (void)setSurveyInfoWithModel:(id)model;
+
 @end

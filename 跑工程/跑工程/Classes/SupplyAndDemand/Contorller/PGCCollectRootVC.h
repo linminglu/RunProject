@@ -11,12 +11,4 @@
 
 @interface PGCCollectRootVC : UIViewController <PGCSupplyAndDemandShareViewDelegate>
 
-/**
- 弹出框
- 
- @param view
- @param title
- */
-- (void)showCollectHUDWith:(UIView *)view title:(NSString *)title;
-
 @end

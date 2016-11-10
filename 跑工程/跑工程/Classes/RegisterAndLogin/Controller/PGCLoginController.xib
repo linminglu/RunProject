@@ -20,7 +20,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xat-r2-KP0">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xat-r2-KP0" userLabel="手机号">
                     <rect key="frame" x="0.0" y="75" width="375" height="70"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="手机号" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rL3-1E-3qe">
@@ -45,14 +45,14 @@
                                 </mask>
                             </variation>
                         </label>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入您的手机号" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jUG-wg-UIr">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入您的手机号" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="jUG-wg-UIr">
                             <rect key="frame" x="80" y="20" width="200" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="hO0-Wk-e5y"/>
                                 <constraint firstAttribute="width" constant="200" id="hQ6-jP-U4e"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
+                            <textInputTraits key="textInputTraits" keyboardType="numberPad" enablesReturnKeyAutomatically="YES"/>
                             <variation key="default">
                                 <mask key="constraints">
                                     <exclude reference="hO0-Wk-e5y"/>
@@ -82,10 +82,10 @@
                         </mask>
                         <mask key="constraints">
                             <exclude reference="pvi-C6-FaI"/>
-                            <exclude reference="nNh-rs-ORp"/>
-                            <exclude reference="ooG-vf-KJS"/>
                             <exclude reference="Nbf-BS-s6d"/>
                             <exclude reference="UUt-2h-kQ6"/>
+                            <exclude reference="nNh-rs-ORp"/>
+                            <exclude reference="ooG-vf-KJS"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=regular-widthClass=compact">
@@ -95,14 +95,14 @@
                         </mask>
                         <mask key="constraints">
                             <include reference="pvi-C6-FaI"/>
-                            <include reference="nNh-rs-ORp"/>
-                            <include reference="ooG-vf-KJS"/>
                             <include reference="Nbf-BS-s6d"/>
                             <include reference="UUt-2h-kQ6"/>
+                            <include reference="nNh-rs-ORp"/>
+                            <include reference="ooG-vf-KJS"/>
                         </mask>
                     </variation>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="50n-Z1-1Un">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="50n-Z1-1Un" userLabel="密码">
                     <rect key="frame" x="0.0" y="155" width="375" height="70"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="密   码" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W7C-tv-8qz">
@@ -127,14 +127,14 @@
                                 </mask>
                             </variation>
                         </label>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入您的密码" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PJ4-pC-SBr">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入您的密码" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="PJ4-pC-SBr">
                             <rect key="frame" x="80" y="20" width="200" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="AKh-y8-kuu"/>
                                 <constraint firstAttribute="width" constant="200" id="dWc-vd-Nut"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
+                            <textInputTraits key="textInputTraits" returnKeyType="join" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
                             <variation key="default">
                                 <mask key="constraints">
                                     <exclude reference="AKh-y8-kuu"/>
@@ -164,10 +164,10 @@
                         </mask>
                         <mask key="constraints">
                             <exclude reference="rrt-YT-YNy"/>
-                            <exclude reference="LBT-Wa-HE4"/>
-                            <exclude reference="pVH-sW-sbq"/>
                             <exclude reference="RcK-Z9-XKI"/>
                             <exclude reference="gKZ-Tl-Hot"/>
+                            <exclude reference="LBT-Wa-HE4"/>
+                            <exclude reference="pVH-sW-sbq"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=regular-widthClass=compact">
@@ -177,10 +177,10 @@
                         </mask>
                         <mask key="constraints">
                             <include reference="rrt-YT-YNy"/>
-                            <include reference="LBT-Wa-HE4"/>
-                            <include reference="pVH-sW-sbq"/>
                             <include reference="RcK-Z9-XKI"/>
                             <include reference="gKZ-Tl-Hot"/>
+                            <include reference="LBT-Wa-HE4"/>
+                            <include reference="pVH-sW-sbq"/>
                         </mask>
                     </variation>
                 </view>
@@ -285,19 +285,19 @@
                     <exclude reference="4bM-ja-tMz"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="K9w-tX-VQL"/>
-                    <exclude reference="Sir-Uz-Yeb"/>
-                    <exclude reference="eJd-zR-cQa"/>
-                    <exclude reference="iHb-fi-GLz"/>
-                    <exclude reference="rHp-CG-W1h"/>
-                    <exclude reference="5EE-ka-GRb"/>
-                    <exclude reference="EfM-6m-2U3"/>
-                    <exclude reference="409-Io-hTR"/>
-                    <exclude reference="ZNT-bo-pur"/>
-                    <exclude reference="c3D-ri-3C4"/>
                     <exclude reference="D5s-fX-eit"/>
                     <exclude reference="HD9-dJ-han"/>
                     <exclude reference="b8Z-qg-ctE"/>
+                    <exclude reference="eJd-zR-cQa"/>
+                    <exclude reference="iHb-fi-GLz"/>
+                    <exclude reference="rHp-CG-W1h"/>
+                    <exclude reference="409-Io-hTR"/>
+                    <exclude reference="ZNT-bo-pur"/>
+                    <exclude reference="c3D-ri-3C4"/>
+                    <exclude reference="K9w-tX-VQL"/>
+                    <exclude reference="Sir-Uz-Yeb"/>
+                    <exclude reference="5EE-ka-GRb"/>
+                    <exclude reference="EfM-6m-2U3"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -309,19 +309,19 @@
                     <include reference="4bM-ja-tMz"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="K9w-tX-VQL"/>
-                    <include reference="Sir-Uz-Yeb"/>
-                    <include reference="eJd-zR-cQa"/>
-                    <include reference="iHb-fi-GLz"/>
-                    <include reference="rHp-CG-W1h"/>
-                    <include reference="5EE-ka-GRb"/>
-                    <include reference="EfM-6m-2U3"/>
-                    <include reference="409-Io-hTR"/>
-                    <include reference="ZNT-bo-pur"/>
-                    <include reference="c3D-ri-3C4"/>
                     <include reference="D5s-fX-eit"/>
                     <include reference="HD9-dJ-han"/>
                     <include reference="b8Z-qg-ctE"/>
+                    <include reference="eJd-zR-cQa"/>
+                    <include reference="iHb-fi-GLz"/>
+                    <include reference="rHp-CG-W1h"/>
+                    <include reference="409-Io-hTR"/>
+                    <include reference="ZNT-bo-pur"/>
+                    <include reference="c3D-ri-3C4"/>
+                    <include reference="K9w-tX-VQL"/>
+                    <include reference="Sir-Uz-Yeb"/>
+                    <include reference="5EE-ka-GRb"/>
+                    <include reference="EfM-6m-2U3"/>
                 </mask>
             </variation>
         </view>

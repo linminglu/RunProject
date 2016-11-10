@@ -19,28 +19,13 @@
 
 @interface PGCTabBarController ()<PGCTabBarDelegate>
 
-@property (nonatomic, strong) NSMutableArray *items;
-
 @property (strong, nonatomic) PGCTabBar *pGCTabBar;
-
+@property (nonatomic, strong) NSMutableArray *items;
 @property (assign, nonatomic) BOOL isSelect;
 
 @end
 
 @implementation PGCTabBarController
-
-- (NSMutableArray *)items {
-    if (!_items) {
-        
-        _items = [NSMutableArray array];
-        
-    }
-    return _items;
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -52,7 +37,6 @@
     [self setUpTabBar];
     
     // 每隔一段时间请求未读数
-    
 }
 
 
@@ -76,7 +60,6 @@
     [self.tabBar removeFromSuperview];
     
 }
-
 
 
 #pragma mark - 当点击tabBar上的按钮调用
@@ -146,6 +129,14 @@
 }
 
 
+#pragma mark - Getter
+
+- (NSMutableArray *)items {
+    if (!_items) {
+        _items = [NSMutableArray array];
+    }
+    return _items;
+}
 
 
 @end

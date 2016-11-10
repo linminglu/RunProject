@@ -83,7 +83,7 @@
     // 项目名称
     UILabel *nameLabel = [[UILabel alloc] init];
     nameLabel.font = SetFont(16);
-    nameLabel.text = @"项目名称重庆市什么什么项目";
+    nameLabel.text = self.projectInfoDetail.name;
     [projectTitleView addSubview:nameLabel];
     // 开始自动布局
     nameLabel.sd_layout
@@ -92,6 +92,7 @@
     .rightSpaceToView(projectTitleView, 15)
     .autoHeightRatio(0);
 }
+
 
 #pragma mark - Events
 
@@ -139,10 +140,12 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.item == 0) {
         PGCProjectSurveyScrollView *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kProjectSurveyScrollView forIndexPath:indexPath];
+        [cell setSurveyInfoWithModel:self.projectInfoDetail];
         return cell;
         
     } else {
         PGCProjectContactScrollView *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kProjectContactScrollView forIndexPath:indexPath];
+        [cell setContactInfoWithModel:self.projectInfoDetail];
         return cell;
     }
 }

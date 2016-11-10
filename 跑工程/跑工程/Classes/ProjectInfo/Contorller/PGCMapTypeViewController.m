@@ -164,11 +164,11 @@
     [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
         if (error) {
             // 编码失败
-            PGCLog(@"error:%@", error.localizedDescription);
+            NSLog(@"error:%@", error.localizedDescription);
         } else {
             // placemark 包含了经纬度所在的地理位置信息(城市编码、街道名称、区...)
             CLPlacemark *placemark = placemarks.firstObject;
-            PGCLog(@"%@", placemark);
+            NSLog(@"%@", placemark);
         }
     }];
 }

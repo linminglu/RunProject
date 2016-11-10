@@ -7,6 +7,7 @@
 //
 
 #import "PGCProjectInfoCell.h"
+#import "PGCProjectInfo.h"
 
 @interface PGCProjectInfoCell ()
 /**
@@ -158,6 +159,23 @@
     
     [self setupAutoHeightWithBottomView:self.line bottomMargin:0];
 }
+
+
+- (void)loadProjectWithModel:(id)model
+{
+    if (!model) {
+        return;
+    }
+    PGCProjectInfo *project = model;
+    self.nameLabel.text = project.name;
+    self.contentLabel.text = project.desc;
+    self.categoryLabel.text = project.type_name;
+    self.stageLabel.text = project.progress_name;
+    self.areaLabel.text = [project.province stringByAppendingString:project.city];
+    self.timeLabel.text = project.start_time;
+}
+
+
 
 - (void)awakeFromNib {
     [super awakeFromNib];

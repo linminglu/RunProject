@@ -94,6 +94,13 @@
 }
 
 
+#pragma mark - Public
+
+- (void)setContactInfoWithModel:(id)model {
+    //
+}
+
+
 #pragma mark - Events
 
 - (void)respondsToCheckContact:(UIButton *)sender {

@@ -11,12 +11,4 @@
 
 @interface PGCSupplyAndDemandDetailVC : UIViewController <PGCSupplyAndDemandShareViewDelegate>
 
-/**
- 弹出框
-
- @param view
- @param title
- */
-- (void)showDetailHUDWith:(UIView *)view title:(NSString *)title;
-
 @end

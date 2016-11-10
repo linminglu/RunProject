@@ -12,23 +12,15 @@
 /**
  *  基本配置
  */
-- (void)configurationLaunchUserOption;
+- (void)configLaunchingUserData;
 /**
- *  注册高德地图 pod 'AMap2DMap'
+ *  注册高德地图
  */
 - (void)registerAMap;
-
 /**
  *  检查更新
  */
 - (void)checkAppUpDataWithshowOption:(BOOL)showOption;
-/**
- *  上传用户设备信息
- */
-- (void)upLoadMessageAboutUser;
-/**
- *  检查黑名单用户
- */
-- (void)checkBlack;
+
 
 @end

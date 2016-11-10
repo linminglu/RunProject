@@ -7,9 +7,13 @@ target '跑工程' do
     pod 'SDWebImage'
     pod 'Masonry'
     pod 'MJRefresh'
+    pod 'MJExtension'
     pod 'MBProgressHUD'
     pod 'IQKeyboardManager'
     pod 'AMap2DMap'
     pod 'AMapSearch'
     pod 'AMapLocation'
+    pod 'YYCache'
+    pod 'YYModel'
+    pod 'Realm'
 end

@@ -58,7 +58,7 @@ typedef NS_ENUM(NSUInteger, ButtonTag) {
         
         selected = !selected;
         
-        [self showCollectHUDWith:self.view title:selected ? @"收藏成功!":@"取消收藏成功!"];
+//        [self showCollectHUDWith:self.view title:selected ? @"收藏成功!":@"取消收藏成功!"];
         
         self.heartBtn.itemLabel.text = selected ? @"取消收藏":@"收藏";
         
@@ -67,19 +67,6 @@ typedef NS_ENUM(NSUInteger, ButtonTag) {
         shareView.delegate = self;
         [shareView showShareView];
     }
-}
-
-
-
-#pragma mark - Public
-
-- (void)showCollectHUDWith:(UIView *)view title:(NSString *)title {
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:true];
-    hud.animationType = MBProgressHUDAnimationFade;
-    hud.mode = MBProgressHUDModeText;
-    hud.label.text = title;
-    
-    [hud hideAnimated:true afterDelay:1.5f];
 }
 
 

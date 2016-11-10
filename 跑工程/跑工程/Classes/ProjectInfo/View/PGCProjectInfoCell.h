@@ -12,5 +12,6 @@ static NSString *const kProjectInfoCell = @"ProjectInfoCell";
 
 @interface PGCProjectInfoCell : UITableViewCell
 
+- (void)loadProjectWithModel:(id)model;
 
 @end

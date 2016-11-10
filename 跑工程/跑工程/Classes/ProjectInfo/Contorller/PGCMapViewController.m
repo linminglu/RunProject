@@ -54,7 +54,7 @@ static NSString *const kAnnotationViewIdentifier = @"AnnotationViewIdentifier";
 }
 
 - (void)respondsToAddAnnotation:(UILongPressGestureRecognizer *)gesture {
-    PGCLog(@"%@", NSStringFromSelector(_cmd));
+    NSLog(@"%@", NSStringFromSelector(_cmd));
     
     // 在手势开始的时候创建一个标注数据源
     if (gesture.state == UIGestureRecognizerStateBegan) {
@@ -77,7 +77,7 @@ static NSString *const kAnnotationViewIdentifier = @"AnnotationViewIdentifier";
 #pragma mark - MKMapViewDelegate
 // 地图加载失败
 - (void)mapViewDidFailLoadingMap:(MKMapView *)mapView withError:(NSError *)error {
-    PGCLog(@"%@", error.localizedDescription);
+    NSLog(@"%@", error.localizedDescription);
 }
 
 // 自定义标注视图
@@ -170,11 +170,11 @@ static NSString *const kAnnotationViewIdentifier = @"AnnotationViewIdentifier";
     [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
         if (error) {
             // 编码失败
-            PGCLog(@"error:%@", error.localizedDescription);
+            NSLog(@"error:%@", error.localizedDescription);
         } else {
             // placemark 包含了经纬度所在的地理位置信息(城市编码、街道名称、区...)
             CLPlacemark *placemark = placemarks.firstObject;
-            PGCLog(@"%@", placemark);
+            NSLog(@"%@", placemark);
         }
         
     }];
@@ -183,7 +183,7 @@ static NSString *const kAnnotationViewIdentifier = @"AnnotationViewIdentifier";
 #pragma mark - CLLocationManagerDelegate
 // 定位失败
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-    PGCLog(@"error:%@", error.localizedDescription);
+    NSLog(@"error:%@", error.localizedDescription);
 }
 
 // 位置更新

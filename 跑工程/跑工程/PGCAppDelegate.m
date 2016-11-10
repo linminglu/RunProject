@@ -11,8 +11,6 @@
 #import "PGCAppDelegate+AppLifeCircle.h"
 #import "PGCAppDelegate+RootController.h"
 
-#import "PGCTabBarController.h"
-
 @interface PGCAppDelegate ()
 
 @end
@@ -20,19 +18,17 @@
 @implementation PGCAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    // 检查更新
+    [self checkAppUpDataWithshowOption:false];
     // 初始化window
     [self setAppWindow];
     // 设置根视图控制器
     [self setRootViewController];
-    // 基本配置
-    [self configurationLaunchUserOption];
     // 注册高德地图
     [self registerAMap];
-    // 上传用户设备信息
-    [self upLoadMessageAboutUser];
-    // 检查更新
-    [self checkAppUpDataWithshowOption:NO];
-    
+    // 获取基本数据
+    [self configLaunchingUserData];
+    // 设置主窗口并显示在屏幕上
     [self.window makeKeyAndVisible];
     
     return YES;

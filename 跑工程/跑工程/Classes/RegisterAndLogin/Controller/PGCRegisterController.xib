@@ -46,13 +46,13 @@
                                 </mask>
                             </variation>
                         </label>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="公司名称或个人名称" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qKL-pU-dI9">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="公司名称或个人名称" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="qKL-pU-dI9">
                             <rect key="frame" x="80" y="10" width="275" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="2bu-s5-4RC"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
+                            <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
                             <variation key="default">
                                 <mask key="constraints">
                                     <exclude reference="2bu-s5-4RC"/>
@@ -103,13 +103,13 @@
                                 </mask>
                             </variation>
                         </label>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入您的姓名" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dMg-cB-VTJ">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入您的姓名" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="dMg-cB-VTJ">
                             <rect key="frame" x="80" y="60" width="275" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="Soc-dD-iDm"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
+                            <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
                             <variation key="default">
                                 <mask key="constraints">
                                     <exclude reference="Soc-dD-iDm"/>
@@ -160,13 +160,13 @@
                                 </mask>
                             </variation>
                         </label>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入您的手机号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pzj-sW-PyY">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入您的手机号" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Pzj-sW-PyY">
                             <rect key="frame" x="80" y="110" width="275" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="Yk3-DP-Opo"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
+                            <textInputTraits key="textInputTraits" keyboardType="numberPad" enablesReturnKeyAutomatically="YES"/>
                             <variation key="default">
                                 <mask key="constraints">
                                     <exclude reference="Yk3-DP-Opo"/>
@@ -223,7 +223,7 @@
                                 <constraint firstAttribute="height" constant="30" id="AXo-1V-lAB"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
+                            <textInputTraits key="textInputTraits" keyboardType="numberPad" enablesReturnKeyAutomatically="YES"/>
                             <variation key="default">
                                 <mask key="constraints">
                                     <exclude reference="AXo-1V-lAB"/>
@@ -300,13 +300,13 @@
                                 </mask>
                             </variation>
                         </label>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入您的新密码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2Nz-jg-wDc">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入您的新密码" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="2Nz-jg-wDc">
                             <rect key="frame" x="80" y="210" width="275" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="cFc-UP-BLN"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
+                            <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
                             <variation key="default">
                                 <mask key="constraints">
                                     <exclude reference="cFc-UP-BLN"/>
@@ -357,13 +357,13 @@
                                 </mask>
                             </variation>
                         </label>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请再次输入新密码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HSW-SQ-HyN">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请再次输入新密码" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="HSW-SQ-HyN">
                             <rect key="frame" x="80" y="260" width="275" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="PCI-hi-sDg"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
+                            <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
                             <variation key="default">
                                 <mask key="constraints">
                                     <exclude reference="PCI-hi-sDg"/>
@@ -452,53 +452,53 @@
                         </mask>
                         <mask key="constraints">
                             <exclude reference="dks-kQ-rGN"/>
-                            <exclude reference="NjO-DL-jV8"/>
-                            <exclude reference="TtY-GG-Vth"/>
-                            <exclude reference="nK5-tc-uVc"/>
-                            <exclude reference="6vZ-MZ-Twe"/>
-                            <exclude reference="LHc-Cv-crj"/>
-                            <exclude reference="UA3-wr-Thd"/>
-                            <exclude reference="Vez-tG-C62"/>
-                            <exclude reference="dxZ-UI-3Bj"/>
-                            <exclude reference="z01-Q2-YZb"/>
-                            <exclude reference="L6l-LQ-ia1"/>
-                            <exclude reference="bfn-q1-SSe"/>
-                            <exclude reference="Qa7-eB-Vs5"/>
-                            <exclude reference="mkT-y7-FTF"/>
-                            <exclude reference="vl4-oq-VUp"/>
-                            <exclude reference="bYW-7Y-D8g"/>
-                            <exclude reference="lO5-5o-Zn3"/>
-                            <exclude reference="rDD-9W-2VH"/>
-                            <exclude reference="Zgq-L6-bCG"/>
-                            <exclude reference="uaU-fZ-u2q"/>
-                            <exclude reference="vyb-Vd-GOU"/>
-                            <exclude reference="ZLl-Bv-4sN"/>
-                            <exclude reference="b3E-LD-DxJ"/>
-                            <exclude reference="uT0-1P-Guw"/>
-                            <exclude reference="XBi-Xb-kkO"/>
-                            <exclude reference="npr-7Q-2aI"/>
-                            <exclude reference="dRL-Ex-Pes"/>
-                            <exclude reference="h4Z-LJ-e3L"/>
-                            <exclude reference="3Ko-kC-u2z"/>
-                            <exclude reference="8vt-TK-JTE"/>
-                            <exclude reference="ds4-A8-XPW"/>
-                            <exclude reference="H3x-TY-YzK"/>
-                            <exclude reference="Lo4-gz-dWB"/>
-                            <exclude reference="eRd-sL-bg2"/>
+                            <exclude reference="kKA-Za-9qy"/>
+                            <exclude reference="nrk-Sg-eOg"/>
                             <exclude reference="CEf-yN-GPm"/>
                             <exclude reference="VsW-Yt-hjQ"/>
                             <exclude reference="tPH-KI-Mzh"/>
+                            <exclude reference="L6l-LQ-ia1"/>
+                            <exclude reference="bfn-q1-SSe"/>
                             <exclude reference="A4B-Lc-GsT"/>
                             <exclude reference="YaK-iA-UvJ"/>
                             <exclude reference="vrU-wj-sIV"/>
-                            <exclude reference="Qis-9I-7vH"/>
-                            <exclude reference="TH9-TA-Rxt"/>
-                            <exclude reference="kKA-Za-9qy"/>
-                            <exclude reference="nrk-Sg-eOg"/>
-                            <exclude reference="EhN-dk-R5f"/>
-                            <exclude reference="m4u-Wq-Kej"/>
+                            <exclude reference="Qa7-eB-Vs5"/>
+                            <exclude reference="mkT-y7-FTF"/>
+                            <exclude reference="vl4-oq-VUp"/>
+                            <exclude reference="3Ko-kC-u2z"/>
+                            <exclude reference="8vt-TK-JTE"/>
+                            <exclude reference="ds4-A8-XPW"/>
                             <exclude reference="b2m-SP-i1L"/>
                             <exclude reference="mjw-YD-leQ"/>
+                            <exclude reference="ZLl-Bv-4sN"/>
+                            <exclude reference="b3E-LD-DxJ"/>
+                            <exclude reference="uT0-1P-Guw"/>
+                            <exclude reference="Zgq-L6-bCG"/>
+                            <exclude reference="uaU-fZ-u2q"/>
+                            <exclude reference="vyb-Vd-GOU"/>
+                            <exclude reference="Qis-9I-7vH"/>
+                            <exclude reference="TH9-TA-Rxt"/>
+                            <exclude reference="6vZ-MZ-Twe"/>
+                            <exclude reference="LHc-Cv-crj"/>
+                            <exclude reference="UA3-wr-Thd"/>
+                            <exclude reference="EhN-dk-R5f"/>
+                            <exclude reference="m4u-Wq-Kej"/>
+                            <exclude reference="XBi-Xb-kkO"/>
+                            <exclude reference="npr-7Q-2aI"/>
+                            <exclude reference="H3x-TY-YzK"/>
+                            <exclude reference="Lo4-gz-dWB"/>
+                            <exclude reference="eRd-sL-bg2"/>
+                            <exclude reference="NjO-DL-jV8"/>
+                            <exclude reference="TtY-GG-Vth"/>
+                            <exclude reference="nK5-tc-uVc"/>
+                            <exclude reference="dRL-Ex-Pes"/>
+                            <exclude reference="h4Z-LJ-e3L"/>
+                            <exclude reference="bYW-7Y-D8g"/>
+                            <exclude reference="lO5-5o-Zn3"/>
+                            <exclude reference="rDD-9W-2VH"/>
+                            <exclude reference="Vez-tG-C62"/>
+                            <exclude reference="dxZ-UI-3Bj"/>
+                            <exclude reference="z01-Q2-YZb"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=regular-widthClass=compact">
@@ -524,53 +524,53 @@
                         </mask>
                         <mask key="constraints">
                             <include reference="dks-kQ-rGN"/>
-                            <include reference="NjO-DL-jV8"/>
-                            <include reference="TtY-GG-Vth"/>
-                            <include reference="nK5-tc-uVc"/>
-                            <include reference="6vZ-MZ-Twe"/>
-                            <include reference="LHc-Cv-crj"/>
-                            <include reference="UA3-wr-Thd"/>
-                            <include reference="Vez-tG-C62"/>
-                            <include reference="dxZ-UI-3Bj"/>
-                            <include reference="z01-Q2-YZb"/>
-                            <include reference="L6l-LQ-ia1"/>
-                            <include reference="bfn-q1-SSe"/>
-                            <include reference="Qa7-eB-Vs5"/>
-                            <include reference="mkT-y7-FTF"/>
-                            <include reference="vl4-oq-VUp"/>
-                            <include reference="bYW-7Y-D8g"/>
-                            <include reference="lO5-5o-Zn3"/>
-                            <include reference="rDD-9W-2VH"/>
-                            <include reference="Zgq-L6-bCG"/>
-                            <include reference="uaU-fZ-u2q"/>
-                            <include reference="vyb-Vd-GOU"/>
-                            <include reference="ZLl-Bv-4sN"/>
-                            <include reference="b3E-LD-DxJ"/>
-                            <include reference="uT0-1P-Guw"/>
-                            <include reference="XBi-Xb-kkO"/>
-                            <include reference="npr-7Q-2aI"/>
-                            <include reference="dRL-Ex-Pes"/>
-                            <include reference="h4Z-LJ-e3L"/>
-                            <include reference="3Ko-kC-u2z"/>
-                            <include reference="8vt-TK-JTE"/>
-                            <include reference="ds4-A8-XPW"/>
-                            <include reference="H3x-TY-YzK"/>
-                            <include reference="Lo4-gz-dWB"/>
-                            <include reference="eRd-sL-bg2"/>
+                            <include reference="kKA-Za-9qy"/>
+                            <include reference="nrk-Sg-eOg"/>
                             <include reference="CEf-yN-GPm"/>
                             <include reference="VsW-Yt-hjQ"/>
                             <include reference="tPH-KI-Mzh"/>
+                            <include reference="L6l-LQ-ia1"/>
+                            <include reference="bfn-q1-SSe"/>
                             <include reference="A4B-Lc-GsT"/>
                             <include reference="YaK-iA-UvJ"/>
                             <include reference="vrU-wj-sIV"/>
-                            <include reference="Qis-9I-7vH"/>
-                            <include reference="TH9-TA-Rxt"/>
-                            <include reference="kKA-Za-9qy"/>
-                            <include reference="nrk-Sg-eOg"/>
-                            <include reference="EhN-dk-R5f"/>
-                            <include reference="m4u-Wq-Kej"/>
+                            <include reference="Qa7-eB-Vs5"/>
+                            <include reference="mkT-y7-FTF"/>
+                            <include reference="vl4-oq-VUp"/>
+                            <include reference="3Ko-kC-u2z"/>
+                            <include reference="8vt-TK-JTE"/>
+                            <include reference="ds4-A8-XPW"/>
                             <include reference="b2m-SP-i1L"/>
                             <include reference="mjw-YD-leQ"/>
+                            <include reference="ZLl-Bv-4sN"/>
+                            <include reference="b3E-LD-DxJ"/>
+                            <include reference="uT0-1P-Guw"/>
+                            <include reference="Zgq-L6-bCG"/>
+                            <include reference="uaU-fZ-u2q"/>
+                            <include reference="vyb-Vd-GOU"/>
+                            <include reference="Qis-9I-7vH"/>
+                            <include reference="TH9-TA-Rxt"/>
+                            <include reference="6vZ-MZ-Twe"/>
+                            <include reference="LHc-Cv-crj"/>
+                            <include reference="UA3-wr-Thd"/>
+                            <include reference="EhN-dk-R5f"/>
+                            <include reference="m4u-Wq-Kej"/>
+                            <include reference="XBi-Xb-kkO"/>
+                            <include reference="npr-7Q-2aI"/>
+                            <include reference="H3x-TY-YzK"/>
+                            <include reference="Lo4-gz-dWB"/>
+                            <include reference="eRd-sL-bg2"/>
+                            <include reference="NjO-DL-jV8"/>
+                            <include reference="TtY-GG-Vth"/>
+                            <include reference="nK5-tc-uVc"/>
+                            <include reference="dRL-Ex-Pes"/>
+                            <include reference="h4Z-LJ-e3L"/>
+                            <include reference="bYW-7Y-D8g"/>
+                            <include reference="lO5-5o-Zn3"/>
+                            <include reference="rDD-9W-2VH"/>
+                            <include reference="Vez-tG-C62"/>
+                            <include reference="dxZ-UI-3Bj"/>
+                            <include reference="z01-Q2-YZb"/>
                         </mask>
                     </variation>
                 </view>
