@@ -10,9 +10,8 @@
 
 @interface PGCChooseJobController : UIViewController
 
-typedef void (^blo) (NSString *job);
+typedef void (^JobBlock) (NSString *job);
 
-@property (nonatomic,copy) blo block;
-
+@property (nonatomic,copy) JobBlock block;
 
 @end

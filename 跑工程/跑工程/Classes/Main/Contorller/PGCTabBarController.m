@@ -17,7 +17,7 @@
 #import "PGCContactsController.h"
 #import "PGCProfileController.h"
 
-@interface PGCTabBarController ()<PGCTabBarDelegate>
+@interface PGCTabBarController () <PGCTabBarDelegate>
 
 @property (strong, nonatomic) PGCTabBar *pGCTabBar;
 @property (nonatomic, strong) NSMutableArray *items;
@@ -58,7 +58,6 @@
     
     // 移除系统的tabBar
     [self.tabBar removeFromSuperview];
-    
 }
 
 

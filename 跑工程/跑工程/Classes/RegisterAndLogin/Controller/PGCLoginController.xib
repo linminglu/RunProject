@@ -11,7 +11,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PGCLoginController">
             <connections>
-                <outlet property="LoginButton" destination="GKx-zP-Ntz" id="d6y-v5-Kof"/>
+                <outlet property="loginButton" destination="GKx-zP-Ntz" id="Xse-re-3Y3"/>
+                <outlet property="userPasswordTF" destination="PJ4-pC-SBr" id="mxf-sh-izc"/>
+                <outlet property="userPhoneTF" destination="jUG-wg-UIr" id="kwW-u0-tlQ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -190,9 +192,9 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="60" id="EJL-vl-4uF"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <state key="normal" title="登  录">
-                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <variation key="default">
                         <mask key="constraints">
@@ -204,16 +206,19 @@
                             <include reference="EJL-vl-4uF"/>
                         </mask>
                     </variation>
+                    <connections>
+                        <action selector="loginBtnClick:" destination="-1" eventType="touchUpInside" id="ZbS-OY-dhF"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CWh-Kd-aWv">
-                    <rect key="frame" x="300" y="622" width="60" height="30"/>
+                    <rect key="frame" x="295" y="617" width="60" height="30"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="60" id="MtX-FI-wXk"/>
                         <constraint firstAttribute="height" constant="30" id="Mxv-ti-s6k"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <state key="normal" title="现在注册">
-                        <color key="titleColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="titleColor" red="0.98039215686274506" green="0.45882352941176469" blue="0.039215686274509803" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <variation key="default">
                         <mask key="constraints">
@@ -232,14 +237,14 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4bM-ja-tMz">
-                    <rect key="frame" x="25" y="622" width="60" height="30"/>
+                    <rect key="frame" x="20" y="617" width="60" height="30"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="60" id="AoL-IM-BwL"/>
                         <constraint firstAttribute="height" constant="30" id="FYD-7i-EqZ"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <state key="normal" title="忘记密码">
-                        <color key="titleColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="titleColor" red="0.98039215686274506" green="0.45882352941176469" blue="0.039215686274509803" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <variation key="default">
                         <mask key="constraints">
@@ -261,14 +266,14 @@
             <color key="backgroundColor" red="0.95559728145599365" green="0.95559728145599365" blue="0.95559728145599365" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="GKx-zP-Ntz" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="25" id="409-Io-hTR"/>
-                <constraint firstAttribute="trailing" secondItem="CWh-Kd-aWv" secondAttribute="trailing" constant="15" id="5EE-ka-GRb"/>
+                <constraint firstAttribute="trailing" secondItem="CWh-Kd-aWv" secondAttribute="trailing" constant="20" id="5EE-ka-GRb"/>
                 <constraint firstItem="Xat-r2-KP0" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="70" id="D5s-fX-eit">
                     <variation key="heightClass=regular-widthClass=compact" constant="75"/>
                 </constraint>
-                <constraint firstAttribute="bottom" secondItem="CWh-Kd-aWv" secondAttribute="bottom" constant="15" id="EfM-6m-2U3"/>
+                <constraint firstAttribute="bottom" secondItem="CWh-Kd-aWv" secondAttribute="bottom" constant="20" id="EfM-6m-2U3"/>
                 <constraint firstAttribute="trailing" secondItem="Xat-r2-KP0" secondAttribute="trailing" id="HD9-dJ-han"/>
-                <constraint firstAttribute="bottom" secondItem="4bM-ja-tMz" secondAttribute="bottom" constant="15" id="K9w-tX-VQL"/>
-                <constraint firstItem="4bM-ja-tMz" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="25" id="Sir-Uz-Yeb"/>
+                <constraint firstAttribute="bottom" secondItem="4bM-ja-tMz" secondAttribute="bottom" constant="20" id="K9w-tX-VQL"/>
+                <constraint firstItem="4bM-ja-tMz" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="Sir-Uz-Yeb"/>
                 <constraint firstAttribute="trailing" secondItem="GKx-zP-Ntz" secondAttribute="trailing" constant="25" id="ZNT-bo-pur"/>
                 <constraint firstItem="Xat-r2-KP0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="b8Z-qg-ctE"/>
                 <constraint firstItem="GKx-zP-Ntz" firstAttribute="top" secondItem="50n-Z1-1Un" secondAttribute="bottom" constant="35" id="c3D-ri-3C4"/>
@@ -324,6 +329,7 @@
                     <include reference="EfM-6m-2U3"/>
                 </mask>
             </variation>
+            <point key="canvasLocation" x="-607" y="-23"/>
         </view>
     </objects>
 </document>

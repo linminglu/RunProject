@@ -10,10 +10,8 @@
 
 @interface PGCChooseCompanyController : UIViewController
 
-typedef void (^blo) (NSString *job);
+typedef void (^CompanyBlock) (NSString *company);
 
-@property (nonatomic,copy) blo block;
-
-@property (weak, nonatomic) IBOutlet UITextField *companyTextField;
+@property (copy, nonatomic) CompanyBlock block;
 
 @end

@@ -18,7 +18,7 @@ NSString *const kSendVerifyCodeURL = @"open/sendVerifyCode.htm";
 NSString *const kUserRegist = @"user/open/userRegist.htm";
 // 登录
 NSString *const kUserLogin = @"user/open/userLogin.htm";
-// 上传推送信心
+// 上传推送信息
 NSString *const kUserPushInfo = @"user/access/userPushInfo.htm";
 // 忘记密码
 NSString *const kUserForgetPassword = @"user/open/userForgetPassword.htm";
@@ -86,18 +86,22 @@ NSString *const kCloseMySupply = @"access/closeMySupply.htm";
 
 #pragma mark - 联系人
 // 添加联系人
-NSString *const kCarParkList = @"open/carParkList.htm";
-
+NSString *const kAddContact = @"access/addContact.htm";
+// 获取联系人
+NSString *const kGetContactsList = @"access/getContactsList.htm";
+// 删除联系人
+NSString *const kDeleteContact = @"access/deleteContact.htm";
 
 #pragma mark - 会员
 // 购买会员
-
+NSString *const kBuyVip = @"access/buyVip.htm";
 // 广告轮播
-NSString *const kAdList = @"/mobile/api/open/adList.htm";
+NSString *const kAdList = @"open/adList.htm";
 // 软件更新
-NSString *const kGetNewVersion = @"/mobile/api/open/getNewVersion.htm";
+NSString *const kGetNewVersion = @"open/getNewVersion.htm";
 // 意见反馈
-NSString *const kFeedback = @"/mobile/api/open/feedback.htm";
+NSString *const kFeedback = @"open/feedback.htm";
+#warning 此处链接不同
 // 图片上传
 NSString *const kSignleImageUpload = @"/signleImageUpload.htm";
 

@@ -7,44 +7,21 @@
 //
 
 #import "PGCProfileController.h"
-
 #import "PGCRegisterController.h"
 #import "PGCLoginController.h"
 #import "PGCResetPasswordController.h"
-
 #import "PGCSettingController.h"
 #import "PGCUserInfoController.h"
 #import "PGCShareToFriendController.h"
+#import "PGCToken.h"
 
 @interface PGCProfileController ()
-//顶部橙色界面
-@property (weak, nonatomic) IBOutlet UIView *headView;
-//头像的X
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconX;
-//登录/注册按钮的X
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconLebelX;
-//头像上按钮的X
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconButtonX;
-//头像按钮点击事件
-- (IBAction)iconButtonClick:(id)sender;
-//登录/注册按钮点击事件
-- (IBAction)iconLabelButtonClick:(id)sender;
 
-//个人中心按钮点击事件
-- (IBAction)userInfoButtonClick:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *headImageBtn;
 
-//设置按钮点击事件
-- (IBAction)settingButtonClick:(id)sender;
 
-//推荐给好友按钮点击事件
-- (IBAction)commendToFriendButtonClick:(id)sender;
-
-//修改密码按钮点击事件
-- (IBAction)updataPassWordButtonClick:(id)sender;
-
-//会员中心点击事件
-- (IBAction)VIPInfoButtonClick:(id)sender;
-
+- (void)initializeDataSource; /** 初始化数据源 */
+- (void)initializeUserInterface; /** 初始化用户界面 */
 
 @end
 
@@ -65,51 +42,99 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // 设置头像的X
-    self.iconX.constant = (SCREEN_WIDTH - 65) / 2;
-    // 设置头像上的按钮的X
-    self.iconButtonX.constant = (SCREEN_WIDTH - 80) / 2;
-    
-    // 设置登录/注册按钮的X
-    self.iconLebelX.constant = self.iconX.constant;
+    [self initializeDataSource];
+    [self initializeUserInterface];
 }
 
+- (void)initializeDataSource {
+    NSString *tokenPath = [PGCCachesPath stringByAppendingPathComponent:@"TokenInfo.plist"];
+    
+    PGCToken *token = [NSKeyedUnarchiver unarchiveObjectWithFile:tokenPath];
+    
+    if (token) {
+        [PGCToken token].isLogin = true;
+    } else {
+        [PGCToken token].isLogin = false;
+    }
+}
 
-// 未登录前不能点击
-- (IBAction)iconButtonClick:(id)sender {
+- (void)initializeUserInterface {
+    
+    self.headImageBtn.layer.masksToBounds = true;
+    self.headImageBtn.layer.cornerRadius = 65 / 2;
+    
+    
+}
+
+#pragma mark - Event
+
+/**
+ 头像, 未登录前不能点击
+
+ @param sender
+ */
+- (IBAction)iconButtonClick:(UIButton *)sender {
     NSLog(@"haha");
 }
 
-// block回调登录信息
-- (IBAction)iconLabelButtonClick:(id)sender {
+/**
+ 登录/注册 block回调登录信息
+
+ @param sender
+ */
+- (IBAction)iconLabelButtonClick:(UIButton *)sender {
     PGCLoginController *loginVC = [[PGCLoginController alloc] init];
-    [self.navigationController pushViewController:loginVC animated:YES];
+    [self.navigationController pushViewController:loginVC animated:true];
 }
 
-- (IBAction)userInfoButtonClick:(id)sender {
+/**
+ 个人中心
+
+ @param sender
+ */
+- (IBAction)userInfoButtonClick:(UIButton *)sender {
     PGCUserInfoController *userInfoVC = [[PGCUserInfoController alloc] init];
-    [self.navigationController pushViewController:userInfoVC animated:YES];
+    [self.navigationController pushViewController:userInfoVC animated:true];
 }
 
-- (IBAction)settingButtonClick:(id)sender {
+/**
+ 设置
+
+ @param sender
+ */
+- (IBAction)settingButtonClick:(UIButton *)sender {
     PGCSettingController *settingVC = [[PGCSettingController alloc] init];
-    [self.navigationController pushViewController:settingVC animated:YES];
+    [self.navigationController pushViewController:settingVC animated:true];
 }
 
-- (IBAction)commendToFriendButtonClick:(id)sender {
+/**
+ 推荐给好友
+
+ @param send
+ */
+- (IBAction)commendToFriendButtonClick:(UIButton *)sender {
     PGCShareToFriendController *shareVC = [[PGCShareToFriendController alloc] init];
-    [self.navigationController pushViewController:shareVC animated:YES];
+    [self.navigationController pushViewController:shareVC animated:true];
 }
 
-- (IBAction)updataPassWordButtonClick:(id)sender {
+/**
+ 修改密码按钮
+
+ @param sender
+ */
+- (IBAction)updataPassWordButtonClick:(UIButton *)sender {
     PGCResetPasswordController *resetPassVC = [[PGCResetPasswordController alloc] init];
-    resetPassVC.title = @"修改密码";
-    [self.navigationController pushViewController:resetPassVC animated:YES];
+    resetPassVC.navigationItem.title = @"修改密码";
+    [self.navigationController pushViewController:resetPassVC animated:true];
 }
 
+/**
+ 会员中心
 
-- (IBAction)VIPInfoButtonClick:(id)sender {
-    NSLog(@"VIP中心");
+ @param sender
+ */
+- (IBAction)VIPInfoButtonClick:(UIButton *)sender {
+    [PGCProgressHUD showMsgWithoutView:@"VIP用户"];
 }
 
 

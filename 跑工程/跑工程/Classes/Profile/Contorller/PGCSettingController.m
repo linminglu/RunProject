@@ -7,10 +7,11 @@
 //
 
 #import "PGCSettingController.h"
+#import "PGCUserInfo.h"
 
 @interface PGCSettingController ()
-//退出账号按钮
-@property (weak, nonatomic) IBOutlet UIButton *logoutBtn;
+
+@property (weak, nonatomic) IBOutlet UIButton *logoutBtn;/** 退出账号按钮 */
 
 @end
 
@@ -18,11 +19,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.navigationController.navigationBar setHidden:NO];
-//  设置退出按钮圆角效果
-    self.logoutBtn.layer.cornerRadius = 10;
+    
+    self.logoutBtn.layer.masksToBounds = true;
+    self.logoutBtn.layer.cornerRadius = 10.0;
 }
 
 
+#pragma mark - Events
+// 退出登录
+- (IBAction)logoutEvent:(UIButton *)sender {
+    
+}
 
 @end

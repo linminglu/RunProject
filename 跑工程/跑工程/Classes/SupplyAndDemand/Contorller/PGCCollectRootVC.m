@@ -56,9 +56,8 @@ typedef NS_ENUM(NSUInteger, ButtonTag) {
     
     if (sender.tag == HeartBtnTag) {
         
-        selected = !selected;
-        
-//        [self showCollectHUDWith:self.view title:selected ? @"收藏成功!":@"取消收藏成功!"];
+        selected = !selected;        
+        [PGCProgressHUD showMessage:selected ? @"收藏成功!":@"取消收藏成功!" inView:self.view];
         
         self.heartBtn.itemLabel.text = selected ? @"取消收藏":@"收藏";
         

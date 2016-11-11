@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PGCProfileController">
             <connections>
-                <outlet property="headView" destination="3oi-BE-BaH" id="WfQ-b0-siu"/>
-                <outlet property="iconButtonX" destination="CuM-SG-zct" id="vBJ-D0-Uw4"/>
-                <outlet property="iconLebelX" destination="pas-Mz-tFd" id="R6R-8V-zeL"/>
-                <outlet property="iconX" destination="Nzw-nq-cyf" id="r7Y-CP-eq3"/>
+                <outlet property="headImageBtn" destination="92H-Os-apC" id="Tkf-5K-hkE"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -20,59 +20,16 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3oi-BE-BaH">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3oi-BE-BaH" userLabel="顶部橙色背景">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="186"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="头像" translatesAutoresizingMaskIntoConstraints="NO" id="tyL-X4-DqL">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="92H-Os-apC" userLabel="头像">
+                            <rect key="frame" x="155" y="60" width="65" height="65"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="65" id="LLg-nN-VX3"/>
-                                <constraint firstAttribute="width" constant="65" id="gxE-4i-kVy">
-                                    <variation key="heightClass=regular-widthClass=compact" constant="66"/>
-                                </constraint>
+                                <constraint firstAttribute="width" constant="65" id="Yk1-uk-GJl"/>
+                                <constraint firstAttribute="height" constant="65" id="c91-p6-6Dd"/>
                             </constraints>
-                            <variation key="default">
-                                <mask key="constraints">
-                                    <exclude reference="LLg-nN-VX3"/>
-                                    <exclude reference="gxE-4i-kVy"/>
-                                </mask>
-                            </variation>
-                            <variation key="heightClass=regular-widthClass=compact">
-                                <mask key="constraints">
-                                    <include reference="LLg-nN-VX3"/>
-                                    <include reference="gxE-4i-kVy"/>
-                                </mask>
-                            </variation>
-                        </imageView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tqc-8p-dwS">
-                            <constraints>
-                                <constraint firstAttribute="width" constant="66" id="9hM-X7-aye"/>
-                                <constraint firstAttribute="height" constant="14" id="uFi-2r-XX0"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <state key="normal" title="登录/注册">
-                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </state>
-                            <variation key="default">
-                                <mask key="constraints">
-                                    <exclude reference="9hM-X7-aye"/>
-                                    <exclude reference="uFi-2r-XX0"/>
-                                </mask>
-                            </variation>
-                            <variation key="heightClass=regular-widthClass=compact">
-                                <mask key="constraints">
-                                    <include reference="9hM-X7-aye"/>
-                                    <include reference="uFi-2r-XX0"/>
-                                </mask>
-                            </variation>
-                            <connections>
-                                <action selector="iconLabelButtonClick:" destination="-1" eventType="touchUpInside" id="fWY-1a-RJH"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="92H-Os-apC">
-                            <constraints>
-                                <constraint firstAttribute="width" constant="80" id="Yk1-uk-GJl"/>
-                                <constraint firstAttribute="height" constant="80" id="c91-p6-6Dd"/>
-                            </constraints>
-                            <state key="normal">
+                            <state key="normal" image="头像">
                                 <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                             <variation key="default">
@@ -91,57 +48,57 @@
                                 <action selector="iconButtonClick:" destination="-1" eventType="touchUpInside" id="lP5-d1-dSs"/>
                             </connections>
                         </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tqc-8p-dwS">
+                            <rect key="frame" x="155" y="143" width="66" height="15"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="15" id="1aZ-1y-b0b"/>
+                                <constraint firstAttribute="width" constant="66" id="ap9-D8-KTY"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <state key="normal" title="登录/注册">
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="iconLabelButtonClick:" destination="-1" eventType="touchUpInside" id="fWY-1a-RJH"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" red="0.97467929124832153" green="0.5351448655128479" blue="0.17870476841926575" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstItem="tyL-X4-DqL" firstAttribute="top" secondItem="3oi-BE-BaH" secondAttribute="top" constant="64.5" id="1mG-G7-xGJ"/>
-                        <constraint firstItem="92H-Os-apC" firstAttribute="leading" secondItem="3oi-BE-BaH" secondAttribute="leading" constant="161" id="CuM-SG-zct"/>
-                        <constraint firstItem="tyL-X4-DqL" firstAttribute="leading" secondItem="3oi-BE-BaH" secondAttribute="leading" constant="168" id="Nzw-nq-cyf"/>
                         <constraint firstItem="92H-Os-apC" firstAttribute="top" secondItem="3oi-BE-BaH" secondAttribute="top" constant="60" id="Pj7-Bm-ol0"/>
-                        <constraint firstItem="tqc-8p-dwS" firstAttribute="leading" secondItem="3oi-BE-BaH" secondAttribute="leading" constant="168" id="pas-Mz-tFd"/>
+                        <constraint firstItem="92H-Os-apC" firstAttribute="centerX" secondItem="3oi-BE-BaH" secondAttribute="centerX" id="QPB-Zb-NsW"/>
+                        <constraint firstItem="tqc-8p-dwS" firstAttribute="top" secondItem="92H-Os-apC" secondAttribute="bottom" constant="18" id="UWp-QM-Eca"/>
+                        <constraint firstItem="tqc-8p-dwS" firstAttribute="centerX" secondItem="92H-Os-apC" secondAttribute="centerX" id="bq3-Qn-m6O"/>
                         <constraint firstAttribute="height" constant="180" id="ufm-zS-DMh">
                             <variation key="heightClass=regular-widthClass=compact" constant="186"/>
-                        </constraint>
-                        <constraint firstItem="tqc-8p-dwS" firstAttribute="top" secondItem="tyL-X4-DqL" secondAttribute="bottom" constant="12.5" id="xBH-xA-ZGT">
-                            <variation key="heightClass=regular-widthClass=compact" constant="15"/>
                         </constraint>
                     </constraints>
                     <variation key="default">
                         <mask key="subviews">
-                            <exclude reference="tyL-X4-DqL"/>
-                            <exclude reference="tqc-8p-dwS"/>
                             <exclude reference="92H-Os-apC"/>
+                            <exclude reference="tqc-8p-dwS"/>
                         </mask>
                         <mask key="constraints">
                             <exclude reference="ufm-zS-DMh"/>
-                            <exclude reference="CuM-SG-zct"/>
                             <exclude reference="Pj7-Bm-ol0"/>
-                            <exclude reference="pas-Mz-tFd"/>
-                            <exclude reference="xBH-xA-ZGT"/>
-                            <exclude reference="1mG-G7-xGJ"/>
-                            <exclude reference="Nzw-nq-cyf"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=regular-widthClass=compact">
                         <mask key="subviews">
-                            <include reference="tyL-X4-DqL"/>
-                            <include reference="tqc-8p-dwS"/>
                             <include reference="92H-Os-apC"/>
+                            <include reference="tqc-8p-dwS"/>
                         </mask>
                         <mask key="constraints">
                             <include reference="ufm-zS-DMh"/>
-                            <include reference="CuM-SG-zct"/>
                             <include reference="Pj7-Bm-ol0"/>
-                            <include reference="pas-Mz-tFd"/>
-                            <include reference="xBH-xA-ZGT"/>
-                            <include reference="1mG-G7-xGJ"/>
-                            <include reference="Nzw-nq-cyf"/>
                         </mask>
                     </variation>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K6V-JB-IRL">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K6V-JB-IRL" userLabel="个人中心">
+                    <rect key="frame" x="0.0" y="200" width="375" height="45"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="个人工心" translatesAutoresizingMaskIntoConstraints="NO" id="ZgC-gh-cPM">
+                            <rect key="frame" x="15" y="15" width="15" height="15"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="15" id="eWU-r7-GQZ"/>
                                 <constraint firstAttribute="height" constant="15" id="j6i-0W-ioa"/>
@@ -160,6 +117,7 @@
                             </variation>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="个人中心" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wvu-i2-WMe">
+                            <rect key="frame" x="55" y="15" width="120" height="14"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="120" id="7mr-Te-HQp"/>
                                 <constraint firstAttribute="height" constant="14" id="cud-Bf-n3E"/>
@@ -181,6 +139,7 @@
                             </variation>
                         </label>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right" translatesAutoresizingMaskIntoConstraints="NO" id="Kya-Ki-5M2">
+                            <rect key="frame" x="355" y="17.5" width="5" height="10"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="5" id="hX1-g0-Pdt"/>
                                 <constraint firstAttribute="height" constant="10" id="phk-UC-vzV"/>
@@ -199,6 +158,7 @@
                             </variation>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u6e-1S-bV6">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
                             <state key="normal">
                                 <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
@@ -264,9 +224,11 @@
                         </mask>
                     </variation>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bf5-VN-Gff">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bf5-VN-Gff" userLabel="设置">
+                    <rect key="frame" x="0.0" y="260" width="375" height="45"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="设置" translatesAutoresizingMaskIntoConstraints="NO" id="deV-mt-EKY">
+                            <rect key="frame" x="15" y="15" width="15" height="15"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="15" id="6Lt-hy-f1x"/>
                                 <constraint firstAttribute="height" constant="15" id="G7A-Qy-MHk"/>
@@ -285,6 +247,7 @@
                             </variation>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="设置" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LTD-4x-ZUb">
+                            <rect key="frame" x="55" y="15" width="120" height="14"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="120" id="V97-Qn-pMT"/>
                                 <constraint firstAttribute="height" constant="14" id="xnN-wv-oh3"/>
@@ -306,6 +269,7 @@
                             </variation>
                         </label>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right" translatesAutoresizingMaskIntoConstraints="NO" id="QCd-nL-9kQ">
+                            <rect key="frame" x="355" y="17.5" width="5" height="10"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="10" id="UF4-ud-Zca"/>
                                 <constraint firstAttribute="width" constant="5" id="tKF-LR-WrO"/>
@@ -324,6 +288,7 @@
                             </variation>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kjR-gH-07H">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
                             <state key="normal">
                                 <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
@@ -389,9 +354,11 @@
                         </mask>
                     </variation>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pPA-Kc-rsg">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pPA-Kc-rsg" userLabel="推荐">
+                    <rect key="frame" x="0.0" y="320" width="375" height="45"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="推荐给好友" translatesAutoresizingMaskIntoConstraints="NO" id="tOb-ve-IRh">
+                            <rect key="frame" x="15" y="15" width="15" height="15"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="15" id="WuP-qi-Fbh"/>
                                 <constraint firstAttribute="width" constant="15" id="qhN-h5-7Ao"/>
@@ -410,6 +377,7 @@
                             </variation>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="推荐给好友" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FLt-zz-FdC">
+                            <rect key="frame" x="55" y="15" width="120" height="14"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="120" id="Ixl-WQ-yfa"/>
                                 <constraint firstAttribute="height" constant="14" id="SYU-HK-Kln"/>
@@ -431,6 +399,7 @@
                             </variation>
                         </label>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right" translatesAutoresizingMaskIntoConstraints="NO" id="iTZ-vi-9zJ">
+                            <rect key="frame" x="355" y="17.5" width="5" height="10"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="10" id="9UT-7k-DYj"/>
                                 <constraint firstAttribute="width" constant="5" id="wfX-tp-7KS"/>
@@ -449,6 +418,7 @@
                             </variation>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="La9-ng-53D">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
                             <state key="normal">
                                 <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
@@ -520,9 +490,11 @@
                         </mask>
                     </variation>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dFT-L0-cAF">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dFT-L0-cAF" userLabel="修改密码">
+                    <rect key="frame" x="0.0" y="380" width="375" height="45"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="修改密码" translatesAutoresizingMaskIntoConstraints="NO" id="yI6-hd-C0F">
+                            <rect key="frame" x="15" y="15" width="15" height="15"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="15" id="Jvp-q6-dTG"/>
                                 <constraint firstAttribute="width" constant="15" id="x1g-kx-s3v"/>
@@ -541,6 +513,7 @@
                             </variation>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="修改密码" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="enS-xQ-YAi">
+                            <rect key="frame" x="55" y="15" width="120" height="14"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="14" id="cnP-H6-2hb"/>
                                 <constraint firstAttribute="width" constant="120" id="xQS-r6-P6E"/>
@@ -562,6 +535,7 @@
                             </variation>
                         </label>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right" translatesAutoresizingMaskIntoConstraints="NO" id="pYc-Ko-3oK">
+                            <rect key="frame" x="355" y="17.5" width="5" height="10"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="10" id="Ahc-Mn-NFZ"/>
                                 <constraint firstAttribute="width" constant="5" id="owA-H1-5ep"/>
@@ -580,6 +554,7 @@
                             </variation>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xbc-Fd-h1x">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
                             <state key="normal">
                                 <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
@@ -645,9 +620,11 @@
                         </mask>
                     </variation>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MMj-YQ-kTE">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MMj-YQ-kTE" userLabel="会员中心">
+                    <rect key="frame" x="0.0" y="440" width="375" height="45"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="会员中心" translatesAutoresizingMaskIntoConstraints="NO" id="ZDp-1Q-wmR">
+                            <rect key="frame" x="15" y="15" width="15" height="15"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="15" id="sw4-Jg-sLW"/>
                                 <constraint firstAttribute="width" constant="15" id="x5l-Zs-b3g"/>
@@ -666,6 +643,7 @@
                             </variation>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="会员中心" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jsv-1r-WHe">
+                            <rect key="frame" x="55" y="15" width="120" height="14"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="14" id="yWf-U7-0wU"/>
                                 <constraint firstAttribute="width" constant="120" id="ypg-si-o2y"/>
@@ -687,6 +665,7 @@
                             </variation>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="开通会员，畅想更多优惠" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hu-wY-XLz">
+                            <rect key="frame" x="225" y="14" width="120" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="A9v-Xf-Ksz"/>
                                 <constraint firstAttribute="width" constant="120" id="WQG-sZ-0a9"/>
@@ -708,6 +687,7 @@
                             </variation>
                         </label>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right" translatesAutoresizingMaskIntoConstraints="NO" id="r40-5S-KWU">
+                            <rect key="frame" x="355" y="17.5" width="5" height="10"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="10" id="VFq-dn-UpN"/>
                                 <constraint firstAttribute="width" constant="5" id="vFP-vL-rXd"/>
@@ -726,6 +706,7 @@
                             </variation>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7En-fV-yIG">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
                             <state key="normal">
                                 <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
@@ -894,7 +875,7 @@
                     <include reference="x5z-JI-y4H"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="-133" y="29"/>
+            <point key="canvasLocation" x="-660" y="-629"/>
         </view>
     </objects>
     <resources>

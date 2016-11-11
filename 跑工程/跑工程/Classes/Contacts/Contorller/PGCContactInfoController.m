@@ -42,16 +42,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"个人资料";
+    self.navigationItem.title = @"个人资料";
     self.contactNameLabel.text = self.nameStr;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-//    注册cell
+    // 注册cell
     [self.tableView registerNib:[UINib nibWithNibName:@"PGCContactInfoCell" bundle:nil] forCellReuseIdentifier:@"cell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"PGCProjectCell" bundle:nil] forCellReuseIdentifier:@"cell1"];
     
-//设置控件的X
+    // 设置控件的X
     self.iconImageViewX.constant = (SCREEN_WIDTH - 50) / 2;
     self.nameLabelX.constant = (SCREEN_WIDTH - 80) / 2;
     self.projectLabelX.constant = (SCREEN_WIDTH - 80) / 2;
@@ -59,17 +59,22 @@
     self.SeparatorViewX.constant = SCREEN_WIDTH  / 2;
     self.projectBtnX.constant = (SCREEN_WIDTH / 2- 80) / 2;
     
-//    设置初始状态为个人资料按钮被选中，个人资料按钮用户交互停用
+    // 设置初始状态为个人资料按钮被选中，个人资料按钮用户交互停用
     self.contactInfoBtn.selected = YES;
     self.contactInfoBtn.userInteractionEnabled = NO;
   
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"删除联系人" style:UIBarButtonItemStyleDone target:self action:@selector(respondsToDeleteContact:)];
 }
 
 
 #pragma mark - Evetns
 
+- (void)respondsToDeleteContact:(UIBarButtonItem *)sender {
+    NSLog(@"%@", NSStringFromSelector(_cmd));
+}
+
 - (IBAction)contactInfoBtnClick:(id)sender {
-//    点击个人资料按钮后个人资料用户交互停用，参与的项目按钮用户交互启用，个人资料按钮为选中状态，参与的项目按钮为未选择状态
+    // 点击个人资料按钮后个人资料用户交互停用，参与的项目按钮用户交互启用，个人资料按钮为选中状态，参与的项目按钮为未选择状态
     self.contactInfoBtn.userInteractionEnabled = NO;
     self.projectBtn.userInteractionEnabled = YES;
     self.contactInfoBtn.selected = YES;
@@ -78,6 +83,7 @@
     
     NSLog(@"个人资料");
 }
+
 - (IBAction)projectBtnClick:(id)sender {
     self.contactInfoBtn.userInteractionEnabled = YES;
     self.projectBtn.userInteractionEnabled = NO;
@@ -90,8 +96,7 @@
 
 #pragma mark - UITableViewDataSource
 
-- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (self.contactInfoBtn.isSelected == YES) {
         
     return 1;
@@ -99,8 +104,7 @@
     return 4;
 }
 
-- (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     
     if (self.contactInfoBtn.isSelected == YES) {

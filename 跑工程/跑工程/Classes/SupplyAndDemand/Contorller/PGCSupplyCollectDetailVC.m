@@ -118,19 +118,19 @@
 #pragma mark - PGCSupplyAndDemandShareViewDelegate
 
 - (void)shareView:(PGCSupplyAndDemandShareView *)shareView qqFriend:(UIButton *)qqFriend {
-//    [self showCollectHUDWith:self.view title:@"分享供应信息到QQ好友成功!"];
+    [PGCProgressHUD showMessage:@"分享供应信息到QQ好友成功!" inView:self.view];
 }
 
 - (void)shareView:(PGCSupplyAndDemandShareView *)shareView qqZone:(UIButton *)qqZone {
-//    [self showCollectHUDWith:self.view title:@"分享供应信息到QQ空间成功!"];
+    [PGCProgressHUD showMessage:@"分享供应信息到QQ空间成功!" inView:self.view];
 }
 
 - (void)shareView:(PGCSupplyAndDemandShareView *)shareView weChat:(UIButton *)weChat {
-//    [self showCollectHUDWith:self.view title:@"分享供应信息到微信好友成功!"];
+    [PGCProgressHUD showMessage:@"分享供应信息到微信好友成功!" inView:self.view];
 }
 
 - (void)shareView:(PGCSupplyAndDemandShareView *)shareView weChatFriends:(UIButton *)friends {
-//    [self showCollectHUDWith:self.view title:@"分享供应信息到朋友圈成功!"];
+    [PGCProgressHUD showMessage:@"分享供应信息到朋友圈成功!" inView:self.view];
 }
 
 

@@ -11,6 +11,18 @@
 
 @interface NSString (Size)
 
+/**
+ 手机号的正则表达式
+ */
+- (BOOL)isPhoneNumber;
+
+/**
+ 获取文字的size
+
+ @param font
+ @param size
+ @return
+ */
 - (CGSize)sizeWithFont:(UIFont *)font constrainedToSize:(CGSize)size;
 
 - (CGSize)textSizeWithFont:(UIFont *)font constrainedToSize:(CGSize)size lineBreakMode:(NSLineBreakMode)lineBreakMode;

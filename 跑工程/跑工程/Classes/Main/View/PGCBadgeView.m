@@ -41,24 +41,18 @@
         _badgeValue = badgeValue;
     }
     
-    CGSize size;
-    
-    if (SystemVersion < 7.0) {
-        size = [badgeValue sizeWithFont:PGCBadgeViewFont];
-    } else {
-        size = [badgeValue sizeWithAttributes:@{NSFontAttributeName:PGCBadgeViewFont}];
-    }
+    CGSize size = [badgeValue sizeWithAttributes:@{NSFontAttributeName:PGCBadgeViewFont}];
 
-    if (size.width > self.width) { // 文字的尺寸大于控件的宽度
+    if (size.width > self.frame.size.width) {// 文字的尺寸大于控件的宽度
         [self setImage:[UIImage imageNamed:@"new_dot"] forState:UIControlStateNormal];
         [self setTitle:nil forState:UIControlStateNormal];
         [self setBackgroundImage:nil forState:UIControlStateNormal];
-    }else{
+    }
+    else {
         [self setBackgroundImage:[UIImage imageNamed:@"main_badge"] forState:UIControlStateNormal];
         [self setTitle:badgeValue forState:UIControlStateNormal];
         [self setImage:nil forState:UIControlStateNormal];
     }
-    
 }
 
 

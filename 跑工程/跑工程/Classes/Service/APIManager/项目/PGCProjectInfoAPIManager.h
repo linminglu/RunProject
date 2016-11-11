@@ -7,6 +7,7 @@
 //
 
 #import "PGCBaseAPIManager.h"
+#import "PGCNetworkHelper.h"
 
 @interface PGCProjectInfoAPIManager : PGCBaseAPIManager
 

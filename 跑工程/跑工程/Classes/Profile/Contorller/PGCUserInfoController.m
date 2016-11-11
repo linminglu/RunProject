@@ -11,19 +11,17 @@
 #import "PGCChooseCompanyController.h"
 
 
-@interface PGCUserInfoController ()<UIActionSheetDelegate>
-//头像
-@property (weak, nonatomic) IBOutlet UIImageView *icon;
-//性别
-@property (weak, nonatomic) IBOutlet UILabel *sexLabel;
-//职位
-@property (weak, nonatomic) IBOutlet UILabel *jobLabel;
-//公司
-@property (weak, nonatomic) IBOutlet UILabel *companyLabel;
+@interface PGCUserInfoController ()
 
+@property (weak, nonatomic) IBOutlet UIImageView *icon;/** 头像 */
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;/** 姓名 */
+@property (weak, nonatomic) IBOutlet UILabel *sexLabel;/** 性别 */
+@property (weak, nonatomic) IBOutlet UILabel *phoneLabel;/** 手机 */
+@property (weak, nonatomic) IBOutlet UILabel *jobLabel;/** 职位 */
+@property (weak, nonatomic) IBOutlet UILabel *companyLabel;/** 公司 */
 
-//选择性别选择框
-@property (nonatomic,strong) UIActionSheet *actionSheet;
+- (void)initializeDataSource; /** 初始化数据源 */
+- (void)initializeUserInterface; /** 初始化用户界面 */
 
 @end
 
@@ -31,73 +29,64 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"个人资料";
-    [self.navigationController.navigationBar setHidden:NO];
     
-    // 设置头像圆角效果和边框
-    self.icon.layer.cornerRadius = 20;
-    self.icon.layer.masksToBounds = YES;
-    self.icon.layer.borderWidth = 1;
-    
-    // 创建弹出视图
-    [self creatPopView];
+    [self initializeDataSource];
+    [self initializeUserInterface];
+}
+
+- (void)initializeDataSource {
     
 }
 
-//选择性别
-- (IBAction)sexBtnClick:(id)sender {
-    [self.view addSubview:_actionSheet];
-    [_actionSheet showFromRect:CGRectMake(0, 0, 50, 50) inView:self.view animated:YES];
+- (void)initializeUserInterface {
+    self.navigationItem.title = @"个人资料";
+    
+    self.icon.layer.masksToBounds = true;
+    self.icon.layer.cornerRadius = 20.0;
+    self.icon.layer.borderWidth = 1.0;
+}
 
+#pragma mark - Events
+// 选择性别
+- (IBAction)sexBtnClick:(UIButton *)sender {
+    
+    UIAlertController *alertView = [UIAlertController alertControllerWithTitle:@"选择性别" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [alertView addAction:[UIAlertAction actionWithTitle:@"男" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        self.sexLabel.text = @"男";
+    }]];
+    [alertView addAction:[UIAlertAction actionWithTitle:@"女" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        self.sexLabel.text = @"女";
+    }]];
+    [alertView addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    }]];
+    [self presentViewController:alertView animated:true completion:nil];
 }
 
 //选择职位
-- (IBAction)jobBtnClick:(id)sender {
+- (IBAction)jobBtnClick:(UIButton *)sender {
     __weak PGCUserInfoController *weakSelf = self;
     PGCChooseJobController *jobVC = [[PGCChooseJobController alloc] init];
     jobVC.block = ^(NSString *job) {
         weakSelf.jobLabel.text = job;
     };
-    [self.navigationController pushViewController:jobVC animated:YES];
+    [self.navigationController pushViewController:jobVC animated:true];
 }
 
-////选择公司
-//- (IBAction)chooseCompanyBtnClick:(id)sender {
-//    
-//    if ([self.companyLabel.text isEqualToString:@"未填写"]) {
-//        __weak PGCUserInfoController *weakSelf = self;
-//        PGCChooseCompanyController *companyVC = [[PGCChooseCompanyController alloc] init];
-//        
-//        companyVC.block = ^(NSString *job) {
-//            weakSelf.companyLabel.text = job;
-//        };
-//        [self.navigationController pushViewController:companyVC animated:YES];
-//    }
-//}
-
-//创建弹出视图
-- (void) creatPopView {
-    _actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:@"男", nil];
-    [_actionSheet addButtonWithTitle:@"女"];
-    [_actionSheet addButtonWithTitle:@"取消"];
-    _actionSheet.cancelButtonIndex = _actionSheet.numberOfButtons -1;
-}
-
-#pragma mark -------- actionSheet代理方法
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    switch (buttonIndex) {
-        case 0:
-            self.sexLabel.text = @"男";
-            break;
-        case 1:
-            self.sexLabel.text = @"女";
-            break;
-        default:
-            break;
+/***
+//选择公司
+- (IBAction)chooseCompanyBtnClick:(id)sender {
+    
+    if ([self.companyLabel.text isEqualToString:@"未填写"]) {
+        __weak PGCUserInfoController *weakSelf = self;
+        PGCChooseCompanyController *companyVC = [[PGCChooseCompanyController alloc] init];
+        
+        companyVC.block = ^(NSString *job) {
+            weakSelf.companyLabel.text = job;
+        };
+        [self.navigationController pushViewController:companyVC animated:YES];
     }
 }
-
+***/
 
 
 @end

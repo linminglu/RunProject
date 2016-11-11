@@ -14,6 +14,7 @@
 #import "PGCProjectAddContactController.h"
 #import "PGCVIPServiceController.h"
 #import "PGCMapViewController.h"
+#import "PGCProjectInfo.h"
 
 @interface PGCProjectContactScrollView () <UITableViewDataSource, PGCProjectContactCellDelegate, PGCAlertViewDelegate, PGCHintAlertViewDelegate>
 

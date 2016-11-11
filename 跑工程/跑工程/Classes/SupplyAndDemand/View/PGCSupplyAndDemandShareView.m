@@ -79,7 +79,7 @@
         .widthRatioToView(self, 0.25)
         .bottomSpaceToView(self, 0);
         
-        UIImage *image = [UIImage imageNamed:imageNames[i] ];
+        UIImage *image = [UIImage imageNamed:imageNames[i]];
         UIButton *button = [[UIButton alloc] init];
         button.tag = ShareBtnTag + i;
         [button setImage:image forState:UIControlStateNormal];

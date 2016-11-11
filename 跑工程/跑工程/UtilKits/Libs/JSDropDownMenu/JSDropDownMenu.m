@@ -12,8 +12,8 @@
 
 #define TextColor [UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1.0]
 #define SelectColor [UIColor colorWithRed:250/255.0 green:117/255.0 blue:10/255.0 alpha:1.0]
-#define BackColor [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1.0]
-#define SeparatorColor [UIColor colorWithRed:230/255.0 green:230/255.0 blue:230/255.0 alpha:1.0]
+#define BackColor [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0]
+#define SeparatorColor [UIColor colorWithRed:239/255.0 green:239/255.0 blue:241/255.0 alpha:1.0]
 #define DetailColor [UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0]
 
 static NSString *const kJSCollectionViewCell = @"JSCollectionViewCell";
@@ -168,7 +168,7 @@ static NSString *const kJSCollectionViewCell = @"JSCollectionViewCell";
              [self.layer addSublayer:separator];
          }
     }
-    _bottomShadow.backgroundColor = [UIColor whiteColor];
+    _bottomShadow.backgroundColor = BackColor;
     
     _titles = [tempTitles copy];
     _indicators = [tempIndicators copy];
@@ -665,27 +665,26 @@ static NSString *const kJSCollectionViewCell = @"JSCollectionViewCell";
     cell.textLabel.font = FontSize;
     cell.separatorInset = UIEdgeInsetsZero;    
     
+    titleLabel.frame = CGRectMake(imageView.right_sd + 8, 0, textWidth, cell.frame.size.height);
+    
     if (leftOrRight == 1) {
-        titleLabel.frame = CGRectMake(25, 0, textWidth, cell.frame.size.height);
         //右边tableview
         cell.backgroundColor = BackColor;
         
         if ([titleLabel.text isEqualToString:[(CATextLayer *)[_titles objectAtIndex:_currentSelectedMenudIndex] string]]) {
-            
             [cell addSubview:imageView];
+            
             titleLabel.textColor = SelectColor;
             cell.backgroundColor = SeparatorColor;
         }
     }
     else {
-        titleLabel.frame = CGRectMake(25, 0, textWidth, cell.frame.size.height);
         // 是否为选中的cell
         if (!_hadSelected && _leftSelectedRow == indexPath.row) {
             titleLabel.textColor = SelectColor;
             cell.backgroundColor = BackColor;
             
-            if (![_dataSource haveRightTableViewInColumn:_currentSelectedMenudIndex]) {
-                
+            if (![_dataSource haveRightTableViewInColumn:_currentSelectedMenudIndex]) {                
                 [cell addSubview:imageView];
             }
         }
@@ -735,8 +734,13 @@ static NSString *const kJSCollectionViewCell = @"JSCollectionViewCell";
                 [_leftTableView selectRowAtIndexPath:selectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
             }
             [_rightTableView reloadData];
-        }
-        
+            if ([_rightTableView numberOfRowsInSection:0] < 1) {
+                [self animateIdicator:_indicators[_currentSelectedMenudIndex] background:_backGroundView leftTableView:_leftTableView rightTableView:_rightTableView title:_titles[_currentSelectedMenudIndex] forward:NO complecte:^{
+                    _show = NO;
+                }];
+                self.titleLabels[_currentSelectedMenudIndex].textColor = TextColor;
+            }
+        }        
     }
 }
 

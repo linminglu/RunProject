@@ -9,16 +9,16 @@
 #import "PGCResetPasswordController.h"
 #import "MZTimerLabel.h"
 
-@interface PGCResetPasswordController ()<MZTimerLabelDelegate>
-//确认按钮
-@property (weak, nonatomic) IBOutlet UIButton *confirmBtn;
+@interface PGCResetPasswordController () <MZTimerLabelDelegate>
+{
+    UILabel *_timerShow;/** 倒计时label */
+    UIColor *_recevieIDBtnColor;/** 获取验证码初始背景颜色 */
+}
 
-@property (weak, nonatomic) IBOutlet UIButton *recevieIDBtn;
+@property (weak, nonatomic) IBOutlet UIButton *recevieIDBtn;/** 获取验证码按钮 */
+@property (weak, nonatomic) IBOutlet UIButton *confirmBtn;/** 确认按钮 */
 
-//倒计时label
-@property (nonatomic,strong) UILabel *timer_show;
-//获取验证码初始背景颜色
-@property (nonatomic,strong) UIColor *recevieIDBtnColor;
+- (void)initializeUserInterface; /** 初始化用户界面 */
 
 @end
 
@@ -26,42 +26,75 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.navigationController.navigationBar setHidden:NO];
-//    设置确定按钮圆角效果
-    self.confirmBtn.layer.cornerRadius = 10;
-    //    记录获取验证码最初的背景颜色
-    self.recevieIDBtnColor = self.recevieIDBtn.backgroundColor;
     
+    [self initializeUserInterface];
 }
-- (IBAction)recevieIDBtnClick:(id)sender {
-    //    倒计时
+
+- (void)initializeUserInterface {
+    self.navigationItem.title = @"注册";
+    //记录获取验证码最初的背景颜色
+    _recevieIDBtnColor = self.recevieIDBtn.backgroundColor;
+    
+    self.confirmBtn.layer.masksToBounds = true;
+    self.confirmBtn.layer.cornerRadius = 10.0;
+}
+
+#pragma mark - Events
+
+/**
+ 确认修改
+ */
+- (IBAction)confirmBtnClick:(UIButton *)sender {
+    
+    [self.view endEditing:true];
+    
+    [PGCProgressHUD showMsgWithoutView:@"修改密码"];
+}
+
+/**
+ 获取验证
+ */
+- (IBAction)recevieIDBtnClick:(UIButton *)sender {
+    //倒计时
     [self timeCount];
 }
 
-
-//倒计时
-- (void)timeCount{//倒计时函数
-    [self.recevieIDBtn setTitle:nil forState:UIControlStateNormal];//把按钮原先的名字消掉
-    _timer_show = [[UILabel alloc] initWithFrame:CGRectMake(30, 15, 80, 20)];//UILabel设置成和UIButton一样的尺寸和位置
-    [self.recevieIDBtn addSubview:_timer_show];//把timer_show添加到_dynamicCode_btn按钮上
-    MZTimerLabel *timer_cutDown = [[MZTimerLabel alloc] initWithLabel:_timer_show andTimerType:MZTimerLabelTypeTimer];//创建MZTimerLabel类的对象timer_cutDown
-    [timer_cutDown setCountDownTime:60];//倒计时时间60s
-    timer_cutDown.timeFormat = @"倒计时 (ss)";//倒计时格式,也可以是@"HH:mm:ss SS"，时，分，秒，毫秒；想用哪个就写哪个
-    timer_cutDown.timeLabel.textColor = [UIColor whiteColor];//倒计时字体颜色
-    timer_cutDown.timeLabel.font = [UIFont systemFontOfSize:14.0];//倒计时字体大小
-    timer_cutDown.timeLabel.textAlignment = NSTextAlignmentCenter;//剧中
-    timer_cutDown.delegate = self;//设置代理，以便后面倒计时结束时调用代理
-    self.recevieIDBtn.userInteractionEnabled = NO;//按钮禁止点击
-    [timer_cutDown start];//开始计时
+/**
+ 倒计时
+ */
+- (void)timeCount
+{
+    [self.recevieIDBtn setTitle:nil forState:UIControlStateNormal];
+    _timerShow = [[UILabel alloc] initWithFrame:CGRectMake(20, 15, 80, 20)];
+    [self.recevieIDBtn addSubview:_timerShow];
+    MZTimerLabel *timer_cutDown = [[MZTimerLabel alloc] initWithLabel:_timerShow andTimerType:MZTimerLabelTypeTimer];
+    [timer_cutDown setCountDownTime:60];
+    timer_cutDown.timeFormat = @"倒计时 (ss)";
+    timer_cutDown.timeLabel.textColor = [UIColor whiteColor];
+    timer_cutDown.timeLabel.font = [UIFont systemFontOfSize:14.0];
+    timer_cutDown.timeLabel.textAlignment = NSTextAlignmentCenter;
+    timer_cutDown.delegate = self;
+    self.recevieIDBtn.userInteractionEnabled = false;
+    [timer_cutDown start];
     self.recevieIDBtn.backgroundColor = [UIColor grayColor];
 }
 
-//倒计时结束后的代理方法
+
+
+#pragma mark - MZTimerLabelDelegate
+
+/**
+ 倒计时结束后的代理方法
+
+ @param timerLabel
+ @param countTime
+ */
 - (void)timerLabel:(MZTimerLabel *)timerLabel finshedCountDownTimerWithTime:(NSTimeInterval)countTime{
-    [self.recevieIDBtn setTitle:@"获取验证码" forState:UIControlStateNormal];//倒计时结束后按钮名称改为"发送验证码"
-    [_timer_show removeFromSuperview];//移除倒计时模块
-    self.recevieIDBtn.userInteractionEnabled = YES;//按钮可以点击
-    self.recevieIDBtn.backgroundColor = self.recevieIDBtnColor;
+    [self.recevieIDBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+    [_timerShow removeFromSuperview];
+    
+    self.recevieIDBtn.userInteractionEnabled = true;
+    self.recevieIDBtn.backgroundColor = _recevieIDBtnColor;
 }
 
 

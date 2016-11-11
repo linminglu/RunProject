@@ -10,6 +10,19 @@
 
 @implementation NSString (Size)
 
+
+- (BOOL)isPhoneNumber {
+    return [self match:@"^((13[0-9])|(15[3-5])|(18[07-9]))\\d{8}$"];
+}
+
+- (BOOL)match:(NSString *)string{
+    NSRegularExpression *regular = [[NSRegularExpression alloc] initWithPattern:string options:NSRegularExpressionCaseInsensitive error:nil];
+    //2.测试字符串
+    NSArray *results = [regular matchesInString:self options:0 range:NSMakeRange(0, self.length)];
+    return results.count;
+}
+
+
 - (CGSize)sizeWithFont:(UIFont *)font constrainedToSize:(CGSize)size
 {
     CGSize textSize;

@@ -19,7 +19,7 @@ extern NSString *const kUserRegist;// 注册
 
 extern NSString *const kUserLogin;// 登录
 
-extern NSString *const kUserPushInfo;// 上传推送信心
+extern NSString *const kUserPushInfo;// 上传推送信息
 
 extern NSString *const kUserForgetPassword;// 忘记密码
 
@@ -87,18 +87,23 @@ extern NSString *const kCloseMySupply;// 关闭我的供应
 
 #pragma mark - 联系人
 
-extern NSString *const kCarParkList;// 添加联系人
+extern NSString *const kAddContact;// 添加联系人
+
+extern NSString *const kGetContactsList;// 获取联系人
+
+extern NSString *const kDeleteContact;// 删除联系人
 
 
 #pragma mark - 会员
-// 购买会员
+
+extern NSString *const kBuyVip;// 购买会员
 
 extern NSString *const kAdList;// 广告轮播
 
 extern NSString *const kGetNewVersion;// 软件更新
 
 extern NSString *const kFeedback;// 意见反馈
-
+#warning 此处链接不同
 extern NSString *const kSignleImageUpload;// 图片上传
 
 

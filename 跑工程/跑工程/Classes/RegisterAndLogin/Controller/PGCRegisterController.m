@@ -8,61 +8,200 @@
 
 #import "PGCRegisterController.h"
 #import "MZTimerLabel.h"
+#import "PGCRegistInfo.h"
+#import "PGCRegisterOrLoginAPIManager.h"
 
-@interface PGCRegisterController ()<MZTimerLabelDelegate>
-//注册按钮
-@property (weak, nonatomic) IBOutlet UIButton *registerButton;
-//倒计时label
-@property (nonatomic,strong) UILabel *timer_show;
-//获取验证码初始背景颜色
-@property (nonatomic,strong) UIColor *recevieIDBtnColor;
-//获取验证码按钮
-@property (weak, nonatomic) IBOutlet UIButton *recevieIDBtn;
+@interface PGCRegisterController () <MZTimerLabelDelegate>
+{
+    UILabel *_timerShow;/** 倒计时label */
+    UIColor *_recevieIDBtnColor;/** 获取验证码初始背景颜色 */
+}
 
+@property (weak, nonatomic) IBOutlet UITextField *companyTF;
+@property (weak, nonatomic) IBOutlet UITextField *nameTF;
+@property (weak, nonatomic) IBOutlet UITextField *phoneTF;
+@property (weak, nonatomic) IBOutlet UITextField *verifyCodeTF;
+@property (weak, nonatomic) IBOutlet UITextField *passwordTF;
+@property (weak, nonatomic) IBOutlet UITextField *checkPasswordTF;
 
+@property (weak, nonatomic) IBOutlet UIButton *recevieIDBtn;/** 获取验证码按钮 */
+@property (weak, nonatomic) IBOutlet UIButton *registerButton;/** 注册按钮 */
+
+@property (strong, nonatomic) PGCRegistInfo *registerInfo;/** 注册的模型 */
+
+- (void)initializeUserInterface; /** 初始化用户界面 */
 
 @end
 
 @implementation PGCRegisterController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    self.title = @"注册";
-    self.registerButton.layer.cornerRadius = 10;
-//    记录获取验证码最初的背景颜色
-    self.recevieIDBtnColor = self.recevieIDBtn.backgroundColor;
-}
-//获取验证码
-- (IBAction)recevieIDBtnClick:(id)sender {
-    //    倒计时
-    [self timeCount];
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [self.companyTF becomeFirstResponder];
 }
 
-//倒计时
-- (void)timeCount{//倒计时函数
-    [self.recevieIDBtn setTitle:nil forState:UIControlStateNormal];//把按钮原先的名字消掉
-    _timer_show = [[UILabel alloc] initWithFrame:CGRectMake(30, 15, 80, 20)];//UILabel设置成和UIButton一样的尺寸和位置
-    [self.recevieIDBtn addSubview:_timer_show];//把timer_show添加到_dynamicCode_btn按钮上
-    MZTimerLabel *timer_cutDown = [[MZTimerLabel alloc] initWithLabel:_timer_show andTimerType:MZTimerLabelTypeTimer];//创建MZTimerLabel类的对象timer_cutDown
-    [timer_cutDown setCountDownTime:60];//倒计时时间60s
-    timer_cutDown.timeFormat = @"倒计时 (ss)";//倒计时格式,也可以是@"HH:mm:ss SS"，时，分，秒，毫秒；想用哪个就写哪个
-    timer_cutDown.timeLabel.textColor = [UIColor whiteColor];//倒计时字体颜色
-    timer_cutDown.timeLabel.font = [UIFont systemFontOfSize:14.0];//倒计时字体大小
-    timer_cutDown.timeLabel.textAlignment = NSTextAlignmentCenter;//剧中
-    timer_cutDown.delegate = self;//设置代理，以便后面倒计时结束时调用代理
-    self.recevieIDBtn.userInteractionEnabled = NO;//按钮禁止点击
-    [timer_cutDown start];//开始计时
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    [self initializeUserInterface];
+}
+
+- (void)initializeUserInterface {
+    self.navigationItem.title = @"注册";
+    // 记录获取验证码最初的背景颜色
+    _recevieIDBtnColor = self.recevieIDBtn.backgroundColor;
+    
+    self.registerButton.layer.masksToBounds = true;
+    self.registerButton.layer.cornerRadius = 10.0;
+}
+
+#pragma mark - Events
+/**
+ 注册
+
+ @param sender 
+ */
+- (IBAction)registerBtnClick:(UIButton *)sender {
+    
+    [self.view endEditing:true];
+    
+    // 判断是否输入公司名
+    if (!(self.companyTF.text.length > 0)) {
+        [PGCProgressHUD showMessage:@"请输入公司名称或个人名称" inView:self.view];
+        return;
+    }
+    // 判断是否输入姓名
+    if (!(self.nameTF.text.length > 0)) {
+        [PGCProgressHUD showMessage:@"请输入姓名" inView:self.view];
+        return;
+    }
+    // 判断是否输入手机号
+    if (![self.phoneTF.text isPhoneNumber]) {
+        [PGCProgressHUD showMessage:@"请输入正确的手机号" inView:self.view];
+        return;
+    }
+    // 判断是否输入验证码
+    if (!(self.verifyCodeTF.text.length > 0)) {
+        [PGCProgressHUD showMessage:@"请输入验证码" inView:self.view];
+        return;
+    }
+    // 判断是否输入密码
+    if (self.passwordTF.text.length < 6) {
+        [PGCProgressHUD showMessage:@"请输入6位数以上的密码" inView:self.view];
+        return;
+    }
+    // 判断密码验证是否正确
+    if (![self.checkPasswordTF.text isEqualToString:self.passwordTF.text]) {
+        [PGCProgressHUD showMessage:@"密码验证失败" inView:self.view];
+        self.checkPasswordTF.text = @"";
+        return;
+    }
+    
+    self.registerInfo.company = self.companyTF.text;
+    self.registerInfo.name = self.nameTF.text;
+    self.registerInfo.phone = self.phoneTF.text;
+    self.registerInfo.verify_code = self.verifyCodeTF.text;
+    self.registerInfo.password = self.passwordTF.text;
+    self.registerInfo.password2 = self.checkPasswordTF.text;
+    
+    NSDictionary *parameters = self.registerInfo.mj_keyValues;
+    
+    MBProgressHUD *hud = [PGCProgressHUD showProgressHUD:self.view label:@"注册中..."];
+    
+    [PGCRegisterOrLoginAPIManager registerRequestWithParameters:parameters responds:^(RespondsStatus status, NSString *message, id resultData) {
+        
+        [hud hideAnimated:true];
+        
+        if (status == RespondsStatusSuccess) {
+            
+            [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示" message:@"注册成功，请返回登录！" actionWithTitle:@"确定" handler:^{
+                [self.navigationController popViewControllerAnimated:true];
+            }];
+        }
+        else {
+            [PGCProgressHUD showAlertWithTarget:self title:@"注册失败：" message:message actionWithTitle:@"确定" handler:nil];
+        }
+    }];
+}
+
+
+#pragma mark - Event
+/**
+ 获取验证码
+
+ @param sender
+ */
+- (IBAction)recevieIDBtnClick:(UIButton *)sender {
+    if ([self.phoneTF.text isPhoneNumber]) {
+        //倒计时
+        [self timeCount];
+        
+        NSDictionary *params = @{@"phone":self.phoneTF.text, @"type":@0};
+        [PGCRegisterOrLoginAPIManager sendVerifyCodeURLRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
+            if (status == RespondsStatusSuccess) {
+                [PGCProgressHUD showMessage:@"验证码发送成功，请查看您的手机短信！" inView:self.view];
+            }
+        }];
+    } else {
+        [PGCProgressHUD showMessage:@"请输入正确的手机号" inView:self.view];
+    }
+}
+
+/**
+ 倒计时
+ */
+- (void)timeCount {
+    //把按钮原先的名字消掉
+    [self.recevieIDBtn setTitle:nil forState:UIControlStateNormal];
+    
+    //UILabel设置成和UIButton一样的尺寸和位置
+    _timerShow = [[UILabel alloc] initWithFrame:CGRectMake(20, 15, 80, 20)];
+    
+    //把timer_show添加到_dynamicCode_btn按钮上
+    [self.recevieIDBtn addSubview:_timerShow];
+    
+    //创建MZTimerLabel类的对象timer_cutDown
+    MZTimerLabel *timerCutDown = [[MZTimerLabel alloc] initWithLabel:_timerShow andTimerType:MZTimerLabelTypeTimer];
+    //倒计时时间60s
+    [timerCutDown setCountDownTime:60];
+    //倒计时格式,也可以是@"HH:mm:ss SS"，时，分，秒，毫秒；想用哪个就写哪个
+    timerCutDown.timeFormat = @"倒计时 (ss)";
+    timerCutDown.timeLabel.textColor = [UIColor whiteColor];
+    timerCutDown.timeLabel.font = [UIFont systemFontOfSize:14.0];
+    timerCutDown.timeLabel.textAlignment = NSTextAlignmentCenter;
+    timerCutDown.delegate = self;
+    self.recevieIDBtn.userInteractionEnabled = false;
+    //开始计时
+    [timerCutDown start];
     self.recevieIDBtn.backgroundColor = [UIColor grayColor];
 }
 
-//倒计时结束后的代理方法
-- (void)timerLabel:(MZTimerLabel *)timerLabel finshedCountDownTimerWithTime:(NSTimeInterval)countTime{
-    [self.recevieIDBtn setTitle:@"获取验证码" forState:UIControlStateNormal];//倒计时结束后按钮名称改为"发送验证码"
-    [_timer_show removeFromSuperview];//移除倒计时模块
-    self.recevieIDBtn.userInteractionEnabled = YES;//按钮可以点击
-    self.recevieIDBtn.backgroundColor = self.recevieIDBtnColor;
+#pragma mark - MZTimerLabelDelegate
+/**
+ 倒计时结束后的代理方法
+
+ @param timerLabel
+ @param countTime
+ */
+- (void)timerLabel:(MZTimerLabel *)timerLabel finshedCountDownTimerWithTime:(NSTimeInterval)countTime {
+    //倒计时结束后按钮名称改为"获取验证码"
+    [self.recevieIDBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+    //移除倒计时模块
+    [_timerShow removeFromSuperview];
+    
+    self.recevieIDBtn.userInteractionEnabled = true;
+    self.recevieIDBtn.backgroundColor = _recevieIDBtnColor;
 }
 
 
+#pragma mark - Getter
+
+- (PGCRegistInfo *)registerInfo {
+    if (!_registerInfo) {
+        _registerInfo = [[PGCRegistInfo alloc] init];
+    }
+    return _registerInfo;
+}
 
 @end

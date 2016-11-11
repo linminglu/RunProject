@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,8 +21,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bWD-eG-H43">
+                    <rect key="frame" x="0.0" y="75" width="375" height="50"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="职  位" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="axA-CG-NMO">
+                            <rect key="frame" x="20" y="15" width="50" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="50" id="xhK-xp-Fgw"/>
                                 <constraint firstAttribute="height" constant="20" id="zSd-jF-UKb"/>
@@ -41,6 +46,7 @@
                             </variation>
                         </label>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请填写职位" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="axu-eK-S2L">
+                            <rect key="frame" x="80" y="10" width="225" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="YX5-ng-N2K"/>
                             </constraints>
@@ -60,9 +66,9 @@
                     </subviews>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
+                        <constraint firstItem="axu-eK-S2L" firstAttribute="centerY" secondItem="axA-CG-NMO" secondAttribute="centerY" id="8jk-2X-zZT"/>
                         <constraint firstItem="axA-CG-NMO" firstAttribute="leading" secondItem="bWD-eG-H43" secondAttribute="leading" constant="20" id="h7M-4p-dkr"/>
                         <constraint firstAttribute="height" constant="50" id="hyb-2d-7Uf"/>
-                        <constraint firstItem="axu-eK-S2L" firstAttribute="top" secondItem="bWD-eG-H43" secondAttribute="top" constant="10" id="i22-pK-zel"/>
                         <constraint firstItem="axA-CG-NMO" firstAttribute="top" secondItem="bWD-eG-H43" secondAttribute="top" constant="15" id="js4-o1-LIA"/>
                         <constraint firstItem="axu-eK-S2L" firstAttribute="leading" secondItem="axA-CG-NMO" secondAttribute="trailing" constant="10" id="kG1-QW-yfX"/>
                         <constraint firstAttribute="trailing" secondItem="axu-eK-S2L" secondAttribute="trailing" constant="70" id="khZ-Iy-X6g"/>
@@ -74,11 +80,10 @@
                         </mask>
                         <mask key="constraints">
                             <exclude reference="hyb-2d-7Uf"/>
-                            <exclude reference="i22-pK-zel"/>
-                            <exclude reference="kG1-QW-yfX"/>
-                            <exclude reference="khZ-Iy-X6g"/>
                             <exclude reference="h7M-4p-dkr"/>
                             <exclude reference="js4-o1-LIA"/>
+                            <exclude reference="kG1-QW-yfX"/>
+                            <exclude reference="khZ-Iy-X6g"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=regular-widthClass=compact">
@@ -88,11 +93,10 @@
                         </mask>
                         <mask key="constraints">
                             <include reference="hyb-2d-7Uf"/>
-                            <include reference="i22-pK-zel"/>
-                            <include reference="kG1-QW-yfX"/>
-                            <include reference="khZ-Iy-X6g"/>
                             <include reference="h7M-4p-dkr"/>
                             <include reference="js4-o1-LIA"/>
+                            <include reference="kG1-QW-yfX"/>
+                            <include reference="khZ-Iy-X6g"/>
                         </mask>
                     </variation>
                 </view>

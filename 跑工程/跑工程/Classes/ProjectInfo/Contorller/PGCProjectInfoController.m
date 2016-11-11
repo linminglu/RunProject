@@ -66,8 +66,6 @@
 #pragma mark - Initialize
 
 - (void)initializeDataSource {
-    AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];
-    [manager startMonitoring];
     
     _areaDatas = [PGCProvince province].areaArray;
     _typeDatas = [PGCProjectType projectType].projectTypes;
@@ -78,14 +76,12 @@
             
             NSArray *resultArray = resultData[@"result"];
             
-            NSLog(@"%@", PGCCachesPath);
-            
             for (id value in resultArray) {
                 PGCProjectInfo *project = [PGCProjectInfo mj_objectWithKeyValues:value];
                 
                 [self.dataSource addObject:project];
             }
-            if (self.dataSource.count > 20) {
+            if (self.dataSource.count >= 20) {
                 self.tableView.mj_footer.hidden = false;
             }
             [self.tableView reloadData];
@@ -94,7 +90,7 @@
 }
 
 - (void)initializeUserInterface {
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = RGB(239, 239, 241);
     self.automaticallyAdjustsScrollViewInsets = false;
     
     // 自定义导航栏
@@ -111,6 +107,7 @@
     
     // 表格视图
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    tableView.backgroundColor = [UIColor whiteColor];
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     tableView.delegate = self;
     tableView.dataSource = self;
@@ -118,7 +115,7 @@
     // 设置表格视图下拉刷新和上拉加载
     tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadProjectData)];
     tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
-    tableView.mj_footer.automaticallyHidden = true;
+    tableView.mj_footer.hidden = true;
     [self.view addSubview:tableView];
     // 开始自动布局
     tableView.sd_layout
@@ -136,9 +133,25 @@
 #pragma mark - 加载数据
 
 - (void)loadProjectData {
+    AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];
+    [manager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        switch (status) {
+            case AFNetworkReachabilityStatusUnknown:
+                [PGCProgressHUD showMessage:@"未识别的网络" inView:self.view];
+                break;
+            case AFNetworkReachabilityStatusNotReachable:
+                [PGCProgressHUD showMessage:@"不可达的网络(未连接)" inView:self.view];
+                break;
+            default:
+                break;
+        }
+    }];
+    [manager startMonitoring];
+    
     [self.dataSource removeAllObjects];
     
     [PGCProjectInfoAPIManager getProjectsRequestWithParameters:@{@"page":@(1), @"page_size":@(20)} responds:^(RespondsStatus status, NSString *message, id resultData) {
+        
         if (status == RespondsStatusSuccess) {
             
             NSArray *resultArray = resultData[@"result"];
@@ -147,8 +160,8 @@
                 PGCProjectInfo *project = [PGCProjectInfo mj_objectWithKeyValues:value];
                 [self.dataSource addObject:project];
             }
-            [self.tableView reloadData];
             [self.tableView.mj_header endRefreshing];
+            [self.tableView reloadData];
         }
     }];
 }
@@ -173,7 +186,6 @@
     
     return cell;
 }
-
 
 
 #pragma mark -

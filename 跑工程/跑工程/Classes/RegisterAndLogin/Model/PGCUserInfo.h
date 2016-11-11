@@ -10,62 +10,19 @@
 
 @interface PGCUserInfo : NSObject
 
-/**
- 电话
- */
-@property (copy, nonatomic) NSString *phone;
-/**
- 姓名
- */
-@property (copy, nonatomic) NSString *name;
-/**
- 身份证
- */
-@property (assign, nonatomic) NSInteger id_card;
-/**
- 头像
- */
-@property (copy, nonatomic) NSString *headimage;
-/**
- 性别
- */
-@property (assign, nonatomic) NSInteger sex;
-/**
- 职位
- */
-@property (copy, nonatomic) NSString *post;
-/**
- 公司
- */
-@property (copy, nonatomic) NSString *company;
-/**
- 是不是会员
- */
-@property (assign, nonatomic) NSInteger is_vip;
-/**
- vip 到期时间
- */
-@property (copy, nonatomic) NSString *vip_expired;
-
-
-- (instancetype)initWithDic:(NSDictionary*)dic;
-
-- (void)setValue:(id)value forUndefinedKey:(NSString *)key;
-
-/**
- 清除用户信息
- */
-+ (void)clearUserInfo;
-/**
- 重新登录
- */
-+ (void)reLogin;
-/**
- 刷新用户信息
-
- @param key
- @param value
- */
-+ (void)refreshUserMessageWithKey:(NSString *)key value:(NSString *)value;
+@property (assign, nonatomic) int id;/** id */
+@property (copy, nonatomic) NSString *phone;/** 电话 */
+@property (copy, nonatomic) NSString *name;/** 姓名 */
+@property (copy, nonatomic) NSString *password;/** 密码 */
+@property (assign, nonatomic) NSInteger id_card;/** 身份证 */
+@property (copy, nonatomic) NSString *headimage;/** 头像 */
+@property (assign, nonatomic) NSInteger sex;/** 性别 */
+@property (copy, nonatomic) NSString *post;/** 职位 */
+@property (copy, nonatomic) NSString *company;/** 公司 */
+@property (assign, nonatomic) NSInteger is_vip;/** 是不是会员 */
+@property (copy, nonatomic) NSString *vip_expired;/** vip 到期时间 */
+@property (assign, nonatomic) int is_push;/** 是否接受推送 */
+@property (copy, nonatomic) NSString *push_id;/** 信息推送 */
+@property (copy, nonatomic) NSString *device_type;/** 用户设备类型 */
 
 @end

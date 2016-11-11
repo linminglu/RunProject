@@ -20,10 +20,28 @@ typedef NS_ENUM(NSUInteger, ProgressMode) {
 
 @interface PGCProgressHUD : NSObject
 
-@property (strong, nonatomic) MBProgressHUD  *hud;
-
+@property (strong, nonatomic) MBProgressHUD *hud;
 
 +(instancetype)shareinstance;
+
+
++ (void)showProgressHUDWithTitle:(NSString *)title;
++ (void)showProgressHUDWith:(UIView *)view
+                      title:(NSString *)title;
++ (void)showProgressHUDWith:(UIView *)view
+                      title:(NSString *)title
+                      block:(void(^)(void))block;
+
++ (MBProgressHUD *)showProgressHUD:(UIView *)view label:(NSString *)label;
+
+#pragma mark - UIAlertController
++ (void)showAlertWithTitle:(NSString *)title;
++ (void)showAlertWithTitle:(NSString *)title
+                     block:(void(^)(void))block;
++ (void)showAlertWithTarget:(id)target title:(NSString *)title
+                    message:(NSString *)message
+            actionWithTitle:(NSString *)otherTitle
+                    handler:(void (^)(void))handler;
 
 //显示
 +(void)show:(NSString *)msg inView:(UIView *)view mode:(ProgressMode)myMode;
@@ -44,7 +62,7 @@ typedef NS_ENUM(NSUInteger, ProgressMode) {
 +(void)showProgress:(NSString *)msg inView:(UIView *)view;
 
 //显示成功提示
-+(void)showSuccess:(NSString *)msg inview:(UIView *)view;
++(void)showSuccess:(NSString *)msg inView:(UIView *)view;
 
 //在最上层显示
 +(void)showMsgWithoutView:(NSString *)msg;

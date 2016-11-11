@@ -36,14 +36,14 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
     
-//    创建搜索条和取消按钮
+    // 创建搜索条和取消按钮
     [self creatSearBar];
-//    tableView
+    // tableView
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.tableView registerNib:[UINib nibWithNibName:@"PGCContactsCell" bundle:nil] forCellReuseIdentifier:@"cell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"PGCSearchContactCell" bundle:nil] forCellReuseIdentifier:@"cell1"];
-//    初始化数据
+    // 初始化数据
     self.dataSourceArray = [NSMutableArray array];
     [self.dataSourceArray addObject:@[@"张三",@"李四",@"王麻子",@"刘能"]];
     [self.dataSourceArray addObject:@[@"21",@"22",@"23",@"24"]];

@@ -132,6 +132,7 @@
     // 立即支付按钮
     UIButton *payButton = [[UIButton alloc] init];
     payButton.backgroundColor = PGCTintColor;
+    payButton.layer.masksToBounds = true;
     payButton.layer.cornerRadius = 10.0;
     [payButton setTitle:@"立即支付" forState:UIControlStateNormal];
     [payButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

@@ -10,26 +10,38 @@
 
 @interface PGCChooseCompanyController ()
 
+@property (weak, nonatomic) IBOutlet UITextField *companyTextField;
 
 @end
 
 @implementation PGCChooseCompanyController
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [self.companyTextField becomeFirstResponder];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleDone target:self action:@selector(saveInfo)];
     
-    self.navigationItem.rightBarButtonItem = right;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleDone target:self action:@selector(saveInfo:)];
 }
 
-- (void) saveInfo
-{
+
+#pragma mark - Event
+
+- (void)saveInfo:(UIBarButtonItem *)sedner {
     self.block(self.companyTextField.text);
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:true];
 }
 
-    
 
+#pragma mark - Touches
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self.view endEditing:true];
+}
 
 
 

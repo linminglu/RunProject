@@ -263,6 +263,14 @@
             </state>
             <point key="canvasLocation" x="-1939" y="-2571"/>
         </button>
+        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="O4f-PG-S1O">
+            <rect key="frame" x="0.0" y="0.0" width="39" height="18"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+            <nil key="textColor"/>
+            <nil key="highlightedColor"/>
+            <point key="canvasLocation" x="-1919.5" y="-2404"/>
+        </label>
     </objects>
     <resources>
         <image name="橙色矩形-0" width="70" height="30"/>

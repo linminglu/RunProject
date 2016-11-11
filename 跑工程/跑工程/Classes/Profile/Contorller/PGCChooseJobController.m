@@ -11,22 +11,37 @@
 @interface PGCChooseJobController ()
 
 @property (weak, nonatomic) IBOutlet UITextField *jobTextField;
+
 @end
 
 @implementation PGCChooseJobController
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [self.jobTextField becomeFirstResponder];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleDone target:self action:@selector(saveInfo)];
-    
-    self.navigationItem.rightBarButtonItem = right;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleDone target:self action:@selector(saveInfo:)];
 }
 
-- (void) saveInfo
-{
+
+#pragma mark - Events
+
+- (void)saveInfo:(UIBarButtonItem *)sender {
     self.block(self.jobTextField.text);
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+
+#pragma mark - Touches
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self.view endEditing:true];
+}
+
 
 @end

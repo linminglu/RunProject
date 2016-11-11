@@ -9,20 +9,15 @@
 #import "PGCShareToFriendController.h"
 
 @interface PGCShareToFriendController ()
-
-//分享按钮名字数组
-@property (nonatomic,strong) NSArray *shareBtnArray;
-
-
-//第一个文字视图X
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *fristLabViewX;
-//二维码X
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *codeImageX;
-//第二个文字视图X
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *secondLabViewX;
 //二维码的H和W
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *codeH;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *codeW;
+
+
+@property (copy, nonatomic) NSArray *shareBtnArray;/** 分享按钮名字数组 */
+
+- (void)initializeDataSource; /** 初始化数据源 */
+- (void)initializeUserInterface; /** 初始化用户界面 */
 
 @end
 
@@ -30,56 +25,50 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self initializeDataSource];
+    [self initializeUserInterface];
+}
 
-    self.title = @"推荐APP";
-    [self.navigationController.navigationBar setHidden:NO];
-//    设置文字视图的X和二维码的X
-    self.fristLabViewX.constant = (SCREEN_WIDTH - 160) /2;
-    self.codeImageX.constant = SCREEN_WIDTH /4 ;
-    self.secondLabViewX.constant = (SCREEN_WIDTH - 160) /2;
+- (void)initializeDataSource {
+    
+}
+
+- (void)initializeUserInterface {
+    self.navigationItem.title = @"推荐APP";
+    
+    // 设置文字视图的X和二维码的X
     self.codeH.constant = SCREEN_WIDTH / 2;
     self.codeW.constant = SCREEN_WIDTH / 2;
-
-//    分享按钮图片数组
-    _shareBtnArray = @[@"QQ好友",@"QQ空间",@"微信好友",@"朋友圈"];
     
-    [self creatShareBtn];
- 
-    
-    
-}
-//创建分享按钮
-- (void) creatShareBtn
-{
-//    6s,6p
-    if (SCREEN_WIDTH > 320.00) {
-        for (int i = 0; i < 4; i++) {
-            
-            UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(30 +(i * (50 + (SCREEN_WIDTH - 260) / 3)) , SCREEN_HEIGHT * 0.8, 50, 70)];
-            btn.tag = i;
-            [btn addTarget:self action:@selector(shareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-            [self.view addSubview:btn];
-
-            [self creatBtnSubViewWithBtn:btn andIndex:i];
+    // 分享按钮图片数组
+    _shareBtnArray = @[@"QQ好友", @"QQ空间", @"微信好友", @"朋友圈"];
+    //创建四个分享按钮
+    for (int i = 0; i < _shareBtnArray.count; i++) {
+        UIButton *button = [[UIButton alloc] init];
+        
+        if (SCREEN_WIDTH > 320.00) {// iPhone 6 & 6p 及以上的屏幕
+            button.frame = CGRectMake(30 + (i * (50 + (SCREEN_WIDTH - 260) / 3)) , SCREEN_HEIGHT * 0.8, 50, 70);
         }
-    }
-//    5s
-    else
-    {
-        for (int i = 0; i < 4; i++) {
-            
-            UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(30 +(i * (50 + (SCREEN_WIDTH - 260) / 3)) , 500, 50, 70)];
-            [self.view addSubview:btn];
-            btn.tag = i;
-            [btn addTarget:self action:@selector(shareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-
-            [self creatBtnSubViewWithBtn:btn andIndex:i];
+        else {
+            button.frame = CGRectMake(30 + (i * (50 + (SCREEN_WIDTH - 260) / 3)) , 500, 50, 70);
         }
+        button.tag = i;
+        [button addTarget:self action:@selector(shareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:button];
+        [self creatBtnSubViewWithBtn:button index:i];
     }
 }
 
-//创建btn的子控件
-- (void) creatBtnSubViewWithBtn:(UIButton *)btn andIndex:(int)index
+#pragma mark - Private
+
+/**
+ 创建btn的子控件
+
+ @param btn
+ @param index
+ */
+- (void)creatBtnSubViewWithBtn:(UIButton *)btn index:(int)index
 {
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 0, 40, 40)];
     [btn addSubview:imageView];
@@ -87,29 +76,34 @@
     
     UILabel *btnLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 50, 50, 20)];
     [btn addSubview:btnLabel];
-    btnLabel.text = [NSString stringWithFormat:@"%@",_shareBtnArray[index]];
+    btnLabel.text = [NSString stringWithFormat:@"%@", _shareBtnArray[index]];
     btnLabel.font = [UIFont systemFontOfSize:12];
     btnLabel.textColor = [UIColor grayColor];
     btnLabel.textAlignment = NSTextAlignmentCenter;
-    
 }
-//分享按钮点击事件
+
+
+#pragma mark - Event
+/**
+ 分享按钮点击事件
+
+ @param sender
+ */
 - (void) shareBtnClick:(UIButton *)sender
 {
     switch (sender.tag) {
         case 0:
-            NSLog(@"QQ好友");
+            [PGCProgressHUD showMessage:@"QQ好友" inView:self.view];
             break;
         case 1:
-            NSLog(@"QQ空间");
+            [PGCProgressHUD showMessage:@"QQ空间" inView:self.view];
             break;
         case 2:
-            NSLog(@"微信好友");
+            [PGCProgressHUD showMessage:@"微信好友" inView:self.view];
             break;
         case 3:
-            NSLog(@"朋友圈");
+            [PGCProgressHUD showMessage:@"朋友圈" inView:self.view];
             break;
-            
         default:
             break;
     }

@@ -39,10 +39,18 @@ typedef void(^failureHandler)(NSURLSessionDataTask *task, NSError *error);
 
 @interface PGCBaseAPIManager : NSObject
 
+@property (copy, nonatomic)  NSString *bindTag;
+@property (assign, nonatomic)  NSInteger needToken;
+
 /**
  清空缓存
  */
 + (void)removeAllCache;
+
+/**
+ 获取缓存大小
+ */
++ (NSInteger)getAllCacheSize;
 
 
 #pragma mark -

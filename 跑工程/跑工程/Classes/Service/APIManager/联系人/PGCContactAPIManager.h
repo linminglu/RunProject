@@ -10,4 +10,13 @@
 
 @interface PGCContactAPIManager : PGCBaseAPIManager
 
+// 添加联系人
++ (NSURLSessionDataTask *)addContactRequestWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
+
+// 获取联系人
++ (NSURLSessionDataTask *)getContactsListRequestWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
+
+// 删除联系人
++ (NSURLSessionDataTask *)deleteContactRequestWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
+
 @end

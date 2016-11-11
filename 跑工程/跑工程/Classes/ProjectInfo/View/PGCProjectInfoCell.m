@@ -47,6 +47,7 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.contentView.backgroundColor = [UIColor whiteColor];
         
         [self createUI];
         [self setupSubviewsAutoLayout];
@@ -59,14 +60,12 @@
     self.nameLabel = [[UILabel alloc] init];
     self.nameLabel.font = [UIFont systemFontOfSize:16];
     self.nameLabel.textColor = RGB(76, 141, 174);
-    self.nameLabel.text = @"需求和供应信息的标题";
     [self.contentView addSubview:self.nameLabel];
     
     // 内容
     self.contentLabel = [[UILabel alloc] init];
     self.contentLabel.font = [UIFont systemFontOfSize:14];
     self.contentLabel.textColor = RGB(102, 102, 102);
-    self.contentLabel.text = @"需求和供应信息的标题，需求和供应信息的内容；需求和供应信息的标题，需求和供应信息的内容；需求和供应信息的标题，需求和供应信息的内容；需求和供应信息的标题。";
     self.contentLabel.numberOfLines = 0;
     [self.contentView addSubview:self.contentLabel];
     
@@ -74,28 +73,24 @@
     self.categoryLabel = [[UILabel alloc] init];
     self.categoryLabel.font = [UIFont systemFontOfSize:12];
     self.categoryLabel.textColor = RGB(187, 187, 187);
-    self.categoryLabel.text = @"机电设备";
     [self.contentView addSubview:self.categoryLabel];
     
     // 项目阶段
     self.stageLabel = [[UILabel alloc] init];
     self.stageLabel.font = [UIFont systemFontOfSize:12];
     self.stageLabel.textColor = RGB(187, 187, 187);
-    self.stageLabel.text = @"机电设备";
     [self.contentView addSubview:self.stageLabel];
     
     // 地区
     self.areaLabel = [[UILabel alloc] init];
     self.areaLabel.font = [UIFont systemFontOfSize:12];
     self.areaLabel.textColor = RGB(187, 187, 187);
-    self.areaLabel.text = @"重庆市江北区";
     [self.contentView addSubview:self.areaLabel];
     
     // 时间标签
     self.timeLabel = [[UILabel alloc] init];
     self.timeLabel.font = [UIFont systemFontOfSize:10];
     self.timeLabel.textColor = RGB(187, 187, 187);
-    self.timeLabel.text = @"2016.9.14";
     self.timeLabel.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:self.timeLabel];
     
@@ -127,28 +122,29 @@
     .topSpaceToView(self.contentLabel, 10)
     .leftSpaceToView(self.contentView, 15)
     .widthIs(60)
-    .autoHeightRatio(0);
+    .heightIs(20);
+    
+    // 时间标签
+    self.timeLabel.sd_layout
+    .bottomEqualToView(self.categoryLabel)
+    .rightSpaceToView(self.contentView, 15)
+    .widthIs(60)
+    .heightIs(20);
     
     // 项目阶段
     self.stageLabel.sd_layout
     .centerYEqualToView(self.categoryLabel)
     .leftSpaceToView(self.categoryLabel, 0)
     .widthIs(60)
-    .autoHeightRatio(0);
+    .heightIs(20);
     
     // 地区
     self.areaLabel.sd_layout
     .centerYEqualToView(self.categoryLabel)
     .leftSpaceToView(self.stageLabel, 0)
-    .widthIs(80)
-    .autoHeightRatio(0);
+    .rightSpaceToView(self.timeLabel, 20)
+    .heightIs(20);
     
-    // 时间标签
-    self.timeLabel.sd_layout
-    .bottomEqualToView(self.categoryLabel)
-    .rightSpaceToView(self.contentView, 15)
-    .widthIs(50)
-    .autoHeightRatio(0);
     
     // 底部分割线
     self.line.sd_layout
@@ -172,9 +168,9 @@
     self.categoryLabel.text = project.type_name;
     self.stageLabel.text = project.progress_name;
     self.areaLabel.text = [project.province stringByAppendingString:project.city];
-    self.timeLabel.text = project.start_time;
+    NSString *start_time = [project.start_time substringToIndex:10];
+    self.timeLabel.text = start_time;
 }
-
 
 
 - (void)awakeFromNib {

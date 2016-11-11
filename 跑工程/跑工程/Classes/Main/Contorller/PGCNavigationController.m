@@ -17,7 +17,8 @@
 
 @implementation PGCNavigationController
 
-+ (void)initialize {
++ (void)initialize
+{
     UINavigationBar *bar = [UINavigationBar appearance];
     //设置导航条按钮的文字颜色
     bar.tintColor = PGCTextColor;
@@ -34,15 +35,20 @@
     self.delegate = self;
 }
 
-- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(nonnull UIViewController *)viewController animated:(BOOL)animated {    
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
     
-    PGCTabBarController* tabbarVC = (PGCTabBarController*)self.tabBarController;
+    PGCTabBarController *tabbarVC = (PGCTabBarController *)self.tabBarController;
     if (viewController == self.viewControllers.firstObject) {//是根控制器
         
         self.interactivePopGestureRecognizer.delegate = nil;
         [tabbarVC setTabBarHidden:false];
-        
-    } else {
+    }
+}
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(nonnull UIViewController *)viewController animated:(BOOL)animated {    
+    
+    PGCTabBarController *tabbarVC = (PGCTabBarController *)self.tabBarController;
+    if (viewController != self.viewControllers.firstObject) {//不是根控制器
         
         self.interactivePopGestureRecognizer.delegate = _popDelegate;
         [tabbarVC setTabBarHidden:true];
