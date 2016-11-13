@@ -10,4 +10,6 @@
 
 @interface PGCLoginController : UIViewController
 
+@property (strong, nonatomic) UIViewController *vc;
+
 @end

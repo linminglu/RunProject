@@ -7,16 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PGCUserInfo.h"
+@class PGCUserInfo;
 
 @interface PGCToken : NSObject
 
-@property (assign, nonatomic) BOOL isLogin;/** 是否登录 */
 @property (copy, nonatomic) NSString *token;/** 用户token信息 */
 @property (assign, nonatomic) long timestamp;/** timestamp */
 @property (assign, nonatomic) int valid;/** valid */
 @property (strong, nonatomic) PGCUserInfo *user;/** 用户信息 */
 
-+ (instancetype)token;
+@property (nonatomic, assign) BOOL firstUseSoft;//是不是第一次使用软件
+@property (nonatomic, strong) NSString *lastSoftVersion;//最近一次软件的版本号
 
 @end

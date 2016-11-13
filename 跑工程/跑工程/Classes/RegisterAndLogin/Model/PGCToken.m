@@ -7,35 +7,23 @@
 //
 
 #import "PGCToken.h"
+#import "PGCUserInfo.h"
 
 @implementation PGCToken
 
-
-static PGCToken *token = nil;
-
-+ (instancetype)token {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        token = [[PGCToken alloc] init];
-    });
-    return token;
-}
-
-+ (void)clearTokenInfo
-{
-    NSString *tokenPath = [PGCCachesPath stringByAppendingPathComponent:@"TokenInfo.plist"];
-    NSError *error;
-    if ([PGCFileManager removeItemAtPath:tokenPath error:&error]) {
-        NSLog(@"已清除用户信息");
-    } else {
-        NSLog(@"erro:%@", error.userInfo);
-    }
-}
-
 MJExtensionCodingImplementation
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _firstUseSoft = true;
+    }
+    return self;
+}
+
 + (NSArray *)mj_ignoredCodingPropertyNames {
-    return @[@"isLogin"];
+    return @[@"firstUseSoft", @"lastSoftVersion"];
 }
 
 @end

@@ -10,9 +10,17 @@
 
 @implementation PGCProvince
 
-static PGCProvince *province;
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        
+    }
+    return self;
+}
 
 + (instancetype)province {
+    static PGCProvince *province = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         province = [[PGCProvince alloc] init];

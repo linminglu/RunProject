@@ -43,7 +43,8 @@
             NSMutableArray *cities = [NSMutableArray array];
             
             for (id temp in citiesData) {
-                PGCCity *city = [PGCCity mj_objectWithKeyValues:temp];
+                PGCCity *city = [[PGCCity alloc] init];
+                [city mj_setKeyValues:temp];
                 // 将城市模型添加到数组中
                 [cities addObject:city];
             }
@@ -67,7 +68,8 @@
                         // 将城市数组添加到省份字典中
                         [provinceDic setObject:cityData forKey:@"city"];
                         
-                        PGCProvince *province = [PGCProvince mj_objectWithKeyValues:provinceDic];
+                        PGCProvince *province = [[PGCProvince alloc] init];
+                        [province mj_setKeyValues:provinceDic];
                         // 将模型添加到数组中
                         [results addObject:province];
                     }
@@ -83,16 +85,13 @@
 - (void)initProjectTypeData
 {
     [PGCProjectInfoAPIManager getProjectTypesRequestWithParameters:@{} responds:^(RespondsStatus status, NSString *message, id resultData) {
-        
         if (status == RespondsStatusSuccess) {
-            
             NSMutableArray *typeArr = [NSMutableArray array];
-            
             for (id value in resultData) {
-                PGCProjectType *projectType = [PGCProjectType mj_objectWithKeyValues:value];
+                PGCProjectType *projectType = [[PGCProjectType alloc] init];
+                [projectType mj_setKeyValues:value];
                 // 将模型添加到数组中
                 [typeArr addObject:projectType];
-                
             }
             [PGCProjectType projectType].projectTypes = typeArr;
         }
@@ -104,13 +103,11 @@
 - (void)initProjectStageData
 {
     [PGCProjectInfoAPIManager getProjectProgressesRequestWithParameters:@{} responds:^(RespondsStatus status, NSString *message, id resultData) {
-        
         if (status == RespondsStatusSuccess) {
-            
             NSMutableArray *progressArr = [NSMutableArray array];
-            
             for (id value in resultData) {
-                PGCProjectProgress *progress = [PGCProjectProgress mj_objectWithKeyValues:value];
+                PGCProjectProgress *progress = [[PGCProjectProgress alloc] init];
+                [progress mj_setKeyValues:value];
                 // 将模型添加到数组中
                 [progressArr addObject:progress];
             }
@@ -124,14 +121,12 @@
 - (void)initMaterialServiceTypesData
 {
     [PGCSupplyAndDemandAPIManager getMaterialServiceTypesWithParameters:@{} responds:^(RespondsStatus status, NSString *message, id resultData) {
-        
         if (status == RespondsStatusSuccess) {
-            
-            NSMutableArray *typeArr = [NSMutableArray array];
-            
+            NSMutableArray *typeArr = [NSMutableArray array];            
             for (id value in resultData) {
                 // 构造一级类别模型
-                PGCMaterialServiceTypes *type = [PGCMaterialServiceTypes mj_objectWithKeyValues:value];
+                PGCMaterialServiceTypes *type = [[PGCMaterialServiceTypes alloc] init];
+                [type mj_setKeyValues:value];
                 // 将一级类别模型添加到数组中
                 [typeArr addObject:type];
                 
@@ -141,7 +136,8 @@
                         
                         for (id second in secondResultData) {
                             // 构造二级类别模型
-                            PGCMaterialServiceTypes *secondType = [PGCMaterialServiceTypes mj_objectWithKeyValues:second];
+                            PGCMaterialServiceTypes *secondType = [[PGCMaterialServiceTypes alloc] init];
+                            [secondType mj_setKeyValues:second];
                             // 将二级类别模型添加到数组中
                             [seconds addObject:secondType];
                         }

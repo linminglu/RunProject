@@ -127,8 +127,7 @@
     .autoHeightRatio(0);
     
     [centerView setupAutoHeightWithBottomView:phoneNumberLabel bottomMargin:20];
-    
-    
+        
     // 立即支付按钮
     UIButton *payButton = [[UIButton alloc] init];
     payButton.backgroundColor = PGCTintColor;

@@ -13,15 +13,19 @@
 #import "PGCSettingController.h"
 #import "PGCUserInfoController.h"
 #import "PGCShareToFriendController.h"
-#import "PGCToken.h"
+#import "PGCTokenManager.h"
+#import "PGCUserInfo.h"
+#import "UIButton+WebCache.h"
 
 @interface PGCProfileController ()
 
 @property (weak, nonatomic) IBOutlet UIButton *headImageBtn;
+@property (weak, nonatomic) IBOutlet UIButton *loginAndRegisterBtn;
 
 
 - (void)initializeDataSource; /** 初始化数据源 */
 - (void)initializeUserInterface; /** 初始化用户界面 */
+- (void)registerNotification; /** 注册通知 */
 
 @end
 
@@ -39,23 +43,21 @@
     self.navigationController.navigationBar.hidden = false;
 }
 
+- (void)dealloc {
+    [PGCNotificationCenter removeObserver:self name:kProfileNotification object:nil];
+    [PGCNotificationCenter removeObserver:self name:kReloadProfileInfo object:nil];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self initializeDataSource];
     [self initializeUserInterface];
+    [self registerNotification];
 }
 
 - (void)initializeDataSource {
-    NSString *tokenPath = [PGCCachesPath stringByAppendingPathComponent:@"TokenInfo.plist"];
-    
-    PGCToken *token = [NSKeyedUnarchiver unarchiveObjectWithFile:tokenPath];
-    
-    if (token) {
-        [PGCToken token].isLogin = true;
-    } else {
-        [PGCToken token].isLogin = false;
-    }
+
 }
 
 - (void)initializeUserInterface {
@@ -63,7 +65,67 @@
     self.headImageBtn.layer.masksToBounds = true;
     self.headImageBtn.layer.cornerRadius = 65 / 2;
     
+    [[PGCTokenManager tokenManager] readAuthorizeData];
+    PGCUserInfo *user = [PGCTokenManager tokenManager].token.user;
     
+    // 判断当前是否登录
+    if (user) {
+        // 用户已登录，加载用户头像和名字
+        self.loginAndRegisterBtn.enabled = false;
+        [self.loginAndRegisterBtn setTitle:user.name forState:UIControlStateNormal];
+        
+        self.headImageBtn.enabled = true;
+        if (user.headimage) {
+            NSURL *url = [NSURL URLWithString:user.headimage];
+            [self.headImageBtn sd_setImageWithURL:url forState:UIControlStateNormal];
+        }
+    } else {
+        self.headImageBtn.enabled = false;
+        [self.loginAndRegisterBtn setTitle:@"登录/注册" forState:UIControlStateNormal];
+        [self.headImageBtn setImage:[UIImage imageNamed:@"头像"] forState:UIControlStateNormal];
+    }
+}
+
+- (void)registerNotification {
+    [PGCNotificationCenter addObserver:self selector:@selector(profileNotification:) name:kProfileNotification object:nil];
+    [PGCNotificationCenter addObserver:self selector:@selector(reloadProfileInfo:) name:kReloadProfileInfo object:nil];
+}
+
+
+#pragma mark - NSNotificationCenter
+- (void)profileNotification:(NSNotification *)notifi {
+    
+    if (notifi.object) {
+        [self.navigationController pushViewController:notifi.object animated:false];
+    }
+}
+
+
+- (void)reloadProfileInfo:(NSNotification *)notifi {
+    
+    [[PGCTokenManager tokenManager] readAuthorizeData];
+    
+    if ([notifi.userInfo objectForKey:@"Login"]) {// 收到用户登录的通知
+        PGCUserInfo *user = [PGCTokenManager tokenManager].token.user;
+        
+        self.loginAndRegisterBtn.enabled = false;
+        [self.loginAndRegisterBtn setTitle:user.name forState:UIControlStateNormal];
+        
+        self.headImageBtn.enabled = true;
+        
+        if (user.headimage) {
+            NSURL *url = [NSURL URLWithString:user.headimage];
+            [self.headImageBtn sd_setImageWithURL:url forState:UIControlStateNormal];
+        }
+    }
+    
+    if ([notifi.userInfo objectForKey:@"Logout"]) {// 收到用户退出登录的通知
+        
+        self.loginAndRegisterBtn.enabled = true;
+        [self.loginAndRegisterBtn setTitle:@"登录/注册" forState:UIControlStateNormal];
+        self.headImageBtn.enabled = false;
+        [self.headImageBtn setImage:[UIImage imageNamed:@"头像"] forState:UIControlStateNormal];
+    }
 }
 
 #pragma mark - Event
@@ -74,7 +136,8 @@
  @param sender
  */
 - (IBAction)iconButtonClick:(UIButton *)sender {
-    NSLog(@"haha");
+    PGCUserInfoController *userInfoVC = [[PGCUserInfoController alloc] init];
+    [self.navigationController pushViewController:userInfoVC animated:true];
 }
 
 /**
@@ -94,7 +157,15 @@
  */
 - (IBAction)userInfoButtonClick:(UIButton *)sender {
     PGCUserInfoController *userInfoVC = [[PGCUserInfoController alloc] init];
-    [self.navigationController pushViewController:userInfoVC animated:true];
+    PGCUserInfo *user = [PGCTokenManager tokenManager].token.user;
+    
+    if (user) {
+        [self.navigationController pushViewController:userInfoVC animated:true];
+    } else {
+        PGCLoginController *loginVC = [[PGCLoginController alloc] init];
+        loginVC.vc = userInfoVC;
+        [self.navigationController pushViewController:loginVC animated:true];
+    }
 }
 
 /**

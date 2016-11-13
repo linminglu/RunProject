@@ -10,9 +10,17 @@
 
 @implementation PGCMaterialServiceTypes
 
-static PGCMaterialServiceTypes *type;
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        
+    }
+    return self;
+}
 
 + (instancetype)materialServiceTypes {
+    static PGCMaterialServiceTypes *type = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         type = [[PGCMaterialServiceTypes alloc] init];

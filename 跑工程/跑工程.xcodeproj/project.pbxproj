@@ -227,6 +227,10 @@
 		84A87A981DC2010F00FD8CC3 /* PGCProjectRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A87A971DC2010F00FD8CC3 /* PGCProjectRootViewController.m */; };
 		84AA70481DC0B3E000150CFC /* PGCProjectDetailTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AA70471DC0B3E000150CFC /* PGCProjectDetailTagView.m */; };
 		84B9C3CE1DCB5AE400035064 /* PGCSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B9C3CD1DCB5AE400035064 /* PGCSearchBar.m */; };
+		84C839401DD710E200A07F76 /* PGCDataCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C8393F1DD710E200A07F76 /* PGCDataCache.m */; };
+		84C839431DD7138B00A07F76 /* PGCTokenManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C839421DD7138B00A07F76 /* PGCTokenManager.m */; };
+		84C839491DD7269200A07F76 /* PGCHeadImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C839481DD7269200A07F76 /* PGCHeadImage.m */; };
+		84C8394C1DD7285800A07F76 /* PGCHeadImageAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C8394B1DD7285800A07F76 /* PGCHeadImageAPIManager.m */; };
 		84ECF1C81DD0599000697207 /* PGCUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECF1C71DD0599000697207 /* PGCUserInfo.m */; };
 		84ECF1F21DD167CE00697207 /* NSString+Size.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECF1CF1DD167CE00697207 /* NSString+Size.m */; };
 		84ECF1F31DD167CE00697207 /* UIBarButtonItem+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECF1D11DD167CE00697207 /* UIBarButtonItem+Extension.m */; };
@@ -695,6 +699,14 @@
 		84AA70471DC0B3E000150CFC /* PGCProjectDetailTagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCProjectDetailTagView.m; sourceTree = "<group>"; };
 		84B9C3CC1DCB5AE400035064 /* PGCSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCSearchBar.h; sourceTree = "<group>"; };
 		84B9C3CD1DCB5AE400035064 /* PGCSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCSearchBar.m; sourceTree = "<group>"; };
+		84C8393E1DD710E200A07F76 /* PGCDataCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCDataCache.h; sourceTree = "<group>"; };
+		84C8393F1DD710E200A07F76 /* PGCDataCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCDataCache.m; sourceTree = "<group>"; };
+		84C839411DD7138B00A07F76 /* PGCTokenManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCTokenManager.h; sourceTree = "<group>"; };
+		84C839421DD7138B00A07F76 /* PGCTokenManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCTokenManager.m; sourceTree = "<group>"; };
+		84C839471DD7269200A07F76 /* PGCHeadImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCHeadImage.h; sourceTree = "<group>"; };
+		84C839481DD7269200A07F76 /* PGCHeadImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCHeadImage.m; sourceTree = "<group>"; };
+		84C8394A1DD7285800A07F76 /* PGCHeadImageAPIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCHeadImageAPIManager.h; sourceTree = "<group>"; };
+		84C8394B1DD7285800A07F76 /* PGCHeadImageAPIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCHeadImageAPIManager.m; sourceTree = "<group>"; };
 		84ECF1C61DD0599000697207 /* PGCUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCUserInfo.h; sourceTree = "<group>"; };
 		84ECF1C71DD0599000697207 /* PGCUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCUserInfo.m; sourceTree = "<group>"; };
 		84ECF1CB1DD1674B00697207 /* PGCPrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCPrefixHeader.pch; sourceTree = "<group>"; };
@@ -1001,6 +1013,8 @@
 		845938D11DBF625B0086DD53 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				84C839471DD7269200A07F76 /* PGCHeadImage.h */,
+				84C839481DD7269200A07F76 /* PGCHeadImage.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1133,8 +1147,12 @@
 			children = (
 				845938FC1DBF625B0086DD53 /* MZTimerLabel.h */,
 				845938FD1DBF625B0086DD53 /* MZTimerLabel.m */,
+				84C8393E1DD710E200A07F76 /* PGCDataCache.h */,
+				84C8393F1DD710E200A07F76 /* PGCDataCache.m */,
 				84237A291DD5D1B1001B929C /* PGCToken.h */,
 				84237A2A1DD5D1B1001B929C /* PGCToken.m */,
+				84C839411DD7138B00A07F76 /* PGCTokenManager.h */,
+				84C839421DD7138B00A07F76 /* PGCTokenManager.m */,
 				84ECF1C61DD0599000697207 /* PGCUserInfo.h */,
 				84ECF1C71DD0599000697207 /* PGCUserInfo.m */,
 				848794271DD498C10060D7FD /* PGCRegistInfo.h */,
@@ -1864,6 +1882,8 @@
 				848794191DD41BF10060D7FD /* PGCNetworkCache.m */,
 				8487942A1DD4A2900060D7FD /* PGCNetworkHelper.h */,
 				8487942B1DD4A2900060D7FD /* PGCNetworkHelper.m */,
+				84C8394A1DD7285800A07F76 /* PGCHeadImageAPIManager.h */,
+				84C8394B1DD7285800A07F76 /* PGCHeadImageAPIManager.m */,
 				848793CB1DD2B4C00060D7FD /* 地区-省市 */,
 				848793CE1DD2B4C00060D7FD /* 供需 */,
 				848793D11DD2B4C00060D7FD /* 联系人 */,
@@ -2075,6 +2095,7 @@
 				84A007BF1DD1A75000CC8C83 /* RACDynamicSignal.m in Sources */,
 				84A007BD1DD1A75000CC8C83 /* RACDynamicPropertySuperclass.m in Sources */,
 				84A007CA1DD1A75000CC8C83 /* RACKVOTrampoline.m in Sources */,
+				84C839491DD7269200A07F76 /* PGCHeadImage.m in Sources */,
 				8475AE611DCC720B004A15A5 /* PGCSupplyAndDemandRootVC.m in Sources */,
 				84A007C71DD1A75000CC8C83 /* RACIndexSetSequence.m in Sources */,
 				841383BB1DC6D1EF00A91589 /* PGCVIPServiceController.m in Sources */,
@@ -2194,6 +2215,7 @@
 				849C7A221DC89F9F00C229DF /* PGCDemandIntroduceVC.m in Sources */,
 				84A006D41DD1A70F00CC8C83 /* MCJSONNonNullStringTransformer.m in Sources */,
 				8475AE6A1DCC7CD2004A15A5 /* PGCIntroduceDetailBottomView.m in Sources */,
+				84C839431DD7138B00A07F76 /* PGCTokenManager.m in Sources */,
 				8475AE411DCC2B87004A15A5 /* PGCPayView.m in Sources */,
 				84A006D51DD1A70F00CC8C83 /* MCJSONPrimaryKeyTransformer.m in Sources */,
 				84A007CD1DD1A75000CC8C83 /* RACPassthroughSubscriber.m in Sources */,
@@ -2253,9 +2275,11 @@
 				849C79FA1DC884F900C229DF /* PGCSupplyAndDemandDetailVC.m in Sources */,
 				84A007E71DD1A75100CC8C83 /* UIAlertView+RACSignalSupport.m in Sources */,
 				84A007A51DD1A75000CC8C83 /* NSInvocation+RACTypeParsing.m in Sources */,
+				84C8394C1DD7285800A07F76 /* PGCHeadImageAPIManager.m in Sources */,
 				84A007ED1DD1A75100CC8C83 /* UIDatePicker+RACSignalSupport.m in Sources */,
 				848794071DD300B90060D7FD /* PGCProfileAPIManager.m in Sources */,
 				84A007B31DD1A75000CC8C83 /* NSUserDefaults+RACSupport.m in Sources */,
+				84C839401DD710E200A07F76 /* PGCDataCache.m in Sources */,
 				845939381DBF625B0086DD53 /* MZTimerLabel.m in Sources */,
 				849C7A301DC8AFC800C229DF /* PGCDemandCollectDetailVC.m in Sources */,
 				84A007C41DD1A75000CC8C83 /* RACEvent.m in Sources */,

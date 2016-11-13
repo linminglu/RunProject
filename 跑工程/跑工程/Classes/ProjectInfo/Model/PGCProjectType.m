@@ -10,9 +10,17 @@
 
 @implementation PGCProjectType
 
-static PGCProjectType *projectType;
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        
+    }
+    return self;
+}
 
 + (instancetype)projectType {
+    static PGCProjectType *projectType = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         projectType = [[PGCProjectType alloc] init];

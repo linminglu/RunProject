@@ -16,4 +16,5 @@ target '跑工程' do
     pod 'YYCache'
     pod 'YYModel'
     pod 'Realm'
+    pod 'RBQFetchedResultsController'
 end

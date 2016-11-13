@@ -7,6 +7,9 @@
 //
 
 #import "PGCSettingController.h"
+#import "PGCRegisterOrLoginAPIManager.h"
+#import "JCAlertView.h"
+#import "PGCTokenManager.h"
 #import "PGCUserInfo.h"
 
 @interface PGCSettingController ()
@@ -29,6 +32,40 @@
 // 退出登录
 - (IBAction)logoutEvent:(UIButton *)sender {
     
+    PGCUserInfo *user = [PGCTokenManager tokenManager].token.user;
+    
+    if (!user) {
+        [PGCProgressHUD showProgressHUDWithTitle:@"请先登录"];
+        return;
+    }
+    
+    NSDictionary *params = @{@"user_id":@(user.id),
+                             @"client_type":@"iphone",
+                             @"token":[PGCTokenManager tokenManager].token.token};
+    
+    MBProgressHUD *hud = [PGCProgressHUD showProgressHUD:self.view label:@"注销中..."];
+    
+    [JCAlertView showTwoButtonsWithTitle:@"温馨提示:" Message:@"是否确定注销登录?" ButtonType:JCAlertViewButtonTypeCancel ButtonTitle:@"注销" Click:^{
+        
+        [PGCRegisterOrLoginAPIManager logoutRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
+            
+            [hud hideAnimated:true];
+            
+            if (status == RespondsStatusSuccess) {
+                [PGCProgressHUD showProgressHUDWithTitle:@"成功退出登录!"];
+                // 发送退出登录的通知给 我的 控制器
+                [PGCNotificationCenter postNotificationName:kReloadProfileInfo object:nil userInfo:@{@"Logout":@"退出登录"}];
+                
+                [[PGCTokenManager tokenManager] logout];
+                
+            } else {
+                [PGCProgressHUD showAlertWithTarget:self title:@"退出登录失败：" message:message actionWithTitle:@"确定" handler:nil];
+            }
+        }];
+
+    } ButtonType:JCAlertViewButtonTypeWarn ButtonTitle:@"取消" Click:^{
+        
+    }];
 }
 
 @end

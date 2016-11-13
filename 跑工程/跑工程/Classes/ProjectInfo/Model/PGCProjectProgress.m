@@ -10,9 +10,17 @@
 
 @implementation PGCProjectProgress
 
-static PGCProjectProgress *progress;
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        
+    }
+    return self;
+}
 
 + (instancetype)projectProgress {
+    static PGCProjectProgress *progress = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         progress = [[PGCProjectProgress alloc] init];

@@ -10,4 +10,7 @@
 
 @interface PGCProfileAPIManager : PGCBaseAPIManager
 
+// 修改用户信息
++ (NSURLSessionDataTask *)completeInfoRequestWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
+
 @end

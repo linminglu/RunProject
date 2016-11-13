@@ -33,8 +33,7 @@
 
 @property (strong, nonatomic) UITableView *tableView;/** 表格视图 */
 @property (strong, nonatomic) NSMutableArray *dataSource;/** 表格数据源 */
-@property (assign, nonatomic) int page;/** 查询页数 */
-@property (assign, nonatomic) int pageSize;/** 查询最大页数 */
+@property (assign, nonatomic) NSInteger page;/** 查询页数 */
 
 - (void)initializeDataSource; /** 初始化数据 */
 - (void)initializeUserInterface; /** 初始化用户界面 */
@@ -71,7 +70,9 @@
     _typeDatas = [PGCProjectType projectType].projectTypes;
     _stageDatas = [PGCProjectProgress projectProgress].progressArray;
     
-    [PGCProjectInfoAPIManager getProjectsRequestWithParameters:@{@"page":@(1), @"page_size":@(20)} responds:^(RespondsStatus status, NSString *message, id resultData) {
+    self.page = 1;
+    
+    [PGCProjectInfoAPIManager getProjectsRequestWithParameters:@{@"page":@(self.page), @"page_size":@(20)} responds:^(RespondsStatus status, NSString *message, id resultData) {
         if (status == RespondsStatusSuccess) {
             
             NSArray *resultArray = resultData[@"result"];
@@ -83,6 +84,7 @@
             }
             if (self.dataSource.count >= 20) {
                 self.tableView.mj_footer.hidden = false;
+                self.page += 20;
             }
             [self.tableView reloadData];
         }
@@ -125,14 +127,7 @@
     .bottomSpaceToView(self.view, TAB_BAR_HEIGHT);
     
     self.tableView = tableView;
-}
-
-
-
-#pragma mark - 
-#pragma mark - 加载数据
-
-- (void)loadProjectData {
+    
     AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];
     [manager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         switch (status) {
@@ -147,10 +142,20 @@
         }
     }];
     [manager startMonitoring];
-    
+}
+
+
+
+#pragma mark - 
+#pragma mark - 加载数据
+
+- (void)loadProjectData {
+    self.page = 1;
     [self.dataSource removeAllObjects];
     
-    [PGCProjectInfoAPIManager getProjectsRequestWithParameters:@{@"page":@(1), @"page_size":@(20)} responds:^(RespondsStatus status, NSString *message, id resultData) {
+    [PGCProjectInfoAPIManager getProjectsRequestWithParameters:@{@"page":@(self.page), @"page_size":@(20)} responds:^(RespondsStatus status, NSString *message, id resultData) {
+        
+        [self.tableView.mj_header endRefreshing];
         
         if (status == RespondsStatusSuccess) {
             
@@ -160,16 +165,38 @@
                 PGCProjectInfo *project = [PGCProjectInfo mj_objectWithKeyValues:value];
                 [self.dataSource addObject:project];
             }
-            [self.tableView.mj_header endRefreshing];
+            if (self.dataSource.count >= 20) {
+                self.tableView.mj_footer.hidden = false;
+                self.page += 20;
+            }
             [self.tableView reloadData];
         }
     }];
 }
 
 - (void)loadMoreData {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.tableView.mj_footer endRefreshing];
-    });
+    
+    [PGCProjectInfoAPIManager getProjectsRequestWithParameters:@{@"page":@(self.page), @"page_size":@(10)} responds:^(RespondsStatus status, NSString *message, id resultData) {
+        
+        if (status == RespondsStatusSuccess) {
+            
+            NSArray *resultArray = resultData[@"result"];
+            
+            if (resultArray.count > 0) {
+                for (id value in resultArray) {
+                    PGCProjectInfo *project = [PGCProjectInfo mj_objectWithKeyValues:value];
+                    [self.dataSource addObject:project];
+                }
+                [self.tableView.mj_header endRefreshing];
+                [self.tableView reloadData];
+            
+            } else {
+                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            }
+        } else {
+            [self.tableView.mj_header endRefreshing];
+        }
+    }];
 }
 
 #pragma mark -

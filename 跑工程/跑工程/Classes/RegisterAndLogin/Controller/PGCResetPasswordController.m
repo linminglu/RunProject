@@ -8,6 +8,9 @@
 
 #import "PGCResetPasswordController.h"
 #import "MZTimerLabel.h"
+#import "PGCRegisterOrLoginAPIManager.h"
+#import "PGCRegistInfo.h"
+#import "PGCLoginController.h"
 
 @interface PGCResetPasswordController () <MZTimerLabelDelegate>
 {
@@ -15,8 +18,14 @@
     UIColor *_recevieIDBtnColor;/** 获取验证码初始背景颜色 */
 }
 
+@property (weak, nonatomic) IBOutlet UITextField *phoneTF;
+@property (weak, nonatomic) IBOutlet UITextField *verifyCodeTF;
+@property (weak, nonatomic) IBOutlet UITextField *passwordTF;
+@property (weak, nonatomic) IBOutlet UITextField *checkPasswordTF;
 @property (weak, nonatomic) IBOutlet UIButton *recevieIDBtn;/** 获取验证码按钮 */
 @property (weak, nonatomic) IBOutlet UIButton *confirmBtn;/** 确认按钮 */
+
+@property (strong, nonatomic) PGCRegistInfo *registerInfo;/** 注册的模型 */
 
 - (void)initializeUserInterface; /** 初始化用户界面 */
 
@@ -31,7 +40,6 @@
 }
 
 - (void)initializeUserInterface {
-    self.navigationItem.title = @"注册";
     //记录获取验证码最初的背景颜色
     _recevieIDBtnColor = self.recevieIDBtn.backgroundColor;
     
@@ -47,16 +55,102 @@
 - (IBAction)confirmBtnClick:(UIButton *)sender {
     
     [self.view endEditing:true];
+
+    if (![self.phoneTF.text isPhoneNumber]) {
+        [PGCProgressHUD showMessage:@"请输入正确的手机号" inView:self.view];
+        return;
+    }
+    // 判断是否输入验证码
+    if (!(self.verifyCodeTF.text.length > 0)) {
+        [PGCProgressHUD showMessage:@"请输入验证码" inView:self.view];
+        return;
+    }
+    // 判断是否输入密码
+    if (self.passwordTF.text.length < 6) {
+        [PGCProgressHUD showMessage:@"请输入6位数以上的密码" inView:self.view];
+        return;
+    }
+    // 判断密码验证是否正确
+    if (![self.checkPasswordTF.text isEqualToString:self.passwordTF.text]) {
+        [PGCProgressHUD showMessage:@"密码验证失败" inView:self.view];
+        self.checkPasswordTF.text = @"";
+        return;
+    }
     
-    [PGCProgressHUD showMsgWithoutView:@"修改密码"];
+    self.registerInfo.phone = self.phoneTF.text;
+    self.registerInfo.verify_code = self.verifyCodeTF.text;
+    self.registerInfo.password = self.passwordTF.text;
+    self.registerInfo.password2 = self.checkPasswordTF.text;
+    
+    NSDictionary *params = self.registerInfo.mj_keyValues;
+    
+    MBProgressHUD *hud;
+    
+    if ([self.navigationItem.title isEqualToString:@"忘记密码"]) {
+        
+        hud = [PGCProgressHUD showProgressHUD:self.view label:@"重置密码中..."];
+        
+        [PGCRegisterOrLoginAPIManager forgetPasswordRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
+            
+            [hud hideAnimated:true];
+            
+            if (status == RespondsStatusSuccess) {
+                
+                [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示：" message:@"密码重置成功，请重新登录！" actionWithTitle:@"确定" handler:^{
+                    [self.navigationController popViewControllerAnimated:true];
+                }];
+            }
+            else {
+                [PGCProgressHUD showAlertWithTarget:self title:@"密码重置失败：" message:message actionWithTitle:@"确定" handler:nil];
+            }
+        }];
+        
+    } else {
+        
+        hud = [PGCProgressHUD showProgressHUD:self.view label:@"修改密码中..."];
+        
+        [PGCRegisterOrLoginAPIManager forgetPasswordRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
+            
+            [hud hideAnimated:true];
+            
+            if (status == RespondsStatusSuccess) {
+                
+                [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示：" message:@"密码修改成功，请重新登录！" actionWithTitle:@"确定" handler:^{
+                    
+                    PGCLoginController *loginVC = [[PGCLoginController alloc] init];
+                    [self.navigationController pushViewController:loginVC animated:true];
+                    [self.navigationController popToRootViewControllerAnimated:false];
+                    [PGCNotificationCenter postNotificationName:kProfileNotification object:loginVC userInfo:nil];
+                }];
+            }
+            else {
+                [PGCProgressHUD showAlertWithTarget:self title:@"密码修改失败：" message:message actionWithTitle:@"确定" handler:nil];
+            }
+        }];
+    }
 }
 
 /**
  获取验证
  */
 - (IBAction)recevieIDBtnClick:(UIButton *)sender {
-    //倒计时
-    [self timeCount];
+    
+    [self.view endEditing:true];
+    
+    if ([self.phoneTF.text isPhoneNumber]) {
+        //倒计时
+        [self timeCount];
+        
+        NSDictionary *params = @{@"phone":self.phoneTF.text, @"type":@0};
+        [PGCRegisterOrLoginAPIManager sendVerifyCodeURLRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
+            if (status == RespondsStatusSuccess) {
+                [PGCProgressHUD showMessage:@"验证码发送成功，请查看您的手机短信！" inView:self.view];
+            }
+        }];
+    } else {
+        [PGCProgressHUD showMessage:@"请输入正确的手机号" inView:self.view];
+        return;
+    }
 }
 
 /**
@@ -97,5 +191,14 @@
     self.recevieIDBtn.backgroundColor = _recevieIDBtnColor;
 }
 
+
+#pragma mark - Getter
+
+- (PGCRegistInfo *)registerInfo {
+    if (!_registerInfo) {
+        _registerInfo = [[PGCRegistInfo alloc] init];
+    }
+    return _registerInfo;
+}
 
 @end

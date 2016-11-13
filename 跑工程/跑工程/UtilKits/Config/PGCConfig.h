@@ -11,7 +11,6 @@
 
 #define PGCNotificationCenter [NSNotificationCenter defaultCenter]
 #define PGCUserDefault [NSUserDefaults standardUserDefaults]
-#define PGCCachesPath [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, true) firstObject]
 #define PGCFileManager [NSFileManager defaultManager]
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds
@@ -44,20 +43,21 @@
 /****NSLog的Debug模式****/
 #ifdef DEBUG
     #define NSLog(FORMAT, ...) NSLog((@"[File:%s]" "[Func:%s]" "[Line:%d] " FORMAT), [[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
+//    #define NSLog(FORMAT, ...) fprintf(stderr,"[File:%s]:[Line:%d] NSLog:%s\n",[[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __LINE__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String])
 #else
     #define NSLog(...)
 #endif
 
-/****NSLog的Debug模式****/
-//#ifdef DEBUG
-//    #define PGCLog(FORMAT, ...) fprintf(stderr,"[File:%s]:[Line:%d] NSLog:%s\n",[[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __LINE__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String])
-//#else
-//    #define PGCLog(...)
-//#endif
+
+/*****通知name*****/
+static NSString * const kProfileNotification = @"ProfileNotification";
+static NSString * const kReloadProfileInfo = @"ReloadProfileInfo";
+
 
 
 /*****第三方服务的key*****/
 #define AMapKey @"0eeedd0b0166122dc319ed94dc04cf6a"
+
 
 
 

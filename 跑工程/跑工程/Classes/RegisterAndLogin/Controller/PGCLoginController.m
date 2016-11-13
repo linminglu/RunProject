@@ -10,7 +10,9 @@
 #import "PGCRegisterController.h"
 #import "PGCResetPasswordController.h"
 #import "PGCRegisterOrLoginAPIManager.h"
-#import "PGCToken.h"
+#import "PGCUserInfoController.h"
+#import "PGCTokenManager.h"
+#import "PGCUserInfo.h"
 
 @interface PGCLoginController ()
 
@@ -35,13 +37,11 @@
 }
 
 - (void)initializeDataSource {
-    NSString *tokenPath = [PGCCachesPath stringByAppendingPathComponent:@"TokenInfo.plist"];
+
+    PGCTokenManager *tokenManager = [PGCTokenManager tokenManager];
+    [tokenManager readAuthorizeData];
     
-    PGCToken *token = [NSKeyedUnarchiver unarchiveObjectWithFile:tokenPath];
-    
-    if (token) {
-        self.userPhoneTF.text = token.user.phone;
-    }
+    self.userPhoneTF.text = tokenManager.token.user ? tokenManager.token.user.phone : @"";
 }
 
 - (void)initializeUserInterface {
@@ -77,16 +77,21 @@
         
         if (status == RespondsStatusSuccess) {
             
-            PGCToken *token = [PGCToken mj_objectWithKeyValues:resultData];
-            NSString *tokenPath = [PGCCachesPath stringByAppendingPathComponent:@"TokenInfo.plist"];
-            [NSKeyedArchiver archiveRootObject:token toFile:tokenPath];
-            
-            NSLog(@"%@", tokenPath);
-            
             [PGCProgressHUD showProgressHUDWithTitle:@"登录成功!"];
+            // 发送登录成功的通知给 我的 控制器
+            [PGCNotificationCenter postNotificationName:kReloadProfileInfo object:nil userInfo:@{@"Login":@"登录成功"}];
             
-            [self.navigationController popViewControllerAnimated:true];
-            
+            // 控制器的跳转
+            if ([self.vc isKindOfClass:[PGCUserInfoController class]]) {
+                // 跳到 个人中心 控制器
+                [self.navigationController pushViewController:self.vc animated:true];
+                [self.navigationController popToRootViewControllerAnimated:false];
+                [PGCNotificationCenter postNotificationName:kProfileNotification object:self.vc userInfo:nil];
+
+            } else {
+                // 跳到 我的 控制器
+                [self.navigationController popViewControllerAnimated:true];
+            }
         } else {
             [PGCProgressHUD showAlertWithTarget:self title:@"登录失败：" message:message actionWithTitle:@"确定" handler:nil];
         }

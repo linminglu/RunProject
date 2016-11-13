@@ -7,7 +7,6 @@
 //
 
 #import "PGCUserInfo.h"
-#import "PGCToken.h"
 
 @implementation PGCUserInfo
 

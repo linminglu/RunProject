@@ -115,7 +115,7 @@
         
         if (status == RespondsStatusSuccess) {
             
-            [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示" message:@"注册成功，请返回登录！" actionWithTitle:@"确定" handler:^{
+            [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示：" message:@"注册成功，请返回登录！" actionWithTitle:@"确定" handler:^{
                 [self.navigationController popViewControllerAnimated:true];
             }];
         }
@@ -133,6 +133,9 @@
  @param sender
  */
 - (IBAction)recevieIDBtnClick:(UIButton *)sender {
+    
+    [self.view endEditing:true];
+    
     if ([self.phoneTF.text isPhoneNumber]) {
         //倒计时
         [self timeCount];
@@ -145,6 +148,7 @@
         }];
     } else {
         [PGCProgressHUD showMessage:@"请输入正确的手机号" inView:self.view];
+        return;
     }
 }
 
