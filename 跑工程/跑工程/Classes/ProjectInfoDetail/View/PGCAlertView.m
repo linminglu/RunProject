@@ -154,7 +154,7 @@
     UIButton *delete = [[UIButton alloc] init];
     delete.backgroundColor = [UIColor whiteColor];
     [delete.titleLabel setFont:SetFont(15)];
-    [delete setTitle:@"删除" forState:UIControlStateNormal];
+    [delete setTitle:@"取消" forState:UIControlStateNormal];
     [delete setTitleColor:PGCTextColor forState:UIControlStateNormal];
     [delete addTarget:self action:@selector(respondsToAlertDelete:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:delete];
@@ -243,6 +243,9 @@
 
 - (void)respondsToImageButton:(UIButton *)sender {
     sender.selected = !sender.selected;
+    
+    [PGCUserDefault setObject:@(sender.selected) forKey:@"isRemind"];
+    [PGCUserDefault synchronize];
 }
 
 

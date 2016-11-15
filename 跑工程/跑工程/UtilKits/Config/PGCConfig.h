@@ -30,7 +30,7 @@
 #define PGCThemeColor RGB(249, 136, 46)
 #define PGCTintColor RGB(250, 117, 10)//主题色
 #define PGCTextColor RGB(51, 51, 51)//文字颜色
-#define PGCBackColor RGB(240, 240, 240)//阴影颜色
+#define PGCBackColor RGB(239, 239, 241)//阴影颜色
 
 
 /****宏定义***/
@@ -52,7 +52,7 @@
 /*****通知name*****/
 static NSString * const kProfileNotification = @"ProfileNotification";
 static NSString * const kReloadProfileInfo = @"ReloadProfileInfo";
-
+static NSString * const kRefreshCollectTable = @"RefreshCollectTable";
 
 
 /*****第三方服务的key*****/

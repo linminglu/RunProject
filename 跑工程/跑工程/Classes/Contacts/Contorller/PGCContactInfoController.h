@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+@class PGCContact;
 
 @interface PGCContactInfoController : UIViewController
 
-@property (nonatomic,strong) NSString *nameStr;
+@property (strong, nonatomic) PGCContact *contactInfo;/** 联系人 */
 
 @end

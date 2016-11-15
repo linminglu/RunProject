@@ -253,26 +253,10 @@
                     <include reference="3eb-aj-7Mh"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="-1641" y="-2432"/>
+            <point key="canvasLocation" x="-2132" y="-2593"/>
         </view>
-        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="adL-5k-bLF">
-            <rect key="frame" x="0.0" y="0.0" width="46" height="30"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <state key="normal" title="Button">
-                <color key="titleColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
-            </state>
-            <point key="canvasLocation" x="-1939" y="-2571"/>
-        </button>
-        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="O4f-PG-S1O">
-            <rect key="frame" x="0.0" y="0.0" width="39" height="18"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-            <nil key="textColor"/>
-            <nil key="highlightedColor"/>
-            <point key="canvasLocation" x="-1919.5" y="-2404"/>
-        </label>
     </objects>
     <resources>
-        <image name="橙色矩形-0" width="70" height="30"/>
+        <image name="橙色矩形-0" width="40" height="40"/>
     </resources>
 </document>

@@ -10,4 +10,16 @@
 
 @interface PGCSupplyAPIManager : PGCBaseAPIManager
 
+// 添加需求
++ (NSURLSessionDataTask *)addDemandWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
+
+// 需求列表
++ (NSURLSessionDataTask *)getDemandWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
+
+// 我发布的需求
++ (NSURLSessionDataTask *)myDemandsWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
+
+// 删除我的需求
++ (NSURLSessionDataTask *)deleteMyDemandsWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
+
 @end

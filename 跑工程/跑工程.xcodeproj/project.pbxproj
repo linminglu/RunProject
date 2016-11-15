@@ -17,17 +17,12 @@
 		841383BB1DC6D1EF00A91589 /* PGCVIPServiceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841383BA1DC6D1EF00A91589 /* PGCVIPServiceController.m */; };
 		84237A2B1DD5D1B2001B929C /* PGCToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 84237A2A1DD5D1B1001B929C /* PGCToken.m */; };
 		845939091DBF625B0086DD53 /* PGCContactInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8459389C1DBF625B0086DD53 /* PGCContactInfoController.m */; };
-		8459390A1DBF625B0086DD53 /* PGCContactInfoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8459389D1DBF625B0086DD53 /* PGCContactInfoController.xib */; };
 		8459390B1DBF625B0086DD53 /* PGCContactsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8459389F1DBF625B0086DD53 /* PGCContactsController.m */; };
-		8459390C1DBF625B0086DD53 /* PGCContactsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845938A01DBF625B0086DD53 /* PGCContactsController.xib */; };
 		8459390D1DBF625B0086DD53 /* PGCContactInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 845938A41DBF625B0086DD53 /* PGCContactInfoCell.m */; };
 		8459390E1DBF625B0086DD53 /* PGCContactInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845938A51DBF625B0086DD53 /* PGCContactInfoCell.xib */; };
 		8459390F1DBF625B0086DD53 /* PGCContactsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 845938A71DBF625B0086DD53 /* PGCContactsCell.m */; };
-		845939101DBF625B0086DD53 /* PGCContactsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845938A81DBF625B0086DD53 /* PGCContactsCell.xib */; };
 		845939111DBF625B0086DD53 /* PGCProjectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 845938AA1DBF625B0086DD53 /* PGCProjectCell.m */; };
 		845939121DBF625B0086DD53 /* PGCProjectCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845938AB1DBF625B0086DD53 /* PGCProjectCell.xib */; };
-		845939131DBF625B0086DD53 /* PGCSearchContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 845938AD1DBF625B0086DD53 /* PGCSearchContactCell.m */; };
-		845939141DBF625B0086DD53 /* PGCSearchContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845938AE1DBF625B0086DD53 /* PGCSearchContactCell.xib */; };
 		845939151DBF625B0086DD53 /* PGCNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 845938B21DBF625B0086DD53 /* PGCNavigationController.m */; };
 		845939161DBF625B0086DD53 /* PGCTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 845938B41DBF625B0086DD53 /* PGCTabBarController.m */; };
 		845939171DBF625B0086DD53 /* PGCBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 845938B81DBF625B0086DD53 /* PGCBadgeView.m */; };
@@ -45,19 +40,15 @@
 		845939231DBF625B0086DD53 /* PGCShareToFriendController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845938CD1DBF625B0086DD53 /* PGCShareToFriendController.xib */; };
 		845939241DBF625B0086DD53 /* PGCUserInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 845938CF1DBF625B0086DD53 /* PGCUserInfoController.m */; };
 		845939251DBF625B0086DD53 /* PGCUserInfoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845938D01DBF625B0086DD53 /* PGCUserInfoController.xib */; };
-		845939261DBF625B0086DD53 /* PGCCollectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 845938D61DBF625B0086DD53 /* PGCCollectViewController.m */; };
-		845939271DBF625B0086DD53 /* PGCMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 845938D81DBF625B0086DD53 /* PGCMapViewController.m */; };
 		845939281DBF625B0086DD53 /* PGCProjectInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 845938DA1DBF625B0086DD53 /* PGCProjectInfoController.m */; };
-		845939291DBF625B0086DD53 /* PGCRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 845938DC1DBF625B0086DD53 /* PGCRecordViewController.m */; };
 		8459392F1DBF625B0086DD53 /* PGCProjectInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 845938E81DBF625B0086DD53 /* PGCProjectInfoCell.m */; };
-		845939301DBF625B0086DD53 /* PGCProjectInfoDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 845938EC1DBF625B0086DD53 /* PGCProjectInfoDetailViewController.m */; };
+		845939301DBF625B0086DD53 /* PGCProjectInfoDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 845938EC1DBF625B0086DD53 /* PGCProjectInfoDetailVC.m */; };
 		845939321DBF625B0086DD53 /* PGCLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 845938F31DBF625B0086DD53 /* PGCLoginController.m */; };
 		845939331DBF625B0086DD53 /* PGCLoginController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845938F41DBF625B0086DD53 /* PGCLoginController.xib */; };
 		845939341DBF625B0086DD53 /* PGCRegisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 845938F61DBF625B0086DD53 /* PGCRegisterController.m */; };
 		845939351DBF625B0086DD53 /* PGCRegisterController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845938F71DBF625B0086DD53 /* PGCRegisterController.xib */; };
 		845939361DBF625B0086DD53 /* PGCResetPasswordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 845938F91DBF625B0086DD53 /* PGCResetPasswordController.m */; };
 		845939371DBF625B0086DD53 /* PGCResetPasswordController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845938FA1DBF625B0086DD53 /* PGCResetPasswordController.xib */; };
-		845939381DBF625B0086DD53 /* MZTimerLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 845938FD1DBF625B0086DD53 /* MZTimerLabel.m */; };
 		845939391DBF625B0086DD53 /* PGCSupplyAndDemandController.m in Sources */ = {isa = PBXBuildFile; fileRef = 845939021DBF625B0086DD53 /* PGCSupplyAndDemandController.m */; };
 		8459393A1DBF625B0086DD53 /* PGCSupplyAndDemandController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845939031DBF625B0086DD53 /* PGCSupplyAndDemandController.xib */; };
 		845B41EE1DC824C5000351D7 /* PGCAddContactTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 845B41ED1DC824C5000351D7 /* PGCAddContactTableCell.m */; };
@@ -123,12 +114,6 @@
 		849C7BCF1DC9D48900C229DF /* PGCAppDelegate+AppLifeCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C7BCE1DC9D48900C229DF /* PGCAppDelegate+AppLifeCircle.m */; };
 		849C7BD21DC9D4A500C229DF /* PGCAppDelegate+RootController.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C7BD11DC9D4A500C229DF /* PGCAppDelegate+RootController.m */; };
 		849C7BE31DC9EED800C229DF /* PGCMapTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C7BE21DC9EED800C229DF /* PGCMapTypeViewController.m */; };
-		84A006D31DD1A70F00CC8C83 /* MCJSONDateTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A0066A1DD1A70F00CC8C83 /* MCJSONDateTransformer.m */; };
-		84A006D41DD1A70F00CC8C83 /* MCJSONNonNullStringTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A0066C1DD1A70F00CC8C83 /* MCJSONNonNullStringTransformer.m */; };
-		84A006D51DD1A70F00CC8C83 /* MCJSONPrimaryKeyTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A0066E1DD1A70F00CC8C83 /* MCJSONPrimaryKeyTransformer.m */; };
-		84A006D61DD1A70F00CC8C83 /* MCJSONValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A006701DD1A70F00CC8C83 /* MCJSONValueTransformer.m */; };
-		84A006D71DD1A70F00CC8C83 /* RLMObject+Copying.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A006721DD1A70F00CC8C83 /* RLMObject+Copying.m */; };
-		84A006D81DD1A70F00CC8C83 /* RLMObject+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A006741DD1A70F00CC8C83 /* RLMObject+JSON.m */; };
 		84A0079D1DD1A75000CC8C83 /* EXTRuntimeExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A006DE1DD1A75000CC8C83 /* EXTRuntimeExtensions.m */; };
 		84A0079E1DD1A75000CC8C83 /* MKAnnotationView+RACSignalSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A006E21DD1A75000CC8C83 /* MKAnnotationView+RACSignalSupport.m */; };
 		84A0079F1DD1A75000CC8C83 /* NSArray+RACSequenceAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A006E41DD1A75000CC8C83 /* NSArray+RACSequenceAdditions.m */; };
@@ -221,8 +206,10 @@
 		84A007F61DD1A75100CC8C83 /* UITableViewHeaderFooterView+RACSignalSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A007971DD1A75000CC8C83 /* UITableViewHeaderFooterView+RACSignalSupport.m */; };
 		84A007F71DD1A75100CC8C83 /* UITextField+RACSignalSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A007991DD1A75000CC8C83 /* UITextField+RACSignalSupport.m */; };
 		84A007F81DD1A75100CC8C83 /* UITextView+RACSignalSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A0079B1DD1A75000CC8C83 /* UITextView+RACSignalSupport.m */; };
-		84A007FB1DD1ACE900CC8C83 /* NSObject+Tips.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A007FA1DD1ACE900CC8C83 /* NSObject+Tips.m */; };
 		84A008021DD1B9A700CC8C83 /* PGCProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A008011DD1B9A700CC8C83 /* PGCProgressHUD.m */; };
+		84A3F6691DD863D900DB43D3 /* PGCContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A3F6681DD863D900DB43D3 /* PGCContact.m */; };
+		84A3F66D1DD879A000DB43D3 /* BMChineseSort.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A3F66C1DD879A000DB43D3 /* BMChineseSort.m */; };
+		84A3F6701DD94BB600DB43D3 /* PGCProjectContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A3F66F1DD94BB600DB43D3 /* PGCProjectContact.m */; };
 		84A87A931DC1CD1000FD8CC3 /* PGCProjectInfoNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A87A921DC1CD1000FD8CC3 /* PGCProjectInfoNavigationBar.m */; };
 		84A87A981DC2010F00FD8CC3 /* PGCProjectRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A87A971DC2010F00FD8CC3 /* PGCProjectRootViewController.m */; };
 		84AA70481DC0B3E000150CFC /* PGCProjectDetailTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AA70471DC0B3E000150CFC /* PGCProjectDetailTagView.m */; };
@@ -230,7 +217,6 @@
 		84C839401DD710E200A07F76 /* PGCDataCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C8393F1DD710E200A07F76 /* PGCDataCache.m */; };
 		84C839431DD7138B00A07F76 /* PGCTokenManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C839421DD7138B00A07F76 /* PGCTokenManager.m */; };
 		84C839491DD7269200A07F76 /* PGCHeadImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C839481DD7269200A07F76 /* PGCHeadImage.m */; };
-		84C8394C1DD7285800A07F76 /* PGCHeadImageAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C8394B1DD7285800A07F76 /* PGCHeadImageAPIManager.m */; };
 		84ECF1C81DD0599000697207 /* PGCUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECF1C71DD0599000697207 /* PGCUserInfo.m */; };
 		84ECF1F21DD167CE00697207 /* NSString+Size.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECF1CF1DD167CE00697207 /* NSString+Size.m */; };
 		84ECF1F31DD167CE00697207 /* UIBarButtonItem+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECF1D11DD167CE00697207 /* UIBarButtonItem+Extension.m */; };
@@ -244,6 +230,14 @@
 		84ECF2011DD1684A00697207 /* PGCHttpService.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECF2001DD1684A00697207 /* PGCHttpService.m */; };
 		84ECF2051DD168A700697207 /* PGCInterfaceConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECF2041DD168A700697207 /* PGCInterfaceConfig.m */; };
 		84ECF2101DD16A2000697207 /* PGCBaseAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECF20A1DD16A2000697207 /* PGCBaseAPIManager.m */; };
+		84F22C421DD9D09300AB0325 /* PGCSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F22C411DD9D09200AB0325 /* PGCSession.m */; };
+		84F22C451DD9D9AC00AB0325 /* MZTimerLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F22C441DD9D9AC00AB0325 /* MZTimerLabel.m */; };
+		84F22C4B1DDAAD7700AB0325 /* PGCSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F22C4A1DDAAD7700AB0325 /* PGCSearchViewController.m */; };
+		84F22C511DDAB89900AB0325 /* PGCSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F22C501DDAB89900AB0325 /* PGCSearchView.m */; };
+		84F22C541DDB01BD00AB0325 /* PGCContacInfoHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F22C531DDB01BD00AB0325 /* PGCContacInfoHeaderView.m */; };
+		84F22C571DDB0C7E00AB0325 /* PGCSupplyAndDemand.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F22C561DDB0C7E00AB0325 /* PGCSupplyAndDemand.m */; };
+		84F22C5D1DDB33B500AB0325 /* Contacts.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F22C5C1DDB33B500AB0325 /* Contacts.m */; };
+		84F22C601DDB33BD00AB0325 /* Images.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F22C5F1DDB33BD00AB0325 /* Images.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -286,22 +280,16 @@
 		845938801DBF48320086DD53 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		8459389B1DBF625B0086DD53 /* PGCContactInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCContactInfoController.h; sourceTree = "<group>"; };
 		8459389C1DBF625B0086DD53 /* PGCContactInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCContactInfoController.m; sourceTree = "<group>"; };
-		8459389D1DBF625B0086DD53 /* PGCContactInfoController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PGCContactInfoController.xib; sourceTree = "<group>"; };
 		8459389E1DBF625B0086DD53 /* PGCContactsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCContactsController.h; sourceTree = "<group>"; };
 		8459389F1DBF625B0086DD53 /* PGCContactsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCContactsController.m; sourceTree = "<group>"; };
-		845938A01DBF625B0086DD53 /* PGCContactsController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PGCContactsController.xib; sourceTree = "<group>"; };
 		845938A31DBF625B0086DD53 /* PGCContactInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCContactInfoCell.h; sourceTree = "<group>"; };
 		845938A41DBF625B0086DD53 /* PGCContactInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCContactInfoCell.m; sourceTree = "<group>"; };
 		845938A51DBF625B0086DD53 /* PGCContactInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PGCContactInfoCell.xib; sourceTree = "<group>"; };
 		845938A61DBF625B0086DD53 /* PGCContactsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCContactsCell.h; sourceTree = "<group>"; };
 		845938A71DBF625B0086DD53 /* PGCContactsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCContactsCell.m; sourceTree = "<group>"; };
-		845938A81DBF625B0086DD53 /* PGCContactsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PGCContactsCell.xib; sourceTree = "<group>"; };
 		845938A91DBF625B0086DD53 /* PGCProjectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCProjectCell.h; sourceTree = "<group>"; };
 		845938AA1DBF625B0086DD53 /* PGCProjectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCProjectCell.m; sourceTree = "<group>"; };
 		845938AB1DBF625B0086DD53 /* PGCProjectCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PGCProjectCell.xib; sourceTree = "<group>"; };
-		845938AC1DBF625B0086DD53 /* PGCSearchContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCSearchContactCell.h; sourceTree = "<group>"; };
-		845938AD1DBF625B0086DD53 /* PGCSearchContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCSearchContactCell.m; sourceTree = "<group>"; };
-		845938AE1DBF625B0086DD53 /* PGCSearchContactCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PGCSearchContactCell.xib; sourceTree = "<group>"; };
 		845938B11DBF625B0086DD53 /* PGCNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCNavigationController.h; sourceTree = "<group>"; };
 		845938B21DBF625B0086DD53 /* PGCNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCNavigationController.m; sourceTree = "<group>"; };
 		845938B31DBF625B0086DD53 /* PGCTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCTabBarController.h; sourceTree = "<group>"; };
@@ -330,18 +318,12 @@
 		845938CE1DBF625B0086DD53 /* PGCUserInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCUserInfoController.h; sourceTree = "<group>"; };
 		845938CF1DBF625B0086DD53 /* PGCUserInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCUserInfoController.m; sourceTree = "<group>"; };
 		845938D01DBF625B0086DD53 /* PGCUserInfoController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PGCUserInfoController.xib; sourceTree = "<group>"; };
-		845938D51DBF625B0086DD53 /* PGCCollectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCCollectViewController.h; sourceTree = "<group>"; };
-		845938D61DBF625B0086DD53 /* PGCCollectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCCollectViewController.m; sourceTree = "<group>"; };
-		845938D71DBF625B0086DD53 /* PGCMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCMapViewController.h; sourceTree = "<group>"; };
-		845938D81DBF625B0086DD53 /* PGCMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCMapViewController.m; sourceTree = "<group>"; };
 		845938D91DBF625B0086DD53 /* PGCProjectInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCProjectInfoController.h; sourceTree = "<group>"; };
 		845938DA1DBF625B0086DD53 /* PGCProjectInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCProjectInfoController.m; sourceTree = "<group>"; };
-		845938DB1DBF625B0086DD53 /* PGCRecordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCRecordViewController.h; sourceTree = "<group>"; };
-		845938DC1DBF625B0086DD53 /* PGCRecordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCRecordViewController.m; sourceTree = "<group>"; };
 		845938E71DBF625B0086DD53 /* PGCProjectInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCProjectInfoCell.h; sourceTree = "<group>"; };
 		845938E81DBF625B0086DD53 /* PGCProjectInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCProjectInfoCell.m; sourceTree = "<group>"; };
-		845938EB1DBF625B0086DD53 /* PGCProjectInfoDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCProjectInfoDetailViewController.h; sourceTree = "<group>"; };
-		845938EC1DBF625B0086DD53 /* PGCProjectInfoDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCProjectInfoDetailViewController.m; sourceTree = "<group>"; };
+		845938EB1DBF625B0086DD53 /* PGCProjectInfoDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCProjectInfoDetailVC.h; sourceTree = "<group>"; };
+		845938EC1DBF625B0086DD53 /* PGCProjectInfoDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCProjectInfoDetailVC.m; sourceTree = "<group>"; };
 		845938F21DBF625B0086DD53 /* PGCLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCLoginController.h; sourceTree = "<group>"; };
 		845938F31DBF625B0086DD53 /* PGCLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCLoginController.m; sourceTree = "<group>"; };
 		845938F41DBF625B0086DD53 /* PGCLoginController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PGCLoginController.xib; sourceTree = "<group>"; };
@@ -351,8 +333,6 @@
 		845938F81DBF625B0086DD53 /* PGCResetPasswordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCResetPasswordController.h; sourceTree = "<group>"; };
 		845938F91DBF625B0086DD53 /* PGCResetPasswordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCResetPasswordController.m; sourceTree = "<group>"; };
 		845938FA1DBF625B0086DD53 /* PGCResetPasswordController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PGCResetPasswordController.xib; sourceTree = "<group>"; };
-		845938FC1DBF625B0086DD53 /* MZTimerLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MZTimerLabel.h; sourceTree = "<group>"; };
-		845938FD1DBF625B0086DD53 /* MZTimerLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MZTimerLabel.m; sourceTree = "<group>"; };
 		845939011DBF625B0086DD53 /* PGCSupplyAndDemandController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCSupplyAndDemandController.h; sourceTree = "<group>"; };
 		845939021DBF625B0086DD53 /* PGCSupplyAndDemandController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCSupplyAndDemandController.m; sourceTree = "<group>"; };
 		845939031DBF625B0086DD53 /* PGCSupplyAndDemandController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PGCSupplyAndDemandController.xib; sourceTree = "<group>"; };
@@ -482,18 +462,6 @@
 		849C7BD11DC9D4A500C229DF /* PGCAppDelegate+RootController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PGCAppDelegate+RootController.m"; sourceTree = "<group>"; };
 		849C7BE11DC9EED800C229DF /* PGCMapTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCMapTypeViewController.h; sourceTree = "<group>"; };
 		849C7BE21DC9EED800C229DF /* PGCMapTypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCMapTypeViewController.m; sourceTree = "<group>"; };
-		84A006691DD1A70F00CC8C83 /* MCJSONDateTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCJSONDateTransformer.h; sourceTree = "<group>"; };
-		84A0066A1DD1A70F00CC8C83 /* MCJSONDateTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCJSONDateTransformer.m; sourceTree = "<group>"; };
-		84A0066B1DD1A70F00CC8C83 /* MCJSONNonNullStringTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCJSONNonNullStringTransformer.h; sourceTree = "<group>"; };
-		84A0066C1DD1A70F00CC8C83 /* MCJSONNonNullStringTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCJSONNonNullStringTransformer.m; sourceTree = "<group>"; };
-		84A0066D1DD1A70F00CC8C83 /* MCJSONPrimaryKeyTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCJSONPrimaryKeyTransformer.h; sourceTree = "<group>"; };
-		84A0066E1DD1A70F00CC8C83 /* MCJSONPrimaryKeyTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCJSONPrimaryKeyTransformer.m; sourceTree = "<group>"; };
-		84A0066F1DD1A70F00CC8C83 /* MCJSONValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCJSONValueTransformer.h; sourceTree = "<group>"; };
-		84A006701DD1A70F00CC8C83 /* MCJSONValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCJSONValueTransformer.m; sourceTree = "<group>"; };
-		84A006711DD1A70F00CC8C83 /* RLMObject+Copying.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RLMObject+Copying.h"; sourceTree = "<group>"; };
-		84A006721DD1A70F00CC8C83 /* RLMObject+Copying.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RLMObject+Copying.m"; sourceTree = "<group>"; };
-		84A006731DD1A70F00CC8C83 /* RLMObject+JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RLMObject+JSON.h"; sourceTree = "<group>"; };
-		84A006741DD1A70F00CC8C83 /* RLMObject+JSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RLMObject+JSON.m"; sourceTree = "<group>"; };
 		84A006DC1DD1A75000CC8C83 /* EXTKeyPathCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTKeyPathCoding.h; sourceTree = "<group>"; };
 		84A006DD1DD1A75000CC8C83 /* EXTRuntimeExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTRuntimeExtensions.h; sourceTree = "<group>"; };
 		84A006DE1DD1A75000CC8C83 /* EXTRuntimeExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EXTRuntimeExtensions.m; sourceTree = "<group>"; };
@@ -687,10 +655,14 @@
 		84A0079A1DD1A75000CC8C83 /* UITextView+RACSignalSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+RACSignalSupport.h"; sourceTree = "<group>"; };
 		84A0079B1DD1A75000CC8C83 /* UITextView+RACSignalSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+RACSignalSupport.m"; sourceTree = "<group>"; };
 		84A0079C1DD1A75000CC8C83 /* ReactiveCocoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReactiveCocoa.h; sourceTree = "<group>"; };
-		84A007F91DD1ACE900CC8C83 /* NSObject+Tips.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Tips.h"; sourceTree = "<group>"; };
-		84A007FA1DD1ACE900CC8C83 /* NSObject+Tips.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Tips.m"; sourceTree = "<group>"; };
 		84A008001DD1B9A700CC8C83 /* PGCProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCProgressHUD.h; sourceTree = "<group>"; };
 		84A008011DD1B9A700CC8C83 /* PGCProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCProgressHUD.m; sourceTree = "<group>"; };
+		84A3F6671DD863D900DB43D3 /* PGCContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCContact.h; sourceTree = "<group>"; };
+		84A3F6681DD863D900DB43D3 /* PGCContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCContact.m; sourceTree = "<group>"; };
+		84A3F66B1DD879A000DB43D3 /* BMChineseSort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMChineseSort.h; sourceTree = "<group>"; };
+		84A3F66C1DD879A000DB43D3 /* BMChineseSort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMChineseSort.m; sourceTree = "<group>"; };
+		84A3F66E1DD94BB600DB43D3 /* PGCProjectContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCProjectContact.h; sourceTree = "<group>"; };
+		84A3F66F1DD94BB600DB43D3 /* PGCProjectContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCProjectContact.m; sourceTree = "<group>"; };
 		84A87A911DC1CD1000FD8CC3 /* PGCProjectInfoNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCProjectInfoNavigationBar.h; sourceTree = "<group>"; };
 		84A87A921DC1CD1000FD8CC3 /* PGCProjectInfoNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCProjectInfoNavigationBar.m; sourceTree = "<group>"; };
 		84A87A961DC2010F00FD8CC3 /* PGCProjectRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCProjectRootViewController.h; sourceTree = "<group>"; };
@@ -705,8 +677,6 @@
 		84C839421DD7138B00A07F76 /* PGCTokenManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCTokenManager.m; sourceTree = "<group>"; };
 		84C839471DD7269200A07F76 /* PGCHeadImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCHeadImage.h; sourceTree = "<group>"; };
 		84C839481DD7269200A07F76 /* PGCHeadImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCHeadImage.m; sourceTree = "<group>"; };
-		84C8394A1DD7285800A07F76 /* PGCHeadImageAPIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCHeadImageAPIManager.h; sourceTree = "<group>"; };
-		84C8394B1DD7285800A07F76 /* PGCHeadImageAPIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCHeadImageAPIManager.m; sourceTree = "<group>"; };
 		84ECF1C61DD0599000697207 /* PGCUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCUserInfo.h; sourceTree = "<group>"; };
 		84ECF1C71DD0599000697207 /* PGCUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCUserInfo.m; sourceTree = "<group>"; };
 		84ECF1CB1DD1674B00697207 /* PGCPrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCPrefixHeader.pch; sourceTree = "<group>"; };
@@ -737,6 +707,22 @@
 		84ECF2041DD168A700697207 /* PGCInterfaceConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCInterfaceConfig.m; sourceTree = "<group>"; };
 		84ECF2091DD16A2000697207 /* PGCBaseAPIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCBaseAPIManager.h; sourceTree = "<group>"; };
 		84ECF20A1DD16A2000697207 /* PGCBaseAPIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCBaseAPIManager.m; sourceTree = "<group>"; };
+		84F22C401DD9D09200AB0325 /* PGCSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCSession.h; sourceTree = "<group>"; };
+		84F22C411DD9D09200AB0325 /* PGCSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCSession.m; sourceTree = "<group>"; };
+		84F22C431DD9D9AC00AB0325 /* MZTimerLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MZTimerLabel.h; sourceTree = "<group>"; };
+		84F22C441DD9D9AC00AB0325 /* MZTimerLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MZTimerLabel.m; sourceTree = "<group>"; };
+		84F22C491DDAAD7700AB0325 /* PGCSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCSearchViewController.h; sourceTree = "<group>"; };
+		84F22C4A1DDAAD7700AB0325 /* PGCSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCSearchViewController.m; sourceTree = "<group>"; };
+		84F22C4F1DDAB89900AB0325 /* PGCSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCSearchView.h; sourceTree = "<group>"; };
+		84F22C501DDAB89900AB0325 /* PGCSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCSearchView.m; sourceTree = "<group>"; };
+		84F22C521DDB01BD00AB0325 /* PGCContacInfoHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCContacInfoHeaderView.h; sourceTree = "<group>"; };
+		84F22C531DDB01BD00AB0325 /* PGCContacInfoHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCContacInfoHeaderView.m; sourceTree = "<group>"; };
+		84F22C551DDB0C7E00AB0325 /* PGCSupplyAndDemand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCSupplyAndDemand.h; sourceTree = "<group>"; };
+		84F22C561DDB0C7E00AB0325 /* PGCSupplyAndDemand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCSupplyAndDemand.m; sourceTree = "<group>"; };
+		84F22C5B1DDB33B500AB0325 /* Contacts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contacts.h; sourceTree = "<group>"; };
+		84F22C5C1DDB33B500AB0325 /* Contacts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contacts.m; sourceTree = "<group>"; };
+		84F22C5E1DDB33BD00AB0325 /* Images.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Images.h; sourceTree = "<group>"; };
+		84F22C5F1DDB33BD00AB0325 /* Images.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Images.m; sourceTree = "<group>"; };
 		BEA06E02B51C4C6B6E6C8727 /* Pods____.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods____.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -880,12 +866,12 @@
 			children = (
 				849BECF11DD00E17007936B0 /* Service */,
 				845938AF1DBF625B0086DD53 /* Main */,
-				845938991DBF625B0086DD53 /* Contacts */,
-				845938BD1DBF625B0086DD53 /* Profile */,
 				845938D31DBF625B0086DD53 /* ProjectInfo */,
 				845938E91DBF625B0086DD53 /* ProjectInfoDetail */,
-				845938F01DBF625B0086DD53 /* RegisterAndLogin */,
 				845938FF1DBF625B0086DD53 /* SupplyAndDemand */,
+				845938991DBF625B0086DD53 /* Contacts */,
+				845938BD1DBF625B0086DD53 /* Profile */,
+				845938F01DBF625B0086DD53 /* RegisterAndLogin */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -903,12 +889,10 @@
 		8459389A1DBF625B0086DD53 /* Contorller */ = {
 			isa = PBXGroup;
 			children = (
-				8459389B1DBF625B0086DD53 /* PGCContactInfoController.h */,
-				8459389C1DBF625B0086DD53 /* PGCContactInfoController.m */,
-				8459389D1DBF625B0086DD53 /* PGCContactInfoController.xib */,
 				8459389E1DBF625B0086DD53 /* PGCContactsController.h */,
 				8459389F1DBF625B0086DD53 /* PGCContactsController.m */,
-				845938A01DBF625B0086DD53 /* PGCContactsController.xib */,
+				8459389B1DBF625B0086DD53 /* PGCContactInfoController.h */,
+				8459389C1DBF625B0086DD53 /* PGCContactInfoController.m */,
 			);
 			path = Contorller;
 			sourceTree = "<group>";
@@ -916,6 +900,8 @@
 		845938A11DBF625B0086DD53 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				84A3F6671DD863D900DB43D3 /* PGCContact.h */,
+				84A3F6681DD863D900DB43D3 /* PGCContact.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -923,18 +909,16 @@
 		845938A21DBF625B0086DD53 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				845938A61DBF625B0086DD53 /* PGCContactsCell.h */,
+				845938A71DBF625B0086DD53 /* PGCContactsCell.m */,
+				84F22C521DDB01BD00AB0325 /* PGCContacInfoHeaderView.h */,
+				84F22C531DDB01BD00AB0325 /* PGCContacInfoHeaderView.m */,
 				845938A31DBF625B0086DD53 /* PGCContactInfoCell.h */,
 				845938A41DBF625B0086DD53 /* PGCContactInfoCell.m */,
 				845938A51DBF625B0086DD53 /* PGCContactInfoCell.xib */,
-				845938A61DBF625B0086DD53 /* PGCContactsCell.h */,
-				845938A71DBF625B0086DD53 /* PGCContactsCell.m */,
-				845938A81DBF625B0086DD53 /* PGCContactsCell.xib */,
 				845938A91DBF625B0086DD53 /* PGCProjectCell.h */,
 				845938AA1DBF625B0086DD53 /* PGCProjectCell.m */,
 				845938AB1DBF625B0086DD53 /* PGCProjectCell.xib */,
-				845938AC1DBF625B0086DD53 /* PGCSearchContactCell.h */,
-				845938AD1DBF625B0086DD53 /* PGCSearchContactCell.m */,
-				845938AE1DBF625B0086DD53 /* PGCSearchContactCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1015,6 +999,8 @@
 			children = (
 				84C839471DD7269200A07F76 /* PGCHeadImage.h */,
 				84C839481DD7269200A07F76 /* PGCHeadImage.m */,
+				84F22C401DD9D09200AB0325 /* PGCSession.h */,
+				84F22C411DD9D09200AB0325 /* PGCSession.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1039,13 +1025,14 @@
 		845938D41DBF625B0086DD53 /* Contorller */ = {
 			isa = PBXGroup;
 			children = (
-				849C79FE1DC8871300C229DF /* 我的收藏 */,
-				849C79FD1DC886FA00C229DF /* 浏览记录 */,
-				849C79DE1DC8772700C229DF /* 地图模式 */,
+				849C7BE11DC9EED800C229DF /* PGCMapTypeViewController.h */,
+				849C7BE21DC9EED800C229DF /* PGCMapTypeViewController.m */,
 				84A87A961DC2010F00FD8CC3 /* PGCProjectRootViewController.h */,
 				84A87A971DC2010F00FD8CC3 /* PGCProjectRootViewController.m */,
 				845938D91DBF625B0086DD53 /* PGCProjectInfoController.h */,
 				845938DA1DBF625B0086DD53 /* PGCProjectInfoController.m */,
+				84F22C491DDAAD7700AB0325 /* PGCSearchViewController.h */,
+				84F22C4A1DDAAD7700AB0325 /* PGCSearchViewController.m */,
 			);
 			path = Contorller;
 			sourceTree = "<group>";
@@ -1057,7 +1044,7 @@
 				849BED021DD04F9B007936B0 /* PGCProvince.m */,
 				849BED041DD04FA4007936B0 /* PGCCity.h */,
 				849BED051DD04FA4007936B0 /* PGCCity.m */,
-				848794141DD313ED0060D7FD /* 项目 */,
+				848794141DD313ED0060D7FD /* 项目相关 */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1065,6 +1052,8 @@
 		845938E01DBF625B0086DD53 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				84F22C4F1DDAB89900AB0325 /* PGCSearchView.h */,
+				84F22C501DDAB89900AB0325 /* PGCSearchView.m */,
 				84A87A911DC1CD1000FD8CC3 /* PGCProjectInfoNavigationBar.h */,
 				84A87A921DC1CD1000FD8CC3 /* PGCProjectInfoNavigationBar.m */,
 				8475AE2B1DCC2203004A15A5 /* PGCNavigationItem.h */,
@@ -1090,8 +1079,8 @@
 			children = (
 				849C79FC1DC886BF00C229DF /* 添加联系人 */,
 				849C79FB1DC886B600C229DF /* 会员服务 */,
-				845938EB1DBF625B0086DD53 /* PGCProjectInfoDetailViewController.h */,
-				845938EC1DBF625B0086DD53 /* PGCProjectInfoDetailViewController.m */,
+				845938EB1DBF625B0086DD53 /* PGCProjectInfoDetailVC.h */,
+				845938EC1DBF625B0086DD53 /* PGCProjectInfoDetailVC.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1099,6 +1088,8 @@
 		845938EE1DBF625B0086DD53 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				84A3F66E1DD94BB600DB43D3 /* PGCProjectContact.h */,
+				84A3F66F1DD94BB600DB43D3 /* PGCProjectContact.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1145,8 +1136,6 @@
 		845938FB1DBF625B0086DD53 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				845938FC1DBF625B0086DD53 /* MZTimerLabel.h */,
-				845938FD1DBF625B0086DD53 /* MZTimerLabel.m */,
 				84C8393E1DD710E200A07F76 /* PGCDataCache.h */,
 				84C8393F1DD710E200A07F76 /* PGCDataCache.m */,
 				84237A291DD5D1B1001B929C /* PGCToken.h */,
@@ -1164,6 +1153,8 @@
 		845938FE1DBF625B0086DD53 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				84F22C431DD9D9AC00AB0325 /* MZTimerLabel.h */,
+				84F22C441DD9D9AC00AB0325 /* MZTimerLabel.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1196,6 +1187,12 @@
 			children = (
 				848793E91DD2C2940060D7FD /* PGCMaterialServiceTypes.h */,
 				848793EA1DD2C2940060D7FD /* PGCMaterialServiceTypes.m */,
+				84F22C551DDB0C7E00AB0325 /* PGCSupplyAndDemand.h */,
+				84F22C561DDB0C7E00AB0325 /* PGCSupplyAndDemand.m */,
+				84F22C5B1DDB33B500AB0325 /* Contacts.h */,
+				84F22C5C1DDB33B500AB0325 /* Contacts.m */,
+				84F22C5E1DDB33BD00AB0325 /* Images.h */,
+				84F22C5F1DDB33BD00AB0325 /* Images.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1337,7 +1334,7 @@
 			path = JSDropDownMenu;
 			sourceTree = "<group>";
 		};
-		848794141DD313ED0060D7FD /* 项目 */ = {
+		848794141DD313ED0060D7FD /* 项目相关 */ = {
 			isa = PBXGroup;
 			children = (
 				849BED071DD04FAE007936B0 /* PGCProjectInfo.h */,
@@ -1347,7 +1344,7 @@
 				848794111DD30A860060D7FD /* PGCProjectProgress.h */,
 				848794121DD30A860060D7FD /* PGCProjectProgress.m */,
 			);
-			name = "项目";
+			name = "项目相关";
 			sourceTree = "<group>";
 		};
 		849BECED1DCF28BC007936B0 /* 添加联系人cell */ = {
@@ -1371,17 +1368,6 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
-		849C79DE1DC8772700C229DF /* 地图模式 */ = {
-			isa = PBXGroup;
-			children = (
-				845938D71DBF625B0086DD53 /* PGCMapViewController.h */,
-				845938D81DBF625B0086DD53 /* PGCMapViewController.m */,
-				849C7BE11DC9EED800C229DF /* PGCMapTypeViewController.h */,
-				849C7BE21DC9EED800C229DF /* PGCMapTypeViewController.m */,
-			);
-			name = "地图模式";
-			sourceTree = "<group>";
-		};
 		849C79FB1DC886B600C229DF /* 会员服务 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1398,24 +1384,6 @@
 				8413839C1DC6147B00A91589 /* PGCProjectAddContactController.m */,
 			);
 			name = "添加联系人";
-			sourceTree = "<group>";
-		};
-		849C79FD1DC886FA00C229DF /* 浏览记录 */ = {
-			isa = PBXGroup;
-			children = (
-				845938DB1DBF625B0086DD53 /* PGCRecordViewController.h */,
-				845938DC1DBF625B0086DD53 /* PGCRecordViewController.m */,
-			);
-			name = "浏览记录";
-			sourceTree = "<group>";
-		};
-		849C79FE1DC8871300C229DF /* 我的收藏 */ = {
-			isa = PBXGroup;
-			children = (
-				845938D51DBF625B0086DD53 /* PGCCollectViewController.h */,
-				845938D61DBF625B0086DD53 /* PGCCollectViewController.m */,
-			);
-			name = "我的收藏";
 			sourceTree = "<group>";
 		};
 		849C7A091DC89BFA00C229DF /* RootVC */ = {
@@ -1527,25 +1495,6 @@
 				8475AE4D1DCC4386004A15A5 /* PGCDetailContactCell.m */,
 			);
 			name = "详情子视图";
-			sourceTree = "<group>";
-		};
-		84A006681DD1A70F00CC8C83 /* Realm+JSON */ = {
-			isa = PBXGroup;
-			children = (
-				84A006691DD1A70F00CC8C83 /* MCJSONDateTransformer.h */,
-				84A0066A1DD1A70F00CC8C83 /* MCJSONDateTransformer.m */,
-				84A0066B1DD1A70F00CC8C83 /* MCJSONNonNullStringTransformer.h */,
-				84A0066C1DD1A70F00CC8C83 /* MCJSONNonNullStringTransformer.m */,
-				84A0066D1DD1A70F00CC8C83 /* MCJSONPrimaryKeyTransformer.h */,
-				84A0066E1DD1A70F00CC8C83 /* MCJSONPrimaryKeyTransformer.m */,
-				84A0066F1DD1A70F00CC8C83 /* MCJSONValueTransformer.h */,
-				84A006701DD1A70F00CC8C83 /* MCJSONValueTransformer.m */,
-				84A006711DD1A70F00CC8C83 /* RLMObject+Copying.h */,
-				84A006721DD1A70F00CC8C83 /* RLMObject+Copying.m */,
-				84A006731DD1A70F00CC8C83 /* RLMObject+JSON.h */,
-				84A006741DD1A70F00CC8C83 /* RLMObject+JSON.m */,
-			);
-			path = "Realm+JSON";
 			sourceTree = "<group>";
 		};
 		84A006D91DD1A75000CC8C83 /* ReactiveCocoa */ = {
@@ -1773,6 +1722,15 @@
 			path = Tools;
 			sourceTree = "<group>";
 		};
+		84A3F66A1DD879A000DB43D3 /* BMChineseStringSort */ = {
+			isa = PBXGroup;
+			children = (
+				84A3F66B1DD879A000DB43D3 /* BMChineseSort.h */,
+				84A3F66C1DD879A000DB43D3 /* BMChineseSort.m */,
+			);
+			path = BMChineseStringSort;
+			sourceTree = "<group>";
+		};
 		84ECF1CC1DD167CE00697207 /* UtilKits */ = {
 			isa = PBXGroup;
 			children = (
@@ -1793,8 +1751,6 @@
 				84ECF1D11DD167CE00697207 /* UIBarButtonItem+Extension.m */,
 				84ECF1D21DD167CE00697207 /* UIImage+Image.h */,
 				84ECF1D31DD167CE00697207 /* UIImage+Image.m */,
-				84A007F91DD1ACE900CC8C83 /* NSObject+Tips.h */,
-				84A007FA1DD1ACE900CC8C83 /* NSObject+Tips.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -1812,9 +1768,9 @@
 		84ECF1DA1DD167CE00697207 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				84A3F66A1DD879A000DB43D3 /* BMChineseStringSort */,
 				848793DD1DD2B96E0060D7FD /* JSDropDownMenu */,
 				84A006D91DD1A75000CC8C83 /* ReactiveCocoa */,
-				84A006681DD1A70F00CC8C83 /* Realm+JSON */,
 				84ECF1E31DD167CE00697207 /* FDTemplateLayoutCell */,
 				84ECF1EC1DD167CE00697207 /* GCD */,
 				84ECF1EF1DD167CE00697207 /* JCAlertView */,
@@ -1882,8 +1838,6 @@
 				848794191DD41BF10060D7FD /* PGCNetworkCache.m */,
 				8487942A1DD4A2900060D7FD /* PGCNetworkHelper.h */,
 				8487942B1DD4A2900060D7FD /* PGCNetworkHelper.m */,
-				84C8394A1DD7285800A07F76 /* PGCHeadImageAPIManager.h */,
-				84C8394B1DD7285800A07F76 /* PGCHeadImageAPIManager.m */,
 				848793CB1DD2B4C00060D7FD /* 地区-省市 */,
 				848793CE1DD2B4C00060D7FD /* 供需 */,
 				848793D11DD2B4C00060D7FD /* 联系人 */,
@@ -2010,16 +1964,12 @@
 				8459391D1DBF625B0086DD53 /* PGCChooseJobController.xib in Resources */,
 				845939371DBF625B0086DD53 /* PGCResetPasswordController.xib in Resources */,
 				845939351DBF625B0086DD53 /* PGCRegisterController.xib in Resources */,
-				8459390A1DBF625B0086DD53 /* PGCContactInfoController.xib in Resources */,
 				845939121DBF625B0086DD53 /* PGCProjectCell.xib in Resources */,
 				0483E2DF1DAF33D200EF89F0 /* Assets.xcassets in Resources */,
 				8459393A1DBF625B0086DD53 /* PGCSupplyAndDemandController.xib in Resources */,
 				8459391F1DBF625B0086DD53 /* PGCProfileController.xib in Resources */,
 				845939231DBF625B0086DD53 /* PGCShareToFriendController.xib in Resources */,
-				845939141DBF625B0086DD53 /* PGCSearchContactCell.xib in Resources */,
 				845939211DBF625B0086DD53 /* PGCSettingController.xib in Resources */,
-				8459390C1DBF625B0086DD53 /* PGCContactsController.xib in Resources */,
-				845939101DBF625B0086DD53 /* PGCContactsCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2094,6 +2044,7 @@
 			files = (
 				84A007BF1DD1A75000CC8C83 /* RACDynamicSignal.m in Sources */,
 				84A007BD1DD1A75000CC8C83 /* RACDynamicPropertySuperclass.m in Sources */,
+				84F22C601DDB33BD00AB0325 /* Images.m in Sources */,
 				84A007CA1DD1A75000CC8C83 /* RACKVOTrampoline.m in Sources */,
 				84C839491DD7269200A07F76 /* PGCHeadImage.m in Sources */,
 				8475AE611DCC720B004A15A5 /* PGCSupplyAndDemandRootVC.m in Sources */,
@@ -2116,7 +2067,7 @@
 				84A007B01DD1A75000CC8C83 /* NSString+RACSequenceAdditions.m in Sources */,
 				84A007D61DD1A75100CC8C83 /* RACSignal.m in Sources */,
 				84A87A931DC1CD1000FD8CC3 /* PGCProjectInfoNavigationBar.m in Sources */,
-				845939271DBF625B0086DD53 /* PGCMapViewController.m in Sources */,
+				84A3F6691DD863D900DB43D3 /* PGCContact.m in Sources */,
 				849C7BD21DC9D4A500C229DF /* PGCAppDelegate+RootController.m in Sources */,
 				8459390F1DBF625B0086DD53 /* PGCContactsCell.m in Sources */,
 				84A007BE1DD1A75000CC8C83 /* RACDynamicSequence.m in Sources */,
@@ -2136,21 +2087,24 @@
 				84ECF2011DD1684A00697207 /* PGCHttpService.m in Sources */,
 				84A007C01DD1A75000CC8C83 /* RACEagerSequence.m in Sources */,
 				84A007BA1DD1A75000CC8C83 /* RACCompoundDisposableProvider.d in Sources */,
-				84A006D71DD1A70F00CC8C83 /* RLMObject+Copying.m in Sources */,
 				8459391C1DBF625B0086DD53 /* PGCChooseJobController.m in Sources */,
 				84A007EA1DD1A75100CC8C83 /* UICollectionReusableView+RACSignalSupport.m in Sources */,
 				84A007A91DD1A75000CC8C83 /* NSObject+RACKVOWrapper.m in Sources */,
 				8487940D1DD303570060D7FD /* PGCProjectType.m in Sources */,
+				84A3F66D1DD879A000DB43D3 /* BMChineseSort.m in Sources */,
 				84A007CE1DD1A75100CC8C83 /* RACQueueScheduler.m in Sources */,
 				84ECF1C81DD0599000697207 /* PGCUserInfo.m in Sources */,
 				84A007DA1DD1A75100CC8C83 /* RACStringSequence.m in Sources */,
+				84F22C511DDAB89900AB0325 /* PGCSearchView.m in Sources */,
 				84A0079D1DD1A75000CC8C83 /* EXTRuntimeExtensions.m in Sources */,
 				84A007E81DD1A75100CC8C83 /* UIBarButtonItem+RACCommandSupport.m in Sources */,
 				84A007DF1DD1A75100CC8C83 /* RACTargetQueueScheduler.m in Sources */,
 				84ECF1F81DD167CE00697207 /* UITableView+FDIndexPathHeightCache.m in Sources */,
 				845939161DBF625B0086DD53 /* PGCTabBarController.m in Sources */,
+				84F22C5D1DDB33B500AB0325 /* Contacts.m in Sources */,
 				849C7BC91DC9D3CB00C229DF /* PGCAppDelegate.m in Sources */,
 				84A007E41DD1A75100CC8C83 /* RACUnit.m in Sources */,
+				84F22C451DD9D9AC00AB0325 /* MZTimerLabel.m in Sources */,
 				84A007E11DD1A75100CC8C83 /* RACTuple.m in Sources */,
 				84A008021DD1B9A700CC8C83 /* PGCProgressHUD.m in Sources */,
 				84A007D21DD1A75100CC8C83 /* RACScopedDisposable.m in Sources */,
@@ -2160,11 +2114,10 @@
 				848793EB1DD2C2940060D7FD /* PGCMaterialServiceTypes.m in Sources */,
 				84A007C11DD1A75000CC8C83 /* RACEmptySequence.m in Sources */,
 				84ECF1F21DD167CE00697207 /* NSString+Size.m in Sources */,
+				84F22C421DD9D09300AB0325 /* PGCSession.m in Sources */,
 				845939321DBF625B0086DD53 /* PGCLoginController.m in Sources */,
-				845939261DBF625B0086DD53 /* PGCCollectViewController.m in Sources */,
 				84ECF1FB1DD167CE00697207 /* UITableView+FDTemplateLayoutCellDebug.m in Sources */,
 				849C7A331DC8AFD700C229DF /* PGCRemandIntroduceDetailVC.m in Sources */,
-				84A007FB1DD1ACE900CC8C83 /* NSObject+Tips.m in Sources */,
 				848793E51DD2C2100060D7FD /* PGCSupplyAPIManager.m in Sources */,
 				845939201DBF625B0086DD53 /* PGCSettingController.m in Sources */,
 				84A007D01DD1A75100CC8C83 /* RACReturnSignal.m in Sources */,
@@ -2196,6 +2149,7 @@
 				84A007C61DD1A75000CC8C83 /* RACImmediateScheduler.m in Sources */,
 				845939341DBF625B0086DD53 /* PGCRegisterController.m in Sources */,
 				84A007F41DD1A75100CC8C83 /* UISwitch+RACSignalSupport.m in Sources */,
+				84F22C571DDB0C7E00AB0325 /* PGCSupplyAndDemand.m in Sources */,
 				848793DB1DD2B4C00060D7FD /* PGCProjectInfoAPIManager.m in Sources */,
 				84A007DD1DD1A75100CC8C83 /* RACSubscriptingAssignmentTrampoline.m in Sources */,
 				84A007EC1DD1A75100CC8C83 /* UIControl+RACSignalSupportPrivate.m in Sources */,
@@ -2207,18 +2161,18 @@
 				8475AE671DCC7CC0004A15A5 /* PGCIntroduceDetailTopView.m in Sources */,
 				845939241DBF625B0086DD53 /* PGCUserInfoController.m in Sources */,
 				849C7A2D1DC8A6E900C229DF /* PGCSupplyIntroduceDetailVC.m in Sources */,
+				84F22C541DDB01BD00AB0325 /* PGCContacInfoHeaderView.m in Sources */,
 				8487942C1DD4A2900060D7FD /* PGCNetworkHelper.m in Sources */,
 				84A0079E1DD1A75000CC8C83 /* MKAnnotationView+RACSignalSupport.m in Sources */,
 				84A007EB1DD1A75100CC8C83 /* UIControl+RACSignalSupport.m in Sources */,
 				84A007D41DD1A75100CC8C83 /* RACSerialDisposable.m in Sources */,
 				84A007D51DD1A75100CC8C83 /* RACSignal+Operations.m in Sources */,
 				849C7A221DC89F9F00C229DF /* PGCDemandIntroduceVC.m in Sources */,
-				84A006D41DD1A70F00CC8C83 /* MCJSONNonNullStringTransformer.m in Sources */,
 				8475AE6A1DCC7CD2004A15A5 /* PGCIntroduceDetailBottomView.m in Sources */,
 				84C839431DD7138B00A07F76 /* PGCTokenManager.m in Sources */,
 				8475AE411DCC2B87004A15A5 /* PGCPayView.m in Sources */,
-				84A006D51DD1A70F00CC8C83 /* MCJSONPrimaryKeyTransformer.m in Sources */,
 				84A007CD1DD1A75000CC8C83 /* RACPassthroughSubscriber.m in Sources */,
+				84A3F6701DD94BB600DB43D3 /* PGCProjectContact.m in Sources */,
 				8475AE731DCC8DA6004A15A5 /* PGCIntroduceSelectView.m in Sources */,
 				8475AE5D1DCC6F7D004A15A5 /* PGCDetailSubviewBottom.m in Sources */,
 				849C7BCC1DC9D46F00C229DF /* PGCAppDelegate+AppService.m in Sources */,
@@ -2228,12 +2182,11 @@
 				848794231DD45A530060D7FD /* PGCDropRightCell.m in Sources */,
 				84ECF1F31DD167CE00697207 /* UIBarButtonItem+Extension.m in Sources */,
 				845939171DBF625B0086DD53 /* PGCBadgeView.m in Sources */,
-				84A006D61DD1A70F00CC8C83 /* MCJSONValueTransformer.m in Sources */,
 				845939391DBF625B0086DD53 /* PGCSupplyAndDemandController.m in Sources */,
 				8475AE5E1DCC6F7D004A15A5 /* PGCDetailSubviewTop.m in Sources */,
 				84A007C31DD1A75000CC8C83 /* RACErrorSignal.m in Sources */,
 				849BED031DD04F9B007936B0 /* PGCProvince.m in Sources */,
-				845939301DBF625B0086DD53 /* PGCProjectInfoDetailViewController.m in Sources */,
+				845939301DBF625B0086DD53 /* PGCProjectInfoDetailVC.m in Sources */,
 				84A007DB1DD1A75100CC8C83 /* RACSubject.m in Sources */,
 				0483E2D41DAF33D200EF89F0 /* main.m in Sources */,
 				84ECF2101DD16A2000697207 /* PGCBaseAPIManager.m in Sources */,
@@ -2256,14 +2209,11 @@
 				84A007D11DD1A75100CC8C83 /* RACScheduler.m in Sources */,
 				848794131DD30A860060D7FD /* PGCProjectProgress.m in Sources */,
 				849C7A1A1DC89F6600C229DF /* PGCSupplyIntroduceVC.m in Sources */,
-				845939291DBF625B0086DD53 /* PGCRecordViewController.m in Sources */,
 				84ECF2051DD168A700697207 /* PGCInterfaceConfig.m in Sources */,
-				84A006D31DD1A70F00CC8C83 /* MCJSONDateTransformer.m in Sources */,
 				84A007AA1DD1A75000CC8C83 /* NSObject+RACLifting.m in Sources */,
 				84A007F21DD1A75100CC8C83 /* UISlider+RACSignalSupport.m in Sources */,
 				8475AE4E1DCC4386004A15A5 /* PGCDetailContactCell.m in Sources */,
 				84A007E91DD1A75100CC8C83 /* UIButton+RACCommandSupport.m in Sources */,
-				84A006D81DD1A70F00CC8C83 /* RLMObject+JSON.m in Sources */,
 				848794221DD45A530060D7FD /* PGCDropLeftCell.m in Sources */,
 				84A007C91DD1A75000CC8C83 /* RACKVOProxy.m in Sources */,
 				84A007A01DD1A75000CC8C83 /* NSData+RACSupport.m in Sources */,
@@ -2275,12 +2225,10 @@
 				849C79FA1DC884F900C229DF /* PGCSupplyAndDemandDetailVC.m in Sources */,
 				84A007E71DD1A75100CC8C83 /* UIAlertView+RACSignalSupport.m in Sources */,
 				84A007A51DD1A75000CC8C83 /* NSInvocation+RACTypeParsing.m in Sources */,
-				84C8394C1DD7285800A07F76 /* PGCHeadImageAPIManager.m in Sources */,
 				84A007ED1DD1A75100CC8C83 /* UIDatePicker+RACSignalSupport.m in Sources */,
 				848794071DD300B90060D7FD /* PGCProfileAPIManager.m in Sources */,
 				84A007B31DD1A75000CC8C83 /* NSUserDefaults+RACSupport.m in Sources */,
 				84C839401DD710E200A07F76 /* PGCDataCache.m in Sources */,
-				845939381DBF625B0086DD53 /* MZTimerLabel.m in Sources */,
 				849C7A301DC8AFC800C229DF /* PGCDemandCollectDetailVC.m in Sources */,
 				84A007C41DD1A75000CC8C83 /* RACEvent.m in Sources */,
 				84A007A71DD1A75000CC8C83 /* NSObject+RACDeallocating.m in Sources */,
@@ -2296,12 +2244,12 @@
 				84A007AC1DD1A75000CC8C83 /* NSObject+RACSelectorSignal.m in Sources */,
 				84A007E31DD1A75100CC8C83 /* RACUnarySequence.m in Sources */,
 				848793DA1DD2B4C00060D7FD /* PGCSupplyAndDemandAPIManager.m in Sources */,
-				845939131DBF625B0086DD53 /* PGCSearchContactCell.m in Sources */,
 				849C7A271DC8A54C00C229DF /* PGCSupplyAndDemandShareView.m in Sources */,
 				84AA70481DC0B3E000150CFC /* PGCProjectDetailTagView.m in Sources */,
 				84A007BB1DD1A75000CC8C83 /* RACDelegateProxy.m in Sources */,
 				84ECF1FA1DD167CE00697207 /* UITableView+FDTemplateLayoutCell.m in Sources */,
 				84A007F51DD1A75100CC8C83 /* UITableViewCell+RACSignalSupport.m in Sources */,
+				84F22C4B1DDAAD7700AB0325 /* PGCSearchViewController.m in Sources */,
 				84A007F31DD1A75100CC8C83 /* UIStepper+RACSignalSupport.m in Sources */,
 				84A007E01DD1A75100CC8C83 /* RACTestScheduler.m in Sources */,
 				84A007B61DD1A75000CC8C83 /* RACBlockTrampoline.m in Sources */,

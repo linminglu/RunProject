@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+@class PGCContact;
+
+static NSString * const kPGCContactInfoCell = @"PGCContactInfoCell";
 
 @interface PGCContactInfoCell : UITableViewCell
+
+@property (strong, nonatomic) PGCContact *contactLeft;/** 联系人模型 */
 
 @end

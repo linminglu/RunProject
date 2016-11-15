@@ -8,13 +8,26 @@
 
 #import "PGCProjectCell.h"
 
+@interface PGCProjectCell ()
+
+@property (weak, nonatomic) IBOutlet UIView *contentLabel;
+
+@end
+
 @implementation PGCProjectCell
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-        
+- (void)setContactRight:(PGCContact *)contactRight
+{
+    _contactRight = contactRight;
+    if (!contactRight) {
+        return;
+    }
     
+}
 
+- (void)awakeFromNib {
+    [super awakeFromNib];    
+    // Initialization code
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -22,7 +35,5 @@
 
     // Configure the view for the selected state
 }
-
-
 
 @end

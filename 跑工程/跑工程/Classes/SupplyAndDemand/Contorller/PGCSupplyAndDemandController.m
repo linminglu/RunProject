@@ -18,6 +18,10 @@
 #import "PGCSupplyIntroduceVC.h"
 #import "PGCProvince.h"
 #import "PGCMaterialServiceTypes.h"
+#import "PGCSupplyAndDemand.h"
+#import "PGCSupplyAndDemandAPIManager.h"
+#import "PGCSupplyAPIManager.h"
+#import "PGCDemandAPIManager.h"
 
 #define TopButtonTag 500
 #define CenterButtonTag 400
@@ -177,8 +181,8 @@
  
  @param sender
  */
-- (IBAction)collectionAndIntroduceBtn:(UIButton *)sender {
-    
+- (IBAction)collectionAndIntroduceBtn:(UIButton *)sender
+{    
     switch (sender.tag) {
         case CenterButtonTag:
         {
@@ -225,118 +229,100 @@
     return 3;
 }
 
-- (BOOL)haveRightTableViewInColumn:(NSInteger)column {
-    
-    if (column < 2) {
-        return true;
-    }
-    return false;
+- (BOOL)haveRightTableViewInColumn:(NSInteger)column
+{
+    return column < 2 ? true : false;
 }
 
-- (CGFloat)widthRatioOfLeftColumn:(NSInteger)column {
-    
-    if (column < 2) {
-        return 0.5;
-    }
-    return 1;
+- (CGFloat)widthRatioOfLeftColumn:(NSInteger)column
+{
+    return column < 2 ? 0.5 : 1;
 }
 
-- (NSInteger)currentLeftSelectedRow:(NSInteger)column {
-    
-    if (column == 0) {
-        
-        return _areaCurrentIndex;
-        
-    }
-    if (column == 1) {
-        
-        return _typeCurrentIndex;
-    }
-    
-    return _timeCurrentIndex;
-}
-
-- (NSInteger)menu:(JSDropDownMenu *)menu numberOfRowsInColumn:(NSInteger)column leftOrRight:(NSInteger)leftOrRight leftRow:(NSInteger)leftRow {
-    
-    if (column == 0) {
-        if (leftOrRight == 0) {
-            
-            return _areaDatas.count;
-        }
-        else {
-            PGCProvince *province = _areaDatas[leftRow];
-            NSArray *arr = province.city;
-            
-            return arr.count;
-        }
-    }
-    else if (column == 1) {
-        
-        if (leftOrRight == 0) {
-            return _typeDatas.count;
-            
-        }
-        else {
-            PGCMaterialServiceTypes *type = _typeDatas[leftRow];
-            return type.secondArray.count;
-        }
-        
-    }
-    else if (column == 2) {
-        return _timeDatas.count;
-    }
-    
-    return 0;
-}
-
-- (NSString *)menu:(JSDropDownMenu *)menu titleForColumn:(NSInteger)column{
-    
+- (NSInteger)currentLeftSelectedRow:(NSInteger)column
+{
     switch (column) {
-        case 0: return @"地区";
+        case 0: return _areaCurrentIndex; break;
+        case 1: return _typeCurrentIndex; break;
+        default: return _timeCurrentIndex; break;
+    }
+}
+
+- (NSInteger)menu:(JSDropDownMenu *)menu numberOfRowsInColumn:(NSInteger)column leftOrRight:(NSInteger)leftOrRight leftRow:(NSInteger)leftRow
+{
+    switch (column) {
+        case 0:
+        {
+            if (leftOrRight == 0) {
+                
+                return _areaDatas.count;
+            }
+            else {
+                PGCProvince *province = _areaDatas[leftRow];
+                NSArray *arr = province.city;
+                
+                return arr.count;
+            }
+        }
             break;
-        case 1: return @"类型";
+        case 1:
+        {
+            if (leftOrRight == 0) {
+                return _typeDatas.count;
+                
+            }
+            else {
+                PGCMaterialServiceTypes *type = _typeDatas[leftRow];
+                return type.secondArray.count;
+            }
+        }
             break;
-        case 2: return @"时间";
-            break;
-        default:
-            return nil;
+        default: return _timeDatas.count;
             break;
     }
 }
 
-- (NSString *)menu:(JSDropDownMenu *)menu titleForRowAtIndexPath:(JSIndexPath *)indexPath {
-    
-    if (indexPath.column == 0) {
-        
-        if (indexPath.leftOrRight==0) {
-            PGCProvince *province = _areaDatas[indexPath.row];
-            return province.province;
-            
-        }
-        else {
-            PGCProvince *province = _areaDatas[indexPath.leftRow];
-            NSArray *rightArr = province.city;
-            PGCCity *city = rightArr[indexPath.row];
-
-            return city.city;
-        }
+- (NSString *)menu:(JSDropDownMenu *)menu titleForColumn:(NSInteger)column
+{
+    switch (column) {
+        case 0: return @"地区"; break;
+        case 1: return @"类型"; break;
+        default: return @"时间"; break;
     }
-    else if (indexPath.column == 1) {
-        
-        if (indexPath.leftOrRight == 0) {
-            PGCMaterialServiceTypes *type = _typeDatas[indexPath.row];
-            return type.name;
-            
-        }
-        else{
-            PGCMaterialServiceTypes *type = _typeDatas[indexPath.leftRow];
-            PGCMaterialServiceTypes *secondType = type.secondArray[indexPath.row];
+}
 
-            return secondType.name;
+- (NSString *)menu:(JSDropDownMenu *)menu titleForRowAtIndexPath:(JSIndexPath *)indexPath
+{
+    switch (indexPath.column) {
+        case 0:
+        {
+            if (indexPath.leftOrRight==0) {
+                PGCProvince *province = _areaDatas[indexPath.row];
+                return province.province;
+            }
+            else {
+                PGCProvince *province = _areaDatas[indexPath.leftRow];
+                NSArray *rightArr = province.city;
+                PGCCity *city = rightArr[indexPath.row];
+                return city.city;
+            }
         }
-    }
-    else {        
-        return _timeDatas[indexPath.row];
+            break;
+        case 1:
+        {
+            if (indexPath.leftOrRight == 0) {
+                PGCMaterialServiceTypes *type = _typeDatas[indexPath.row];
+                return type.name;
+            }
+            else{
+                PGCMaterialServiceTypes *type = _typeDatas[indexPath.leftRow];
+                PGCMaterialServiceTypes *secondType = type.secondArray[indexPath.row];
+                return secondType.name;
+            }
+        }
+            break;
+        default: return _timeDatas[indexPath.row];
+            break;
     }
 }
 
@@ -344,41 +330,41 @@
 
 #pragma mark - JSDropDownMenuDelegatetaSource
 
-- (void)menu:(JSDropDownMenu *)menu didSelectRowAtIndexPath:(JSIndexPath *)indexPath {
-    
-    if (indexPath.column == 0) {
-        
-        if (indexPath.leftOrRight == 0) {
-            
-            _areaCurrentIndex = indexPath.row;
-            
-            return;
+- (void)menu:(JSDropDownMenu *)menu didSelectRowAtIndexPath:(JSIndexPath *)indexPath
+{
+    switch (indexPath.column) {
+        case 0:
+        {
+            if (indexPath.leftOrRight == 0) {
+                _areaCurrentIndex = indexPath.row;
+                return;
+            }
         }
-    }
-    else if (indexPath.column == 1) {
-        
-        if (indexPath.leftOrRight == 0) {
-            
-            _typeCurrentIndex = indexPath.row;
-            
-            return;
+            break;
+        case 1:
+        {
+            if (indexPath.leftOrRight == 0) {
+                _typeCurrentIndex = indexPath.row;
+                return;
+            }
         }
-    }
-    else{
-        _timeCurrentIndex = indexPath.row;
+            break;
+        default: _timeCurrentIndex = indexPath.row;
+            break;
     }
 }
 
 
 #pragma mark - UITableViewDataSource
 
-- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 20;
+- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 10;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    PGCSupplyAndDemandCell *cell = [tableView dequeueReusableCellWithIdentifier:kSupplyAndDemandCell];
-    
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    PGCSupplyAndDemandCell *cell = [tableView dequeueReusableCellWithIdentifier:kSupplyAndDemandCell];    
     // 点击cell不变色
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
@@ -388,11 +374,13 @@
 
 #pragma mark - UITableViewDelegate
 
-- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     return [tableView cellHeightForIndexPath:indexPath model:nil keyPath:nil cellClass:[PGCSupplyAndDemandCell class] contentViewWidth:SCREEN_WIDTH];
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
     if (_demandNotSupply) {
         
         [self.navigationController pushViewController:[PGCDemandDetailVC new] animated:true];

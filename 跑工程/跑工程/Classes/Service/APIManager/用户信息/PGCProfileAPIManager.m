@@ -21,7 +21,7 @@
         NSDictionary *resultData = responseObject[@"data"];
         
         if (resultCode == 200) {
-            
+            NSLog(@"user:%@", resultData);
             //构造token模型
             PGCToken *token = [[PGCToken alloc] init];
             [token mj_setKeyValues:resultData];
@@ -39,5 +39,26 @@
         respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
     }];
 }
+
+
++ (NSURLSessionDataTask *)uploadRequestWithParameters:(NSDictionary *)parameters image:(UIImage *)image name:(NSString *)name fileName:(NSString *)fileName mimeType:(NSString *)mimeType progress:(HttpProgress)progress responds:(void (^)(RespondsStatus, NSString *, id))respondsBlock
+{
+    return [self uploadRequest:kSignleImageUpload parameters:parameters image:image name:name fileName:fileName mimeType:mimeType progress:progress success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSInteger resultCode = [responseObject[@"code"] integerValue];
+        NSString *resultMsg = responseObject[@"msg"];
+        NSDictionary *resultData = responseObject[@"data"];
+        
+        if (resultCode == 200) {            
+            respondsBlock(RespondsStatusSuccess, resultMsg, resultData);
+        }
+        else {
+            respondsBlock(RespondsStatusDataError, resultMsg, nil);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
+    }];
+}
+
 
 @end

@@ -9,20 +9,28 @@
 #import "PGCContactsController.h"
 #import "PGCContactsCell.h"
 #import "PGCContactInfoController.h"
-#import "PGCSearchContactCell.h"
+#import "PGCContactAPIManager.h"
+#import "BMChineseSort.h"
+#import "PGCContact.h"
+#import "PGCTokenManager.h"
+#import "PGCUserInfo.h"
 
-@interface PGCContactsController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
+@interface PGCContactsController () <UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating>
+{
+    BOOL _isSearching; /** 记录当前搜索状态 */
+}
 
 #pragma mark - 控件
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) UISearchBar *searchBar;
-@property (nonatomic,strong) UIButton *cancelBtn;
+@property (strong, nonatomic) UISearchController *searchController;
+@property (strong, nonatomic) UITableView *tableView;
 
-#pragma mark - 数据源
-//初始数据源
-@property (nonatomic,strong) NSMutableArray *dataSourceArray;
-//搜索条数据源
-@property (nonatomic,strong) NSMutableArray *searchDataSourceArray;
+@property (strong, nonatomic) NSMutableArray<PGCContact *> *dataSource;/** 初始数据源 */
+@property (strong, nonatomic) NSArray *indexArray;/** 排序后的出现过的拼音首字母数组 */
+@property (strong, nonatomic) NSArray *letterArray;/** 排序好的结果数组 */
+@property (strong, nonatomic) NSMutableArray *searchDataSource;/** 搜索条数据源 */
+
+- (void)initializeDataSource; /** 初始化数据源 */
+- (void)initializeUserInterface; /** 初始化用户界面 */
 
 @end
 
@@ -36,183 +44,161 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
     
-    // 创建搜索条和取消按钮
-    [self creatSearBar];
-    // tableView
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    [self.tableView registerNib:[UINib nibWithNibName:@"PGCContactsCell" bundle:nil] forCellReuseIdentifier:@"cell"];
-    [self.tableView registerNib:[UINib nibWithNibName:@"PGCSearchContactCell" bundle:nil] forCellReuseIdentifier:@"cell1"];
-    // 初始化数据
-    self.dataSourceArray = [NSMutableArray array];
-    [self.dataSourceArray addObject:@[@"张三",@"李四",@"王麻子",@"刘能"]];
-    [self.dataSourceArray addObject:@[@"21",@"22",@"23",@"24"]];
+    [self initializeDataSource];
+    [self initializeUserInterface];
+}
+
+
+- (void)initializeDataSource
+{
+    _isSearching = false;
+    
+    [[PGCTokenManager tokenManager] readAuthorizeData];
+    PGCUserInfo *user = [PGCTokenManager tokenManager].token.user;
+    
+    NSDictionary *params = @{@"user_id":@(user.id), @"client_type":@"iphone", @"token":[PGCTokenManager tokenManager].token.token};
+    
+    [PGCContactAPIManager getContactsListRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
+        
+        if (status == RespondsStatusSuccess) {
+            
+            for (id value in resultData) {
+                PGCContact *contact = [[PGCContact alloc] init];
+                [contact mj_setKeyValues:value];
+                
+                [self.dataSource addObject:contact];
+            }
+            self.indexArray = [BMChineseSort IndexWithArray:self.dataSource Key:@"name"];
+            self.letterArray = [BMChineseSort sortObjectArray:self.dataSource Key:@"name"];
+            
+            [self.tableView reloadData];
+        }
+    }];
+}
+
+- (void)initializeUserInterface
+{
+    self.navigationItem.title = @"通讯录";
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.automaticallyAdjustsScrollViewInsets = false;
+    
+    [self.view addSubview:self.tableView];
+//    self.tableView.tableHeaderView = self.searchController.searchBar;
+}
+
+
+#pragma mark - UISearchResultsUpdating
+// 只要搜索框在活跃状态，此方法就会被触发
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    
 }
 
 
 #pragma mark - UITableViewDataSource
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return self.indexArray.count;
+//    return _isSearching ? 1 : self.indexArray.count;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (_cancelBtn.isHidden == NO) {
-        return _searchDataSourceArray.count;
-    }
-        return self.dataSourceArray.count;
-    
+    return [self.letterArray[section] count];
+//    return _isSearching ? self.searchDataSource.count : [self.dataSource[_sortedKeys[section]] count];
 }
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    搜索条在使用时
-    if (_cancelBtn.isHidden == NO) {
-        PGCSearchContactCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1" forIndexPath:indexPath];
-        if (!cell) {
-            cell = [[PGCSearchContactCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell1"];
-        }
-        cell.nameStr = self.searchDataSourceArray[indexPath.row];
-        //        点击cell不变色
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
-        return cell;
-    }
-//    正常状态下
-    PGCContactsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    if (!cell) {
-        cell = [[PGCContactsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-    }
-    
-        //        解决视图重叠的BUG
-    for (UIView *view in cell.contentView.subviews) {
-        [view removeFromSuperview];
-    }
-    
-    //        点击cell不变色
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//    去除cell分界线
-    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-
-//   数据源
-    cell.contactsArray = self.dataSourceArray[indexPath.row];
-
-//    创建点击事件
-    for (int i = 0 ; i < cell.contactsArray.count; i++) {
-        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0, 40  + i * 70, SCREEN_WIDTH, 70)];
-        [cell.contentView addSubview:btn];
-        btn.titleLabel.text = cell.contactsArray[i];
-        btn.tag = i;
-        [btn addTarget:self action:@selector(contactInfo:) forControlEvents:UIControlEventTouchUpInside];
-    }
+    // 正常状态下
+    PGCContactsCell *cell = [tableView dequeueReusableCellWithIdentifier:kContactsCell];
+    cell.contact = self.letterArray[indexPath.section][indexPath.row];
     
     return cell;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return self.indexArray[section];
 }
 
 
 #pragma mark - UITableViewDelegate
 
-- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_cancelBtn.isHidden == NO) {
-        return 70;
-    }
-    
-    if (indexPath.row == 1) {
-        return 40 + 330;
-    }
-    return 40 + 290;
+    PGCContact *contact = self.letterArray[indexPath.section][indexPath.row];
+    return [tableView cellHeightForIndexPath:indexPath model:contact keyPath:@"contact" cellClass:[PGCContactsCell class] contentViewWidth:SCREEN_WIDTH];
 }
+
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 30)];
+    header.backgroundColor = PGCBackColor;
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, header.width - 30, 30)];
+    label.font = [UIFont boldSystemFontOfSize:17];
+    label.textColor = PGCTintColor;
+    label.text = self.indexArray[section];
+    [header addSubview:label];
+    return header;
+}
+
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_cancelBtn.isHidden == NO) {
-        PGCContactInfoController *contactInfoVC = [[PGCContactInfoController alloc] init];
-        contactInfoVC.nameStr = _searchDataSourceArray[indexPath.row];
-        [self.navigationController pushViewController:contactInfoVC animated:YES];
-    }
-}
-
-- (void) creatSearBar
-{
-    //创建searBar，设置其属性
-    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(10, 75, SCREEN_WIDTH - 20, 40)];
-    [self.view addSubview:self.searchBar];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"透明"]];
-    self.searchBar.backgroundImage = imageView.image;
-    self.searchBar.layer.borderWidth = 1;
-    self.searchBar.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-    self.searchBar.layer.cornerRadius = 20;
-    self.searchBar.placeholder = @"在联系人中搜索";
-    self.searchBar.delegate = self;
-    
-    _cancelBtn = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 50, 85, 40, 20)];
-    [_cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
-    [_cancelBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    [self.view addSubview:_cancelBtn];
-    _cancelBtn.titleLabel.font = [UIFont systemFontOfSize: 15.0];
-    [_cancelBtn setHidden:YES];
-    [_cancelBtn addTarget:self action:@selector(cancelSearch) forControlEvents:UIControlEventTouchUpInside];
-}
-
-
-#pragma mark - UISearchBarDelegate
-
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
-{
-  
-//    当开始输入文字时搜索条变短，右边出现取消按钮
-    self.searchBar.frame = CGRectMake(10, 75, SCREEN_WIDTH - 70, 40);
-    if (searchText.length > 0) {
-        [_cancelBtn setHidden:NO];
-        //    匹配搜索内容
-        self.searchDataSourceArray = [NSMutableArray array];
-        for (NSArray *array in self.dataSourceArray) {
-            for (NSString *name in array) {
-                NSString *nameStr = [name substringWithRange:NSMakeRange(0,1)];
-                if ([searchText isEqualToString:name] || [searchText isEqualToString:nameStr]) {
-                    [self.searchDataSourceArray addObject:name];
-                }
-//                每次匹配后都刷新界面
-                [self.tableView reloadData];
-            }
-        }
-    }
-    
-//    当没有输入文字时搜索条回归正常
-    if (searchText.length == 0) {
-        self.searchBar.frame = CGRectMake(10, 75, SCREEN_WIDTH - 20, 40);
-        [_cancelBtn setHidden:YES];
-        self.searchDataSourceArray = nil;
-        [self.tableView reloadData];
-    }
-    
-    
-    
-}
-
-#pragma mark - 各个按钮点击事件
-//进入联系人资料界面
-- (void) contactInfo:(UIButton*) sender
-{
     PGCContactInfoController *contactInfoVC = [[PGCContactInfoController alloc] init];
-    contactInfoVC.nameStr = sender.titleLabel.text;
-    [self.navigationController pushViewController:contactInfoVC animated:YES];
-    
-}
-
-//取消搜索
-- (void) cancelSearch
-{
-    [_cancelBtn setHidden:true];
-    self.searchBar.frame = CGRectMake(10, 75, SCREEN_WIDTH - 20, 40);
-    self.searchBar.text = nil;
-    self.searchBar.userActivity = false;
-    self.searchDataSourceArray = nil;
-    [self.tableView reloadData];
+    contactInfoVC.contactInfo = self.letterArray[indexPath.row];
+    [self.navigationController pushViewController:contactInfoVC animated:true];
 }
 
 
-#pragma mark - Touches
+#pragma mark - Getter
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [self.view endEditing:true];
+- (UISearchController *)searchController {
+    if (!_searchController) {
+        _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+        _searchController.searchBar.frame = CGRectMake(0, 0, SCREEN_WIDTH, NAVIGATION_BAR_HEIGHT);
+        _searchController.searchBar.placeholder = @"在联系人中搜索";
+        // 设置搜索状态下是否隐藏导航栏
+        _searchController.hidesNavigationBarDuringPresentation = true;
+        // 设置搜索状态下是否半透明
+        _searchController.dimsBackgroundDuringPresentation = false;
+        // 设置搜索状态下背景是否模糊
+        _searchController.obscuresBackgroundDuringPresentation = true;
+        _searchController.searchResultsUpdater = self;
+        _searchController.searchBar.tintColor = PGCTextColor;
+    }
+    return _searchController;
 }
+
+- (UITableView *)tableView {
+    if (!_tableView) {
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, STATUS_AND_NAVIGATION_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - STATUS_AND_NAVIGATION_HEIGHT - TAB_BAR_HEIGHT) style:UITableViewStylePlain];
+        _tableView.backgroundColor = RGB(239, 239, 241);
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        _tableView.dataSource = self;
+        _tableView.delegate = self;
+        [_tableView registerClass:[PGCContactsCell class] forCellReuseIdentifier:kContactsCell];
+    }
+    return _tableView;
+}
+
+
+- (NSMutableArray<PGCContact *> *)dataSource {
+    if (!_dataSource) {
+        _dataSource = [NSMutableArray array];
+    }
+    return _dataSource;
+}
+
+
+- (NSMutableArray *)searchDataSource {
+    if (!_searchDataSource) {
+        _searchDataSource = [NSMutableArray array];
+    }
+    return _searchDataSource;
+}
+
 
 @end

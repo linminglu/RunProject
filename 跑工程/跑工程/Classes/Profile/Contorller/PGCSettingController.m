@@ -30,9 +30,11 @@
 
 #pragma mark - Events
 // 退出登录
-- (IBAction)logoutEvent:(UIButton *)sender {
-    
-    PGCUserInfo *user = [PGCTokenManager tokenManager].token.user;
+- (IBAction)logoutEvent:(UIButton *)sender
+{
+    PGCTokenManager *manager = [PGCTokenManager tokenManager];
+    [manager readAuthorizeData];
+    PGCUserInfo *user = manager.token.user;
     
     if (!user) {
         [PGCProgressHUD showProgressHUDWithTitle:@"请先登录"];
@@ -41,14 +43,11 @@
     
     NSDictionary *params = @{@"user_id":@(user.id),
                              @"client_type":@"iphone",
-                             @"token":[PGCTokenManager tokenManager].token.token};
-    
-    MBProgressHUD *hud = [PGCProgressHUD showProgressHUD:self.view label:@"注销中..."];
-    
+                             @"token":manager.token.token};
     [JCAlertView showTwoButtonsWithTitle:@"温馨提示:" Message:@"是否确定注销登录?" ButtonType:JCAlertViewButtonTypeCancel ButtonTitle:@"注销" Click:^{
+        MBProgressHUD *hud = [PGCProgressHUD showProgressHUD:self.view label:@"注销中..."];
         
         [PGCRegisterOrLoginAPIManager logoutRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
-            
             [hud hideAnimated:true];
             
             if (status == RespondsStatusSuccess) {

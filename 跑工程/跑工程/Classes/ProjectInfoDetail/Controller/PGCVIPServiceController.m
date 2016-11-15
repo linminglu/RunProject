@@ -11,18 +11,10 @@
 
 @interface PGCVIPServiceController () <UITableViewDataSource, PGCPayViewDelegate>
 
-/**
- 表格视图数据源
- */
-@property (copy, nonatomic) NSArray *dataSource;
-/**
- 初始化数据源
- */
-- (void)initializeDataSource;
-/**
- 初始化用户界面
- */
-- (void)initializeUserInterface;
+@property (copy, nonatomic) NSArray *dataSource;/** 表格视图数据源 */
+
+- (void)initializeDataSource;/* 初始化数据源 */
+- (void)initializeUserInterface;/* 初始化用户界面 */
 
 @end
 
@@ -39,7 +31,8 @@
     _dataSource = @[@"1、开通会员服务后，使用有效期为一年", @"2、相关的规则和说明", @"3、相关的服务和说明"];
 }
 
-- (void)initializeUserInterface {
+- (void)initializeUserInterface
+{
     self.navigationItem.title = @"开通服务";
     self.view.backgroundColor = RGB(244, 244, 244);
     
@@ -147,7 +140,8 @@
 
 #pragma mark - Events
 
-- (void)respondsToPayButton:(UIButton *)sender {
+- (void)respondsToPayButton:(UIButton *)sender
+{
     PGCPayView *payView = [[PGCPayView alloc] init];
     payView.delegate = self;
     [payView showPayView];
@@ -156,12 +150,14 @@
 
 #pragma mark - PGCPayViewDelegate
 
-- (void)payView:(PGCPayView *)payView weChat:(UIButton *)weChat {    
+- (void)payView:(PGCPayView *)payView weChat:(UIButton *)weChat
+{
     PGCPayView *succeedView = [[PGCPayView alloc] initWithSuccessPay];
     [succeedView showPayViewWithGCD];
 }
 
-- (void)payView:(PGCPayView *)payView alipay:(UIButton *)alipay {
+- (void)payView:(PGCPayView *)payView alipay:(UIButton *)alipay
+{
     PGCPayView *succeedView = [[PGCPayView alloc] initWithSuccessPay];
     [succeedView showPayViewWithGCD];
 }
@@ -169,11 +165,13 @@
 
 #pragma mark - UITableViewDataSource
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
     return _dataSource.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     static NSString *identifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];

@@ -8,100 +8,100 @@
 
 #import "PGCInterfaceConfig.h"
 
-NSString *const kBaseURL = @"http://192.168.0.249:8080/zbapp/mobile/api/";
+NSString *const kBaseURL = @"http://192.168.0.249:8080/zbapp";// 154 || 249
 
 
 #pragma mark - 注册登录
 // 获取验证码
-NSString *const kSendVerifyCodeURL = @"open/sendVerifyCode.htm";
+NSString *const kSendVerifyCodeURL = @"/mobile/api/open/sendVerifyCode.htm";
 // 注册
-NSString *const kUserRegist = @"user/open/userRegist.htm";
+NSString *const kUserRegist = @"/mobile/api/user/open/userRegist.htm";
 // 登录
-NSString *const kUserLogin = @"user/open/userLogin.htm";
+NSString *const kUserLogin = @"/mobile/api/user/open/userLogin.htm";
 // 上传推送信息
-NSString *const kUserPushInfo = @"user/access/userPushInfo.htm";
+NSString *const kUserPushInfo = @"/mobile/api/user/access/userPushInfo.htm";
 // 忘记密码
-NSString *const kUserForgetPassword = @"user/open/userForgetPassword.htm";
+NSString *const kUserForgetPassword = @"/mobile/api/user/open/userForgetPassword.htm";
 // 退出登录
-NSString *const kUserLogout = @"user/access/userLogout.htm";
+NSString *const kUserLogout = @"/mobile/api/user/access/userLogout.htm";
 // 更新用户session
-NSString *const kUserUpdateSession = @"user/access/userUpdateSession.htm";
+NSString *const kUserUpdateSession = @"/mobile/api/user/access/userUpdateSession.htm";
 
 
 #pragma mark - 用户信息
 // 修改个人信息
-NSString *const kUserCompleteInfo = @"user/access/userCompleteInfo.htm";
+NSString *const kUserCompleteInfo = @"/mobile/api/user/access/userCompleteInfo.htm";
 
 
 #pragma mark - 地区-省市
 // 获取省
-NSString *const kGetProvinces = @"open/getProvinces.htm";
+NSString *const kGetProvinces = @"/mobile/api/open/getProvinces.htm";
 // 获取市
-NSString *const kGetCities = @"open/getCities.htm";
+NSString *const kGetCities = @"/mobile/api/open/getCities.htm";
 
 
 #pragma mark - 项目
 // 项目类型
-NSString *const kGetProjectTypes = @"open/getProjectTypes.htm";
+NSString *const kGetProjectTypes = @"/mobile/api/open/getProjectTypes.htm";
 // 项目进度
-NSString *const kGetProjectProgresses = @"open/getProjectProgresses.htm";
+NSString *const kGetProjectProgresses = @"/mobile/api/open/getProjectProgresses.htm";
 // 项目列表
-NSString *const kGetProjects = @"open/getProjects.htm";
+NSString *const kGetProjects = @"/mobile/api/open/getProjects.htm";
 // 获取项目联系人
-NSString *const kGetProjectContacts = @"open/getProjectContacts.htm";
+NSString *const kGetProjectContacts = @"/mobile/api/open/getProjectContacts.htm";
 // 添加收藏与浏览记录
-NSString *const kAddAccessOrCollect = @"access/addAccessOrCollect.htm";
+NSString *const kAddAccessOrCollect = @"/mobile/api/access/addAccessOrCollect.htm";
 // 删除收藏与浏览记录
-NSString *const kDeleteAccessOrCollect = @"access/deleteAccessOrCollect.htm";
+NSString *const kDeleteAccessOrCollect = @"/mobile/api/access/deleteAccessOrCollect.htm";
 // 获取收藏与浏览记录
-NSString *const kGetAccessOrCollect = @"access/getAccessOrCollect.htm";
+NSString *const kGetAccessOrCollect = @"/mobile/api/access/getAccessOrCollect.htm";
 
 
 #pragma mark - 供需
 // 类别
-NSString *const kGetMaterialServiceTypes = @"open/getMaterialServiceTypes.htm";
+NSString *const kGetMaterialServiceTypes = @"/mobile/api/open/getMaterialServiceTypes.htm";
 // 添加需求
-NSString *const kAddDemand = @"access/addDemand.htm";
+NSString *const kAddDemand = @"/mobile/api/access/addDemand.htm";
 // 需求列表
-NSString *const kGetDemand = @"access/getDemand.htm";
+NSString *const kGetDemand = @"/mobile/api/access/getDemand.htm";
 // 添加供应
-NSString *const kAddSupply = @"access/addSupply.htm";
+NSString *const kAddSupply = @"/mobile/api/access/addSupply.htm";
 // 供应列表
-NSString *const kGetSupply = @"access/getSupply.htm";
+NSString *const kGetSupply = @"/mobile/api/access/getSupply.htm";
 // 添加收藏
-NSString *const kAddSupplyDemandCollect = @"access/addSupplyDemandCollect.htm";
+NSString *const kAddSupplyDemandCollect = @"/mobile/api/access/addSupplyDemandCollect.htm";
 // 删除收藏
-NSString *const kDeleteSupplyDemandCollect = @"access/deleteSupplyDemandCollect.htm";
+NSString *const kDeleteSupplyDemandCollect = @"/mobile/api/access/deleteSupplyDemandCollect.htm";
 // 获取收藏
-NSString *const kGetSupplyDemandCollect = @"access/getSupplyDemandCollect.htm";
+NSString *const kGetSupplyDemandCollect = @"/mobile/api/access/getSupplyDemandCollect.htm";
 // 我发布的需求
-NSString *const kMyDemands = @"access/myDemands.htm";
+NSString *const kMyDemands = @"/mobile/api/access/myDemands.htm";
 // 我发布的供应
-NSString *const kMySupplies = @"access/mySupplies.htm";
+NSString *const kMySupplies = @"/mobile/api/access/mySupplies.htm";
 // 删除我的需求
-NSString *const kDeleteMyDemands = @"access/deleteMyDemands.htm";
+NSString *const kDeleteMyDemands = @"/mobile/api/access/deleteMyDemands.htm";
 // 关闭我的供应
-NSString *const kCloseMySupply = @"access/closeMySupply.htm";
+NSString *const kCloseMySupply = @"/mobile/api/access/closeMySupply.htm";
 
 
 #pragma mark - 联系人
 // 添加联系人
-NSString *const kAddContact = @"access/addContact.htm";
+NSString *const kAddContact = @"/mobile/api/access/addContact.htm";
 // 获取联系人
-NSString *const kGetContactsList = @"access/getContactsList.htm";
+NSString *const kGetContactsList = @"/mobile/api/access/getContactsList.htm";
 // 删除联系人
-NSString *const kDeleteContact = @"access/deleteContact.htm";
+NSString *const kDeleteContact = @"/mobile/api/access/deleteContact.htm";
 
 #pragma mark - 会员
 // 购买会员
-NSString *const kBuyVip = @"access/buyVip.htm";
+NSString *const kBuyVip = @"/mobile/api/access/buyVip.htm";
 // 广告轮播
-NSString *const kAdList = @"open/adList.htm";
+NSString *const kAdList = @"/mobile/api/open/adList.htm";
 // 软件更新
-NSString *const kGetNewVersion = @"open/getNewVersion.htm";
+NSString *const kGetNewVersion = @"/mobile/api/open/getNewVersion.htm";
 // 意见反馈
-NSString *const kFeedback = @"open/feedback.htm";
-#warning 此处链接不同
+NSString *const kFeedback = @"/mobile/api/open/feedback.htm";
+
 // 图片上传
 NSString *const kSignleImageUpload = @"/signleImageUpload.htm";
 

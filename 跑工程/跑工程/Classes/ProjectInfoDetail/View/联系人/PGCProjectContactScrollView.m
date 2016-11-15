@@ -13,10 +13,17 @@
 #import "PGCHintAlertView.h"
 #import "PGCProjectAddContactController.h"
 #import "PGCVIPServiceController.h"
-#import "PGCMapViewController.h"
+#import "PGCMapTypeViewController.h"
 #import "PGCProjectInfo.h"
+#import "PGCProjectContact.h"
 
-@interface PGCProjectContactScrollView () <UITableViewDataSource, PGCProjectContactCellDelegate, PGCAlertViewDelegate, PGCHintAlertViewDelegate>
+@interface PGCProjectContactScrollView () <UITableViewDataSource, UITableViewDelegate, PGCProjectContactCellDelegate, PGCAlertViewDelegate, PGCHintAlertViewDelegate>
+{
+    BOOL _isVIP;/** 判断是否是会员 */
+}
+
+@property (strong, nonatomic) UITableView *contactTableView;/** 联系人表格视图 */
+@property (strong, nonatomic) UIButton *bottomBtn;/** 底部查看更多联系人视图 */
 
 - (void)initUserInterface; /** 初始化用户界面 */
 
@@ -28,6 +35,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.contentView.backgroundColor = [UIColor whiteColor];
         
         [self initUserInterface];
     }
@@ -45,36 +53,21 @@
     .rightSpaceToView(self.contentView, 0)
     .heightIs(40);
     
-    // 底部添加联系人视图
-    UIButton *bottomBtn = [self makeButton];
-    [self.contentView addSubview:bottomBtn];
-    bottomBtn.sd_layout
-    .leftSpaceToView(self.contentView, 0)
-    .rightSpaceToView(self.contentView, 0)
-    .bottomSpaceToView(self.contentView, 0)
-    .heightIs(50);
-    UIView *bottomLine = [[UIView alloc] init];
-    bottomLine.backgroundColor = RGB(230, 230, 250);
-    [self.contentView addSubview:bottomLine];
-    bottomLine.sd_layout
-    .bottomSpaceToView(bottomBtn, 0)
-    .leftSpaceToView(self.contentView, 0)
-    .rightSpaceToView(self.contentView, 0)
-    .heightIs(1);
-    
     // 联系人表格视图
     UITableView *contactTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     contactTableView.showsVerticalScrollIndicator = false;
     contactTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    contactTableView.rowHeight = 34 * 5 + 1;
     contactTableView.dataSource = self;
+    contactTableView.delegate = self;
+    [contactTableView registerClass:[PGCProjectContactCell class] forCellReuseIdentifier:kProjectContactCell];
     [self.contentView addSubview:contactTableView];
+    self.contactTableView = contactTableView;
     // 开始自动布局
     contactTableView.sd_layout
     .topSpaceToView(contactView, 0)
     .leftSpaceToView(self.contentView, 0)
     .rightSpaceToView(self.contentView, 0)
-    .bottomSpaceToView(bottomLine, 0);
+    .bottomSpaceToView(self.contentView, 50);
 }
 
 - (UIButton *)makeButton {
@@ -95,78 +88,88 @@
 }
 
 
-#pragma mark - Public
-
-- (void)setContactInfoWithModel:(id)model {
-    //
-}
-
-
 #pragma mark - Events
 
 - (void)respondsToCheckContact:(UIButton *)sender {
     NSLog(@"%@", NSStringFromSelector(_cmd));
+    
 }
 
 
 #pragma mark - UITableViewDataSource
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.contactDataSource.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *kProjectContactCell = @"ProjectContactCell";
-    
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     PGCProjectContactCell *cell = [tableView dequeueReusableCellWithIdentifier:kProjectContactCell];
-    if (!cell) {
-        cell = [[PGCProjectContactCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kProjectContactCell];
-    }
-    cell.delegate = self;
-    
+    cell.delegate = self;    
     return cell;
+}
+
+
+#pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    PGCProjectContact *projectContact = self.contactDataSource[indexPath.row];
+    return [tableView cellHeightForIndexPath:indexPath model:projectContact keyPath:@"projectContact" cellClass:[PGCProjectContactCell class] contentViewWidth:SCREEN_WIDTH];
 }
 
 
 #pragma mark - PGCProjectContactCellDelegate
 
-- (void)projectContactCell:(PGCProjectContactCell *)projectContactCell phone:(id)phone {
-    BOOL isVIP = true;
+- (void)projectContactCell:(PGCProjectContactCell *)projectContactCell phone:(id)phone
+{    
+    BOOL isRemind = [[PGCUserDefault valueForKey:@"isRemind"] boolValue];
     
     PGCAlertView *alert = nil;
     
-    if (isVIP) {
-        alert = [[PGCAlertView alloc] initWithModel:@{@"name":@"联系人：夏先生", @"phone":@"呼叫188883359584"}];        
+    if (!_isVIP) {
+        alert = [[PGCAlertView alloc] initWithModel:@{@"name":@"联系人：夏先生", @"phone":@"呼叫188883359584"}];
         
     } else {
-        alert = [[PGCAlertView alloc] initWithTitle:@"查看项目详情，需要您开通会员服务，如果您需要开通会员服务，请点击确定"];
-        
+        if (isRemind) {
+            [[self getCurrentVC].navigationController pushViewController:[PGCVIPServiceController new] animated:true];
+        } else {
+            alert = [[PGCAlertView alloc] initWithTitle:@"查看项目详情，需要您开通会员服务，如果您需要开通会员服务，请点击确定"];
+        }
     }
     alert.delegate = self;
+    
     [alert showAlertView];
 }
 
-- (void)projectContactCell:(PGCProjectContactCell *)projectContactCell address:(id)address {
-    
-    [[self getCurrentVC].navigationController pushViewController:[PGCMapViewController new] animated:true];
+- (void)projectContactCell:(PGCProjectContactCell *)projectContactCell address:(id)address
+{    
+    [[self getCurrentVC].navigationController pushViewController:[PGCMapTypeViewController new] animated:true];
 }
 
 
 #pragma mark - PGCAlertViewDelegate
 
-- (void)alertView:(PGCAlertView *)alertView phone:(UIButton *)phone {
+- (void)alertView:(PGCAlertView *)alertView phone:(UIButton *)phone
+{
     PGCHintAlertView *hintAlert = [[PGCHintAlertView alloc] initWithTitle:@"是否确定给联系人拨号"];
     hintAlert.delegate = self;
     [hintAlert showHintAlertView];
 }
 
-- (void)alertView:(PGCAlertView *)alertView addContact:(UIButton *)addContact {
+
+- (void)alertView:(PGCAlertView *)alertView addContact:(UIButton *)addContact
+{
     [[self getCurrentVC].navigationController pushViewController:[PGCProjectAddContactController new] animated:true];
 }
 
-- (void)alertView:(PGCAlertView *)alertView confirm:(UIButton *)confirm {
+
+- (void)alertView:(PGCAlertView *)alertView confirm:(UIButton *)confirm
+{
     [[self getCurrentVC].navigationController pushViewController:[PGCVIPServiceController new] animated:true];
 }
+
 
 
 #pragma mark - PGCHintAlertViewDelegate
@@ -217,6 +220,30 @@
     }
     
     return result;
+}
+
+
+#pragma mark - Getter
+
+- (UIButton *)bottomBtn {
+    if (!_bottomBtn) {
+        _bottomBtn = [self makeButton];
+        [self.contentView addSubview:_bottomBtn];
+        _bottomBtn.sd_layout
+        .leftSpaceToView(self.contentView, 0)
+        .rightSpaceToView(self.contentView, 0)
+        .bottomSpaceToView(self.contentView, 0)
+        .heightIs(50);
+        UIView *bottomLine = [[UIView alloc] init];
+        bottomLine.backgroundColor = RGB(230, 230, 250);
+        [self.contentView addSubview:bottomLine];
+        bottomLine.sd_layout
+        .bottomSpaceToView(_bottomBtn, 0)
+        .leftSpaceToView(self.contentView, 0)
+        .rightSpaceToView(self.contentView, 0)
+        .heightIs(1);
+    }
+    return _bottomBtn;
 }
 
 @end

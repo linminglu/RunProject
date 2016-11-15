@@ -56,7 +56,7 @@
                                 <constraint firstAttribute="width" constant="50" id="407-1V-dWR"/>
                                 <constraint firstAttribute="height" constant="50" id="bus-e7-OQ3"/>
                             </constraints>
-                            <state key="normal" image="QQ好友"/>
+                            <state key="normal" image="头像"/>
                             <connections>
                                 <action selector="iconBtnClick:" destination="-1" eventType="touchUpInside" id="7mr-RB-6pl"/>
                             </connections>
@@ -515,24 +515,24 @@
                             <exclude reference="kGi-CN-mV5"/>
                             <exclude reference="RsQ-gX-WrZ"/>
                             <exclude reference="g2W-Ft-mju"/>
+                            <exclude reference="5rv-8b-f8d"/>
+                            <exclude reference="6Yi-rV-JOs"/>
                             <exclude reference="ILc-sd-A4B"/>
                             <exclude reference="TRB-Ky-T3R"/>
                             <exclude reference="Vbf-C6-ECs"/>
-                            <exclude reference="5rv-8b-f8d"/>
-                            <exclude reference="6Yi-rV-JOs"/>
                             <exclude reference="DH8-HF-Y9A"/>
                             <exclude reference="PVf-PJ-OvH"/>
                             <exclude reference="2Ks-rc-nk7"/>
                             <exclude reference="NrL-wQ-NFF"/>
                             <exclude reference="FLR-9p-y37"/>
                             <exclude reference="rij-o0-Sdc"/>
-                            <exclude reference="5cL-fk-Lo8"/>
-                            <exclude reference="DEf-Kz-R7F"/>
-                            <exclude reference="ufb-W9-jvX"/>
                             <exclude reference="0NS-BF-uiv"/>
                             <exclude reference="dSU-Tg-ly9"/>
                             <exclude reference="j6p-EB-Ya7"/>
                             <exclude reference="vAx-SN-kxG"/>
+                            <exclude reference="5cL-fk-Lo8"/>
+                            <exclude reference="DEf-Kz-R7F"/>
+                            <exclude reference="ufb-W9-jvX"/>
                             <exclude reference="xx6-8L-dMd"/>
                             <exclude reference="YFm-pi-vty"/>
                             <exclude reference="oTD-Ei-RPa"/>
@@ -577,24 +577,24 @@
                             <include reference="kGi-CN-mV5"/>
                             <include reference="RsQ-gX-WrZ"/>
                             <include reference="g2W-Ft-mju"/>
+                            <include reference="5rv-8b-f8d"/>
+                            <include reference="6Yi-rV-JOs"/>
                             <include reference="ILc-sd-A4B"/>
                             <include reference="TRB-Ky-T3R"/>
                             <include reference="Vbf-C6-ECs"/>
-                            <include reference="5rv-8b-f8d"/>
-                            <include reference="6Yi-rV-JOs"/>
                             <include reference="DH8-HF-Y9A"/>
                             <include reference="PVf-PJ-OvH"/>
                             <include reference="2Ks-rc-nk7"/>
                             <include reference="NrL-wQ-NFF"/>
                             <include reference="FLR-9p-y37"/>
                             <include reference="rij-o0-Sdc"/>
-                            <include reference="5cL-fk-Lo8"/>
-                            <include reference="DEf-Kz-R7F"/>
-                            <include reference="ufb-W9-jvX"/>
                             <include reference="0NS-BF-uiv"/>
                             <include reference="dSU-Tg-ly9"/>
                             <include reference="j6p-EB-Ya7"/>
                             <include reference="vAx-SN-kxG"/>
+                            <include reference="5cL-fk-Lo8"/>
+                            <include reference="DEf-Kz-R7F"/>
+                            <include reference="ufb-W9-jvX"/>
                             <include reference="xx6-8L-dMd"/>
                             <include reference="YFm-pi-vty"/>
                             <include reference="oTD-Ei-RPa"/>
@@ -638,7 +638,7 @@
         </view>
     </objects>
     <resources>
-        <image name="QQ好友" width="40" height="40"/>
         <image name="right" width="5" height="10"/>
+        <image name="头像" width="65" height="65"/>
     </resources>
 </document>

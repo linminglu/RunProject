@@ -25,7 +25,65 @@
             respondsBlock(RespondsStatusDataError, resultMsg, nil);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
+    }];
+}
+
+
++ (NSURLSessionDataTask *)addSupplyDemandCollectWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, id))respondsBlock
+{
+    return [self requestPOST:kAddSupplyDemandCollect parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
         
+        NSInteger resultCode = [responseObject[@"code"] integerValue];
+        NSString *resultMsg = responseObject[@"msg"];
+        NSDictionary *resultData = responseObject[@"data"];
+        
+        if (resultCode == 200) {
+            respondsBlock(RespondsStatusSuccess, resultMsg, resultData);
+        }
+        else {
+            respondsBlock(RespondsStatusDataError, resultMsg, nil);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
+    }];
+}
+
+
++ (NSURLSessionDataTask *)deleteSupplyDemandCollectWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, id))respondsBlock
+{
+    return [self requestPOST:kDeleteSupplyDemandCollect parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSInteger resultCode = [responseObject[@"code"] integerValue];
+        NSString *resultMsg = responseObject[@"msg"];
+        NSDictionary *resultData = responseObject[@"data"];
+        
+        if (resultCode == 200) {
+            respondsBlock(RespondsStatusSuccess, resultMsg, resultData);
+        }
+        else {
+            respondsBlock(RespondsStatusDataError, resultMsg, nil);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
+    }];
+}
+
++ (NSURLSessionDataTask *)getSupplyDemandCollectWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, id))respondsBlock
+{
+    return [self requestPOST:kGetSupplyDemandCollect parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSInteger resultCode = [responseObject[@"code"] integerValue];
+        NSString *resultMsg = responseObject[@"msg"];
+        NSDictionary *resultData = responseObject[@"data"];
+        
+        if (resultCode == 200) {
+            respondsBlock(RespondsStatusSuccess, resultMsg, resultData);
+        }
+        else {
+            respondsBlock(RespondsStatusDataError, resultMsg, nil);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
     }];
 }

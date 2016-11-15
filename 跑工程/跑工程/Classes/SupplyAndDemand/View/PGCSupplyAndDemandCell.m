@@ -10,30 +10,12 @@
 
 @interface PGCSupplyAndDemandCell ()
 
-/**
- 标题
- */
-@property (nonatomic, strong) UILabel *nameLabel;
-/**
- 内容
- */
-@property (nonatomic, strong) UILabel *contentLabel;
-/**
- 地区
- */
-@property (nonatomic, strong) UILabel *areaLabel;
-/**
- 项目类别
- */
-@property (nonatomic, strong) UILabel *categoryLabel;
-/**
- 时间
- */
-@property (nonatomic, strong) UILabel *timeLabel;
-/**
- 底部分割线
- */
-@property (strong, nonatomic) UIView *line;
+@property (nonatomic, strong) UILabel *nameLabel;/** 标题 */
+@property (nonatomic, strong) UILabel *contentLabel;/** 内容 */
+@property (nonatomic, strong) UILabel *areaLabel;/** 地区 */
+@property (nonatomic, strong) UILabel *categoryLabel;/** 项目类别 */
+@property (nonatomic, strong) UILabel *timeLabel;/** 时间 */
+@property (strong, nonatomic) UIView *line;/** 底部分割线 */
 
 @end
 
@@ -43,6 +25,7 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.contentView.backgroundColor = [UIColor whiteColor];
         
         [self createUI];
         [self setupSubviewsAutoLayout];
@@ -116,21 +99,21 @@
     .topSpaceToView(self.contentLabel, 10)
     .leftSpaceToView(self.contentView, 15)
     .widthIs(80)
-    .autoHeightRatio(0);
-    
-    // 项目类别
-    self.categoryLabel.sd_layout
-    .centerYEqualToView(self.areaLabel)
-    .leftSpaceToView(self.areaLabel, 0)
-    .widthIs(60)
-    .autoHeightRatio(0);
+    .heightIs(20);
     
     // 时间标签
     self.timeLabel.sd_layout
     .bottomEqualToView(self.categoryLabel)
     .rightSpaceToView(self.contentView, 15)
-    .widthIs(50)
-    .autoHeightRatio(0);
+    .widthIs(60)
+    .heightIs(20);
+    
+    // 项目类别
+    self.categoryLabel.sd_layout
+    .centerYEqualToView(self.areaLabel)
+    .leftSpaceToView(self.areaLabel, 0)
+    .widthIs(80)
+    .heightIs(20);
     
     // 底部分割线
     self.line.sd_layout
@@ -139,7 +122,7 @@
     .rightSpaceToView(self.contentView, 0)
     .heightIs(1);
     
-    [self setupAutoHeightWithBottomView:self.line bottomMargin:0];
+    [self.contentView setupAutoHeightWithBottomView:self.line bottomMargin:0];
 }
 
 

@@ -30,8 +30,8 @@
     [self initializeUserInterface];
 }
 
-- (void)initializeUserInterface {
-    
+- (void)initializeUserInterface
+{
     self.view.backgroundColor = [UIColor whiteColor];
     
     ///初始化地图
@@ -70,7 +70,8 @@
 
 #pragma mark - Events
 
-- (void)respondsToAddAnnotation:(UILongPressGestureRecognizer *)gesture {
+- (void)respondsToAddAnnotation:(UILongPressGestureRecognizer *)gesture
+{
     // 在手势开始的时候创建一个标注数据源
     if (gesture.state == UIGestureRecognizerStateBegan) {
         // 获取手势在地图上的位置
@@ -90,7 +91,8 @@
 }
 
 
-- (void)configLocationManager {
+- (void)configLocationManager
+{
     self.locationManager = [[AMapLocationManager alloc] init];
     
     self.locationManager.delegate = self;
@@ -108,11 +110,13 @@
 
 #pragma mark - MAMapViewDelegate
 
-- (void)mapView:(MAMapView *)mapView didFailToLocateUserWithError:(NSError *)error {
+- (void)mapView:(MAMapView *)mapView didFailToLocateUserWithError:(NSError *)error
+{
     NSLog(@"%@", error.localizedDescription);
 }
 
-- (MAAnnotationView *)mapView:(MAMapView *)mapView viewForAnnotation:(id<MAAnnotation>)annotation {
+- (MAAnnotationView *)mapView:(MAMapView *)mapView viewForAnnotation:(id<MAAnnotation>)annotation
+{
     
     if ([annotation isKindOfClass:[MAUserLocation class]]) {
         return nil;
@@ -146,15 +150,16 @@
     return pinAnnotationView;
 }
 
-- (void)mapView:(MAMapView *)mapView annotationView:(MAAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
+- (void)mapView:(MAMapView *)mapView annotationView:(MAAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
+{
     if ([view.annotation.title isKindOfClass:[NSNull class]]) {
         return;
     }
-
 }
 
 
-- (void)mapView:(MAMapView *)mapView didSelectAnnotationView:(MAAnnotationView *)view {
+- (void)mapView:(MAMapView *)mapView didSelectAnnotationView:(MAAnnotationView *)view
+{
     // 1.获取经纬度
     CLLocationCoordinate2D coordinate = view.annotation.coordinate;
     // 2.根据经纬度创建一个CLLocation
@@ -176,12 +181,14 @@
 
 #pragma mark - AMapLocationManagerDelegate
 
-- (void)amapLocationManager:(AMapLocationManager *)manager didFailWithError:(NSError *)error {
+- (void)amapLocationManager:(AMapLocationManager *)manager didFailWithError:(NSError *)error
+{
     //定位错误
     NSLog(@"%s, amapLocationManager = %@, error = %@", __func__, [manager class], error);
 }
 
-- (void)amapLocationManager:(AMapLocationManager *)manager didUpdateLocation:(CLLocation *)location {
+- (void)amapLocationManager:(AMapLocationManager *)manager didUpdateLocation:(CLLocation *)location
+{
     //定位结果
     NSLog(@"location:{lat:%f; lon:%f; accuracy:%f}", location.coordinate.latitude, location.coordinate.longitude, location.horizontalAccuracy);
     
@@ -189,13 +196,15 @@
 }
 
 
-- (void)startSerialLocation {
+- (void)startSerialLocation
+{
     //开始定位
     [self.locationManager startUpdatingLocation];
 }
 
 
-- (void)stopSerialLocation {
+- (void)stopSerialLocation
+{
     //停止定位
     [self.locationManager stopUpdatingLocation];
 }

@@ -16,6 +16,8 @@
 #import "PGCTokenManager.h"
 #import "PGCUserInfo.h"
 #import "UIButton+WebCache.h"
+#import "PGCProfileAPIManager.h"
+#import "PGCHeadImage.h"
 
 @interface PGCProfileController ()
 
@@ -74,13 +76,12 @@
         self.loginAndRegisterBtn.enabled = false;
         [self.loginAndRegisterBtn setTitle:user.name forState:UIControlStateNormal];
         
-        self.headImageBtn.enabled = true;
         if (user.headimage) {
             NSURL *url = [NSURL URLWithString:user.headimage];
             [self.headImageBtn sd_setImageWithURL:url forState:UIControlStateNormal];
         }
     } else {
-        self.headImageBtn.enabled = false;
+        
         [self.loginAndRegisterBtn setTitle:@"登录/注册" forState:UIControlStateNormal];
         [self.headImageBtn setImage:[UIImage imageNamed:@"头像"] forState:UIControlStateNormal];
     }
@@ -111,8 +112,6 @@
         self.loginAndRegisterBtn.enabled = false;
         [self.loginAndRegisterBtn setTitle:user.name forState:UIControlStateNormal];
         
-        self.headImageBtn.enabled = true;
-        
         if (user.headimage) {
             NSURL *url = [NSURL URLWithString:user.headimage];
             [self.headImageBtn sd_setImageWithURL:url forState:UIControlStateNormal];
@@ -123,8 +122,21 @@
         
         self.loginAndRegisterBtn.enabled = true;
         [self.loginAndRegisterBtn setTitle:@"登录/注册" forState:UIControlStateNormal];
-        self.headImageBtn.enabled = false;
         [self.headImageBtn setImage:[UIImage imageNamed:@"头像"] forState:UIControlStateNormal];
+    }
+    
+    if ([notifi.userInfo objectForKey:@"HeadImage"]) {// 收到用户修改头像的通知
+        PGCHeadImage *image = [notifi.userInfo objectForKey:@"HeadImage"];
+        
+        NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+        [parameters setObject:@"iphone" forKey:@"client_type"];
+        [parameters setObject:[PGCTokenManager tokenManager].token.token forKey:@"token"];
+        [parameters setObject:@([PGCTokenManager tokenManager].token.user.id) forKey:@"user_id"];
+        [parameters setObject:image.path forKey:@"headimage"];
+        
+        [PGCProfileAPIManager completeInfoRequestWithParameters:parameters responds:^(RespondsStatus status, NSString *message, id resultData) {
+            
+        }];
     }
 }
 
@@ -136,6 +148,12 @@
  @param sender
  */
 - (IBAction)iconButtonClick:(UIButton *)sender {
+    [[PGCTokenManager tokenManager] readAuthorizeData];
+    PGCUserInfo *user = [PGCTokenManager tokenManager].token.user;
+    if (!user) {
+        PGCLoginController *loginVC = [[PGCLoginController alloc] init];
+        [self.navigationController pushViewController:loginVC animated:true];
+    }
     PGCUserInfoController *userInfoVC = [[PGCUserInfoController alloc] init];
     [self.navigationController pushViewController:userInfoVC animated:true];
 }

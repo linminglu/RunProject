@@ -5,7 +5,6 @@ target '跑工程' do
     pod 'SDAutoLayout'
     pod 'AFNetworking'
     pod 'SDWebImage'
-    pod 'Masonry'
     pod 'MJRefresh'
     pod 'MJExtension'
     pod 'MBProgressHUD'
@@ -14,7 +13,5 @@ target '跑工程' do
     pod 'AMapSearch'
     pod 'AMapLocation'
     pod 'YYCache'
-    pod 'YYModel'
-    pod 'Realm'
-    pod 'RBQFetchedResultsController'
+    pod 'SVProgressHUD'
 end

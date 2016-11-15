@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class PGCProjectContactCell;
+@class PGCProjectContactCell, PGCProjectContact;
 
 @protocol PGCProjectContactCellDelegate <NSObject>
 
@@ -31,8 +31,11 @@
 
 @end
 
+static NSString * const kProjectContactCell = @"ProjectContactCell";
+
 @interface PGCProjectContactCell : UITableViewCell
 
 @property (weak, nonatomic) id <PGCProjectContactCellDelegate> delegate;
+@property (strong, nonatomic) PGCProjectContact *projectContact;/** 项目联系人 */
 
 @end

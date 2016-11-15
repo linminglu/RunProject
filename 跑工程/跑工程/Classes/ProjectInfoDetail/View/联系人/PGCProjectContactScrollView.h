@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+@class PGCProjectContact;
 
 static NSString *const kProjectContactScrollView = @"PGCProjectContactScrollView";
 
 @interface PGCProjectContactScrollView : UICollectionViewCell
 
-- (void)setContactInfoWithModel:(id)model;
+@property (copy, nonatomic) NSArray *contactDataSource;/** 联系人数据源 */
 
 @end

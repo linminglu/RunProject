@@ -13,4 +13,13 @@
 // 修改用户信息
 + (NSURLSessionDataTask *)completeInfoRequestWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
 
+// 上传用户头像
++ (NSURLSessionDataTask *)uploadRequestWithParameters:(NSDictionary *)parameters
+                                                image:(UIImage *)image
+                                                 name:(NSString *)name
+                                             fileName:(NSString *)fileName
+                                             mimeType:(NSString *)mimeType
+                                             progress:(HttpProgress)progress
+                                             responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
+
 @end

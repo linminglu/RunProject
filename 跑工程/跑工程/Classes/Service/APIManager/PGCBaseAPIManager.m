@@ -45,6 +45,27 @@ static NSString * const PGCHttpCache = @"HttpYYCache";
 
 
 #pragma mark -
+#pragma mark - 上传图片
+
++ (NSURLSessionDataTask *)uploadRequest:(NSString *)urlString parameters:(NSDictionary *)parameters image:(UIImage *)image name:(NSString *)name fileName:(NSString *)fileName mimeType:(NSString *)mimeType progress:(HttpProgress)progress success:(successHandler)success failure:(failureHandler)failure
+{
+    // 拼接URL链接
+    NSString *url = [kBaseURL stringByAppendingString:urlString];
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer.timeoutInterval = 20.0f;
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript", @"text/html", nil];
+    
+    return [manager POST:url parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        //压缩-添加-上传图片
+        NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
+        [formData appendPartWithFileData:imageData name:name fileName:fileName mimeType:mimeType];
+        
+    } progress:progress success:success failure:failure];
+}
+
+
+#pragma mark -
 #pragma mark - 网络请求统一处理
 
 + (NSURLSessionDataTask *)requestType:(RequestType)requestType
@@ -163,59 +184,6 @@ static NSString * const PGCHttpCache = @"HttpYYCache";
 
 
 #pragma mark -
-#pragma mark - Private
-/**
- *  拼接请求的网络地址
- *
- *  @param urlStr     基础网址
- *  @param parameters 拼接参数
- *
- *  @return 拼接完成的网址
- */
-+ (NSString *)urlDictionaryToString:(NSString *)urlString parameters:(NSDictionary *)parameters
-{
-    if (!parameters) {
-        return urlString;
-    }
-    NSMutableArray *parts = [NSMutableArray array];
-    //enumerateKeysAndObjectsUsingBlock会遍历dictionary并把里面所有的key和value一组一组的展示给你，每组都会执行这个block 这其实就是传递一个block到另一个方法，在这个例子里它会带着特定参数被反复调用，直到找到一个ENOUGH的key，然后就会通过重新赋值那个BOOL *stop来停止运行，停止遍历同时停止调用block
-    [parameters enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-        //字符串处理
-        key = [NSString stringWithFormat:@"%@", key];
-        obj = [NSString stringWithFormat:@"%@", obj];
-        //接收key
-        NSString *finalKey = [key stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-        //接收值
-        NSString *finalValue = [obj stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-        NSString *part =[NSString stringWithFormat:@"%@=%@",finalKey,finalValue];
-        [parts addObject:part];
-    }];
-    NSString *queryString = [parts componentsJoinedByString:@"&"];
-    queryString = queryString.length != 0 ? [NSString stringWithFormat:@"?%@",queryString] : @"";
-    NSString *pathStr = [NSString stringWithFormat:@"%@%@", urlString, queryString];
-    return pathStr;
-}
-
-/**
- 处理json格式的字符串中的换行符、回车符
-
- @param str json格式的字符串
- @return
- */
-+ (NSString *)deleteSpecialCodeWithStr:(NSString *)str
-{
-    NSString *string = [str stringByReplacingOccurrencesOfString:@"\r" withString:@""];
-    string = [string stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    string = [string stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    string = [string stringByReplacingOccurrencesOfString:@"\t" withString:@""];
-    string = [string stringByReplacingOccurrencesOfString:@" " withString:@""];
-    string = [string stringByReplacingOccurrencesOfString:@"(" withString:@""];
-    string = [string stringByReplacingOccurrencesOfString:@")" withString:@""];
-    return string;
-}
-
-
-#pragma mark -
 #pragma mark - Public
 
 + (void)removeAllCache {
@@ -228,6 +196,17 @@ static NSString * const PGCHttpCache = @"HttpYYCache";
     return [[YYCache cacheWithName:PGCHttpCache].diskCache totalCost];
 }
 
+/**
+ *  json转字符串
+ */
++ (NSString *)jsonToString:(id)data
+{
+    if (!data) {
+        return nil;
+    }
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:NSJSONWritingPrettyPrinted error:nil];
+    return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+}
 
 
 #pragma mark -

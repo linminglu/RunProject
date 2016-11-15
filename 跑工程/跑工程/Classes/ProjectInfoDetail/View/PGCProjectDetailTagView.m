@@ -8,10 +8,6 @@
 
 #import "PGCProjectDetailTagView.h"
 
-@interface PGCProjectDetailTagView ()
-
-@end
-
 @implementation PGCProjectDetailTagView
 
 
@@ -26,7 +22,8 @@
     return self;
 }
 
-- (void)addSubviewsWithTitle:(NSString *)title {
+- (void)addSubviewsWithTitle:(NSString *)title
+{
     UIView *squareView = [[UIView alloc] init];
     squareView.backgroundColor = PGCTintColor;
     [self addSubview:squareView];

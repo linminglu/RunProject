@@ -12,30 +12,60 @@
 
 + (NSURLSessionDataTask *)addContactRequestWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, id))respondsBlock
 {
-    return [self requestPOST:kAddContact parameters:parameters cachePolicy:RequestReturnCacheDataElseLoad success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [self requestPOST:kAddContact parameters:parameters cachePolicy:RequestReloadIngnoringLocalCacheData success:^(NSURLSessionDataTask *task, id responseObject) {
         
+        NSInteger resultCode = [responseObject[@"code"] integerValue];
+        NSString *resultMsg = responseObject[@"msg"];
+        NSDictionary *resultData = responseObject[@"data"];
+        
+        if (resultCode == 200) {
+            respondsBlock(RespondsStatusSuccess, resultMsg, resultData);
+        }
+        else {
+            respondsBlock(RespondsStatusDataError, resultMsg, nil);
+        }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
+        respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
     }];
 }
 
 
 + (NSURLSessionDataTask *)getContactsListRequestWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, id))respondsBlock
 {
-    return [self requestPOST:kGetContactsList parameters:parameters cachePolicy:RequestReturnCacheDataElseLoad success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [self requestPOST:kGetContactsList parameters:parameters cachePolicy:RequestReloadIngnoringLocalCacheData success:^(NSURLSessionDataTask *task, id responseObject) {
         
+        NSInteger resultCode = [responseObject[@"code"] integerValue];
+        NSString *resultMsg = responseObject[@"msg"];
+        NSDictionary *resultData = responseObject[@"data"];
+        
+        if (resultCode == 200) {
+            respondsBlock(RespondsStatusSuccess, resultMsg, resultData);
+        }
+        else {
+            respondsBlock(RespondsStatusDataError, resultMsg, nil);
+        }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
+        respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
     }];
 }
 
 
 + (NSURLSessionDataTask *)deleteContactRequestWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, id))respondsBlock
 {
-    return [self requestPOST:kDeleteContact parameters:parameters cachePolicy:RequestReturnCacheDataElseLoad success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [self requestPOST:kDeleteContact parameters:parameters cachePolicy:RequestReloadIngnoringLocalCacheData success:^(NSURLSessionDataTask *task, id responseObject) {
         
+        NSInteger resultCode = [responseObject[@"code"] integerValue];
+        NSString *resultMsg = responseObject[@"msg"];
+        NSDictionary *resultData = responseObject[@"data"];
+        
+        if (resultCode == 200) {
+            respondsBlock(RespondsStatusSuccess, resultMsg, resultData);
+        }
+        else {
+            respondsBlock(RespondsStatusDataError, resultMsg, nil);
+        }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
+        respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
     }];
 }
 

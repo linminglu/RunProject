@@ -103,7 +103,7 @@ extern NSString *const kAdList;// 广告轮播
 extern NSString *const kGetNewVersion;// 软件更新
 
 extern NSString *const kFeedback;// 意见反馈
-#warning 此处链接不同
+
 extern NSString *const kSignleImageUpload;// 图片上传
 
 

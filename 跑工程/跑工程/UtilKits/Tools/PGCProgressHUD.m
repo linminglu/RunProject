@@ -168,7 +168,7 @@ static PGCProgressHUD *instance = nil;
 
 +(void)showMessage:(NSString *)msg inView:(UIView *)view{
     [self show:msg inView:view mode:ProgressModeOnlyText];
-    [[PGCProgressHUD shareinstance].hud hideAnimated:true afterDelay:1.0];
+    [[PGCProgressHUD shareinstance].hud hideAnimated:true afterDelay:1.5];
 }
 
 
@@ -180,7 +180,7 @@ static PGCProgressHUD *instance = nil;
 
 +(void)showSuccess:(NSString *)msg inView:(UIView *)view{
     [self show:msg inView:view mode:ProgressModeSuccess];
-    [[PGCProgressHUD shareinstance].hud hideAnimated:true afterDelay:1.0];
+    [[PGCProgressHUD shareinstance].hud hideAnimated:true afterDelay:1.5];
     
 }
 
@@ -201,7 +201,7 @@ static PGCProgressHUD *instance = nil;
 +(void)showMsgWithoutView:(NSString *)msg{
     UIWindow *view = [[UIApplication sharedApplication].windows lastObject];
     [self show:msg inView:view mode:ProgressModeOnlyText];
-    [[PGCProgressHUD shareinstance].hud hideAnimated:true afterDelay:1.0];
+    [[PGCProgressHUD shareinstance].hud hideAnimated:true afterDelay:1.5];
 }
 
 +(void)showCustomAnimation:(NSString *)msg withImgArry:(NSArray *)imgArry inview:(UIView *)view{

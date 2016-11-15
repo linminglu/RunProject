@@ -36,6 +36,8 @@ typedef void(^successHandler)(NSURLSessionDataTask *task, id responseObject);
 
 typedef void(^failureHandler)(NSURLSessionDataTask *task, NSError *error);
 
+typedef void (^HttpProgress)(NSProgress *progress);;
+
 
 @interface PGCBaseAPIManager : NSObject
 
@@ -51,6 +53,14 @@ typedef void(^failureHandler)(NSURLSessionDataTask *task, NSError *error);
  获取缓存大小
  */
 + (NSInteger)getAllCacheSize;
+
+/**
+ json转字符串
+
+ @param data
+ @return
+ */
++ (NSString *)jsonToString:(id)data;
 
 
 #pragma mark -
@@ -102,9 +112,9 @@ typedef void(^failureHandler)(NSURLSessionDataTask *task, NSError *error);
  @return
  */
 + (__kindof NSURLSessionDataTask *)requestPOST:(NSString *)urlString
-                    parameters:(NSDictionary *)parameters
-                       success:(successHandler)success
-                       failure:(failureHandler)failure;
+                                    parameters:(NSDictionary *)parameters
+                                       success:(successHandler)success
+                                       failure:(failureHandler)failure;
 
 
 /**
@@ -118,13 +128,36 @@ typedef void(^failureHandler)(NSURLSessionDataTask *task, NSError *error);
  @return
  */
 + (__kindof NSURLSessionDataTask *)requestPOST:(NSString *)urlString
-                    parameters:(NSDictionary *)parameters
-                   cachePolicy:(RequestCachePolicy)cachePolicy
-                       success:(successHandler)success
-                       failure:(failureHandler)failure;
+                                    parameters:(NSDictionary *)parameters
+                                   cachePolicy:(RequestCachePolicy)cachePolicy
+                                       success:(successHandler)success
+                                       failure:(failureHandler)failure;
 
 
 
 
-
+/**
+ *  上传图片文件
+ *
+ *  @param URL        请求地址
+ *  @param parameters 请求参数
+ *  @param images     图片数组
+ *  @param name       文件对应服务器上的字段
+ *  @param fileName   文件名
+ *  @param mimeType   图片文件的类型,例:png、jpeg(默认类型)....
+ *  @param progress   上传进度信息
+ *  @param success    请求成功的回调
+ *  @param failure    请求失败的回调
+ *
+ *  @return 返回的对象可取消请求,调用cancel方法
+ */
++ (__kindof NSURLSessionDataTask *)uploadRequest:(NSString *)urlString
+                                      parameters:(NSDictionary *)parameters
+                                           image:(UIImage *)image
+                                            name:(NSString *)name
+                                        fileName:(NSString *)fileName
+                                        mimeType:(NSString *)mimeType
+                                        progress:(HttpProgress)progress
+                                         success:(successHandler)success
+                                         failure:(failureHandler)failure;
 @end

@@ -105,14 +105,14 @@
                 [_checkBtn setTitle:@"点击查看" forState:UIControlStateNormal];
                 [_checkBtn.titleLabel setFont:SetFont(10)];
                 [_checkBtn.layer setMasksToBounds:true];
-                [_checkBtn.layer setCornerRadius:8];
+                [_checkBtn.layer setCornerRadius:10];
                 [_checkBtn.layer setBorderColor:PGCTintColor.CGColor];
                 [_checkBtn.layer setBorderWidth:1];
                 [self addSubview:_checkBtn];
                 _checkBtn.sd_layout
                 .centerYEqualToView(obj)
                 .rightSpaceToView(self, 30)
-                .heightIs(15)
+                .heightIs(20)
                 .widthIs(60);
                 
                 UIView *line = [[UIView alloc] init];
@@ -121,7 +121,7 @@
                 line.sd_layout
                 .centerYEqualToView(obj)
                 .rightSpaceToView(_checkBtn, 15)
-                .heightRatioToView(_checkBtn, 1.0)
+                .heightRatioToView(_checkBtn, 0.8)
                 .widthIs(1);
                 
                 _addressLabel = [[UILabel alloc] init];

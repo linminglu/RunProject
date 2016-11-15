@@ -10,9 +10,14 @@
 #import "PGCProjectDetailTagView.h"
 #import "PGCProjectSurveySubview.h"
 #import "PGCProjectInfo.h"
+#import "PGCAlertView.h"
+#import "PGCHintAlertView.h"
+#import "PGCVIPServiceController.h"
 
-@interface PGCProjectSurveyScrollView ()
-
+@interface PGCProjectSurveyScrollView () <PGCAlertViewDelegate, PGCHintAlertViewDelegate>
+{
+    BOOL _isVIP;/** 判断是否是会员 */
+}
 @property (strong, nonatomic) PGCProjectSurveySubview *surveySubview;/** 项目概况 */
 @property (strong, nonatomic) UILabel *introContentLabel;/** 项目简介 */
 @property (strong, nonatomic) UILabel *materialLabel;/** 可能用到的材料 */
@@ -117,9 +122,76 @@
 
 #pragma mark - Events
 
-- (void)respondsToCheckButton:(UIButton *)sender {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+- (void)respondsToCheckButton:(UIButton *)sender
+{
+    BOOL isRemind = [[PGCUserDefault valueForKey:@"isRemind"] boolValue];
+    
+    PGCAlertView *alert = nil;
+    
+    if (_isVIP) {
+        
+    } else {
+        if (isRemind) {
+            [[self getCurrentVC].navigationController pushViewController:[PGCVIPServiceController new] animated:true];
+        } else {
+            alert = [[PGCAlertView alloc] initWithTitle:@"查看项目详情，需要您开通会员服务，如果您需要开通会员服务，请点击确定"];
+        }
+    }
+    alert.delegate = self;
+    [alert showAlertView];
 }
+
+
+#pragma mark - PGCAlertViewDelegate
+
+- (void)alertView:(PGCAlertView *)alertView confirm:(UIButton *)confirm {
+    [[self getCurrentVC].navigationController pushViewController:[PGCVIPServiceController new] animated:true];
+}
+
+
+- (UIViewController *)getCurrentVC {
+    
+    UIViewController *result = nil;
+    UIWindow * window = [[UIApplication sharedApplication] keyWindow];
+    //app默认windowLevel是UIWindowLevelNormal，如果不是，找到UIWindowLevelNormal的
+    if (window.windowLevel != UIWindowLevelNormal)
+    {
+        NSArray *windows = [[UIApplication sharedApplication] windows];
+        for(UIWindow * tmpWin in windows)
+        {
+            if (tmpWin.windowLevel == UIWindowLevelNormal)
+            {
+                window = tmpWin;
+                break;
+            }
+        }
+    }
+    id  nextResponder = nil;
+    UIViewController *appRootVC=window.rootViewController;
+    //如果是present上来的appRootVC.presentedViewController 不为nil
+    if (appRootVC.presentedViewController) {
+        nextResponder = appRootVC.presentedViewController;
+    }else{
+        UIView *frontView = [[window subviews] objectAtIndex:0];
+        nextResponder = [frontView nextResponder];
+    }
+    
+    if ([nextResponder isKindOfClass:[UITabBarController class]]){
+        UITabBarController * tabbar = (UITabBarController *)nextResponder;
+        UINavigationController * nav = (UINavigationController *)tabbar.viewControllers[tabbar.selectedIndex];
+        // UINavigationController *nav = tabbar.selectedViewController ; 上下两种写法都行
+        result=nav.childViewControllers.lastObject;
+        
+    }else if ([nextResponder isKindOfClass:[UINavigationController class]]){
+        UIViewController * nav = (UIViewController *)nextResponder;
+        result = nav.childViewControllers.lastObject;
+    }else{
+        result = nextResponder;
+    }
+    
+    return result;
+}
+
 
 
 #pragma mark - Public

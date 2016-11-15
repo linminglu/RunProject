@@ -27,6 +27,11 @@
 
 @implementation PGCLoginController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self.userPhoneTF becomeFirstResponder];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

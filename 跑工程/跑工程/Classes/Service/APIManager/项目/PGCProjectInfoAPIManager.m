@@ -52,7 +52,7 @@
 
 + (NSURLSessionDataTask *)getProjectsRequestWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, id))respondsBlock
 {
-    return [self requestPOST:kGetProjects parameters:parameters cachePolicy:RequestReturnCacheDataElseLoad success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [self requestPOST:kGetProjects parameters:parameters cachePolicy:RequestReloadIngnoringLocalCacheData success:^(NSURLSessionDataTask *task, id responseObject) {
         // code = 200   请求成功返回，数据查询正常，但data不一定有数据
         // code = -200  请求不成功，服务器由于一些原因执行中无法返回数据
         // code = -201  用户不存在或被禁用，手机端退出用户登陆

@@ -13,6 +13,8 @@
 #import "PGCProfileAPIManager.h"
 #import "PGCTokenManager.h"
 #import "PGCUserInfo.h"
+#import "PGCHeadImage.h"
+#import "PGCNetworkHelper.h"
 
 @interface PGCUserInfoController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -44,7 +46,7 @@
     [manager readAuthorizeData];
     PGCUserInfo *user = manager.token.user;
     
-    [self.iconBtn setImage:[UIImage imageNamed:user.headimage] forState:UIControlStateNormal];
+    [self.iconBtn setImage:user.headimage ? [UIImage imageNamed:user.headimage] : [UIImage imageNamed:@"头像"] forState:UIControlStateNormal];
     self.nameLabel.text = user.name;
     if (user.sex == 1) {
         self.sexLabel.text = @"男";
@@ -52,7 +54,7 @@
         self.sexLabel.text = @"女";
     }
     self.phoneLabel.text = user.phone;
-    self.jobLabel.text = user.post;
+    self.jobLabel.text = user.post ? user.post : @"未填写";
     self.companyLabel.text = user.company;
 }
 
@@ -149,6 +151,7 @@
 #pragma mark - UIImagePickerControllerDelegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    
     UIImage *image = nil;
     
     if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
@@ -162,7 +165,42 @@
         image = info[UIImagePickerControllerEditedImage];
     }
     
+    // 在网络开发中，上传文件时，是文件不允许被覆盖，文件重名
+    // 要解决此问题，可以在上传时使用当前的系统事件作为文件名
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyyMMddHHmmss"];
+    NSString *fileName = [NSString stringWithFormat:@"%@.jpg", [formatter stringFromDate:[NSDate date]]];
     
+    NSDictionary *params = @{@"clientType":@"user",
+                             @"category":@"1000",
+                             @"limit":@"true",
+                             @"width":@"200",
+                             @"height":@"200"};
+    NSString *jsonStr = [PGCBaseAPIManager jsonToString:params];
+    
+    [PGCProfileAPIManager uploadRequestWithParameters:@{@"jsonStr":jsonStr} image:image name:@"file" fileName:fileName mimeType:@"image/jpg" progress:^(NSProgress *progress) {
+        
+        [SVProgressHUD showProgress:progress.fractionCompleted];
+        
+    } responds:^(RespondsStatus status, NSString *message, id resultData) {
+        
+        NSLog(@"msg:%@, data:%@", message, resultData);
+        
+        if (status == RespondsStatusSuccess) {
+            
+            [SVProgressHUD showSuccessWithStatus:@"头像上传成功"];
+            
+            PGCHeadImage *headImage = [[PGCHeadImage alloc] init];
+            [headImage mj_setKeyValues:resultData];
+            
+            [self.parameters setObject:headImage.path forKey:@"headimage"];
+            
+            [PGCNotificationCenter postNotificationName:kProfileNotification object:nil userInfo:@{@"HeadImage":headImage}];
+            
+        } else {
+            [SVProgressHUD showErrorWithStatus:@"头像上传失败，请重新上传"];
+        }
+    }];
     [self dismissViewControllerAnimated:true completion:nil];
 }
 

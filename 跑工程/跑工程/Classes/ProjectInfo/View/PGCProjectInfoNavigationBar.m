@@ -25,9 +25,9 @@
 
 @implementation PGCProjectInfoNavigationBar
 
-- (instancetype)init
+- (instancetype)initWithFrame:(CGRect)frame
 {
-    self = [super init];
+    self = [super initWithFrame:frame];
     if (self) {
         
         [self initUserInterface];
@@ -35,10 +35,8 @@
     return self;
 }
 
-- (void)initUserInterface {
-    self.backgroundColor = PGCThemeColor;
-    self.frame = CGRectMake(0, 0, SCREEN_WIDTH, STATUS_AND_NAVIGATION_HEIGHT);
-    
+- (void)initUserInterface
+{
     PGCNavigationItem *mapBarItem = [[PGCNavigationItem alloc] initWithImage:[UIImage imageNamed:@"地图"] title:@"地图模式"];
     [self addSubview:mapBarItem];
     mapBarItem.tag = mapItemTag;

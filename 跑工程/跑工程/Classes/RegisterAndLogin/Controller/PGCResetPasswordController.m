@@ -33,6 +33,12 @@
 
 @implementation PGCResetPasswordController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self.phoneTF becomeFirstResponder];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

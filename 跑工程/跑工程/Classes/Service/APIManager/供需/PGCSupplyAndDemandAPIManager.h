@@ -14,4 +14,14 @@
 + (NSURLSessionDataTask *)getMaterialServiceTypesWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
 
 
+// 添加收藏
++ (NSURLSessionDataTask *)addSupplyDemandCollectWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
+
+// 删除收藏
++ (NSURLSessionDataTask *)deleteSupplyDemandCollectWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
+
+// 获取收藏
++ (NSURLSessionDataTask *)getSupplyDemandCollectWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
+
+
 @end
