@@ -11,8 +11,10 @@
 @interface UIImage (Image)
 
 // 加载最原始的图片，没有渲染
-+ (instancetype)imageWithOriginalName:(NSString *)imageName;
++ (UIImage *)imageWithOriginalName:(NSString *)imageName;
 
-+ (instancetype)imageWithStretchableName:(NSString *)imageName;
++ (UIImage *)imageWithStretchableName:(NSString *)imageName;
+
++ (UIImage *)imageWithColor:(UIColor *)color;
 
 @end

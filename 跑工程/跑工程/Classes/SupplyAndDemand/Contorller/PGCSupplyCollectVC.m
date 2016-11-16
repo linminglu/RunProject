@@ -9,7 +9,6 @@
 #import "PGCSupplyCollectVC.h"
 #import "PGCSupplyAndDemandCell.h"
 #import "PGCSupplyCollectDetailVC.h"
-#import "JCAlertView.h"
 
 @interface PGCSupplyCollectVC ()
 
@@ -74,9 +73,9 @@
 
 
 - (void)respondsToDelete:(UIButton *)sender {
-    [JCAlertView showTwoButtonsWithTitle:@"温馨提示:" Message:@"是否确定删除?" ButtonType:JCAlertViewButtonTypeCancel ButtonTitle:@"否" Click:^{
+    [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示：" message:@"是否确定删除？" actionTitle:@"确定" otherActionTitle:@"取消" handler:^(UIAlertAction *action) {
         
-    } ButtonType:JCAlertViewButtonTypeWarn ButtonTitle:@"是" Click:^{
+    } otherHandler:^(UIAlertAction *action) {
         
     }];
 }

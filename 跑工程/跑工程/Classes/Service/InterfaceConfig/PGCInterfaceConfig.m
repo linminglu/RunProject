@@ -8,7 +8,7 @@
 
 #import "PGCInterfaceConfig.h"
 
-NSString *const kBaseURL = @"http://192.168.0.249:8080/zbapp";// 154 || 249
+NSString *const kBaseURL = @"http://192.168.0.154:8080/zbapp";// 154 || 249
 
 
 #pragma mark - 注册登录

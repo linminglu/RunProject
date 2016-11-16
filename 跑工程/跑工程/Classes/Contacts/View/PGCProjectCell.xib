@@ -43,9 +43,9 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="contentLabel" destination="kHl-dD-lm5" id="hy2-TQ-Vxr"/>
+                <outlet property="contentLabel" destination="kHl-dD-lm5" id="ssb-el-Txo"/>
             </connections>
-            <point key="canvasLocation" x="-683" y="-397.5"/>
+            <point key="canvasLocation" x="-806" y="-933"/>
         </tableViewCell>
     </objects>
 </document>

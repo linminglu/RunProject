@@ -7,7 +7,10 @@
 //
 
 #import "PGCTabBarButton.h"
+#import "PGCBadgeView.h"
+
 #define CZImageRidio 0.7
+
 @implementation PGCTabBarButton
 
 #warning 重写setHighlighted，取消高亮做的事情

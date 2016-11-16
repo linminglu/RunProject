@@ -7,6 +7,7 @@
 //
 
 #import "PGCTabBar.h"
+#import "PGCTabBarButton.h"
 
 @interface PGCTabBar()
 

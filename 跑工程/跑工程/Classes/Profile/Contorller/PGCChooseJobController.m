@@ -14,15 +14,16 @@
 @interface PGCChooseJobController ()
 
 @property (weak, nonatomic) IBOutlet UITextField *jobTextField;
-@property (strong, nonatomic) UIBarButtonItem *saveItem;/** 保存按钮 */
 @property (strong, nonatomic) NSMutableDictionary *parameters;/** 上传参数 */
+
+- (void)initializeUserInterface; /** 初始化用户界面 */
 
 @end
 
 @implementation PGCChooseJobController
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     
     [self.jobTextField becomeFirstResponder];
 }
@@ -30,9 +31,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.saveItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleDone target:self action:@selector(saveInfo:)];
+    [self initializeUserInterface];
+}
 
-    self.navigationItem.rightBarButtonItem = self.saveItem;
+
+- (void)initializeUserInterface {
+    UIBarButtonItem *saveItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleDone target:self action:@selector(saveInfo:)];
+    
+    self.navigationItem.rightBarButtonItem = saveItem;
     
     PGCTokenManager *manager = [PGCTokenManager tokenManager];
     [manager readAuthorizeData];
@@ -40,11 +46,10 @@
     
     self.jobTextField.text = user.post;
     
-    RAC(self.saveItem, enabled) = [RACSignal combineLatest:@[[self.jobTextField rac_textSignal]] reduce:^id(NSString *text) {
+    RAC(saveItem, enabled) = [RACSignal combineLatest:@[[self.jobTextField rac_textSignal]] reduce:^id(NSString *text) {
         return @(text.length > 0 && ![text isEqualToString:user.post]);
     }];
 }
-
 
 #pragma mark - Events
 

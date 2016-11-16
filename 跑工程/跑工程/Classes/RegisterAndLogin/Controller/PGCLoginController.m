@@ -27,8 +27,8 @@
 
 @implementation PGCLoginController
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     
     [self.userPhoneTF becomeFirstResponder];
 }
@@ -54,7 +54,6 @@
     
     self.loginButton.layer.masksToBounds = true;
     self.loginButton.layer.cornerRadius = 10.0;
-    
 }
 
 #pragma mark - Events

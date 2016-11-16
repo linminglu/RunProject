@@ -17,7 +17,7 @@
             <rect key="frame" x="0.0" y="0.0" width="493" height="428"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="493" height="427.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="493" height="428"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="手机" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GcL-dP-RVx">
@@ -449,17 +449,17 @@
                         </variation>
                     </label>
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="3yq-ok-4cz">
-                        <rect key="frame" x="10" y="332" width="462" height="80"/>
+                        <rect key="frame" x="10" y="332" width="473" height="80"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="80" id="Xy4-t0-scT"/>
                         </constraints>
-                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
                     </textView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="备注..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IyH-tP-lsM">
-                        <rect key="frame" x="15" y="340" width="452" height="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IyH-tP-lsM">
+                        <rect key="frame" x="15" y="340" width="463" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="O4d-5k-u4V"/>
                         </constraints>
@@ -507,7 +507,7 @@
                     <constraint firstItem="VGF-Gx-FbH" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="OTl-cW-eOw">
                         <variation key="heightClass=regular-widthClass=compact" constant="2"/>
                     </constraint>
-                    <constraint firstAttribute="trailingMargin" secondItem="3yq-ok-4cz" secondAttribute="trailing" constant="13" id="Ppc-mU-gfM"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="3yq-ok-4cz" secondAttribute="trailing" constant="2" id="Ppc-mU-gfM"/>
                     <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="bVY-wV-HsV" secondAttribute="trailing" constant="30" id="QJ2-jk-nrb"/>
                     <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="sfp-9s-9il" secondAttribute="trailing" constant="30" id="RFC-Wn-1i1"/>
                     <constraint firstItem="M7r-wC-y1u" firstAttribute="top" secondItem="u48-DV-6Rl" secondAttribute="bottom" constant="9" id="Tur-RA-MNd"/>
@@ -724,7 +724,7 @@
                 <outlet property="remarkTextView" destination="3yq-ok-4cz" id="63s-ux-mSH"/>
                 <outlet property="telephoneLabel" destination="yoL-UU-j2j" id="GvI-Vd-Ok6"/>
             </connections>
-            <point key="canvasLocation" x="-580.5" y="-321"/>
+            <point key="canvasLocation" x="-316" y="-355"/>
         </tableViewCell>
     </objects>
 </document>

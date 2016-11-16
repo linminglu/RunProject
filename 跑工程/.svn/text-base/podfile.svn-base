@@ -1,6 +1,0 @@
-platform:ios, '8.0'
-use_frameworks!
-
-target '跑工程' do
-    pod 'SDAutoLayout'
-end

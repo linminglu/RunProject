@@ -10,6 +10,7 @@
 #define PGCUtilKits_h
 
 #import "NSString+Size.h"
+#import "UIImage+Image.h"
 #import "PGCConfig.h"
 #import "PGCProgressHUD.h"
 #import "ReactiveCocoa.h"//决战UI必备工具

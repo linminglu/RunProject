@@ -8,7 +8,6 @@
 
 #import "PGCProjectRootViewController.h"
 #import "PGCProjectInfoCell.h"
-#import "JCAlertView.h"
 #import "PGCProjectInfoDetailVC.h"
 #import "PGCProjectInfoAPIManager.h"
 #import "PGCTokenManager.h"
@@ -264,10 +263,8 @@ static NSString * const kProjectRootCell = @"ProjectRootCell";
         [array addObject:@(project.collect_id)];
     }
     NSString *ids_json = [PGCBaseAPIManager jsonToString:array];
-    
     NSString *string = [NSString stringWithFormat:@"是否确定%@?", _bottomBtnTitle];
-    [JCAlertView showTwoButtonsWithTitle:@"温馨提示:" Message:string ButtonType:JCAlertViewButtonTypeCancel ButtonTitle:@"是" Click:^{
-        
+    [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示：" message:string actionTitle:@"确定" otherActionTitle:@"取消" handler:^(UIAlertAction *action) {
         MBProgressHUD *hud = [PGCProgressHUD showProgressHUD:self.view label:nil];
         NSDictionary *params = @{@"user_id":@(user.id),
                                  @"client_type":@"iphone",
@@ -284,7 +281,7 @@ static NSString * const kProjectRootCell = @"ProjectRootCell";
                 [self respondsToCancel:nil];
             }
         }];
-    } ButtonType:JCAlertViewButtonTypeWarn ButtonTitle:@"否" Click:^{
+    } otherHandler:^(UIAlertAction *action) {
         [self.deleteData removeAllObjects];
     }];
 }

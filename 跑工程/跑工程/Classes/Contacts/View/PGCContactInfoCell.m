@@ -7,6 +7,7 @@
 //
 
 #import "PGCContactInfoCell.h"
+#import "PGCContact.h"
 
 @interface PGCContactInfoCell () <UITextViewDelegate>
 
@@ -30,6 +31,14 @@
     if (!contactLeft) {
         return;
     }
+    self.phoneLabel.text = contactLeft.phone;
+    self.telephoneLabel.text = contactLeft.telephone;
+    self.faxLabel.text = contactLeft.fax;
+    self.emailLabel.text = contactLeft.email;
+    self.postLabel.text = contactLeft.position;
+    self.companyLabel.text = contactLeft.company;
+    self.addressLabel.text = contactLeft.address;
+    self.remarkTextView.text = contactLeft.remark;
 }
 
 
@@ -44,11 +53,27 @@
     }
 }
 
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(contactInfoCell:textViewDidBeginEditing:)]) {
+        [self.delegate contactInfoCell:self textViewDidBeginEditing:textView];
+    }
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(contactInfoCell:textViewDidEndEditing:)]) {
+        [self.delegate contactInfoCell:self textViewDidEndEditing:textView];
+    }
+}
+
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
     
     self.remarkTextView.delegate = self;
+    self.remarkTextView.layer.cornerRadius = 5.0;
     self.remarkTextView.layer.borderColor = PGCBackColor.CGColor;
     self.remarkTextView.layer.borderWidth = 0.5;
 }

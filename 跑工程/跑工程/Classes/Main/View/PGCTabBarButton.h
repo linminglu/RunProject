@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PGCBadgeView.h"
+@class PGCBadgeView;
 
 @interface PGCTabBarButton : UIButton
 

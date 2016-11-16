@@ -7,9 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PGCTabBarButton.h"
-
-@class PGCTabBar;
+@class PGCTabBar, PGCTabBarButton;
 
 @protocol PGCTabBarDelegate <NSObject>
 

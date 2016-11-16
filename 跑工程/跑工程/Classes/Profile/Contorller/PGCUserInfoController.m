@@ -8,7 +8,6 @@
 
 #import "PGCUserInfoController.h"
 #import "PGCChooseJobController.h"
-#import "PGCChooseCompanyController.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "PGCProfileAPIManager.h"
 #import "PGCTokenManager.h"
@@ -119,23 +118,6 @@
     [self.navigationController pushViewController:jobVC animated:true];
 }
 
-/***
-//选择公司
-- (IBAction)chooseCompanyBtnClick:(id)sender {
-    
-    if ([self.companyLabel.text isEqualToString:@"未填写"]) {
-        __weak PGCUserInfoController *weakSelf = self;
-        PGCChooseCompanyController *companyVC = [[PGCChooseCompanyController alloc] init];
-        
-        companyVC.block = ^(NSString *job) {
-            weakSelf.companyLabel.text = job;
-        };
-        [self.navigationController pushViewController:companyVC animated:YES];
-    }
-}
-***/
-
-
 - (void)showAlertSheetWithTitle:(NSString *)string
                      otherTitle:(NSString *)otherString
                         handler:(void (^ __nullable)(UIAlertAction *action))handler
@@ -235,7 +217,7 @@
         
         [self presentViewController:self.imagePickerController animated:true completion:nil];
     } else {
-        [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示:" message:@"当前设备不支持拍照！" actionWithTitle:@"确定" handler:^{
+        [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示：" message:@"当前设备不支持拍照！" actionWithTitle:@"我知道了" handler:^(UIAlertAction *action) {            
         }];
     }
 }

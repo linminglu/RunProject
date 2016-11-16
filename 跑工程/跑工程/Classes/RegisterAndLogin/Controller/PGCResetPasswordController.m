@@ -33,8 +33,8 @@
 
 @implementation PGCResetPasswordController
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     
     [self.phoneTF becomeFirstResponder];
 }
@@ -101,8 +101,7 @@
             [hud hideAnimated:true];
             
             if (status == RespondsStatusSuccess) {
-                
-                [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示：" message:@"密码重置成功，请重新登录！" actionWithTitle:@"确定" handler:^{
+                [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示：" message:@"密码重置成功，请重新登录！" actionWithTitle:@"我知道了" handler:^(UIAlertAction *action) {
                     [self.navigationController popViewControllerAnimated:true];
                 }];
             }
@@ -121,7 +120,7 @@
             
             if (status == RespondsStatusSuccess) {
                 
-                [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示：" message:@"密码修改成功，请重新登录！" actionWithTitle:@"确定" handler:^{
+                [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示：" message:@"密码修改成功，请重新登录！" actionWithTitle:@"确定" handler:^(UIAlertAction *action) {
                     
                     PGCLoginController *loginVC = [[PGCLoginController alloc] init];
                     [self.navigationController pushViewController:loginVC animated:true];

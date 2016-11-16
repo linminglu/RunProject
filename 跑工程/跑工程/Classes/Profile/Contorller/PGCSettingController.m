@@ -8,7 +8,6 @@
 
 #import "PGCSettingController.h"
 #import "PGCRegisterOrLoginAPIManager.h"
-#import "JCAlertView.h"
 #import "PGCTokenManager.h"
 #import "PGCUserInfo.h"
 
@@ -44,7 +43,7 @@
     NSDictionary *params = @{@"user_id":@(user.id),
                              @"client_type":@"iphone",
                              @"token":manager.token.token};
-    [JCAlertView showTwoButtonsWithTitle:@"温馨提示:" Message:@"是否确定注销登录?" ButtonType:JCAlertViewButtonTypeCancel ButtonTitle:@"注销" Click:^{
+    [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示：" message:@"是否确定注销登录？" actionTitle:@"注销" otherActionTitle:@"取消" handler:^(UIAlertAction *action) {
         MBProgressHUD *hud = [PGCProgressHUD showProgressHUD:self.view label:@"注销中..."];
         
         [PGCRegisterOrLoginAPIManager logoutRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
@@ -61,9 +60,7 @@
                 [PGCProgressHUD showAlertWithTarget:self title:@"退出登录失败：" message:message actionWithTitle:@"确定" handler:nil];
             }
         }];
-
-    } ButtonType:JCAlertViewButtonTypeWarn ButtonTitle:@"取消" Click:^{
-        
+    } otherHandler:^(UIAlertAction *action) {
     }];
 }
 

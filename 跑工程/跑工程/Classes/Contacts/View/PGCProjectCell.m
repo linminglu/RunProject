@@ -7,10 +7,11 @@
 //
 
 #import "PGCProjectCell.h"
+#import "PGCContact.h"
 
 @interface PGCProjectCell ()
 
-@property (weak, nonatomic) IBOutlet UIView *contentLabel;
+@property (weak, nonatomic) IBOutlet UILabel *contentLabel;
 
 @end
 
@@ -22,7 +23,7 @@
     if (!contactRight) {
         return;
     }
-    
+    self.contentLabel.text = @"参与项目";
 }
 
 - (void)awakeFromNib {

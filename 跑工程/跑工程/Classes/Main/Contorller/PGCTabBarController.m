@@ -10,8 +10,6 @@
 #import "PGCTabBar.h"
 #import "PGCTabBarButton.h"
 #import "PGCNavigationController.h"
-#import "UIImage+Image.h"
-// rootViewController
 #import "PGCProjectInfoController.h"
 #import "PGCSupplyAndDemandController.h"
 #import "PGCContactsController.h"

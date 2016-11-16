@@ -12,11 +12,8 @@
 //二维码的H和W
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *codeH;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *codeW;
-
-
 @property (copy, nonatomic) NSArray *shareBtnArray;/** 分享按钮名字数组 */
 
-- (void)initializeDataSource; /** 初始化数据源 */
 - (void)initializeUserInterface; /** 初始化用户界面 */
 
 @end
@@ -26,12 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self initializeDataSource];
     [self initializeUserInterface];
-}
-
-- (void)initializeDataSource {
-    
 }
 
 - (void)initializeUserInterface {

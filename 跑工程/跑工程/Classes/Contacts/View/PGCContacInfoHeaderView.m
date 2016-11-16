@@ -150,7 +150,7 @@
     _contactHeader = contactHeader;
     
     self.headImageView.image = [UIImage imageNamed:@"QQ好友"];
-    self.contactNameLabel.text = @"姓名";
+    self.contactNameLabel.text = contactHeader.name;
     self.projectNameLabel.text = @"项目名称";
     
     [self setupAutoHeightWithBottomView:self.lineBottom bottomMargin:0];

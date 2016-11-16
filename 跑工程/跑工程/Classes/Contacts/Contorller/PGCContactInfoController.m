@@ -12,11 +12,10 @@
 #import "PGCContacInfoHeaderView.h"
 #import "PGCContactAPIManager.h"
 #import "PGCContact.h"
-#import "JCAlertView.h"
 #import "PGCTokenManager.h"
 #import "PGCUserInfo.h"
 
-@interface PGCContactInfoController () <UITableViewDataSource, UITableViewDelegate, PGCContacInfoHeaderViewDelegate>
+@interface PGCContactInfoController () <UITableViewDataSource, UITableViewDelegate, PGCContacInfoHeaderViewDelegate, PGCContactInfoCellDelegate>
 {
     BOOL _isLeft;
 }
@@ -62,7 +61,7 @@
                              @"token":manager.token.token,
                              @"ids_json":@"[]"};
     
-    [JCAlertView showTwoButtonsWithTitle:@"温馨提示:" Message:@"是否删除该联系人？" ButtonType:JCAlertViewButtonTypeCancel ButtonTitle:@"是" Click:^{
+    [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示：" message:@"是否删除该联系人？" actionTitle:@"确定" otherActionTitle:@"取消" handler:^(UIAlertAction *action) {
         MBProgressHUD *hud = [PGCProgressHUD showProgressHUD:self.view label:@"删除中..."];
         
         [PGCContactAPIManager deleteContactRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
@@ -70,11 +69,9 @@
             
             if (status == RespondsStatusSuccess) {
                 
-                
             }
         }];
-    } ButtonType:JCAlertViewButtonTypeWarn ButtonTitle:@"否" Click:^{
-        
+    } otherHandler:^(UIAlertAction *action) {
     }];
 }
 
@@ -95,12 +92,13 @@
 {
     if (_isLeft) {
         PGCContactInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:kPGCContactInfoCell];
-        
+        cell.contactLeft = self.contactInfo;
+        cell.delegate = self;
         return cell;
         
     } else {
         PGCProjectCell *cell = [tableView dequeueReusableCellWithIdentifier:kPGCProjectCell];
-        
+        cell.contactRight = self.contactInfo;
         return cell;
     }
 }
@@ -142,6 +140,25 @@
 }
 
 
+
+#pragma mark - PGCContactInfoCellDelegate
+
+- (void)contactInfoCell:(PGCContactInfoCell *)contactInfoCell textViewDidBeginEditing:(UITextView *)textView
+{
+    [UIView animateWithDuration:0.25 animations:^{
+        self.view.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds) - 100);
+    }];
+}
+
+- (void)contactInfoCell:(PGCContactInfoCell *)contactInfoCell textViewDidEndEditing:(UITextView *)textView
+{
+    [UIView animateWithDuration:0.25 animations:^{
+        self.view.center = CGPointMake(CGRectGetMidX(self.view.bounds), SCREEN_HEIGHT / 2);
+    }];
+}
+
+
+
 #pragma mark - Setter
 
 - (void)setContactInfo:(PGCContact *)contactInfo
@@ -160,8 +177,9 @@
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, STATUS_AND_NAVIGATION_HEIGHT, self.view.bounds.size.width, self.view.bounds.size.height) style:UITableViewStylePlain];
         _tableView.backgroundColor = PGCBackColor;
+        _tableView.showsVerticalScrollIndicator = false;
+        _tableView.showsHorizontalScrollIndicator = false;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        _tableView.bounces = false;
         _tableView.dataSource = self;
         _tableView.delegate = self;
         [_tableView registerClass:[PGCContacInfoHeaderView class] forHeaderFooterViewReuseIdentifier:kContacInfoHeaderView];

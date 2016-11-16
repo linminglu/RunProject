@@ -35,8 +35,8 @@
 
 @implementation PGCRegisterController
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     
     [self.companyTF becomeFirstResponder];
 }
@@ -113,9 +113,8 @@
         
         [hud hideAnimated:true];
         
-        if (status == RespondsStatusSuccess) {
-            
-            [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示：" message:@"注册成功，请返回登录！" actionWithTitle:@"确定" handler:^{
+        if (status == RespondsStatusSuccess) {            
+            [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示：" message:@"注册成功，请返回登录！" actionWithTitle:@"确定" handler:^(UIAlertAction *action) {
                 [self.navigationController popViewControllerAnimated:true];
             }];
         }

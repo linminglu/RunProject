@@ -30,22 +30,27 @@ static NSString * const kSearchViewCell = @"SearchViewCell";
 
 @implementation PGCSearchViewController
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    self.searchController.active = true;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self initializeUserInterface];
 }
 
-- (void)initializeUserInterface
-{
+- (void)initializeUserInterface {
     _isSearching = false;
-    [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
-    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
+    UIImage *image = [[UIImage alloc] init];
+    [self.navigationController.navigationBar setShadowImage:image];
+    [self.navigationController.navigationBar setBackgroundImage:image forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
     self.automaticallyAdjustsScrollViewInsets = false;
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.titleView = self.searchController.searchBar;
     [self.view addSubview:self.tableView];
-//    self.tableView.tableHeaderView = self.searchController.searchBar;
 }
 
 
@@ -89,7 +94,6 @@ static NSString * const kSearchViewCell = @"SearchViewCell";
 //            }
 //        }
 //    }
-    NSLog(@"%@", self.searchResults);
     [self.tableView reloadData];
 }
 
@@ -106,13 +110,11 @@ static NSString * const kSearchViewCell = @"SearchViewCell";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"%ld", self.searchResults.count);
     return _isSearching ? self.searchResults.count : self.searchData.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"%@", self.searchResults);
     PGCProjectInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:kSearchViewCell];
     if (!cell) {
         cell = [[PGCProjectInfoCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kSearchViewCell];
@@ -121,6 +123,7 @@ static NSString * const kSearchViewCell = @"SearchViewCell";
     cell.project = _isSearching ? self.searchResults[indexPath.row] : self.searchData[indexPath.row];
     return cell;
 }
+
 
 #pragma mark - UITableViewDelegate
 
@@ -144,9 +147,8 @@ static NSString * const kSearchViewCell = @"SearchViewCell";
         [PGCProgressHUD showMessage:@"请先登录" inView:KeyWindow];
         return;
     }
-    PGCProjectInfo *projectInfo = _isSearching ? self.searchResults[indexPath.row] : self.searchData[indexPath.row];
     PGCProjectInfoDetailVC *detailVC = [[PGCProjectInfoDetailVC alloc] init];
-    detailVC.projectInfoDetail = projectInfo;
+    detailVC.projectInfoDetail = _isSearching ? self.searchResults[indexPath.row] : self.searchData[indexPath.row];
     self.searchController.active = false;
     [self.navigationController pushViewController:detailVC animated:true];
 }
@@ -157,12 +159,20 @@ static NSString * const kSearchViewCell = @"SearchViewCell";
 - (UISearchController *)searchController {
     if (!_searchController) {
         _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-        _searchController.dimsBackgroundDuringPresentation = false;
         _searchController.hidesNavigationBarDuringPresentation = false;
+        _searchController.dimsBackgroundDuringPresentation = false;
+        _searchController.obscuresBackgroundDuringPresentation = false;
         _searchController.searchResultsUpdater = self;
         _searchController.searchBar.frame = CGRectMake(0, 0, self.view.bounds.size.width, 44);
         _searchController.searchBar.placeholder = @"请输入关键字";
+        _searchController.searchBar.barStyle = UIBarStyleDefault;
+        _searchController.searchBar.showsCancelButton = true;
+        _searchController.searchBar.barTintColor = PGCTintColor;
         _searchController.searchBar.tintColor = PGCTintColor;
+        _searchController.searchBar.layer.borderColor = PGCBackColor.CGColor;
+        _searchController.searchBar.layer.borderWidth = 0.5;
+        UIImage *image = [UIImage imageNamed:@"橙色背景"];
+        [_searchController.searchBar setBackgroundImage:image forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
         _searchController.searchBar.delegate = self;
     }
     return _searchController;

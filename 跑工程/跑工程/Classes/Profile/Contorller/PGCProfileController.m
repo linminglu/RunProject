@@ -153,9 +153,10 @@
     if (!user) {
         PGCLoginController *loginVC = [[PGCLoginController alloc] init];
         [self.navigationController pushViewController:loginVC animated:true];
+    } else{        
+        PGCUserInfoController *userInfoVC = [[PGCUserInfoController alloc] init];
+        [self.navigationController pushViewController:userInfoVC animated:true];
     }
-    PGCUserInfoController *userInfoVC = [[PGCUserInfoController alloc] init];
-    [self.navigationController pushViewController:userInfoVC animated:true];
 }
 
 /**

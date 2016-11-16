@@ -73,8 +73,7 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
 
 #pragma mark - Initialize
 
-- (void)initializeDataSource
-{
+- (void)initializeDataSource {
     _areaDatas = [NSMutableArray arrayWithArray:[PGCProvince province].areaArray];
 //    [_areaDatas insertObject:@"全国" atIndex:0];
     _typeDatas = [NSMutableArray arrayWithArray:[PGCProjectType projectType].projectTypes];
@@ -103,8 +102,7 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
     }];
 }
 
-- (void)initializeUserInterface
-{
+- (void)initializeUserInterface {
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = false;
     
