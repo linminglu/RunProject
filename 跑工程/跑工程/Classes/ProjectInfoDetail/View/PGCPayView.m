@@ -42,18 +42,16 @@
  */
 - (void)setupSubviewsWithSuccessPay {
     self.bounds = CGRectMake(0, 0, SCREEN_WIDTH * 0.4, SCREEN_WIDTH * 0.4);
-    self.center = CGPointMake(KeyWindow.centerX, KeyWindow.centerY - 25);
+    self.center = CGPointMake(KeyWindow.centerX_sd, KeyWindow.centerY_sd - 25);
     self.backgroundColor = RGB(244, 244, 244);
     
-    CGFloat width = self.bounds.size.width;
-    CGFloat height = self.bounds.size.height;
     UIImageView *imageView = [[UIImageView alloc] init];
-    imageView.bounds = CGRectMake(0, 0, width / 3, width / 3);
-    imageView.center = CGPointMake(width / 2, height / 2 - 10);
+    imageView.bounds = CGRectMake(0, 0, self.width_sd / 3, self.width_sd / 3);
+    imageView.center = CGPointMake(self.width_sd / 2, self.height_sd / 2 - 10);
     imageView.image = [UIImage imageNamed:@"支付成功"];
     [self addSubview:imageView];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, imageView.bottom + 15, self.width, 30)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, imageView.bottom_sd + 15, self.width_sd, 30)];
     label.text = @"支付成功";
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = PGCTintColor;

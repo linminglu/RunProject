@@ -14,8 +14,8 @@
 #import "PGCProjectAddContactController.h"
 #import "PGCVIPServiceController.h"
 #import "PGCMapTypeViewController.h"
-#import "PGCProjectInfo.h"
 #import "PGCProjectContact.h"
+#import "PGCContact.h"
 
 @interface PGCProjectContactScrollView () <UITableViewDataSource, UITableViewDelegate, PGCProjectContactCellDelegate, PGCAlertViewDelegate, PGCHintAlertViewDelegate>
 {
@@ -24,6 +24,8 @@
 
 @property (strong, nonatomic) UITableView *contactTableView;/** 联系人表格视图 */
 @property (strong, nonatomic) UIButton *bottomBtn;/** 底部查看更多联系人视图 */
+
+@property (strong, nonatomic) PGCProjectContact *projectContact;/** 项目联系人 */
 
 - (void)initUserInterface; /** 初始化用户界面 */
 
@@ -42,7 +44,8 @@
     return self;
 }
 
-- (void)initUserInterface {
+- (void)initUserInterface
+{
     // 项目概况
     PGCProjectDetailTagView *contactView = [[PGCProjectDetailTagView alloc] initWithTitle:@"联系人及其联系方式"];
     [self.contentView addSubview:contactView];
@@ -70,7 +73,8 @@
     .bottomSpaceToView(self.contentView, 50);
 }
 
-- (UIButton *)makeButton {
+- (UIButton *)makeButton
+{
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setImage:[UIImage imageNamed:@"加号"] forState:UIControlStateNormal];
     [button.titleLabel setFont:SetFont(14)];
@@ -90,7 +94,8 @@
 
 #pragma mark - Events
 
-- (void)respondsToCheckContact:(UIButton *)sender {
+- (void)respondsToCheckContact:(UIButton *)sender
+{
     NSLog(@"%@", NSStringFromSelector(_cmd));
     
 }
@@ -106,7 +111,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     PGCProjectContactCell *cell = [tableView dequeueReusableCellWithIdentifier:kProjectContactCell];
-    cell.delegate = self;    
+    cell.delegate = self;
+    cell.projectContact = self.contactDataSource[indexPath.row];
     return cell;
 }
 
@@ -123,17 +129,31 @@
 #pragma mark - PGCProjectContactCellDelegate
 
 - (void)projectContactCell:(PGCProjectContactCell *)projectContactCell phone:(id)phone
-{    
+{
+    NSIndexPath *indexPath = [self.contactTableView indexPathForCell:projectContactCell];
+    self.projectContact = self.contactDataSource[indexPath.row];
+    
+    PGCManager *manager = [PGCManager manager];
+    [manager readTokenData];
+    PGCUser *user = manager.token.user;
+    if (!user) {
+        [PGCProgressHUD showMessage:@"请先登录" toView:KeyWindow];
+        return;
+    }
+    
     BOOL isRemind = [[PGCUserDefault valueForKey:@"isRemind"] boolValue];
     
     PGCAlertView *alert = nil;
     
     if (!_isVIP) {
-        alert = [[PGCAlertView alloc] initWithModel:@{@"name":@"联系人：夏先生", @"phone":@"呼叫188883359584"}];
+        NSString *name = [NSString stringWithFormat:@"联系人：%@", self.projectContact.name];
+        NSString *phone = [NSString stringWithFormat:@"呼叫%@", self.projectContact.phone];
+        alert = [[PGCAlertView alloc] initWithModel:@{@"name":name, @"phone":phone}];
         
     } else {
         if (isRemind) {
-            [[self getCurrentVC].navigationController pushViewController:[PGCVIPServiceController new] animated:true];
+            PGCVIPServiceController *vipVC = [[PGCVIPServiceController alloc] init];
+            [[self getCurrentVC].navigationController pushViewController:vipVC animated:true];
         } else {
             alert = [[PGCAlertView alloc] initWithTitle:@"查看项目详情，需要您开通会员服务，如果您需要开通会员服务，请点击确定"];
         }
@@ -144,8 +164,9 @@
 }
 
 - (void)projectContactCell:(PGCProjectContactCell *)projectContactCell address:(id)address
-{    
-    [[self getCurrentVC].navigationController pushViewController:[PGCMapTypeViewController new] animated:true];
+{
+    PGCMapTypeViewController *mapVC = [[PGCMapTypeViewController alloc] init];
+    [[self getCurrentVC].navigationController pushViewController:mapVC animated:true];
 }
 
 
@@ -153,7 +174,7 @@
 
 - (void)alertView:(PGCAlertView *)alertView phone:(UIButton *)phone
 {
-    PGCHintAlertView *hintAlert = [[PGCHintAlertView alloc] initWithTitle:@"是否确定给联系人拨号"];
+    PGCHintAlertView *hintAlert = [[PGCHintAlertView alloc] initWithTitle:@"是否确定给联系人拨号？"];
     hintAlert.delegate = self;
     [hintAlert showHintAlertView];
 }
@@ -161,21 +182,26 @@
 
 - (void)alertView:(PGCAlertView *)alertView addContact:(UIButton *)addContact
 {
-    [[self getCurrentVC].navigationController pushViewController:[PGCProjectAddContactController new] animated:true];
+    PGCProjectAddContactController *addContactVC = [[PGCProjectAddContactController alloc] init];
+    addContactVC.projectCon = self.projectContact;
+    [[self getCurrentVC].navigationController pushViewController:addContactVC animated:true];
 }
 
 
 - (void)alertView:(PGCAlertView *)alertView confirm:(UIButton *)confirm
 {
-    [[self getCurrentVC].navigationController pushViewController:[PGCVIPServiceController new] animated:true];
+    PGCVIPServiceController *vipVC = [[PGCVIPServiceController alloc] init];
+    [[self getCurrentVC].navigationController pushViewController:vipVC animated:true];
 }
 
 
 
 #pragma mark - PGCHintAlertViewDelegate
 
-- (void)hintAlertView:(PGCHintAlertView *)hintAlertView confirm:(UIButton *)confirm {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://8008808888"]];
+- (void)hintAlertView:(PGCHintAlertView *)hintAlertView confirm:(UIButton *)confirm
+{
+    NSString *phoneNumber = [NSString stringWithFormat:@"tel://%@", self.projectContact.phone];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
 }
 
 
@@ -220,6 +246,20 @@
     }
     
     return result;
+}
+
+
+
+#pragma mark - Setter
+
+- (void)setContactDataSource:(NSArray *)contactDataSource
+{
+    _contactDataSource = contactDataSource;
+    
+    if (contactDataSource.count > 1) {
+        [self bottomBtn];
+    }
+    [self.contactTableView reloadData];
 }
 
 

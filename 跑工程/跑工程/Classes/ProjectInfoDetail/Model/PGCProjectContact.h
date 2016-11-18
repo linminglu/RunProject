@@ -20,5 +20,6 @@
 @property (copy, nonatomic) NSString *position;/** 职位 */
 @property (copy, nonatomic) NSString *company;/** 公司 */
 @property (copy, nonatomic) NSString *address;/** 地址 */
+@property (copy, nonatomic) NSString *sequence;/** 队列 */
 
 @end

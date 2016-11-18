@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+@class PGCProjectInfo;
 
 #define LabelHeight 30
 
 @interface PGCProjectSurveySubview : UIView
 
+@property (strong, nonatomic) PGCProjectInfo *projectInfo;
+
 - (void)addBtnTarget:(id)target action:(SEL)action;
-- (void)loadDataWithModel:(id)model;
 
 @end

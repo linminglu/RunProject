@@ -10,17 +10,17 @@
 
 @interface PGCDemandAPIManager : PGCBaseAPIManager
 
-// 添加供应
-+ (NSURLSessionDataTask *)addSupplyWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
+// 添加需求
++ (NSURLSessionDataTask *)addDemandWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
 
-// 供应列表
-+ (NSURLSessionDataTask *)getSupplyWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
+// 需求列表
++ (NSURLSessionDataTask *)getDemandWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
 
-// 发布的供应
-+ (NSURLSessionDataTask *)mySuppliesWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
+// 我发布的需求
++ (NSURLSessionDataTask *)myDemandsWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
 
-// 闭我的供应
-+ (NSURLSessionDataTask *)closeMySupplyWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
+// 删除我的需求
++ (NSURLSessionDataTask *)deleteMyDemandsWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
 
 
 @end

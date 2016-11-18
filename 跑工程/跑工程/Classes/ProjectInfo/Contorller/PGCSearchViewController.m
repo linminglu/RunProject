@@ -10,8 +10,6 @@
 #import "PGCProjectInfoCell.h"
 #import "PGCProjectInfo.h"
 #import "PGCProjectInfoDetailVC.h"
-#import "PGCTokenManager.h"
-#import "PGCUserInfo.h"
 
 static NSString * const kSearchViewCell = @"SearchViewCell";
 
@@ -42,13 +40,16 @@ static NSString * const kSearchViewCell = @"SearchViewCell";
     [self initializeUserInterface];
 }
 
-- (void)initializeUserInterface {
+- (void)initializeUserInterface
+{
     _isSearching = false;
+    
     UIImage *image = [[UIImage alloc] init];
     [self.navigationController.navigationBar setShadowImage:image];
     [self.navigationController.navigationBar setBackgroundImage:image forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
     self.automaticallyAdjustsScrollViewInsets = false;
     self.view.backgroundColor = [UIColor whiteColor];
+    
     self.navigationItem.titleView = self.searchController.searchBar;
     [self.view addSubview:self.tableView];
 }
@@ -140,13 +141,6 @@ static NSString * const kSearchViewCell = @"SearchViewCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    PGCTokenManager *manager = [PGCTokenManager tokenManager];
-    [manager readAuthorizeData];
-    PGCUserInfo *user = manager.token.user;
-    if (user == nil) {
-        [PGCProgressHUD showMessage:@"请先登录" inView:KeyWindow];
-        return;
-    }
     PGCProjectInfoDetailVC *detailVC = [[PGCProjectInfoDetailVC alloc] init];
     detailVC.projectInfoDetail = _isSearching ? self.searchResults[indexPath.row] : self.searchData[indexPath.row];
     self.searchController.active = false;
@@ -163,7 +157,7 @@ static NSString * const kSearchViewCell = @"SearchViewCell";
         _searchController.dimsBackgroundDuringPresentation = false;
         _searchController.obscuresBackgroundDuringPresentation = false;
         _searchController.searchResultsUpdater = self;
-        _searchController.searchBar.frame = CGRectMake(0, 0, self.view.bounds.size.width, 44);
+        _searchController.searchBar.frame = CGRectMake(0, 0, self.view.width_sd, 44);
         _searchController.searchBar.placeholder = @"请输入关键字";
         _searchController.searchBar.barStyle = UIBarStyleDefault;
         _searchController.searchBar.showsCancelButton = true;

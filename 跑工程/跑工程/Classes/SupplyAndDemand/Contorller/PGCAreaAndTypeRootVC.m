@@ -9,6 +9,7 @@
 #import "PGCAreaAndTypeRootVC.h"
 #import "PGCDropLeftCell.h"
 #import "PGCDropRightCell.h"
+#import "PGCProvince.h"
 
 @interface PGCAreaAndTypeRootVC () <UITableViewDataSource, UITableViewDelegate>
 /**

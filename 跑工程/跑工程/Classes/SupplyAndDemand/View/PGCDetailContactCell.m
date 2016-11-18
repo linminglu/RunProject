@@ -7,20 +7,13 @@
 //
 
 #import "PGCDetailContactCell.h"
+#import "Contacts.h"
 
 @interface PGCDetailContactCell ()
-/**
- 姓名标签
- */
-@property (strong, nonatomic) UILabel *nameLabel;
-/**
- 电话标签
- */
-@property (strong, nonatomic) UILabel *phoneLabel;
-/**
- 打电话按钮
- */
-@property (strong, nonatomic) UIButton *callBtn;
+
+@property (strong, nonatomic) UILabel *nameLabel;/** 姓名标签 */
+@property (strong, nonatomic) UILabel *phoneLabel;/** 电话标签 */
+@property (strong, nonatomic) UIButton *callBtn;/** 打电话按钮 */
 
 @end
 
@@ -45,6 +38,7 @@
     self.callBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     self.callBtn.backgroundColor = [UIColor clearColor];
     [self.callBtn setImage:image forState:UIControlStateNormal];
+    [self.callBtn addTarget:self action:@selector(callPhoneToContact:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:self.callBtn];
     self.callBtn.sd_layout
     .centerYEqualToView(self.contentView)
@@ -130,20 +124,23 @@
 
 #pragma mark - Event
 
-- (void)addTarget:(id)target action:(SEL)action {
-    [self.callBtn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+- (void)callPhoneToContact:(UIButton *)sender
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(detailContactCell:phone:)]) {
+        [self.delegate detailContactCell:self phone:sender];
+    }
 }
 
 
 #pragma mark - Setter
 
-- (void)setContactDic:(NSDictionary *)contactDic {
-    _contactDic = contactDic;
+- (void)setContact:(Contacts *)contact
+{
+    _contact = contact;
     
-    self.nameLabel.text = contactDic[@"name"];
-    self.phoneLabel.text = contactDic[@"phone"];
+    self.nameLabel.text = contact.name;
+    self.phoneLabel.text = contact.phone;
 }
-
 
 
 - (void)awakeFromNib {

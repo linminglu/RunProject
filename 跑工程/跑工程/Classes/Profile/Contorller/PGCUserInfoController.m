@@ -10,8 +10,6 @@
 #import "PGCChooseJobController.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "PGCProfileAPIManager.h"
-#import "PGCTokenManager.h"
-#import "PGCUserInfo.h"
 #import "PGCHeadImage.h"
 #import "PGCNetworkHelper.h"
 
@@ -40,12 +38,18 @@
     [self initializeUserInterface];
 }
 
-- (void)initializeDataSource {
-    PGCTokenManager *manager = [PGCTokenManager tokenManager];
-    [manager readAuthorizeData];
-    PGCUserInfo *user = manager.token.user;
+- (void)initializeDataSource
+{
+    PGCManager *manager = [PGCManager manager];
+    [manager readTokenData];
+    PGCUser *user = manager.token.user;
     
-    [self.iconBtn setImage:user.headimage ? [UIImage imageNamed:user.headimage] : [UIImage imageNamed:@"头像"] forState:UIControlStateNormal];
+    if (user.headimage) {
+        NSURL *url = [NSURL URLWithString:[kBaseURL stringByAppendingString:user.headimage]];
+        [self.iconBtn sd_setImageWithURL:url forState:UIControlStateNormal];
+    } else {
+        [self.iconBtn setImage:[UIImage imageNamed:@"头像"] forState:UIControlStateNormal];
+    }
     self.nameLabel.text = user.name;
     if (user.sex == 1) {
         self.sexLabel.text = @"男";
@@ -57,7 +61,8 @@
     self.companyLabel.text = user.company;
 }
 
-- (void)initializeUserInterface {
+- (void)initializeUserInterface
+{
     self.navigationItem.title = @"个人资料";
     
     self.iconBtn.layer.masksToBounds = true;
@@ -71,11 +76,12 @@
 - (IBAction)iconBtnClick:(UIButton *)sender {
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    __weak __typeof(self) weakSelf = self;
     [alert addAction:[UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self selectPhotoAlbumPhotos];
+        [weakSelf selectPhotoAlbumPhotos];
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self takingPictures];
+        [weakSelf takingPictures];
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:alert animated:true completion:nil];
@@ -91,7 +97,9 @@
         [self.parameters setObject:@(1) forKey:@"sex"];
         
         [PGCProfileAPIManager completeInfoRequestWithParameters:self.parameters responds:^(RespondsStatus status, NSString *message, id resultData) {
-            
+            if (status != RespondsStatusSuccess) {
+                [PGCProgressHUD showMessage:message toView:self.view];
+            }
         }];
     }]];
     [alertView addAction:[UIAlertAction actionWithTitle:@"女" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -100,7 +108,9 @@
         [self.parameters setObject:@(0) forKey:@"sex"];
         
         [PGCProfileAPIManager completeInfoRequestWithParameters:self.parameters responds:^(RespondsStatus status, NSString *message, id resultData) {
-            
+            if (status != RespondsStatusSuccess) {
+                [PGCProgressHUD showMessage:message toView:self.view];
+            }
         }];
     }]];
     [alertView addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
@@ -112,6 +122,7 @@
 - (IBAction)jobBtnClick:(UIButton *)sender {
     __weak PGCUserInfoController *weakSelf = self;
     PGCChooseJobController *jobVC = [[PGCChooseJobController alloc] init];
+    jobVC.parameters = self.parameters;
     jobVC.block = ^(NSString *job) {
         weakSelf.jobLabel.text = job;
     };
@@ -147,47 +158,28 @@
         image = info[UIImagePickerControllerEditedImage];
     }
     
-    // 在网络开发中，上传文件时，是文件不允许被覆盖，文件重名
-    // 要解决此问题，可以在上传时使用当前的系统事件作为文件名
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyyMMddHHmmss"];
-    NSString *fileName = [NSString stringWithFormat:@"%@.jpg", [formatter stringFromDate:[NSDate date]]];
-    
     NSDictionary *params = @{@"clientType":@"user",
                              @"category":@"1000",
-                             @"limit":@"true",
+                             @"limit":@"false",
                              @"width":@"200",
                              @"height":@"200"};
     NSString *jsonStr = [PGCBaseAPIManager jsonToString:params];
     
-    [PGCProfileAPIManager uploadRequestWithParameters:@{@"jsonStr":jsonStr} image:image name:@"file" fileName:fileName mimeType:@"image/jpg" progress:^(NSProgress *progress) {
-        
-        [SVProgressHUD showProgress:progress.fractionCompleted];
-        
-    } responds:^(RespondsStatus status, NSString *message, id resultData) {
-        
-        NSLog(@"msg:%@, data:%@", message, resultData);
-        
+    [PGCProfileAPIManager uploadHeadImageRequestWithParameters:@{@"jsonStr":jsonStr} image:image responds:^(RespondsStatus status, NSString *message, id resultData) {
         if (status == RespondsStatusSuccess) {
+            [PGCProgressHUD showMessage:@"头像上传成功" toView:self.view];
             
-            [SVProgressHUD showSuccessWithStatus:@"头像上传成功"];
-            
-            PGCHeadImage *headImage = [[PGCHeadImage alloc] init];
-            [headImage mj_setKeyValues:resultData];
-            
-            [self.parameters setObject:headImage.path forKey:@"headimage"];
-            
-            [PGCNotificationCenter postNotificationName:kProfileNotification object:nil userInfo:@{@"HeadImage":headImage}];
-            
+            [PGCNotificationCenter postNotificationName:kReloadProfileInfo object:nil userInfo:@{@"HeadImage":resultData}];
         } else {
-            [SVProgressHUD showErrorWithStatus:@"头像上传失败，请重新上传"];
+            [PGCProgressHUD showMessage:[NSString stringWithFormat:@"头像上传失败：%@", message] toView:self.view];
         }
     }];
     [self dismissViewControllerAnimated:true completion:nil];
 }
 
+
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
+    [self.presentedViewController dismissViewControllerAnimated:true completion:nil];
 }
 
 
@@ -228,9 +220,13 @@
 - (NSMutableDictionary *)parameters {
     if (!_parameters) {
         _parameters = [NSMutableDictionary dictionary];
+        
+        PGCManager *manager = [PGCManager manager];
+        [manager readTokenData];
+        PGCUser *user = manager.token.user;
         [_parameters setObject:@"iphone" forKey:@"client_type"];
-        [_parameters setObject:[PGCTokenManager tokenManager].token.token forKey:@"token"];
-        [_parameters setObject:@([PGCTokenManager tokenManager].token.user.id) forKey:@"user_id"];
+        [_parameters setObject:manager.token.token forKey:@"token"];
+        [_parameters setObject:@(user.user_id) forKey:@"user_id"];
     }
     return _parameters;
 }

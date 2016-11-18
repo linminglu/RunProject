@@ -7,7 +7,10 @@
 //
 
 #import "PGCCollectRootVC.h"
+@class PGCSupply;
 
 @interface PGCSupplyCollectDetailVC : PGCCollectRootVC
+
+@property (strong, nonatomic) PGCSupply *supplyDetail;/** 供应模型 */
 
 @end

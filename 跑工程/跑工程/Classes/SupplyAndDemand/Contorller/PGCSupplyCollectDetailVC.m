@@ -12,18 +12,10 @@
 
 
 @interface PGCSupplyCollectDetailVC ()  <PGCDetailSubviewBottomDelegate>
-/**
- 版块0 底部滚动视图
- */
-@property (strong, nonatomic) UIScrollView *scrollView;
-/**
- 板块视图1
- */
-@property (strong, nonatomic) PGCSupplySubviewTop *topView;
-/**
- 板块视图2
- */
-@property (strong, nonatomic) PGCDetailSubviewBottom *bottomView;
+
+@property (strong, nonatomic) UIScrollView *scrollView;/** 版块0 底部滚动视图 */
+@property (strong, nonatomic) PGCSupplySubviewTop *topView;/** 板块视图1 */
+@property (strong, nonatomic) PGCDetailSubviewBottom *bottomView;/** 板块视图2 */
 
 - (void)initializeDataSource; /** 初始化数据源 */
 - (void)initializeUserInterface; /** 初始化用户界面 */
@@ -118,19 +110,19 @@
 #pragma mark - PGCSupplyAndDemandShareViewDelegate
 
 - (void)shareView:(PGCSupplyAndDemandShareView *)shareView qqFriend:(UIButton *)qqFriend {
-    [PGCProgressHUD showMessage:@"分享供应信息到QQ好友成功!" inView:self.view];
+    
 }
 
 - (void)shareView:(PGCSupplyAndDemandShareView *)shareView qqZone:(UIButton *)qqZone {
-    [PGCProgressHUD showMessage:@"分享供应信息到QQ空间成功!" inView:self.view];
+    
 }
 
 - (void)shareView:(PGCSupplyAndDemandShareView *)shareView weChat:(UIButton *)weChat {
-    [PGCProgressHUD showMessage:@"分享供应信息到微信好友成功!" inView:self.view];
+    
 }
 
 - (void)shareView:(PGCSupplyAndDemandShareView *)shareView weChatFriends:(UIButton *)friends {
-    [PGCProgressHUD showMessage:@"分享供应信息到朋友圈成功!" inView:self.view];
+    
 }
 
 

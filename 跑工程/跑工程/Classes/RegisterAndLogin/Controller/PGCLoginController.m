@@ -11,8 +11,6 @@
 #import "PGCResetPasswordController.h"
 #import "PGCRegisterOrLoginAPIManager.h"
 #import "PGCUserInfoController.h"
-#import "PGCTokenManager.h"
-#import "PGCUserInfo.h"
 
 @interface PGCLoginController ()
 
@@ -41,15 +39,17 @@
     
 }
 
-- (void)initializeDataSource {
-
-    PGCTokenManager *tokenManager = [PGCTokenManager tokenManager];
-    [tokenManager readAuthorizeData];
+- (void)initializeDataSource
+{
+    PGCManager *manager = [PGCManager manager];
+    [manager readTokenData];
+    PGCUser *user = manager.token.user;
     
-    self.userPhoneTF.text = tokenManager.token.user ? tokenManager.token.user.phone : @"";
+    self.userPhoneTF.text = user ? user.phone : @"";
 }
 
-- (void)initializeUserInterface {
+- (void)initializeUserInterface
+{
     self.navigationItem.title = @"登录";
     
     self.loginButton.layer.masksToBounds = true;
@@ -58,16 +58,16 @@
 
 #pragma mark - Events
 //登录按钮
-- (IBAction)loginBtnClick:(UIButton *)sender {
-    
+- (IBAction)loginBtnClick:(UIButton *)sender
+{    
     [self.view endEditing:true];
     
     if (![self.userPhoneTF.text isPhoneNumber]) {
-        [PGCProgressHUD showMessage:@"请输入正确的手机号" inView:self.view];
+        [PGCProgressHUD showMessage:@"请输入正确的手机号" toView:self.view];
         return;
     }
     if (self.userPasswordTF.text.length < 6) {
-        [PGCProgressHUD showMessage:@"请输入6位数以上的密码" inView:self.view];
+        [PGCProgressHUD showMessage:@"请输入6位数以上的密码" toView:self.view];
         return;
     }    
     NSDictionary *params = @{@"phone":self.userPhoneTF.text,
@@ -76,22 +76,17 @@
     MBProgressHUD *hud = [PGCProgressHUD showProgressHUD:self.view label:@"登录中..."];
     
     [PGCRegisterOrLoginAPIManager loginRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
-        
         [hud hideAnimated:true];
-        
         if (status == RespondsStatusSuccess) {
-            
-            [PGCProgressHUD showProgressHUDWithTitle:@"登录成功!"];
+            [PGCProgressHUD showMessage:@"登录成功!" toView:self.view];
             // 发送登录成功的通知给 我的 控制器
             [PGCNotificationCenter postNotificationName:kReloadProfileInfo object:nil userInfo:@{@"Login":@"登录成功"}];
-            
             // 控制器的跳转
             if ([self.vc isKindOfClass:[PGCUserInfoController class]]) {
                 // 跳到 个人中心 控制器
                 [self.navigationController pushViewController:self.vc animated:true];
                 [self.navigationController popToRootViewControllerAnimated:false];
                 [PGCNotificationCenter postNotificationName:kProfileNotification object:self.vc userInfo:nil];
-
             } else {
                 // 跳到 我的 控制器
                 [self.navigationController popViewControllerAnimated:true];
@@ -103,13 +98,15 @@
 }
 
 //注册按钮
-- (IBAction)registerNowBtnClick:(UIButton *)sender {
+- (IBAction)registerNowBtnClick:(UIButton *)sender
+{
     PGCRegisterController *registerVC = [[PGCRegisterController alloc] init];
     [self.navigationController pushViewController:registerVC animated:true];
 }
 
 //找回密码
-- (IBAction)resetPasswordBtnClick:(UIButton *)sender {    
+- (IBAction)resetPasswordBtnClick:(UIButton *)sender
+{
     PGCResetPasswordController *resetPassVC = [[PGCResetPasswordController alloc] init];
     resetPassVC.navigationItem.title = @"忘记密码";
     [self.navigationController pushViewController:resetPassVC animated:true];

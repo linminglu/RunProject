@@ -7,6 +7,7 @@
 //
 
 #import "PGCContactAPIManager.h"
+#import "PGCContact.h"
 
 @implementation PGCContactAPIManager
 
@@ -30,7 +31,7 @@
 }
 
 
-+ (NSURLSessionDataTask *)getContactsListRequestWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, id))respondsBlock
++ (NSURLSessionDataTask *)getContactsListRequestWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, NSMutableArray *))respondsBlock
 {
     return [self requestPOST:kGetContactsList parameters:parameters cachePolicy:RequestReloadIngnoringLocalCacheData success:^(NSURLSessionDataTask *task, id responseObject) {
         
@@ -39,7 +40,14 @@
         NSDictionary *resultData = responseObject[@"data"];
         
         if (resultCode == 200) {
-            respondsBlock(RespondsStatusSuccess, resultMsg, resultData);
+            NSMutableArray *contactArr = [NSMutableArray array];
+            for (id value in resultData) {
+                PGCContact *contact = [[PGCContact alloc] init];
+                [contact mj_setKeyValues:value];
+                // 将模型添加到数组中
+                [contactArr addObject:contact];
+            }
+            respondsBlock(RespondsStatusSuccess, resultMsg, contactArr);
         }
         else {
             respondsBlock(RespondsStatusDataError, resultMsg, nil);

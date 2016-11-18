@@ -7,11 +7,13 @@
 //
 
 #import "PGCVIPServiceController.h"
+#import "PGCVIPServiceCell.h"
 #import "PGCPayView.h"
 
-@interface PGCVIPServiceController () <UITableViewDataSource, PGCPayViewDelegate>
+@interface PGCVIPServiceController () <UITableViewDataSource, UITableViewDelegate, PGCPayViewDelegate, PGCVIPServiceCellDelegate>
 
 @property (copy, nonatomic) NSArray *dataSource;/** 表格视图数据源 */
+@property (strong, nonatomic) UITableView *tableView;/** 表格视图 */
 
 - (void)initializeDataSource;/* 初始化数据源 */
 - (void)initializeUserInterface;/* 初始化用户界面 */
@@ -34,114 +36,54 @@
 - (void)initializeUserInterface
 {
     self.navigationItem.title = @"开通服务";
-    self.view.backgroundColor = RGB(244, 244, 244);
-    
-    // 会员开通服务费标签的底部视图
-    UIView *topView = [[UIView alloc] init];
-    topView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:topView];
-    topView.sd_layout
-    .topSpaceToView(self.view, STATUS_AND_NAVIGATION_HEIGHT)
-    .leftSpaceToView(self.view, 0)
-    .rightSpaceToView(self.view, 0)
-    .heightIs(50);
-    
-    NSString *textStr = @"会员开通服务费用：";
-    // 会员开通服务费标签
-    UILabel *label = [[UILabel alloc] init];
-    label.textColor = PGCTextColor;
-    label.font = SetFont(16);
-    label.text = [textStr stringByAppendingString:@"¥xxx"];
-    [topView addSubview:label];
-    label.sd_layout
-    .centerYEqualToView(topView)
-    .leftSpaceToView(topView, 15)
-    .rightSpaceToView(topView, 15)
-    .autoHeightRatio(0);
+    self.automaticallyAdjustsScrollViewInsets = false;
+    self.view.backgroundColor = [UIColor whiteColor];
+
+    [self.view addSubview:self.tableView];
     
     // 服务说明的底部视图
-    UIView *centerView = [[UIView alloc] init];
-    centerView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:centerView];
-    centerView.sd_layout
-    .topSpaceToView(topView, 1)
+    UIView *bottomView = [[UIView alloc] init];
+    bottomView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:bottomView];
+    bottomView.sd_layout
     .leftSpaceToView(self.view, 0)
     .rightSpaceToView(self.view, 0)
-    .heightIs(50);
-    
-    /* 服务说明标签 */
-    UILabel *titleLabel = [[UILabel alloc] init];
-    titleLabel.textColor = PGCTextColor;
-    titleLabel.font = SetFont(15);
-    titleLabel.text = @"服务说明：";
-    [centerView addSubview:titleLabel];
-    titleLabel.sd_layout
-    .topSpaceToView(centerView, 10)
-    .leftSpaceToView(centerView, 15)
-    .rightSpaceToView(centerView, 15)
-    .autoHeightRatio(0);
-    
-    /* 服务内容视图 */
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-    tableView.rowHeight = 40;
-    tableView.backgroundColor = [UIColor whiteColor];
-    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    tableView.bounces = false;
-    tableView.dataSource = self;
-    [centerView addSubview:tableView];
-    tableView.sd_layout
-    .topSpaceToView(titleLabel, 10)
-    .leftSpaceToView(centerView, 0)
-    .rightSpaceToView(centerView, 0)
-    .heightIs(40 * 3);
+    .bottomSpaceToView(self.view, 0)
+    .heightIs(60);
     
     /* tips标签 */
     UILabel *tipsLabel = [[UILabel alloc] init];
     tipsLabel.textColor = RGB(204, 204, 204);
     tipsLabel.text = @"如有疑问，请联系我们。";
     tipsLabel.font = SetFont(15);
-    [centerView addSubview:tipsLabel];
+    [bottomView addSubview:tipsLabel];
     tipsLabel.sd_layout
-    .topSpaceToView(tableView, 10)
-    .leftSpaceToView(centerView, 15)
-    .rightSpaceToView(centerView, 15)
-    .autoHeightRatio(0);
+    .topSpaceToView(bottomView, 10)
+    .leftSpaceToView(bottomView, 15)
+    .rightSpaceToView(bottomView, 15)
+    .heightIs(20);
     
     /* 电话号码标签 */
     UILabel *phoneNumberLabel = [[UILabel alloc] init];
     phoneNumberLabel.textColor = PGCTintColor;
-    phoneNumberLabel.font = SetFont(15);
+    phoneNumberLabel.font = SetFont(14);
     phoneNumberLabel.text = @"023-xxxxxxxx";
-    [centerView addSubview:phoneNumberLabel];
+    [bottomView addSubview:phoneNumberLabel];
     phoneNumberLabel.sd_layout
-    .topSpaceToView(tipsLabel, 15)
-    .leftSpaceToView(centerView, 15)
-    .rightSpaceToView(centerView, 15)
-    .autoHeightRatio(0);
-    
-    [centerView setupAutoHeightWithBottomView:phoneNumberLabel bottomMargin:20];
-        
-    // 立即支付按钮
-    UIButton *payButton = [[UIButton alloc] init];
-    payButton.backgroundColor = PGCTintColor;
-    payButton.layer.masksToBounds = true;
-    payButton.layer.cornerRadius = 10.0;
-    [payButton setTitle:@"立即支付" forState:UIControlStateNormal];
-    [payButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [payButton addTarget:self action:@selector(respondsToPayButton:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:payButton];
-    payButton.sd_layout
-    .topSpaceToView(centerView, 35)
-    .leftSpaceToView(self.view, 20)
-    .rightSpaceToView(self.view, 20)
-    .heightIs(60);
+    .topSpaceToView(tipsLabel, 0)
+    .leftSpaceToView(bottomView, 15)
+    .rightSpaceToView(bottomView, 15)
+    .heightIs(20);
 }
 
 
-#pragma mark - Events
+#pragma mark - PGCVIPServiceCellDelegate
 
-- (void)respondsToPayButton:(UIButton *)sender
+- (void)vipServiceCell:(PGCVIPServiceCell *)cell payButton:(UIButton *)payButton
 {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    NSLog(@"%ld-%ld", indexPath.section, indexPath.row);
+    
     PGCPayView *payView = [[PGCPayView alloc] init];
     payView.delegate = self;
     [payView showPayView];
@@ -167,23 +109,37 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _dataSource.count;
+    return 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *identifier = @"Cell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-    }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.textLabel.textColor = RGB(102, 102, 102);
-    cell.textLabel.font = SetFont(15);
-    cell.textLabel.text = _dataSource[indexPath.row];
-    
+    PGCVIPServiceCell *cell = [tableView dequeueReusableCellWithIdentifier:kVIPServiceCell];
+    cell.delegate = self;
     return cell;
+}
+
+
+#pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 200;
+}
+
+
+#pragma mark - Getter
+
+- (UITableView *)tableView {
+    if (!_tableView) {
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, STATUS_AND_NAVIGATION_HEIGHT, self.view.width_sd, self.view.height_sd - STATUS_AND_NAVIGATION_HEIGHT - 60) style:UITableViewStylePlain];
+        _tableView.backgroundColor = RGB(244, 244, 244);
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        _tableView.dataSource = self;
+        _tableView.delegate = self;
+        [_tableView registerClass:[PGCVIPServiceCell class] forCellReuseIdentifier:kVIPServiceCell];
+    }
+    return _tableView;
 }
 
 @end

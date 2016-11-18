@@ -18,25 +18,25 @@
     //
 }
 
-- (instancetype)initWithFrame:(CGRect)frame {
+- (instancetype)initWithFrame:(CGRect)frame
+{
     self = [super initWithFrame:frame];
     if (self) {
         // 设置字体颜色
         [self setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
         [self setTitleColor:[UIColor orangeColor] forState:UIControlStateSelected];
-        
         // 图片居中
         self.imageView.contentMode = UIViewContentModeCenter;
         // 文字居中
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
         // 设置文字字体
-        self.titleLabel.font = [UIFont systemFontOfSize:12];
-        
+        self.titleLabel.font = SetFont(12);
     }
     return self;
 }
 // 传递UITabBarItem给tabBarButton,给tabBarButton内容赋值
-- (void)setItem:(UITabBarItem *)item {
+- (void)setItem:(UITabBarItem *)item
+{
     _item = item;
     
     [self observeValueForKeyPath:nil ofObject:nil change:nil context:nil];
@@ -52,20 +52,18 @@
 }
 
 // 只要监听的属性一有新值，就会调用
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
     [self setTitle:_item.title forState:UIControlStateNormal];
-    
     [self setImage:_item.image forState:UIControlStateNormal];
-    
     [self setImage:_item.selectedImage forState:UIControlStateSelected];
-    
     // 设置badgeValue
     self.badgeView.badgeValue = _item.badgeValue;
 }
 
 // 修改按钮内部子控件的frame
-- (void)layoutSubviews {
+- (void)layoutSubviews
+{
     [super layoutSubviews];
     
     // 1.imageView
@@ -74,7 +72,6 @@
     CGFloat imageW = self.bounds.size.width;
     CGFloat imageH = self.bounds.size.height * CZImageRidio;
     self.imageView.frame = CGRectMake(imageX, imageY, imageW, imageH);
-    
     
     // 2.title
     CGFloat titleX = 0;
@@ -85,7 +82,7 @@
     
     // 3.badgeView
     // 3.badgeView
-    self.badgeView.left_sd = self.frame.size.width - self.badgeView.frame.size.width - 10;
+    self.badgeView.left_sd = self.bounds.size.width - self.badgeView.width_sd - 10;
     self.badgeView.top_sd = 0;
 }
 

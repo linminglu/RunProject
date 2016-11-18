@@ -17,9 +17,7 @@
 
 @end
 
-static NSString * const kContacInfoHeaderView = @"PGCContacInfoHeaderView";
-
-@interface PGCContacInfoHeaderView : UITableViewHeaderFooterView
+@interface PGCContacInfoHeaderView : UIView
 
 @property (weak, nonatomic) id <PGCContacInfoHeaderViewDelegate> delegate;
 @property (strong, nonatomic) PGCContact *contactHeader;/** 联系人模型 */

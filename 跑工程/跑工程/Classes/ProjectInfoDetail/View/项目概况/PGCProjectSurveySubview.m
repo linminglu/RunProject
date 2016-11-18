@@ -11,12 +11,12 @@
 
 @interface PGCProjectSurveySubview ()
 {
-    UILabel *_areaLabel;/** 工程地区标签 */
-    UILabel *_typeLabel;/** 项目类别标签 */
-    UILabel *_stageLabel;/** 项目阶段标签 */
-    UILabel *_timeLabel;/** 建筑周期标签 */
-    UILabel *_addressLabel;/** 项目地址标签 */
-    UIButton *_checkBtn;/** 点击查看按钮 */
+    UILabel *_areaLabel;    /** 工程地区标签 */
+    UILabel *_typeLabel;    /** 项目类别标签 */
+    UILabel *_stageLabel;   /** 项目阶段标签 */
+    UILabel *_timeLabel;    /** 建筑周期标签 */
+    UILabel *_addressLabel; /** 项目地址标签 */
+    UIButton *_checkBtn;    /** 点击查看按钮 */
 }
 
 @end
@@ -98,7 +98,7 @@
                 .heightRatioToView(obj, 1.0);
             }
                 break;
-            case 4:
+            default:
             {
                 _checkBtn = [UIButton buttonWithType:UIButtonTypeCustom];
                 [_checkBtn setTitleColor:PGCTintColor forState:UIControlStateNormal];
@@ -120,7 +120,7 @@
                 [self addSubview:line];
                 line.sd_layout
                 .centerYEqualToView(obj)
-                .rightSpaceToView(_checkBtn, 15)
+                .rightSpaceToView(_checkBtn, 10)
                 .heightRatioToView(_checkBtn, 0.8)
                 .widthIs(1);
                 
@@ -135,13 +135,30 @@
                 .heightRatioToView(obj, 1.0);
             }
                 break;
-            default:
-                break;
         }
     }];
-    [self setupAutoHeightWithBottomView:_addressLabel bottomMargin:10];
 }
 
+
+
+#pragma mark - Setter
+
+- (void)setProjectInfo:(PGCProjectInfo *)projectInfo
+{
+    _projectInfo = projectInfo;
+    if (!projectInfo) {
+        return;
+    }
+    _areaLabel.text = [projectInfo.province stringByAppendingString:projectInfo.city];
+    _typeLabel.text = projectInfo.type_name;
+    _stageLabel.text = projectInfo.progress_name;
+    NSString *startStr = [self stringFromOldStr:projectInfo.start_time];
+    NSString *endStr = [self stringFromOldStr:projectInfo.end_time];
+    _timeLabel.text = [NSString stringWithFormat:@"%@ 至 %@", startStr, endStr];
+    _addressLabel.text = projectInfo.address;
+    
+    [self setupAutoHeightWithBottomView:_addressLabel bottomMargin:10];
+}
 
 #pragma mark - Public
 /* 点击查看按钮的事件 */
@@ -151,25 +168,12 @@
 }
 
 
-- (void)loadDataWithModel:(id)model
-{
-    PGCProjectInfo *project = model;
-    _areaLabel.text = [project.province stringByAppendingString:project.city];
-    _typeLabel.text = project.type_name;
-    _stageLabel.text = project.progress_name;
-    NSString *startStr = [self stringFromOldStr:project.start_time];
-    NSString *endStr = [self stringFromOldStr:project.end_time];
-    _timeLabel.text = [NSString stringWithFormat:@"%@ 至 %@", startStr, endStr];
-    _addressLabel.text = project.address;
-}
-
-
 #pragma mark - Private
 
 /* 自定义创建标签方法 */
 - (UILabel *)setLabelWithSuperView:(UIView *)superView index:(NSInteger)index title:(NSString *)title {
     
-    CGSize sizeA = [title sizeWithFont:SetFont(14) constrainedToSize:CGSizeMake(MAXFLOAT, 0)];
+    CGSize size = [title sizeWithFont:SetFont(14) constrainedToSize:CGSizeMake(MAXFLOAT, 0)];
     
     UILabel *resultLabel = [[UILabel alloc] init];
     resultLabel.font = SetFont(14);
@@ -179,7 +183,7 @@
     resultLabel.sd_layout
     .topSpaceToView(superView, index * (LabelHeight + 5))
     .leftSpaceToView(superView, 15)
-    .widthIs(sizeA.width)
+    .widthIs(size.width)
     .heightIs(LabelHeight);
 
     return resultLabel;

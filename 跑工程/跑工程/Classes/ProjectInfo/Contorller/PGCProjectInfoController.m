@@ -19,8 +19,6 @@
 #import "PGCProjectProgress.h"
 #import "PGCProjectInfoAPIManager.h"
 #import "PGCProjectInfo.h"
-#import "PGCTokenManager.h"
-#import "PGCUserInfo.h"
 
 static NSString * const kProjectInfoCell = @"ProjectInfoCell";
 
@@ -41,8 +39,8 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
 @property (strong, nonatomic) PGCProjectInfoNavigationBar *navigationBar;/** 自定义导航栏 */
 @property (strong, nonatomic) JSDropDownMenu *menu;/** 下拉菜单视图 */
 @property (strong, nonatomic) UITableView *tableView;/** 表格视图 */
-@property (strong, nonatomic) NSMutableArray *dataSource;/** 表格数据源 */
 @property (strong, nonatomic) NSMutableDictionary *parameters;/** 参数 */
+@property (strong, nonatomic) NSMutableArray *dataSource;/** 表格数据源 */
 
 - (void)initializeDataSource; /** 初始化数据 */
 - (void)initializeUserInterface; /** 初始化用户界面 */
@@ -50,6 +48,11 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
 @end
 
 @implementation PGCProjectInfoController
+
+- (void)dealloc {
+    [PGCNotificationCenter removeObserver:self name:kRefreshCollectTable object:nil];
+}
+
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -68,41 +71,24 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
     
     [self initializeDataSource];
     [self initializeUserInterface];
+    [self registerNotification];
 }
 
 
 #pragma mark - Initialize
 
-- (void)initializeDataSource {
+- (void)initializeDataSource
+{
     _areaDatas = [NSMutableArray arrayWithArray:[PGCProvince province].areaArray];
 //    [_areaDatas insertObject:@"全国" atIndex:0];
     _typeDatas = [NSMutableArray arrayWithArray:[PGCProjectType projectType].projectTypes];
 //    [_typeDatas insertObject:@"全部类别" atIndex:0];
     _stageDatas = [NSMutableArray arrayWithArray:[PGCProjectProgress projectProgress].progressArray];
 //    [_stageDatas insertObject:@"全部阶段" atIndex:0];
-    
-    [PGCProjectInfoAPIManager getProjectsRequestWithParameters:self.parameters responds:^(RespondsStatus status, NSString *message, id resultData) {
-        
-        if (status == RespondsStatusSuccess) {
-            
-            NSArray *resultArray = resultData[@"result"];
-            
-            for (id value in resultArray) {
-                PGCProjectInfo *project = [[PGCProjectInfo alloc] init];
-                [project mj_setKeyValues:value];
-                
-                [self.dataSource addObject:project];
-            }
-            if ([resultData[@"lastPage"] integerValue] >= _pageSize) {
-                self.tableView.mj_footer.hidden = false;
-                _page += 20;
-            }
-            [self.tableView reloadData];
-        }
-    }];
 }
 
-- (void)initializeUserInterface {
+- (void)initializeUserInterface
+{
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = false;
     
@@ -110,60 +96,41 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
     [self.view addSubview:self.menu];
     [self.view addSubview:self.tableView];
     
-    // 设置表格视图下拉刷新和上拉加载
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadProjectData)];
-    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
-    self.tableView.mj_footer.hidden = true;
-    
-    AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];
-    [manager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
-        switch (status) {
-            case AFNetworkReachabilityStatusUnknown:
-                [PGCProgressHUD showMessage:@"未识别的网络" inView:self.view];
-                break;
-            case AFNetworkReachabilityStatusNotReachable:
-                [PGCProgressHUD showMessage:@"不可达的网络(未连接)" inView:self.view];
-                break;
-            default:
-                break;
-        }
-    }];
-    [manager startMonitoring];
+    [self.tableView.mj_header beginRefreshing];
 }
 
 
+- (void)registerNotification {
+    [PGCNotificationCenter addObserver:self selector:@selector(loadProjectData) name:kRefreshCollectTable object:nil];
+}
+
+
+
 #pragma mark - 
-#pragma mark - 加载数据
+#pragma mark - Table Header Refresh
 
 - (void)loadProjectData
 {
-    _page = 1;
-    _pageSize = 20;
     [self.dataSource removeAllObjects];
-    
+    _page = 1;
+    _pageSize = 10;
+    [self.parameters setObject:@(_page) forKey:@"page"];
+    [self.parameters setObject:@(_pageSize) forKey:@"page_size"];
     [self.parameters setObject:@(-1) forKey:@"province_id"];
     [self.parameters setObject:@(-1) forKey:@"city_id"];
     [self.parameters setObject:@(-1) forKey:@"type_id"];
     [self.parameters setObject:@(-1) forKey:@"progress_id"];
     
     [PGCProjectInfoAPIManager getProjectsRequestWithParameters:self.parameters responds:^(RespondsStatus status, NSString *message, id resultData) {
-        
         [self.tableView.mj_header endRefreshing];
         
         if (status == RespondsStatusSuccess) {
-            
-            NSArray *resultArray = resultData[@"result"];
-            
-            for (id value in resultArray) {
+            for (id value in resultData[@"result"]) {
                 PGCProjectInfo *project = [[PGCProjectInfo alloc] init];
                 [project mj_setKeyValues:value];
-                
                 [self.dataSource addObject:project];
             }
-            if ([resultData[@"lastPage"] integerValue] >= 20) {
-                self.tableView.mj_footer.hidden = false;
-                _page += 20;
-            }
+            _page += 10;
             [self.tableView reloadData];
         }
     }];
@@ -171,33 +138,25 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
 
 - (void)loadMoreData
 {
+    [self.parameters setObject:@(_page) forKey:@"page"];
+    [self.parameters setObject:@(1) forKey:@"page_size"];
+    
     [PGCProjectInfoAPIManager getProjectsRequestWithParameters:self.parameters responds:^(RespondsStatus status, NSString *message, id resultData) {
-        
         if (status == RespondsStatusSuccess) {
-            
             NSArray *resultArray = resultData[@"result"];
-            
             if (resultArray.count > 0) {
-                for (id value in resultArray) {
+                for (id value in resultData[@"result"]) {
                     PGCProjectInfo *project = [[PGCProjectInfo alloc] init];
                     [project mj_setKeyValues:value];
-                    
                     [self.dataSource addObject:project];
                 }
-                if ([resultData[@"lastPage"] integerValue] >= _page + 10) {
-                    
-                    _page += 10;
-                    [self.tableView.mj_footer endRefreshing];
-                    
-                } else {
-                    [self.tableView.mj_footer endRefreshingWithNoMoreData];
-                }
-                [self.tableView reloadData];
+                [self.tableView.mj_footer endRefreshing];
+                _page++;
                 
             } else {
                 [self.tableView.mj_footer endRefreshingWithNoMoreData];
             }
-            
+            [self.tableView reloadData];
         } else {
             [self.tableView.mj_footer endRefreshing];
         }
@@ -232,13 +191,6 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    PGCTokenManager *manager = [PGCTokenManager tokenManager];
-    [manager readAuthorizeData];
-    PGCUserInfo *user = manager.token.user;
-    if (user == nil) {
-        [PGCProgressHUD showMessage:@"请先登录" inView:KeyWindow];
-        return;
-    }
     PGCProjectInfo *projectInfo = self.dataSource[indexPath.row];
     PGCProjectInfoDetailVC *detailVC = [[PGCProjectInfoDetailVC alloc] init];
     detailVC.projectInfoDetail = projectInfo;
@@ -252,6 +204,10 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
 
 - (void)projectInfoNavigationBar:(PGCProjectInfoNavigationBar *)projectInfoNavigationBar tapItem:(NSInteger)tag
 {
+    PGCManager *manager = [PGCManager manager];
+    [manager readTokenData];
+    PGCUser *user = manager.token.user;
+    
     PGCProjectRootViewController *rootVC = [[PGCProjectRootViewController alloc] init];
     switch (tag) {
         case mapItemTag:
@@ -262,11 +218,8 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
             break;
         case recordItemTag:
         {
-            PGCTokenManager *manager = [PGCTokenManager tokenManager];
-            [manager readAuthorizeData];
-            PGCUserInfo *user = manager.token.user;
-            if (user == nil) {
-                [PGCProgressHUD showMessage:@"请先登录" inView:KeyWindow];
+            if (!user) {
+                [PGCProgressHUD showMessage:@"请先登录" toView:self.view];
                 return;
             }
             rootVC.navigationItem.title = @"浏览记录";
@@ -278,11 +231,8 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
             break;
         case collectItemTag:
         {
-            PGCTokenManager *manager = [PGCTokenManager tokenManager];
-            [manager readAuthorizeData];
-            PGCUserInfo *user = manager.token.user;
-            if (user == nil) {
-                [PGCProgressHUD showMessage:@"请先登录" inView:KeyWindow];
+            if (!user) {
+                [PGCProgressHUD showMessage:@"请先登录" toView:self.view];
                 return;
             }
             rootVC.navigationItem.title = @"我的收藏";
@@ -409,8 +359,11 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
         {
             if (indexPath.leftOrRight == 0) {
                 _currentProvinceIndex = indexPath.row;
-                PGCProvince *province = _areaDatas[indexPath.leftRow];
-                [self.parameters setObject:@(province.id) forKey:@"province_id"];
+                PGCProvince *province = _areaDatas[indexPath.row];
+                
+                if (!(province.city.count > 0)) {
+                    [self.parameters setObject:@(province.id) forKey:@"province_id"];
+                }
                 
             } else {
                 PGCProvince *province = _areaDatas[indexPath.leftRow];
@@ -435,15 +388,34 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
         }
             break;
     }
-    [self loadProjectData];
+    [self.dataSource removeAllObjects];
+    _page = 1;
+    _pageSize = 20;
+    [self.parameters setObject:@(_page) forKey:@"page"];
+    [self.parameters setObject:@(_pageSize) forKey:@"page_size"];
+    
+    [PGCProjectInfoAPIManager getProjectsRequestWithParameters:self.parameters responds:^(RespondsStatus status, NSString *message, id resultData) {
+        if (status == RespondsStatusSuccess) {
+            for (id value in resultData[@"result"]) {
+                PGCProjectInfo *project = [[PGCProjectInfo alloc] init];
+                [project mj_setKeyValues:value];
+                
+                [self.dataSource addObject:project];
+            }
+            if ([resultData[@"lastPage"] integerValue] >= 20) {
+                self.tableView.mj_footer.hidden = false;
+                _page += 20;
+            }
+            [self.tableView reloadData];
+        }
+    }];
 }
 
 
 #pragma mark -
 #pragma mark - Getter
 
-- (PGCProjectInfoNavigationBar *)navigationBar
-{
+- (PGCProjectInfoNavigationBar *)navigationBar {
     if (!_navigationBar) {
         _navigationBar = [[PGCProjectInfoNavigationBar alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, STATUS_AND_NAVIGATION_HEIGHT)];
         _navigationBar.backgroundColor = PGCThemeColor;
@@ -452,10 +424,9 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
     return _navigationBar;
 }
 
-- (JSDropDownMenu *)menu
-{
+- (JSDropDownMenu *)menu {
     if (!_menu) {
-        _menu = [[JSDropDownMenu alloc] initWithOrigin:CGPointMake(0, self.navigationBar.bottom) andHeight:40];
+        _menu = [[JSDropDownMenu alloc] initWithOrigin:CGPointMake(0, self.navigationBar.bottom_sd) andHeight:40];
         _menu.backgroundColor = [UIColor whiteColor];
         _menu.dataSource = self;
         _menu.delegate = self;
@@ -463,22 +434,30 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
     return _menu;
 }
 
-- (UITableView *)tableView
-{
+- (UITableView *)tableView {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.menu.bottom, SCREEN_WIDTH, SCREEN_HEIGHT - TAB_BAR_HEIGHT - self.menu.bottom) style:UITableViewStylePlain];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.menu.bottom_sd, SCREEN_WIDTH, SCREEN_HEIGHT - TAB_BAR_HEIGHT - self.menu.bottom_sd) style:UITableViewStylePlain];
         _tableView.backgroundColor = PGCBackColor;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.delegate = self;
         _tableView.dataSource = self;
         [_tableView registerClass:[PGCProjectInfoCell class] forCellReuseIdentifier:kProjectInfoCell];
+        // 设置表格视图下拉刷新和上拉加载
+        MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadProjectData)];
+        header.automaticallyChangeAlpha = true;
+        header.lastUpdatedTimeLabel.hidden = true;
+        _tableView.mj_header = header;
+        
+        MJRefreshBackNormalFooter *footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+        _tableView.contentInset = UIEdgeInsetsMake(0, 0, 30, 0);
+        footer.ignoredScrollViewContentInsetBottom = 30;
+        _tableView.mj_footer = footer;
     }
     return _tableView;
 }
 
 
-- (NSMutableArray *)dataSource
-{
+- (NSMutableArray *)dataSource {
     if (!_dataSource) {
         _dataSource = [NSMutableArray array];
     }
@@ -486,21 +465,15 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
 }
 
 
-- (NSMutableDictionary *)parameters
-{
+- (NSMutableDictionary *)parameters {
     if (!_parameters) {
         _parameters = [NSMutableDictionary dictionary];
         
-        _page = 1;
-        _pageSize = 20;
-        [_parameters setObject:@(_page) forKey:@"page"];
-        [_parameters setObject:@(_pageSize) forKey:@"page_size"];
-        
-        [[PGCTokenManager tokenManager] readAuthorizeData];
-        PGCUserInfo *user = [PGCTokenManager tokenManager].token.user;
+        PGCManager *manager = [PGCManager manager];
+        [manager readTokenData];
+        PGCUser *user = manager.token.user;
         if (user) {
-            [_parameters setObject:@(user.id) forKey:@"user_id"];
-            
+            [_parameters setObject:@(user.user_id) forKey:@"user_id"];
         }
     }
     return _parameters;

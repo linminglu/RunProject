@@ -8,14 +8,20 @@
 
 #import "PGCAddContactRemarkCell.h"
 
+@interface PGCAddContactRemarkCell ()
+
+@property (strong, nonatomic) UILabel *textViewPlaceholder;/** 文本视图占位符 */
+
+@end
+
 @implementation PGCAddContactRemarkCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.contentView.backgroundColor = [UIColor whiteColor];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
+        self.contentView.backgroundColor = [UIColor whiteColor];
         
         UITextView *textView = [[UITextView alloc] init];
         textView.textColor = RGB(102, 102, 102);
@@ -54,6 +60,9 @@
         self.textViewPlaceholder.hidden = true;
     } else {
         self.textViewPlaceholder.hidden = false;
+    }
+    if (self.delegate && [self.delegate respondsToSelector:@selector(addContactRemarkCell:textView:)]) {
+        [self.delegate addContactRemarkCell:self textView:textView];
     }
 }
 

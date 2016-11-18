@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+@class PGCProjectContact;
 
 @interface PGCProjectAddContactController : UIViewController
+
+@property (strong, nonatomic) PGCProjectContact *projectCon;/** 项目联系人 */
 
 @end

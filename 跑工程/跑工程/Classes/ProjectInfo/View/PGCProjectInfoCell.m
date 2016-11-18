@@ -145,9 +145,6 @@
 {
     _project = project;
     
-    if (!project) {
-        return;
-    }
     self.nameLabel.text = project.name;
     self.contentLabel.text = project.desc;
     self.categoryLabel.text = project.type_name;

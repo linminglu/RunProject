@@ -22,7 +22,7 @@ typedef NS_ENUM(NSUInteger, ProgressMode) {
 
 @property (strong, nonatomic) MBProgressHUD *hud;
 
-+(instancetype)shareinstance;
++ (instancetype)shareinstance;
 
 #pragma mark -
 #pragma mark - UIAlertController
@@ -79,31 +79,7 @@ typedef NS_ENUM(NSUInteger, ProgressMode) {
 #pragma mark - MBProgressHUD
 
 /**
- 1.5s 后消息的MBProgressHUD
-
- @param title
- */
-+ (void)showProgressHUDWithTitle:(NSString *)title;
-/**
- 1.5s 后消息的MBProgressHUD
-
- @param view
- @param title 
- */
-+ (void)showProgressHUDWith:(UIView *)view
-                      title:(NSString *)title;
-/**
- 1.5s 后消息的MBProgressHUD
-
- @param view
- @param title
- @param block
- */
-+ (void)showProgressHUDWith:(UIView *)view
-                      title:(NSString *)title
-                      block:(void(^)(void))block;
-/**
- 进度提示的MBProgressHUD
+ 进度(菊花)提示的MBProgressHUD
 
  @param view
  @param label
@@ -114,30 +90,28 @@ typedef NS_ENUM(NSUInteger, ProgressMode) {
 
 
 //显示
-+(void)show:(NSString *)msg inView:(UIView *)view mode:(ProgressMode)myMode;
++(void)show:(NSString *)msg toView:(UIView *)view mode:(ProgressMode)myMode;
 
 //隐藏
 +(void)hide;
 
-//显示提示（1秒后消失）
-+(void)showMessage:(NSString *)msg inView:(UIView *)view;
+//显示提示（1.5秒后消失）
++(void)showMessage:(NSString *)msg toView:(UIView *)view;
 
 //显示提示（N秒后消失）
-+(void)showMessage:(NSString *)msg inView:(UIView *)view afterDelayTime:(NSInteger)delay;
++(void)showMessage:(NSString *)msg toView:(UIView *)view afterDelayTime:(NSInteger)delay;
 
 //显示进度(转圈)
-+(MBProgressHUD *)showProgressCircle:(NSString *)msg inView:(UIView *)view;
++(MBProgressHUD *)showProgressCircle:(NSString *)msg toView:(UIView *)view;
 
 //显示进度(菊花)
-+(void)showProgress:(NSString *)msg inView:(UIView *)view;
++(void)showProgress:(NSString *)msg toView:(UIView *)view;
 
 //显示成功提示
-+(void)showSuccess:(NSString *)msg inView:(UIView *)view;
++(void)showSuccess:(NSString *)msg toView:(UIView *)view;
 
 //在最上层显示
 +(void)showMsgWithoutView:(NSString *)msg;
 
-//显示自定义动画(自定义动画序列帧  找UI做就可以了)
-+(void)showCustomAnimation:(NSString *)msg withImgArry:(NSArray *)imgArry inview:(UIView *)view;
 
 @end

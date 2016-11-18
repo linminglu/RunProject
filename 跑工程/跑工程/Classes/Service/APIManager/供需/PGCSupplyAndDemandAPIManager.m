@@ -7,6 +7,9 @@
 //
 
 #import "PGCSupplyAndDemandAPIManager.h"
+#import "PGCMaterialServiceTypes.h"
+#import "PGCSupply.h"
+#import "PGCDemand.h"
 
 @implementation PGCSupplyAndDemandAPIManager
 
@@ -18,7 +21,7 @@
         NSString *resultMsg = responseObject[@"msg"];
         NSDictionary *resultData = responseObject[@"data"];
         
-        if (resultCode == 200) {
+        if (resultCode == 200) {            
             respondsBlock(RespondsStatusSuccess, resultMsg, resultData);
         }
         else {

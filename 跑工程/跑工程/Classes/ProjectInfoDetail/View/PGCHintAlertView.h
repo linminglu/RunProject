@@ -13,10 +13,11 @@
 
 @optional
 /**
+ 我知道了按钮代理方法
+ */
+- (void)hintAlertView:(PGCHintAlertView *)hintAlertView known:(UIButton *)known;
+/**
  确定按钮代理方法
-
- @param hintAlertView
- @param confirm
  */
 - (void)hintAlertView:(PGCHintAlertView *)hintAlertView confirm:(UIButton *)confirm;
 
@@ -28,16 +29,10 @@
 @property (weak, nonatomic) id <PGCHintAlertViewDelegate> delegate;
 /**
  初始化判断alert view
-
- @param title
- @return
  */
 - (instancetype)initWithTitle:(NSString *)title;
 /**
  初始化判断alert view
-
- @param content
- @return
  */
 - (instancetype)initWithContent:(NSString *)content;
 /**

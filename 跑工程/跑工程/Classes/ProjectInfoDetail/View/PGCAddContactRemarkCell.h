@@ -7,12 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+@class PGCAddContactRemarkCell;
+
+@protocol PGCAddContactRemarkCellDelegate <NSObject>
+
+@optional
+- (void)addContactRemarkCell:(PGCAddContactRemarkCell *)cell textView:(UITextView *)textView;
+
+@end
 
 static NSString *const kAddContactRemarkCell = @"AddContactRemarkCell";
 
 @interface PGCAddContactRemarkCell : UITableViewCell <UITextViewDelegate>
 
-@property (strong, nonatomic) UILabel *textViewPlaceholder;/** 文本视图占位符 */
+@property (weak, nonatomic) id <PGCAddContactRemarkCellDelegate> delegate;
 @property (strong, nonatomic) UITextView *addRemarkTextView;/** 文本视图 */
 
 @end

@@ -6,8 +6,11 @@
 //  Copyright © 2016年 Mac. All rights reserved.
 //
 
-#import "PGCSupplyAndDemandDetailVC.h"
+#import <UIKit/UIKit.h>
+@class PGCDemand;
 
-@interface PGCDemandDetailVC : PGCSupplyAndDemandDetailVC
+@interface PGCDemandDetailVC : UIViewController
+
+@property (strong, nonatomic) PGCDemand *demand;/** 需求模型 */
 
 @end

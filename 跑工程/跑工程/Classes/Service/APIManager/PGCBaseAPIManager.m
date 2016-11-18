@@ -47,22 +47,35 @@ static NSString * const PGCHttpCache = @"HttpYYCache";
 #pragma mark -
 #pragma mark - 上传图片
 
-+ (NSURLSessionDataTask *)uploadRequest:(NSString *)urlString parameters:(NSDictionary *)parameters image:(UIImage *)image name:(NSString *)name fileName:(NSString *)fileName mimeType:(NSString *)mimeType progress:(HttpProgress)progress success:(successHandler)success failure:(failureHandler)failure
++ (NSURLSessionDataTask *)uploadRequest:(NSString *)urlString parameters:(NSDictionary *)parameters images:(NSArray<UIImage *> *)images name:(NSString *)name fileName:(NSString *)fileName mimeType:(NSString *)mimeType progress:(HttpProgress)progress success:(successHandler)success failure:(failureHandler)failure
 {
-    // 拼接URL链接
     NSString *url = [kBaseURL stringByAppendingString:urlString];
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.requestSerializer.timeoutInterval = 20.0f;
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript", @"text/html", nil];
-    
     return [manager POST:url parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        // 在网络开发中，上传文件时，是文件不允许被覆盖，文件重名
+        // 要解决此问题，可以在上传时使用当前的系统事件作为文件名
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyyMMddHHmmss"];
+        NSString *file = [formatter stringFromDate:[NSDate date]];
         //压缩-添加-上传图片
-        NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
-        [formData appendPartWithFileData:imageData name:name fileName:fileName mimeType:mimeType];
-        
-    } progress:progress success:success failure:failure];
+        [images enumerateObjectsUsingBlock:^(UIImage * _Nonnull image, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
+            NSString *imageName = [NSString stringWithFormat:@"%@%lu.%@", fileName ? fileName : file, (unsigned long)idx, mimeType ? mimeType : @"jpg"];
+            [formData appendPartWithFileData:imageData name:name fileName:imageName mimeType:[NSString stringWithFormat:@"image/%@", mimeType ? mimeType : @"jpg"]];
+        }];
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        //上传进度
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            progress ? progress(uploadProgress) : nil;
+        });
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        success ? success(task, responseObject) : nil;
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        failure ? failure(task, error) : nil;
+    }];
 }
+
 
 
 #pragma mark -
@@ -90,10 +103,25 @@ static NSString * const PGCHttpCache = @"HttpYYCache";
     }
     
     YYCache *cache = [YYCache cacheWithName:PGCHttpCache];
-    cache.memoryCache.shouldRemoveAllObjectsOnMemoryWarning        = true;
+    cache.memoryCache.shouldRemoveAllObjectsOnMemoryWarning = true;
     cache.memoryCache.shouldRemoveAllObjectsWhenEnteringBackground = true;
     
     id cacheData = [cache objectForKey:cacheKey];
+    
+    AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];
+    [manager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        switch (status) {
+            case AFNetworkReachabilityStatusUnknown:
+                [PGCProgressHUD showMessage:@"未识别的网络" toView:KeyWindow];
+                break;
+            case AFNetworkReachabilityStatusNotReachable:
+                [PGCProgressHUD showMessage:@"网络错误(未连接)" toView:KeyWindow];
+                break;
+            default:
+                break;
+        }
+    }];
+    [manager startMonitoring];
     
     switch (cachePolicy) {
         case RequestReturnCacheDataThenLoad:
@@ -148,12 +176,11 @@ static NSString * const PGCHttpCache = @"HttpYYCache";
                     NSError *error;
                     responseObject = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:&error];
                 }
-                success(task, responseObject);
+                success ? success(task, responseObject) : nil;
                 [cache setObject:responseObject forKey:cacheKey withBlock:nil];
                 
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                
-                failure(task, error);
+                failure ? failure(task, error) : nil;
                 // 解析失败隐藏系统风火轮(可以打印error.userInfo查看错误信息)
                 [UIApplication sharedApplication].networkActivityIndicatorVisible = false;
             }];
@@ -166,12 +193,11 @@ static NSString * const PGCHttpCache = @"HttpYYCache";
                     NSError *error;
                     responseObject = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:&error];
                 }
-                success(task, responseObject);
+                success ? success(task, responseObject) : nil;
                 [cache setObject:responseObject forKey:cacheKey withBlock:nil];
                 
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                
-                failure(task, error);
+                failure ? failure(task, error) : nil;
                 // 解析失败隐藏系统风火轮(可以打印error.userInfo查看错误信息)
                 [UIApplication sharedApplication].networkActivityIndicatorVisible = false;
             }];
@@ -212,7 +238,8 @@ static NSString * const PGCHttpCache = @"HttpYYCache";
 #pragma mark -
 #pragma mark - 网络判断
 
-+ (BOOL)requestBeforeJudgeConnect {
++ (BOOL)requestBeforeJudgeConnect
+{
     struct sockaddr zeroAddress;
     bzero(&zeroAddress, sizeof(zeroAddress));
     zeroAddress.sa_len = sizeof(zeroAddress);

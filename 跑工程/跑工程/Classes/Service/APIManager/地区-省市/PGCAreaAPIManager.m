@@ -7,6 +7,8 @@
 //
 
 #import "PGCAreaAPIManager.h"
+#import "PGCProvince.h"
+#import "PGCCity.h"
 
 @implementation PGCAreaAPIManager
 
@@ -30,7 +32,7 @@
 }
 
 
-+ (NSURLSessionDataTask *)getCitiesRequestWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, id))respondsBlock
++ (NSURLSessionDataTask *)getCitiesRequestWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, NSMutableArray *))respondsBlock
 {    
     return [self requestPOST:kGetCities parameters:parameters cachePolicy:RequestReturnCacheDataThenLoad success:^(NSURLSessionDataTask *task, id responseObject) {
         
@@ -39,7 +41,14 @@
         NSDictionary *resultData = responseObject[@"data"];
         
         if (resultCode == 200) {
-            respondsBlock(RespondsStatusSuccess, resultMsg, resultData);
+            NSMutableArray *cities = [NSMutableArray array];
+            for (id value in resultData) {
+                PGCCity *city = [[PGCCity alloc] init];
+                [city mj_setKeyValues:value];
+                // 将城市模型添加到数组中
+                [cities addObject:city];
+            }
+            respondsBlock(RespondsStatusSuccess, resultMsg, cities);
         }
         else {
             respondsBlock(RespondsStatusDataError, resultMsg, nil);

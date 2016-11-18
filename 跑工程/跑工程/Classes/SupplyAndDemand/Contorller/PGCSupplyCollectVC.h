@@ -6,8 +6,8 @@
 //  Copyright © 2016年 Mac. All rights reserved.
 //
 
-#import "PGCSupplyAndDemandRootVC.h"
+#import <UIKit/UIKit.h>
 
-@interface PGCSupplyCollectVC : PGCSupplyAndDemandRootVC
+@interface PGCSupplyCollectVC : UIViewController
 
 @end

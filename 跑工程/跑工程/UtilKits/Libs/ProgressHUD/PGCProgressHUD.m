@@ -74,6 +74,11 @@ static PGCProgressHUD *instance = nil;
 #pragma mark -
 #pragma mark - MBProgressHUD
 
+/**
+ 1.5s 后消息的MBProgressHUD
+ 
+ @param title
+ */
 + (void)showProgressHUDWithTitle:(NSString *)title {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KeyWindow animated:true];
     hud.mode = MBProgressHUDModeText;
@@ -82,7 +87,12 @@ static PGCProgressHUD *instance = nil;
     
     [hud hideAnimated:true afterDelay:1.5f];
 }
-
+/**
+ 1.5s 后消息的MBProgressHUD
+ 
+ @param view
+ @param title
+ */
 + (void)showProgressHUDWith:(UIView *)view title:(NSString *)title {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:true];
     hud.mode = MBProgressHUDModeText;
@@ -91,7 +101,13 @@ static PGCProgressHUD *instance = nil;
     
     [hud hideAnimated:true afterDelay:1.5f];
 }
-
+/**
+ 1.5s 后消息的MBProgressHUD
+ 
+ @param view
+ @param title
+ @param block
+ */
 + (void)showProgressHUDWith:(UIView *)view title:(NSString *)title block:(void(^)(void))block {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:true];
     hud.mode = MBProgressHUDModeText;
@@ -101,6 +117,7 @@ static PGCProgressHUD *instance = nil;
         block();
     });
 }
+
 
 + (MBProgressHUD *)showProgressHUD:(UIView *)view label:(NSString *)label {
     MBProgressHUD *progressHUD = [MBProgressHUD showHUDAddedTo:view animated:true];
@@ -112,27 +129,20 @@ static PGCProgressHUD *instance = nil;
 
 
 
-+(void)show:(NSString *)msg inView:(UIView *)view mode:(ProgressMode)myMode{
-    [self show:msg inView:view mode:myMode customImgView:nil];
++(void)show:(NSString *)msg toView:(UIView *)view mode:(ProgressMode)myMode{
+    [self show:msg toView:view mode:myMode customImgView:nil];
 }
 
-+(void)show:(NSString *)msg inView:(UIView *)view mode:(ProgressMode)myMode customImgView:(UIImageView *)customImgView{
++(void)show:(NSString *)msg toView:(UIView *)view mode:(ProgressMode)myMode customImgView:(UIImageView *)customImgView{
     //如果已有弹框，先消失
     if ([PGCProgressHUD shareinstance].hud != nil) {
         [[PGCProgressHUD shareinstance].hud hideAnimated:true];
         [PGCProgressHUD shareinstance].hud = nil;
     }
     
-    //4\4s屏幕避免键盘存在时遮挡
-    if ([UIScreen mainScreen].bounds.size.height == 480) {
-        [view endEditing:true];
-    }
-    
     [PGCProgressHUD shareinstance].hud = [MBProgressHUD showHUDAddedTo:view animated:true];
-    [PGCProgressHUD shareinstance].hud.dimBackground = true;//是否显示透明背景
-    //是否设置黑色背景，这两句配合使用
-    [PGCProgressHUD shareinstance].hud.color = [UIColor blackColor];
-    [PGCProgressHUD shareinstance].hud.contentColor = [UIColor whiteColor];
+    
+    [PGCProgressHUD shareinstance].hud.contentColor = [UIColor blackColor];
     
     [[PGCProgressHUD shareinstance].hud setMargin:10];
     [[PGCProgressHUD shareinstance].hud setRemoveFromSuperViewOnHide:true];
@@ -168,30 +178,30 @@ static PGCProgressHUD *instance = nil;
 }
 
 
-+(void)showMessage:(NSString *)msg inView:(UIView *)view{
-    [self show:msg inView:view mode:ProgressModeOnlyText];
++(void)showMessage:(NSString *)msg toView:(UIView *)view{
+    [self show:msg toView:view mode:ProgressModeOnlyText];
     [[PGCProgressHUD shareinstance].hud hideAnimated:true afterDelay:1.5];
 }
 
 
 
-+(void)showMessage:(NSString *)msg inView:(UIView *)view afterDelayTime:(NSInteger)delay{
-    [self show:msg inView:view mode:ProgressModeOnlyText];
++(void)showMessage:(NSString *)msg toView:(UIView *)view afterDelayTime:(NSInteger)delay{
+    [self show:msg toView:view mode:ProgressModeOnlyText];
     [[PGCProgressHUD shareinstance].hud hideAnimated:true afterDelay:delay];
 }
 
-+(void)showSuccess:(NSString *)msg inView:(UIView *)view{
-    [self show:msg inView:view mode:ProgressModeSuccess];
++(void)showSuccess:(NSString *)msg toView:(UIView *)view{
+    [self show:msg toView:view mode:ProgressModeSuccess];
     [[PGCProgressHUD shareinstance].hud hideAnimated:true afterDelay:1.5];
     
 }
 
 
-+(void)showProgress:(NSString *)msg inView:(UIView *)view{
-    [self show:msg inView:view mode:ProgressModeLoading];
++(void)showProgress:(NSString *)msg toView:(UIView *)view{
+    [self show:msg toView:view mode:ProgressModeLoading];
 }
 
-+(MBProgressHUD *)showProgressCircle:(NSString *)msg inView:(UIView *)view{
++(MBProgressHUD *)showProgressCircle:(NSString *)msg toView:(UIView *)view{
     if (view == nil) view = (UIView*)[UIApplication sharedApplication].delegate.window;
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:true];
     hud.mode = MBProgressHUDModeAnnularDeterminate;
@@ -202,23 +212,8 @@ static PGCProgressHUD *instance = nil;
 
 +(void)showMsgWithoutView:(NSString *)msg{
     UIWindow *view = [[UIApplication sharedApplication].windows lastObject];
-    [self show:msg inView:view mode:ProgressModeOnlyText];
+    [self show:msg toView:view mode:ProgressModeOnlyText];
     [[PGCProgressHUD shareinstance].hud hideAnimated:true afterDelay:1.5];
-}
-
-+(void)showCustomAnimation:(NSString *)msg withImgArry:(NSArray *)imgArry inview:(UIView *)view{
-    
-    UIImageView *showImageView = [[UIImageView alloc] init];
-    
-    showImageView.animationImages = imgArry;
-    [showImageView setAnimationRepeatCount:0];
-    [showImageView setAnimationDuration:(imgArry.count + 1) * 0.075];
-    [showImageView startAnimating];
-    
-    [self show:msg inView:view mode:ProgressModeCustomAnimation customImgView:showImageView];
-    
-    //这句话是为了展示几秒，实际要去掉
-//    [[PGCProgressHUD shareinstance].hud hideAnimated:true afterDelay:8.0];
 }
 
 @end

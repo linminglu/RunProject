@@ -22,11 +22,11 @@
 
 @implementation PGCContacInfoHeaderView
 
-- (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier
+- (instancetype)initWithFrame:(CGRect)frame
 {
-    self = [super initWithReuseIdentifier:reuseIdentifier];
+    self = [super initWithFrame:frame];
     if (self) {
-        self.contentView.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = [UIColor whiteColor];
         
         [self createUI];
         [self setAutoLayoutSubviews];
@@ -38,21 +38,21 @@
 {
     // 头像
     self.headImageView = [[UIImageView alloc] init];
-    [self.contentView addSubview:self.headImageView];
+    [self addSubview:self.headImageView];
     
     // 姓名
     self.contactNameLabel = [[UILabel alloc] init];
     self.contactNameLabel.textColor = RGB(102, 102, 102);
     self.contactNameLabel.font = SetFont(14);
     self.contactNameLabel.textAlignment = NSTextAlignmentCenter;
-    [self.contentView addSubview:self.contactNameLabel];
+    [self addSubview:self.contactNameLabel];
     
     // 项目名称
     self.projectNameLabel = [[UILabel alloc] init];
     self.projectNameLabel.textColor = RGB(158, 158, 158);
     self.projectNameLabel.font = SetFont(12);
     self.projectNameLabel.textAlignment = NSTextAlignmentCenter;
-    [self.contentView addSubview:self.projectNameLabel];
+    [self addSubview:self.projectNameLabel];
     
     // 个人资料按钮
     self.contactInfoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -61,7 +61,7 @@
     [self.contactInfoBtn setTitleColor:RGB(102, 102, 102) forState:UIControlStateNormal];
     [self.contactInfoBtn setTitleColor:PGCTintColor forState:UIControlStateSelected];
     [self.contactInfoBtn addTarget:self action:@selector(contactInfoBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentView addSubview:self.contactInfoBtn];
+    [self addSubview:self.contactInfoBtn];
     self.contactInfoBtn.selected = true;
     self.contactInfoBtn.userInteractionEnabled = false;
     
@@ -72,7 +72,7 @@
     [self.projectsBtn setTitleColor:RGB(102, 102, 102) forState:UIControlStateNormal];
     [self.projectsBtn setTitleColor:PGCTintColor forState:UIControlStateSelected];
     [self.projectsBtn addTarget:self action:@selector(projectsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentView addSubview:self.projectsBtn];
+    [self addSubview:self.projectsBtn];
     self.projectsBtn.selected = false;
     self.projectsBtn.userInteractionEnabled = true;
 }
@@ -82,36 +82,36 @@
 {
     self.headImageView.sd_layout
     .centerXIs(SCREEN_WIDTH / 2)
-    .topSpaceToView(self.contentView, 10)
+    .topSpaceToView(self, 10)
     .widthIs(50)
     .heightIs(50);
     
     self.contactNameLabel.sd_layout
     .centerXEqualToView(self.headImageView)
     .topSpaceToView(self.headImageView, 10)
-    .widthRatioToView(self.contentView, 0.5)
+    .widthRatioToView(self, 0.5)
     .heightIs(20);
     
     self.projectNameLabel.sd_layout
     .centerXEqualToView(self.headImageView)
     .topSpaceToView(self.contactNameLabel, 10)
-    .widthRatioToView(self.contentView, 0.5)
+    .widthRatioToView(self, 0.5)
     .heightIs(20);
     
     
     UIView *lineTop = [[UIView alloc] init];
     lineTop.backgroundColor = PGCBackColor;
-    [self.contentView addSubview:lineTop];
+    [self addSubview:lineTop];
     lineTop.sd_layout
-    .leftSpaceToView(self.contentView, 0)
-    .rightSpaceToView(self.contentView, 0)
+    .leftSpaceToView(self, 0)
+    .rightSpaceToView(self, 0)
     .topSpaceToView(self.projectNameLabel, 10)
     .heightIs(1);
     
     
     UIView *lineCenter = [[UIView alloc] init];
     lineCenter.backgroundColor = PGCBackColor;
-    [self.contentView addSubview:lineCenter];
+    [self addSubview:lineCenter];
     lineCenter.sd_layout
     .centerXEqualToView(self.headImageView)
     .topSpaceToView(lineTop, 15)
@@ -122,26 +122,28 @@
     self.contactInfoBtn.sd_layout
     .centerYEqualToView(lineCenter)
     .rightSpaceToView(lineCenter, 30)
-    .leftSpaceToView(self.contentView, 30)
+    .leftSpaceToView(self, 30)
     .heightIs(20);
     
     
     self.projectsBtn.sd_layout
     .centerYEqualToView(lineCenter)
     .leftSpaceToView(lineCenter, 30)
-    .rightSpaceToView(self.contentView, 30)
+    .rightSpaceToView(self, 30)
     .heightIs(20);
     
     
     UIView *lineBottom = [[UIView alloc] init];
     lineBottom.backgroundColor = PGCBackColor;
-    [self.contentView addSubview:lineBottom];
+    [self addSubview:lineBottom];
     self.lineBottom = lineBottom;
     lineBottom.sd_layout
-    .leftSpaceToView(self.contentView, 0)
-    .rightSpaceToView(self.contentView, 0)
+    .leftSpaceToView(self, 0)
+    .rightSpaceToView(self, 0)
     .topSpaceToView(lineCenter, 15)
     .heightIs(1);
+    
+    [self setupAutoHeightWithBottomView:self.lineBottom bottomMargin:0];
 }
 
 
@@ -152,8 +154,6 @@
     self.headImageView.image = [UIImage imageNamed:@"QQ好友"];
     self.contactNameLabel.text = contactHeader.name;
     self.projectNameLabel.text = @"项目名称";
-    
-    [self setupAutoHeightWithBottomView:self.lineBottom bottomMargin:0];
 }
 
 

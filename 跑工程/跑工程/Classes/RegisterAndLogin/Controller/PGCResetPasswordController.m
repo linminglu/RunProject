@@ -63,22 +63,22 @@
     [self.view endEditing:true];
 
     if (![self.phoneTF.text isPhoneNumber]) {
-        [PGCProgressHUD showMessage:@"请输入正确的手机号" inView:self.view];
+        [PGCProgressHUD showMessage:@"请输入正确的手机号" toView:self.view];
         return;
     }
     // 判断是否输入验证码
     if (!(self.verifyCodeTF.text.length > 0)) {
-        [PGCProgressHUD showMessage:@"请输入验证码" inView:self.view];
+        [PGCProgressHUD showMessage:@"请输入验证码" toView:self.view];
         return;
     }
     // 判断是否输入密码
     if (self.passwordTF.text.length < 6) {
-        [PGCProgressHUD showMessage:@"请输入6位数以上的密码" inView:self.view];
+        [PGCProgressHUD showMessage:@"请输入6位数以上的密码" toView:self.view];
         return;
     }
     // 判断密码验证是否正确
     if (![self.checkPasswordTF.text isEqualToString:self.passwordTF.text]) {
-        [PGCProgressHUD showMessage:@"密码验证失败" inView:self.view];
+        [PGCProgressHUD showMessage:@"密码验证失败" toView:self.view];
         self.checkPasswordTF.text = @"";
         return;
     }
@@ -149,11 +149,11 @@
         NSDictionary *params = @{@"phone":self.phoneTF.text, @"type":@0};
         [PGCRegisterOrLoginAPIManager sendVerifyCodeURLRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
             if (status == RespondsStatusSuccess) {
-                [PGCProgressHUD showMessage:@"验证码发送成功，请查看您的手机短信！" inView:self.view];
+                [PGCProgressHUD showMessage:@"验证码发送成功，请查看您的手机短信！" toView:self.view];
             }
         }];
     } else {
-        [PGCProgressHUD showMessage:@"请输入正确的手机号" inView:self.view];
+        [PGCProgressHUD showMessage:@"请输入正确的手机号" toView:self.view];
         return;
     }
 }

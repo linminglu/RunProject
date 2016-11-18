@@ -8,13 +8,10 @@
 
 #import "PGCChooseJobController.h"
 #import "PGCProfileAPIManager.h"
-#import "PGCTokenManager.h"
-#import "PGCUserInfo.h"
 
 @interface PGCChooseJobController ()
 
 @property (weak, nonatomic) IBOutlet UITextField *jobTextField;
-@property (strong, nonatomic) NSMutableDictionary *parameters;/** 上传参数 */
 
 - (void)initializeUserInterface; /** 初始化用户界面 */
 
@@ -40,9 +37,9 @@
     
     self.navigationItem.rightBarButtonItem = saveItem;
     
-    PGCTokenManager *manager = [PGCTokenManager tokenManager];
-    [manager readAuthorizeData];
-    PGCUserInfo *user = manager.token.user;
+    PGCManager *manager = [PGCManager manager];
+    [manager readTokenData];
+    PGCUser *user = manager.token.user;
     
     self.jobTextField.text = user.post;
     
@@ -53,13 +50,14 @@
 
 #pragma mark - Events
 
-- (void)saveInfo:(UIBarButtonItem *)sender {
-    
+- (void)saveInfo:(UIBarButtonItem *)sender
+{
     [self.view endEditing:true];
     
     [self.parameters setObject:self.jobTextField.text forKey:@"post"];
     
     MBProgressHUD *hud = [PGCProgressHUD showProgressHUD:self.view label:@"保存中..."];
+    
     [PGCProfileAPIManager completeInfoRequestWithParameters:self.parameters responds:^(RespondsStatus status, NSString *message, id resultData) {
         [hud hideAnimated:true];
         
@@ -70,25 +68,10 @@
             [self.navigationController popViewControllerAnimated:true];
             
         } else {
-            [PGCProgressHUD showAlertWithTarget:self title:@"保存失败：" message:message actionWithTitle:@"确定" handler:nil];
+            [PGCProgressHUD showAlertWithTarget:self title:@"保存失败：" message:message actionWithTitle:@"我知道了" handler:nil];
         }
     }];
 }
-
-
-#pragma mark - Getter
-
-- (NSMutableDictionary *)parameters {
-    if (!_parameters) {
-        _parameters = [NSMutableDictionary dictionary];
-        [_parameters setObject:@"iphone" forKey:@"client_type"];
-        [_parameters setObject:[PGCTokenManager tokenManager].token.token forKey:@"token"];
-        [_parameters setObject:@([PGCTokenManager tokenManager].token.user.id) forKey:@"user_id"];
-    }
-    return _parameters;
-}
-
-
 
 #pragma mark - Touches
 

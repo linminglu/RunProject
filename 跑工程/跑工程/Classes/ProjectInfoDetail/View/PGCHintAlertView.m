@@ -89,7 +89,7 @@
     [okButton.titleLabel setFont:SetFont(15)];
     [okButton setTitle:@"我知道了" forState:UIControlStateNormal];
     [okButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [okButton addTarget:self action:@selector(respondsToHintAlertDelete:) forControlEvents:UIControlEventTouchUpInside];
+    [okButton addTarget:self action:@selector(respondsToHintAlertKnown:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:okButton];
     okButton.sd_layout
     .topSpaceToView(centerView, 0)
@@ -101,7 +101,8 @@
 
 }
 
-- (void)setupSubviewsWithTitle:(NSString *)title {
+- (void)setupSubviewsWithTitle:(NSString *)title
+{
     self.bounds = CGRectMake(0, 0, SCREEN_WIDTH * 0.7, SCREEN_WIDTH * 0.35);
     self.center = CGPointMake(KeyWindow.centerX, KeyWindow.centerY - 25);
     self.backgroundColor = RGB(244, 244, 244);
@@ -179,6 +180,8 @@
         [KeyWindow addSubview:self];
         
         self.backView.alpha = 0.7;
+    } completion:^(BOOL finished) {
+        
     }];
 }
 
@@ -189,6 +192,7 @@
     [self hideAlertView];
 }
 
+
 - (void)respondsToHintAlertConfirm:(UIButton *)sender {
     if (self.delegate && [self.delegate respondsToSelector:@selector(hintAlertView:confirm:)]) {
         [self.delegate hintAlertView:self confirm:sender];
@@ -196,6 +200,13 @@
     [self hideAlertView];
 }
 
+
+- (void)respondsToHintAlertKnown:(UIButton *)sender {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(hintAlertView:known:)]) {
+        [self.delegate hintAlertView:self known:sender];
+    }
+    [self hideAlertView];
+}
 
 #pragma mark - Private
 

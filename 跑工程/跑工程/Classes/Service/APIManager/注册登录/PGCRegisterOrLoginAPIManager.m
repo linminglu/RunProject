@@ -7,10 +7,9 @@
 //
 
 #import "PGCRegisterOrLoginAPIManager.h"
-#import "PGCTokenManager.h"
-#import "PGCUserInfo.h"
 
 @implementation PGCRegisterOrLoginAPIManager
+
 
 + (NSURLSessionDataTask *)sendVerifyCodeURLRequestWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, id))respondsBlock
 {
@@ -66,8 +65,8 @@
             [token mj_setKeyValues:resultData];
             
             // 保存用户登录信息
-            [PGCTokenManager tokenManager].token = token;
-            [[PGCTokenManager tokenManager] saveAuthorizeData];
+            [PGCManager manager].token = token;
+            [[PGCManager manager] saveTokenData];
             
             respondsBlock(RespondsStatusSuccess, resultMsg, resultData);
         }
@@ -149,6 +148,14 @@
         NSDictionary *resultData = responseObject[@"data"];
         
         if (resultCode == 200) {
+            //构造token模型
+            PGCToken *token = [[PGCToken alloc] init];
+            [token mj_setKeyValues:resultData];
+            
+            // 保存用户登录信息
+            [PGCManager manager].token = token;
+            [[PGCManager manager] saveTokenData];
+            
             respondsBlock(RespondsStatusSuccess, resultMsg, resultData);
         }
         else {

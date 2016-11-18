@@ -12,8 +12,6 @@
 #import "PGCContactAPIManager.h"
 #import "BMChineseSort.h"
 #import "PGCContact.h"
-#import "PGCTokenManager.h"
-#import "PGCUserInfo.h"
 
 @interface PGCContactsController () <UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating>
 {
@@ -27,13 +25,17 @@
 @property (strong, nonatomic) NSMutableArray *letterArray;/** 排序好的结果数组 */
 @property (strong, nonatomic) NSMutableArray *searchDataSource;/** 搜索条数据源 */
 
-- (void)initializeDataSource; /** 初始化数据源 */
 - (void)initializeUserInterface; /** 初始化用户界面 */
+- (void)registerNotification; /** 注册通知 */
 
 @end
 
 
 @implementation PGCContactsController
+
+- (void)dealloc {
+    [PGCNotificationCenter removeObserver:self name:kContactReloadData object:nil];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -42,79 +44,61 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
     
-    [self initializeDataSource];
+    [self refreshContactList];
     [self initializeUserInterface];
+    [self registerNotification];
 }
 
-
-- (void)initializeDataSource
+- (void)initializeUserInterface
 {
-    _isSearching = false;
-    
-    PGCTokenManager *manager = [PGCTokenManager tokenManager];
-    [manager readAuthorizeData];
-    PGCUserInfo *user = manager.token.user;
-    if (!user) {
-        return;
-    }
-    NSDictionary *params = @{@"user_id":@(user.id),
-                             @"client_type":@"iphone",
-                             @"token":manager.token.token};
-    [PGCContactAPIManager getContactsListRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
-        
-        if (status == RespondsStatusSuccess) {
-            
-            for (id value in resultData) {
-                PGCContact *contact = [[PGCContact alloc] init];
-                [contact mj_setKeyValues:value];
-                
-                [self.dataSource addObject:contact];
-            }
-            [self.indexArray addObjectsFromArray:[BMChineseSort IndexWithArray:self.dataSource Key:@"name"]];
-            [self.letterArray addObjectsFromArray:[BMChineseSort sortObjectArray:self.dataSource Key:@"name"]];
-            
-            [self.tableView reloadData];
-        }
-    }];
-}
-
-- (void)initializeUserInterface {
-    
     self.navigationItem.title = @"通讯录";
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = false;
     
     [self.view addSubview:self.tableView];
     self.tableView.tableHeaderView = self.searchController.searchBar;
+    [self.tableView.mj_header beginRefreshing];
 }
 
-- (void)refreshContactList {
+
+- (void)registerNotification {
+    [PGCNotificationCenter addObserver:self selector:@selector(reloadContactData:) name:kContactReloadData object:nil];
+}
+
+
+- (void)reloadContactData:(NSNotification *)notifi
+{
+    if ([notifi.userInfo objectForKey:@"DeleteContact"]) {
+        [self refreshContactList];
+    }
+}
+
+#pragma mark - Table Header Refresh
+
+- (void)refreshContactList
+{
     [self.indexArray removeAllObjects];
     [self.letterArray removeAllObjects];
-    [self.dataSource removeAllObjects];
     
-    PGCTokenManager *manager = [PGCTokenManager tokenManager];
-    [manager readAuthorizeData];
-    PGCUserInfo *user = manager.token.user;
+    _isSearching = false;
+    
+    PGCManager *manager = [PGCManager manager];
+    [manager readTokenData];
+    PGCUser *user = manager.token.user;
     if (!user) {
+        [PGCProgressHUD showMessage:@"请先登录" toView:self.view];
+        [self.tableView.mj_header endRefreshing];
         return;
     }
-    NSDictionary *params = @{@"user_id":@(user.id),
+    NSDictionary *params = @{@"user_id":@(user.user_id),
                              @"client_type":@"iphone",
                              @"token":manager.token.token};
-    [PGCContactAPIManager getContactsListRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
+    [PGCContactAPIManager getContactsListRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, NSMutableArray *resultData) {
         [self.tableView.mj_header endRefreshing];
         
         if (status == RespondsStatusSuccess) {
-            
-            for (id value in resultData) {
-                PGCContact *contact = [[PGCContact alloc] init];
-                [contact mj_setKeyValues:value];
-                
-                [self.dataSource addObject:contact];
-            }
-            [self.indexArray addObjectsFromArray:[BMChineseSort IndexWithArray:self.dataSource Key:@"name"]];
-            [self.letterArray addObjectsFromArray:[BMChineseSort sortObjectArray:self.dataSource Key:@"name"]];
+            [self.indexArray addObjectsFromArray:[BMChineseSort IndexWithArray:resultData Key:@"name"]];
+            [self.letterArray addObjectsFromArray:[BMChineseSort sortObjectArray:resultData Key:@"name"]];
             
             [self.tableView reloadData];
         }
@@ -202,9 +186,9 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 30)];
+    UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width_sd, 30)];
     header.backgroundColor = PGCBackColor;
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, header.width - 30, 30)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, header.width_sd - 30, 30)];
     label.font = [UIFont boldSystemFontOfSize:17];
     label.textColor = PGCTintColor;
     label.text = self.indexArray[section];
@@ -255,8 +239,10 @@
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.dataSource = self;
         _tableView.delegate = self;
-        _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshContactList)];
         [_tableView registerClass:[PGCContactsCell class] forCellReuseIdentifier:kContactsCell];
+        MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshContactList)];
+        _tableView.mj_header = header;
+        header.lastUpdatedTimeLabel.hidden = true;
     }
     return _tableView;
 }

@@ -38,7 +38,11 @@
     self.postLabel.text = contactLeft.position;
     self.companyLabel.text = contactLeft.company;
     self.addressLabel.text = contactLeft.address;
-    self.remarkTextView.text = contactLeft.remark;
+    if (contactLeft.remark) {
+        self.remarkTextView.text = contactLeft.remark;
+    } else {
+        self.placeholder.text = @"备注...";
+    }
 }
 
 

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "PGCSupplyAndDemandShareView.h"
+#import "PGCNavigationItem.h"
 
 @interface PGCCollectRootVC : UIViewController <PGCSupplyAndDemandShareViewDelegate>
 

@@ -7,10 +7,14 @@
 //
 
 #import "PGCProjectInfoAPIManager.h"
+#import "PGCProjectType.h"
+#import "PGCProjectProgress.h"
+#import "PGCProjectInfo.h"
+#import "PGCProjectContact.h"
 
 @implementation PGCProjectInfoAPIManager
 
-+ (NSURLSessionDataTask *)getProjectTypesRequestWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, id))respondsBlock
++ (NSURLSessionDataTask *)getProjectTypesRequestWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, NSMutableArray *))respondsBlock
 {
     return [self requestPOST:kGetProjectTypes parameters:parameters cachePolicy:RequestReturnCacheDataThenLoad success:^(NSURLSessionDataTask *task, id responseObject) {
         
@@ -19,7 +23,14 @@
         NSDictionary *resultData = responseObject[@"data"];
         
         if (resultCode == 200) {
-            respondsBlock(RespondsStatusSuccess, resultMsg, resultData);
+            NSMutableArray *typeArr = [NSMutableArray array];
+            for (id value in resultData) {
+                PGCProjectType *projectType = [[PGCProjectType alloc] init];
+                [projectType mj_setKeyValues:value];
+                // 将模型添加到数组中
+                [typeArr addObject:projectType];
+            }
+            respondsBlock(RespondsStatusSuccess, resultMsg, typeArr);
         }
         else {
             respondsBlock(RespondsStatusDataError, resultMsg, nil);
@@ -30,7 +41,7 @@
 }
 
 
-+ (NSURLSessionDataTask *)getProjectProgressesRequestWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, id))respondsBlock
++ (NSURLSessionDataTask *)getProjectProgressesRequestWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, NSMutableArray *))respondsBlock
 {
     return [self requestPOST:kGetProjectProgresses parameters:parameters cachePolicy:RequestReturnCacheDataThenLoad success:^(NSURLSessionDataTask *task, id responseObject) {
         
@@ -39,7 +50,14 @@
         NSDictionary *resultData = responseObject[@"data"];
         
         if (resultCode == 200) {
-            respondsBlock(RespondsStatusSuccess, resultMsg, resultData);
+            NSMutableArray *progressArr = [NSMutableArray array];
+            for (id value in resultData) {
+                PGCProjectProgress *progress = [[PGCProjectProgress alloc] init];
+                [progress mj_setKeyValues:value];
+                // 将模型添加到数组中
+                [progressArr addObject:progress];
+            }
+            respondsBlock(RespondsStatusSuccess, resultMsg, progressArr);
         }
         else {
             respondsBlock(RespondsStatusDataError, resultMsg, nil);
@@ -52,7 +70,7 @@
 
 + (NSURLSessionDataTask *)getProjectsRequestWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, id))respondsBlock
 {
-    return [self requestPOST:kGetProjects parameters:parameters cachePolicy:RequestReloadIngnoringLocalCacheData success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [self requestPOST:kGetProjects parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
         // code = 200   请求成功返回，数据查询正常，但data不一定有数据
         // code = -200  请求不成功，服务器由于一些原因执行中无法返回数据
         // code = -201  用户不存在或被禁用，手机端退出用户登陆
@@ -61,6 +79,13 @@
         NSDictionary *resultData = responseObject[@"data"];
         
         if (resultCode == 200) {
+            NSMutableArray *results = [NSMutableArray array];
+            for (id value in resultData[@"result"]) {
+                PGCProjectInfo *project = [[PGCProjectInfo alloc] init];
+                [project mj_setKeyValues:value];
+                // 将模型添加到数组中
+                [results addObject:project];
+            }
             respondsBlock(RespondsStatusSuccess, resultMsg, resultData);
         }
         else {
@@ -74,7 +99,7 @@
 }
 
 
-+ (NSURLSessionDataTask *)getProjectContactsRequestWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, id))respondsBlock
++ (NSURLSessionDataTask *)getProjectContactsRequestWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, NSMutableArray *))respondsBlock
 {
     return [self requestPOST:kGetProjectContacts parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
         
@@ -83,7 +108,14 @@
         NSDictionary *resultData = responseObject[@"data"];
         
         if (resultCode == 200) {
-            respondsBlock(RespondsStatusSuccess, resultMsg, resultData);
+            NSMutableArray *results = [NSMutableArray array];
+            for (id value in resultData) {
+                PGCProjectContact *contact = [[PGCProjectContact alloc] init];
+                [contact mj_setKeyValues:value];
+                // 将模型添加到数组中
+                [results addObject:contact];
+            }
+            respondsBlock(RespondsStatusSuccess, resultMsg, results);
         }
         else {
             respondsBlock(RespondsStatusDataError, resultMsg, nil);
@@ -102,7 +134,7 @@
         NSString *resultMsg = responseObject[@"msg"];
         NSDictionary *resultData = responseObject[@"data"];
         
-        if (resultCode == 200) {
+        if (resultCode == 200) {            
             respondsBlock(RespondsStatusSuccess, resultMsg, resultData);
         }
         else {

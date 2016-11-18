@@ -11,7 +11,9 @@
 @interface Images : NSObject
 
 @property (assign, nonatomic) int id;/** 图片id */
-@property (copy, nonatomic) NSString *path;/** 图片路径 */
-@property (copy, nonatomic) NSString *imageDec;/** 图片面熟 */
+@property (assign, nonatomic) int ref_id;/** ref_id */
+@property (assign, nonatomic) int type;/** 类型 */
+@property (copy, nonatomic) NSString *image;/** 图片路径 */
+@property (copy, nonatomic) NSString *imageDec;/** 图片介绍 */
 
 @end

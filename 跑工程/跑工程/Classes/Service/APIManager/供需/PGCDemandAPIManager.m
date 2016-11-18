@@ -7,12 +7,14 @@
 //
 
 #import "PGCDemandAPIManager.h"
+#import "PGCDemand.h"
 
 @implementation PGCDemandAPIManager
 
-+ (NSURLSessionDataTask *)addSupplyWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, id))respondsBlock
+
++ (NSURLSessionDataTask *)addDemandWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, id))respondsBlock
 {
-    return [self requestPOST:kAddSupply parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [self requestPOST:kAddDemand parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
         
         NSInteger resultCode = [responseObject[@"code"] integerValue];
         NSString *resultMsg = responseObject[@"msg"];
@@ -30,9 +32,9 @@
 }
 
 
-+ (NSURLSessionDataTask *)getSupplyWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, id))respondsBlock
++ (NSURLSessionDataTask *)getDemandWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, id))respondsBlock
 {
-    return [self requestPOST:kGetSupply parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [self requestPOST:kGetDemand parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
         
         NSInteger resultCode = [responseObject[@"code"] integerValue];
         NSString *resultMsg = responseObject[@"msg"];
@@ -50,9 +52,9 @@
 }
 
 
-+ (NSURLSessionDataTask *)mySuppliesWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, id))respondsBlock
++ (NSURLSessionDataTask *)myDemandsWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, id))respondsBlock
 {
-    return [self requestPOST:kMySupplies parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [self requestPOST:kMyDemands parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
         
         NSInteger resultCode = [responseObject[@"code"] integerValue];
         NSString *resultMsg = responseObject[@"msg"];
@@ -70,9 +72,9 @@
 }
 
 
-+ (NSURLSessionDataTask *)closeMySupplyWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, id))respondsBlock
++ (NSURLSessionDataTask *)deleteMyDemandsWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, id))respondsBlock
 {
-    return [self requestPOST:kCloseMySupply parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [self requestPOST:kDeleteMyDemands parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
         
         NSInteger resultCode = [responseObject[@"code"] integerValue];
         NSString *resultMsg = responseObject[@"msg"];
@@ -88,4 +90,6 @@
         respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
     }];
 }
+
+
 @end

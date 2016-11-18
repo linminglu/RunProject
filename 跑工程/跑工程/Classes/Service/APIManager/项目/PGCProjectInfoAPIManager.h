@@ -12,11 +12,11 @@
 @interface PGCProjectInfoAPIManager : PGCBaseAPIManager
 
 // 获取项目类型
-+ (NSURLSessionDataTask *)getProjectTypesRequestWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
++ (NSURLSessionDataTask *)getProjectTypesRequestWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, NSMutableArray *resultData))respondsBlock;
 
 
 // 获取项目进度
-+ (NSURLSessionDataTask *)getProjectProgressesRequestWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
++ (NSURLSessionDataTask *)getProjectProgressesRequestWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, NSMutableArray *resultData))respondsBlock;
 
 
 // 获取项目信息
@@ -24,7 +24,7 @@
 
 
 // 获取项目联系人
-+ (NSURLSessionDataTask *)getProjectContactsRequestWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
++ (NSURLSessionDataTask *)getProjectContactsRequestWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, NSMutableArray *resultData))respondsBlock;
 
 
 // 添加收藏与浏览记录

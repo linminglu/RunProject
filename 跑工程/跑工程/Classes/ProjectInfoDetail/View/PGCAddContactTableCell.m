@@ -8,6 +8,11 @@
 
 #import "PGCAddContactTableCell.h"
 
+@interface PGCAddContactTableCell () <UITextFieldDelegate>
+
+
+@end
+
 @implementation PGCAddContactTableCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -22,7 +27,8 @@
     return self;
 }
 
-- (void)setupSubviews {
+- (void)setupSubviews
+{
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.textColor = RGB(51, 51, 51);
     titleLabel.font = SetFont(15);
@@ -40,6 +46,8 @@
     textField.font = SetFont(15);
     textField.returnKeyType = UIReturnKeyDefault;
     textField.enablesReturnKeyAutomatically = true;
+    textField.delegate = self;
+    
     [self.contentView addSubview:textField];
     self.addContactTF = textField;
     textField.sd_layout
@@ -57,6 +65,19 @@
     .rightSpaceToView(self.contentView, 0)
     .heightIs(1);
 }
+
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(addContactTableCell:textField:)]) {
+        [self.delegate addContactTableCell:self textField:textField];
+    }
+    return true;
+}
+
+
 
 - (void)awakeFromNib {
     [super awakeFromNib];

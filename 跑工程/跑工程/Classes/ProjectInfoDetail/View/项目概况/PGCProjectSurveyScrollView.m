@@ -42,7 +42,8 @@
 #pragma mark - Init method
 
 // 子控件布局
-- (void)initUserInterface {
+- (void)initUserInterface
+{
     UIScrollView *scrollView = [[UIScrollView alloc] init];
     scrollView.backgroundColor = [UIColor whiteColor];
     scrollView.showsHorizontalScrollIndicator = false;
@@ -116,7 +117,7 @@
     .rightSpaceToView(scrollView, 15)
     .autoHeightRatio(0);
     
-    [scrollView setupAutoContentSizeWithBottomView:materialLabel bottomMargin:10];
+    [scrollView setupAutoContentSizeWithBottomView:materialLabel bottomMargin:20];
 }
 
 
@@ -124,6 +125,14 @@
 
 - (void)respondsToCheckButton:(UIButton *)sender
 {
+    PGCManager *manager = [PGCManager manager];
+    [manager readTokenData];
+    PGCUser *user = manager.token.user;
+    if (!user) {
+        [PGCProgressHUD showMessage:@"请先登录" toView:KeyWindow];
+        return;
+    }
+    
     BOOL isRemind = [[PGCUserDefault valueForKey:@"isRemind"] boolValue];
     
     PGCAlertView *alert = nil;
@@ -132,7 +141,8 @@
         
     } else {
         if (isRemind) {
-            [[self getCurrentVC].navigationController pushViewController:[PGCVIPServiceController new] animated:true];
+            PGCVIPServiceController *vipVC = [[PGCVIPServiceController alloc] init];
+            [[self getCurrentVC].navigationController pushViewController:vipVC animated:true];
         } else {
             alert = [[PGCAlertView alloc] initWithTitle:@"查看项目详情，需要您开通会员服务，如果您需要开通会员服务，请点击确定"];
         }
@@ -144,8 +154,10 @@
 
 #pragma mark - PGCAlertViewDelegate
 
-- (void)alertView:(PGCAlertView *)alertView confirm:(UIButton *)confirm {
-    [[self getCurrentVC].navigationController pushViewController:[PGCVIPServiceController new] animated:true];
+- (void)alertView:(PGCAlertView *)alertView confirm:(UIButton *)confirm
+{
+    PGCVIPServiceController *vipVC = [[PGCVIPServiceController alloc] init];
+    [[self getCurrentVC].navigationController pushViewController:vipVC animated:true];
 }
 
 
@@ -187,22 +199,21 @@
         result = nav.childViewControllers.lastObject;
     }else{
         result = nextResponder;
-    }
-    
+    }    
     return result;
 }
 
 
 
-#pragma mark - Public
+#pragma mark - Setter
 
-- (void)setSurveyInfoWithModel:(id)model {
-    if (!model) {
+- (void)setProject:(PGCProjectInfo *)project
+{
+    _project = project;
+    if (!project) {
         return;
     }
-    [self.surveySubview loadDataWithModel:model];
-    
-    PGCProjectInfo *project = (PGCProjectInfo *)model;
+    self.surveySubview.projectInfo = project;
     
     self.introContentLabel.text = project.desc;
     

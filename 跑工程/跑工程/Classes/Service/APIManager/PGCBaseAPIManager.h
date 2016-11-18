@@ -27,8 +27,6 @@ typedef NS_ENUM(NSUInteger, RequestCachePolicy) {
 typedef NS_ENUM(NSUInteger, RequestType) {
     RequestType_POST = 0, //POST请求方式
     RequestType_GET,      //GET请求方式
-    RequestType_UpLoad,   //POST上传
-    RequestType_Download, //下载
 };
 
 
@@ -73,7 +71,7 @@ typedef void (^HttpProgress)(NSProgress *progress);;
  @param parameters 请求参数
  @param success 成功的回调
  @param failure 失败的回调
- @return
+ @return 返回的对象可取消请求,调用cancel方法
  */
 + (__kindof NSURLSessionDataTask *)requestGET:(NSString *)urlString
                    parameters:(NSDictionary *)parameters
@@ -89,7 +87,7 @@ typedef void (^HttpProgress)(NSProgress *progress);;
  @param cachePolicy 缓存策略
  @param success 成功的回调
  @param failure 失败的回调
- @return
+ @return 返回的对象可取消请求,调用cancel方法
  */
 + (__kindof NSURLSessionDataTask *)requestGET:(NSString *)urlString
                    parameters:(NSDictionary *)parameters
@@ -109,7 +107,7 @@ typedef void (^HttpProgress)(NSProgress *progress);;
  @param parameters 请求参数
  @param success 成功的回调
  @param failure 失败的回调
- @return
+ @return 返回的对象可取消请求,调用cancel方法
  */
 + (__kindof NSURLSessionDataTask *)requestPOST:(NSString *)urlString
                                     parameters:(NSDictionary *)parameters
@@ -125,7 +123,7 @@ typedef void (^HttpProgress)(NSProgress *progress);;
  @param cachePolicy 缓存策略
  @param success 成功的回调
  @param failure 失败的回调
- @return
+ @return 返回的对象可取消请求,调用cancel方法
  */
 + (__kindof NSURLSessionDataTask *)requestPOST:(NSString *)urlString
                                     parameters:(NSDictionary *)parameters
@@ -134,17 +132,15 @@ typedef void (^HttpProgress)(NSProgress *progress);;
                                        failure:(failureHandler)failure;
 
 
-
-
 /**
- *  上传图片文件
+ *  上传图片数组
  *
  *  @param URL        请求地址
  *  @param parameters 请求参数
  *  @param images     图片数组
  *  @param name       文件对应服务器上的字段
  *  @param fileName   文件名
- *  @param mimeType   图片文件的类型,例:png、jpeg(默认类型)....
+ *  @param mimeType   图片文件的类型,例:png、jpg(默认类型)....
  *  @param progress   上传进度信息
  *  @param success    请求成功的回调
  *  @param failure    请求失败的回调
@@ -153,11 +149,13 @@ typedef void (^HttpProgress)(NSProgress *progress);;
  */
 + (__kindof NSURLSessionDataTask *)uploadRequest:(NSString *)urlString
                                       parameters:(NSDictionary *)parameters
-                                           image:(UIImage *)image
+                                          images:(NSArray<UIImage *> *)images
                                             name:(NSString *)name
                                         fileName:(NSString *)fileName
                                         mimeType:(NSString *)mimeType
                                         progress:(HttpProgress)progress
                                          success:(successHandler)success
                                          failure:(failureHandler)failure;
+
+
 @end

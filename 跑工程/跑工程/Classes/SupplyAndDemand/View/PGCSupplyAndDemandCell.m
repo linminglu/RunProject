@@ -7,6 +7,8 @@
 //
 
 #import "PGCSupplyAndDemandCell.h"
+#import "PGCSupply.h"
+#import "PGCDemand.h"
 
 @interface PGCSupplyAndDemandCell ()
 
@@ -33,7 +35,8 @@
     return self;
 }
 
-- (void)createUI {
+- (void)createUI
+{
     // 标题
     self.nameLabel = [[UILabel alloc] init];
     self.nameLabel.font = [UIFont systemFontOfSize:16];
@@ -79,7 +82,8 @@
 
 #pragma mark - 在这里用三方自动布局进行约束
 
-- (void)setupSubviewsAutoLayout {
+- (void)setupSubviewsAutoLayout
+{
     // 标题
     self.nameLabel.sd_layout
     .topSpaceToView(self.contentView, 10)
@@ -98,7 +102,7 @@
     self.areaLabel.sd_layout
     .topSpaceToView(self.contentLabel, 10)
     .leftSpaceToView(self.contentView, 15)
-    .widthIs(80)
+    .widthIs(100)
     .heightIs(20);
     
     // 时间标签
@@ -121,8 +125,45 @@
     .leftSpaceToView(self.contentView, 0)
     .rightSpaceToView(self.contentView, 0)
     .heightIs(1);
+}
+
+
+#pragma mark - Setter
+
+- (void)setDemand:(PGCDemand *)demand
+{
+    _demand = demand;
     
-    [self.contentView setupAutoHeightWithBottomView:self.line bottomMargin:0];
+    self.nameLabel.text = demand.title;
+    self.contentLabel.text = demand.desc;
+    self.areaLabel.text = demand.address;
+    self.categoryLabel.text = demand.type_name;
+    self.areaLabel.text = [demand.province stringByAppendingString:demand.city];
+    NSString *start_time = [demand.start_time substringToIndex:10];
+    self.timeLabel.text = start_time;
+    
+    [self setupAutoHeightWithBottomView:self.line bottomMargin:0];
+}
+
+
+- (void)setSupply:(PGCSupply *)supply
+{
+    _supply = supply;
+    
+    self.nameLabel.text = supply.title;
+    self.contentLabel.text = supply.desc;
+    self.areaLabel.text = supply.address;
+    
+    NSMutableArray *mutableArray = [NSMutableArray array];
+    for (Types *type in supply.types) {
+        [mutableArray addObject:type.name];
+    }
+    self.categoryLabel.text = [mutableArray componentsJoinedByString:@","];
+    self.areaLabel.text = [supply.province stringByAppendingString:supply.city];
+    NSString *start_time = [supply.start_time substringToIndex:10];
+    self.timeLabel.text = start_time;
+    
+    [self setupAutoHeightWithBottomView:self.line bottomMargin:0];
 }
 
 

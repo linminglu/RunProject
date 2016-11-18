@@ -10,5 +10,4 @@
 
 @interface PGCSearchBar : UITextField
 
-
 @end

@@ -12,22 +12,19 @@
 #import "PGCMapTypeViewController.h"
 #import "PGCProjectInfo.h"
 #import "PGCProjectInfoAPIManager.h"
-#import "PGCTokenManager.h"
-#import "PGCUserInfo.h"
 #import "PGCProjectContact.h"
 
 #define SegmentBtnTag 100
 
 @interface PGCProjectInfoDetailVC () <UICollectionViewDataSource>
-{
-    NSMutableDictionary *_params;
-}
 
+@property (strong, nonatomic) UIButton *navButton;/** 导航栏按钮 */
 @property (strong, nonatomic) UICollectionView *collectionView;/** 集合视图 */
 @property (strong, nonatomic) UIButton *previousBtn;/** 当前选中按钮 */
 @property (strong, nonatomic) NSMutableArray *segmentBtns;/** 存放按钮的数组 */
 @property (strong, nonatomic) UIView *projectTitleView;/** 项目名称背景视图 */
-@property (strong, nonatomic) NSMutableArray *contactData;/** 联系人数据源 */
+@property (copy, nonatomic) NSArray *contactData;/** 联系人数据源 */
+@property (strong, nonatomic) NSMutableDictionary *accessOrCollectParams;/** 添加收藏或浏览记录的参数 */
 
 - (void)initializeDataSource; /** 初始化数据源 */
 - (void)initializeUserInterface;/** 初始化用户界面 */
@@ -46,37 +43,32 @@
 
 - (void)initializeDataSource
 {
-    PGCTokenManager *manager = [PGCTokenManager tokenManager];
-    [manager readAuthorizeData];
-    PGCUserInfo *user = manager.token.user;
+    PGCManager *manager = [PGCManager manager];
+    [manager readTokenData];
+    PGCUser *user = manager.token.user;
+    if (!user) {
+        return;
+    }
+    NSDictionary *params = @{@"project_id":@(self.projectInfoDetail.id), @"user_id":@(user.user_id)};
     
-    _params = [@{@"user_id":@(user.id),
-                 @"client_type":@"iphone",
-                 @"token":manager.token.token,
-                 @"project_id":@(self.projectInfoDetail.id),
-                 @"type":@(1)} mutableCopy];
-    
-    [PGCProjectInfoAPIManager addAccessOrCollectRequestWithParameters:_params responds:^(RespondsStatus status, NSString *message, id resultData) {
-        
-    }];
-    
-    NSDictionary *params = @{@"project_id":@(self.projectInfoDetail.id), @"user_id":@(user.id)};
-    
-    [PGCProjectInfoAPIManager getProjectContactsRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
+    [PGCProjectInfoAPIManager getProjectContactsRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, NSMutableArray *resultData) {
         if (status == RespondsStatusSuccess) {
-            
-            for (id value in resultData) {
-                PGCProjectContact *contact = [[PGCProjectContact alloc] init];
-                [contact mj_setKeyValues:value];
-                
-                [self.contactData addObject:contact];
-            }
+            self.contactData = resultData;
         }
+    }];
+    self.accessOrCollectParams = [@{@"user_id":@(user.user_id),
+                                  @"client_type":@"iphone",
+                                  @"token":manager.token.token,
+                                  @"project_id":@(self.projectInfoDetail.id),
+                                  @"type":@(1)} mutableCopy];
+    [PGCProjectInfoAPIManager addAccessOrCollectRequestWithParameters:self.accessOrCollectParams responds:^(RespondsStatus status, NSString *message, id resultData) {
+        
     }];
 }
 
 
-- (void)initializeUserInterface {
+- (void)initializeUserInterface
+{
     self.navigationItem.title = @"项目详情";
     self.view.backgroundColor = RGB(244, 244, 244);
     
@@ -142,7 +134,7 @@
         self.previousBtn = button;
         NSInteger index = (button.tag - SegmentBtnTag);
         if (selected && index < 2) {
-            self.collectionView.contentOffset = CGPointMake(index * self.collectionView.width, 0);
+            self.collectionView.contentOffset = CGPointMake(index * self.collectionView.width_sd, 0);
         } else {
             [self.navigationController pushViewController:[PGCMapTypeViewController new] animated:true];
         }
@@ -154,36 +146,38 @@
 
  @param sender
  */
-- (void)respondsToCollect:(UIButton *)sender {
-    
-    PGCTokenManager *manager = [PGCTokenManager tokenManager];
-    [manager readAuthorizeData];
-    PGCUserInfo *user = manager.token.user;
-    
-    MBProgressHUD *hud = [PGCProgressHUD showProgressHUD:self.view label:nil];
-    
+- (void)respondsToCollect:(UIButton *)sender
+{
+    PGCManager *manager = [PGCManager manager];
+    [manager readTokenData];
+    PGCUser *user = manager.token.user;
+    if (!user) {
+        [PGCProgressHUD showMessage:@"请先登录" toView:self.view];
+        return;
+    }
     if (self.projectInfoDetail.collect_id == 0) {
-        [_params setObject:@(2) forKey: @"type"];
-        [PGCProjectInfoAPIManager addAccessOrCollectRequestWithParameters:_params responds:^(RespondsStatus status, NSString *message, id resultData) {
-            [hud hideAnimated:true];
-            
+        
+        [self.accessOrCollectParams setObject:@(2) forKey:@"type"];
+        
+        [PGCProjectInfoAPIManager addAccessOrCollectRequestWithParameters:self.accessOrCollectParams responds:^(RespondsStatus status, NSString *message, id resultData) {
             if (status == RespondsStatusSuccess) {
+                
                 [sender setTitle:@"取消收藏" forState:UIControlStateNormal];
-                [PGCProgressHUD showMessage:@"收藏成功" inView:self.view];
+                [PGCProgressHUD showMessage:@"收藏成功" toView:self.view];
+                [PGCNotificationCenter postNotificationName:kRefreshCollectTable object:nil userInfo:nil];
             }
         }];
     } else {
         NSString *ids_json = [NSString stringWithFormat:@"[%d]", self.projectInfoDetail.collect_id];
-        NSDictionary *params = @{@"user_id":@(user.id),
+        NSDictionary *params = @{@"user_id":@(user.user_id),
                                  @"client_type":@"iphone",
                                  @"token":manager.token.token,
                                  @"ids_json":ids_json};
         [PGCProjectInfoAPIManager deleteAccessOrCollectRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
-            [hud hideAnimated:true];
-            
             if (status == RespondsStatusSuccess) {
+                
                 [sender setTitle:@"收藏此项目" forState:UIControlStateNormal];
-                [PGCProgressHUD showMessage:@"已取消收藏" inView:self.view];
+                [PGCProgressHUD showMessage:@"已取消收藏" toView:self.view];
                 [PGCNotificationCenter postNotificationName:kRefreshCollectTable object:nil userInfo:nil];
             }
         }];
@@ -193,17 +187,19 @@
 
 #pragma mark - UICollectionViewDataSource
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
     return 2;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
     if (indexPath.item == 0) {
         PGCProjectSurveyScrollView *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kProjectSurveyScrollView forIndexPath:indexPath];
         if (!cell) {
             cell = [[PGCProjectSurveyScrollView alloc] initWithFrame:collectionView.frame];
         }
-        [cell setSurveyInfoWithModel:self.projectInfoDetail];
+        cell.project = self.projectInfoDetail;
         return cell;
         
     } else {
@@ -219,27 +215,18 @@
 
 #pragma mark - Setter
 
-- (void)setProjectInfoDetail:(PGCProjectInfo *)projectInfoDetail {
+- (void)setProjectInfoDetail:(PGCProjectInfo *)projectInfoDetail
+{
     _projectInfoDetail = projectInfoDetail;
     
     NSString *collectBtnTitle = projectInfoDetail.collect_id > 0 ? @"取消收藏" : @"收藏此项目";
-    // 导航栏收藏按钮
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
-    button.bounds = CGRectMake(0, 0, 90, 40);
-    [button setImage:[UIImage imageNamed:@"heart"] forState:UIControlStateNormal];
-    [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
-    [button setTitleColor:PGCTextColor forState:UIControlStateNormal];
-    [button setTintColor:PGCTextColor];
-    [button setTitle:collectBtnTitle forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(respondsToCollect:) forControlEvents:UIControlEventTouchUpInside];
-    CGFloat labelInset = [button.titleLabel intrinsicContentSize].width - button.imageView.width - button.width;
-    CGFloat imageInset = button.imageView.width - button.width - button.titleLabel.width;
+    [self.navButton setTitle:collectBtnTitle forState:UIControlStateNormal];
     
-    button.titleEdgeInsets = UIEdgeInsetsMake(0, labelInset, 0, 0);
-    button.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, imageInset);
-    
-    UIBarButtonItem *collectItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-    self.navigationItem.rightBarButtonItem = collectItem;
+    CGFloat labelInset = [_navButton.titleLabel intrinsicContentSize].width - _navButton.imageView.width_sd - _navButton.width_sd;
+    CGFloat imageInset = _navButton.imageView.width_sd - _navButton.width_sd - _navButton.titleLabel.width_sd;
+    _navButton.titleEdgeInsets = UIEdgeInsetsMake(0, labelInset, 0, 0);
+    _navButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, imageInset);
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_navButton];
 }
 
 
@@ -253,22 +240,15 @@
 }
 
 
-- (NSMutableArray *)contactData {
-    if (!_contactData) {
-        _contactData = [NSMutableArray array];
-    }
-    return _contactData;
-}
-
 - (UICollectionView *)collectionView {
     if (!_collectionView) {
         UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
         flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         flowLayout.minimumLineSpacing = 0;
         flowLayout.minimumInteritemSpacing = 0;
-        flowLayout.itemSize = CGSizeMake(SCREEN_WIDTH, self.view.bounds.size.height - self.projectTitleView.bottom - 1);
+        flowLayout.itemSize = CGSizeMake(SCREEN_WIDTH, self.view.height_sd - self.projectTitleView.bottom - 1);
         
-        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, self.projectTitleView.bottom, self.view.bounds.size.width, self.view.bounds.size.height - self.projectTitleView.bottom) collectionViewLayout:flowLayout];
+        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, self.projectTitleView.bottom, self.view.width_sd, self.view.height_sd - self.projectTitleView.bottom) collectionViewLayout:flowLayout];
         _collectionView.backgroundColor = [UIColor whiteColor];
         _collectionView.scrollEnabled = false;
         _collectionView.pagingEnabled = true;
@@ -279,6 +259,21 @@
     }
     return _collectionView;
 }
+
+- (UIButton *)navButton {
+    if (!_navButton) {
+        // 导航栏收藏按钮
+        _navButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        _navButton.bounds = CGRectMake(0, 0, 90, 40);
+        [_navButton setImage:[UIImage imageNamed:@"heart"] forState:UIControlStateNormal];
+        [_navButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
+        [_navButton setTitleColor:PGCTextColor forState:UIControlStateNormal];
+        [_navButton setTintColor:PGCTextColor];
+        [_navButton addTarget:self action:@selector(respondsToCollect:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _navButton;
+}
+
 
 
 @end

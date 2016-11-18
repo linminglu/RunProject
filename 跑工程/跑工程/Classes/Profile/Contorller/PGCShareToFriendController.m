@@ -85,16 +85,16 @@
 {
     switch (sender.tag) {
         case 0:
-            [PGCProgressHUD showMessage:@"QQ好友" inView:self.view];
+            [PGCProgressHUD showMessage:@"QQ好友" toView:self.view];
             break;
         case 1:
-            [PGCProgressHUD showMessage:@"QQ空间" inView:self.view];
+            [PGCProgressHUD showMessage:@"QQ空间" toView:self.view];
             break;
         case 2:
-            [PGCProgressHUD showMessage:@"微信好友" inView:self.view];
+            [PGCProgressHUD showMessage:@"微信好友" toView:self.view];
             break;
         case 3:
-            [PGCProgressHUD showMessage:@"朋友圈" inView:self.view];
+            [PGCProgressHUD showMessage:@"朋友圈" toView:self.view];
             break;
         default:
             break;

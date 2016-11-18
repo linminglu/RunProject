@@ -16,7 +16,6 @@
 
 @implementation PGCAppDelegate (RootController)
 
-
 - (void)setRootViewController
 {
     if ([PGCUserDefault objectForKey:@"isOne"])
@@ -60,28 +59,42 @@
     sc.showsVerticalScrollIndicator = false;
     [self.window.rootViewController.view addSubview:sc];
     
-    NSArray *arr = @[@"1.jpg", @"2.jpg", @"3.jpg", @"4.jpg"];
+    NSArray *images;
     
-    for (NSInteger i = 0; i < arr.count; i++)
+    NSLog(@"%f", SCREEN_WIDTH);
+    if (SCREEN_WIDTH == 320) {
+        images = @[@"工程信息640x1136",
+                   @"供需信息640x1136",
+                   @"项目足迹640x1136"];
+    }
+    if (SCREEN_WIDTH == 375) {
+        images = @[@"工程信息750x1334",
+                   @"供需信息750x1334",
+                   @"项目足迹750x1334"];
+    }
+    if (SCREEN_WIDTH == 414) {
+        images = @[@"工程信息1242x2208",
+                   @"供需信息1242x2208",
+                   @"项目足迹1242x2208"];
+    }
+    for (NSInteger i = 0; i < images.count; i++)
     {
-        UIImageView *img = [[UIImageView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * i, 0, SCREEN_WIDTH, self.window.frame.size.height)];
-        img.image = [UIImage imageNamed:arr[i]];
+        UIImageView *img = [[UIImageView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * i, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        img.image = [UIImage imageNamed:images[i]];
         [sc addSubview:img];
         img.userInteractionEnabled = true;
-        if (i == arr.count - 1)
+        if (i == images.count - 1)
         {
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-            btn.frame = CGRectMake((self.window.frame.size.width / 2) - 50, SCREEN_HEIGHT - 110, 100, 40);
-            btn.backgroundColor = RGB(250, 117, 10);
-            [btn setTitle:@"开始体验" forState:UIControlStateNormal];
+            btn.frame = CGRectMake((SCREEN_WIDTH / 2) - 50, SCREEN_HEIGHT - 100, SCREEN_WIDTH * 0.8, 40);
+            btn.backgroundColor = [UIColor clearColor];
             [btn addTarget:self action:@selector(goToMain) forControlEvents:UIControlEventTouchUpInside];
+            btn.layer.borderWidth = 0.5;
+            btn.layer.borderColor = [UIColor clearColor].CGColor;
             [img addSubview:btn];
-            [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            btn.layer.borderWidth = 1;
-            btn.layer.borderColor = RGB(250, 117, 10).CGColor;
         }
     }
-    sc.contentSize = CGSizeMake(SCREEN_WIDTH * arr.count, self.window.frame.size.height);
+    sc.contentSize = CGSizeMake(SCREEN_WIDTH * images.count, SCREEN_HEIGHT);
 }
 
 - (void)goToMain
@@ -96,7 +109,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (scrollView.contentOffset.x > SCREEN_WIDTH * 4 + 30)
+    if (scrollView.contentOffset.x > SCREEN_WIDTH * 3 + 30)
     {
         [self goToMain];
     }

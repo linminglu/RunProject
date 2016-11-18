@@ -19,7 +19,7 @@
  @param phone
  */
 - (void)projectContactCell:(PGCProjectContactCell *)projectContactCell
-                  phone:(id)phone;
+                     phone:(id)phone;
 /**
  点击地址的协议方法
 
@@ -27,7 +27,7 @@
  @param address
  */
 - (void)projectContactCell:(PGCProjectContactCell *)projectContactCell
-                  address:(id)address;
+                   address:(id)address;
 
 @end
 

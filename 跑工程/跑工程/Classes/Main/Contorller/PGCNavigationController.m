@@ -17,6 +17,7 @@
 
 @implementation PGCNavigationController
 
+
 + (void)initialize
 {
     UINavigationBar *bar = [UINavigationBar appearance];
@@ -35,36 +36,29 @@
     self.delegate = self;
 }
 
-- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    
-    PGCTabBarController *tabbarVC = (PGCTabBarController *)self.tabBarController;
+
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
     if (viewController == self.viewControllers.firstObject) {//是根控制器
-        
         self.interactivePopGestureRecognizer.delegate = nil;
-        [tabbarVC setTabBarHidden:false];
+        [(PGCTabBarController *)self.tabBarController setTabBarHidden:false];
     }
 }
 
-- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(nonnull UIViewController *)viewController animated:(BOOL)animated {    
-    
-    PGCTabBarController *tabbarVC = (PGCTabBarController *)self.tabBarController;
+
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
     if (viewController != self.viewControllers.firstObject) {//不是根控制器
-        
         self.interactivePopGestureRecognizer.delegate = _popDelegate;
-        [tabbarVC setTabBarHidden:true];
+        [(PGCTabBarController *)self.tabBarController setTabBarHidden:true];
     }
-}
-
-//设置非根控制器的导航条的左按钮
-- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
     // 设置导航条的返回按钮
     viewController.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:nil];
     
     [super pushViewController:viewController animated:animated];
 }
 
-- (void)popToPre {
-    [self popViewControllerAnimated:true];
-}
+
+
 
 @end

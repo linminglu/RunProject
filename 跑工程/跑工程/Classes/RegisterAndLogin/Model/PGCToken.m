@@ -7,7 +7,6 @@
 //
 
 #import "PGCToken.h"
-#import "PGCUserInfo.h"
 
 @implementation PGCToken
 

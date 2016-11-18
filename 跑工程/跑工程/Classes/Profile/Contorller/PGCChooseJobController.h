@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void (^JobBlock) (NSString *job);
+
 @interface PGCChooseJobController : UIViewController
 
-typedef void (^JobBlock) (NSString *job);
+@property (strong, nonatomic) NSMutableDictionary *parameters;/** 上传参数 */
 
 @property (nonatomic,copy) JobBlock block;
 

@@ -50,10 +50,15 @@
 
 
 /*****通知name*****/
-static NSString * const kProfileNotification = @"ProfileNotification";
-static NSString * const kReloadProfileInfo = @"ReloadProfileInfo";
-static NSString * const kRefreshCollectTable = @"RefreshCollectTable";
+static NSString * const kProfileNotification = @"ProfileNotification";//我 控制器
 
+static NSString * const kReloadProfileInfo = @"ReloadProfileInfo";// 修改个人资料 的通知
+
+static NSString * const kRefreshCollectTable = @"RefreshCollectTable";// 项目收藏 的通知
+
+static NSString * const kContactReloadData = @"ContactReloadData";// 删除联系人 的通知
+
+static NSString * const kRefreshDemandAndSupplyData = @"RefreshDemandAndSupplyData";// 收藏供需 的通知
 
 /*****第三方服务的key*****/
 #define AMapKey @"0eeedd0b0166122dc319ed94dc04cf6a"
