@@ -8,8 +8,8 @@
 
 #import "PGCInterfaceConfig.h"
 
-NSString *const kBaseURL = @"http://192.168.0.154:8080/zbapp";// 154 || 249
-
+//工程信息管理系统
+NSString *const kBaseURL = @"http://gcb.letide.cn";
 
 #pragma mark - 注册登录
 // 获取验证码
@@ -60,12 +60,12 @@ NSString *const kGetAccessOrCollect = @"/mobile/api/access/getAccessOrCollect.ht
 #pragma mark - 供需
 // 类别
 NSString *const kGetMaterialServiceTypes = @"/mobile/api/open/getMaterialServiceTypes.htm";
-// 添加需求
-NSString *const kAddDemand = @"/mobile/api/access/addDemand.htm";
+// 添加/修改 需求
+NSString *const kAddOrMidifyDemand = @"/mobile/api/access/addOrMidifyDemand.htm";
 // 需求列表
 NSString *const kGetDemand = @"/mobile/api/access/getDemand.htm";
-// 添加供应
-NSString *const kAddSupply = @"/mobile/api/access/addSupply.htm";
+// 添加/修改 供应
+NSString *const kAddOrMidifySupply = @"/mobile/api/access/addOrMidifySupply.htm";
 // 供应列表
 NSString *const kGetSupply = @"/mobile/api/access/getSupply.htm";
 // 添加收藏
@@ -101,10 +101,10 @@ NSString *const kAdList = @"/mobile/api/open/adList.htm";
 NSString *const kGetNewVersion = @"/mobile/api/open/getNewVersion.htm";
 // 意见反馈
 NSString *const kFeedback = @"/mobile/api/open/feedback.htm";
-
 // 图片上传
 NSString *const kSignleImageUpload = @"/signleImageUpload.htm";
-
+// 获取启动图片
+NSString *const kGetLatestAppSplashImage = @"/mobile/api/open/getLatestAppSplashImage.htm";
 
 @implementation PGCInterfaceConfig
 

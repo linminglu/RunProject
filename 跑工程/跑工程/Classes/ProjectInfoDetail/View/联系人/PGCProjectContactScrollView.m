@@ -18,9 +18,6 @@
 #import "PGCContact.h"
 
 @interface PGCProjectContactScrollView () <UITableViewDataSource, UITableViewDelegate, PGCProjectContactCellDelegate, PGCAlertViewDelegate, PGCHintAlertViewDelegate>
-{
-    BOOL _isVIP;/** 判断是否是会员 */
-}
 
 @property (strong, nonatomic) UITableView *contactTableView;/** 联系人表格视图 */
 @property (strong, nonatomic) UIButton *bottomBtn;/** 底部查看更多联系人视图 */
@@ -140,12 +137,11 @@
         [PGCProgressHUD showMessage:@"请先登录" toView:KeyWindow];
         return;
     }
-    
     BOOL isRemind = [[PGCUserDefault valueForKey:@"isRemind"] boolValue];
     
     PGCAlertView *alert = nil;
     
-    if (!_isVIP) {
+    if (user.is_vip == 0) {
         NSString *name = [NSString stringWithFormat:@"联系人：%@", self.projectContact.name];
         NSString *phone = [NSString stringWithFormat:@"呼叫%@", self.projectContact.phone];
         alert = [[PGCAlertView alloc] initWithModel:@{@"name":name, @"phone":phone}];
@@ -158,8 +154,7 @@
             alert = [[PGCAlertView alloc] initWithTitle:@"查看项目详情，需要您开通会员服务，如果您需要开通会员服务，请点击确定"];
         }
     }
-    alert.delegate = self;
-    
+    alert.delegate = self;    
     [alert showAlertView];
 }
 
@@ -210,41 +205,36 @@
     UIViewController *result = nil;
     UIWindow * window = [[UIApplication sharedApplication] keyWindow];
     //app默认windowLevel是UIWindowLevelNormal，如果不是，找到UIWindowLevelNormal的
-    if (window.windowLevel != UIWindowLevelNormal)
-    {
+    if (window.windowLevel != UIWindowLevelNormal) {
         NSArray *windows = [[UIApplication sharedApplication] windows];
-        for(UIWindow * tmpWin in windows)
-        {
-            if (tmpWin.windowLevel == UIWindowLevelNormal)
-            {
+        for (UIWindow *tmpWin in windows) {
+            if (tmpWin.windowLevel == UIWindowLevelNormal) {
                 window = tmpWin;
                 break;
             }
         }
     }
-    id  nextResponder = nil;
+    id nextResponder = nil;
     UIViewController *appRootVC=window.rootViewController;
     //如果是present上来的appRootVC.presentedViewController 不为nil
     if (appRootVC.presentedViewController) {
         nextResponder = appRootVC.presentedViewController;
-    }else{
+    } else {
         UIView *frontView = [[window subviews] objectAtIndex:0];
         nextResponder = [frontView nextResponder];
     }
-    
-    if ([nextResponder isKindOfClass:[UITabBarController class]]){
-        UITabBarController * tabbar = (UITabBarController *)nextResponder;
-        UINavigationController * nav = (UINavigationController *)tabbar.viewControllers[tabbar.selectedIndex];
+    if ([nextResponder isKindOfClass:[UITabBarController class]]) {
+        UITabBarController *tabbar = (UITabBarController *)nextResponder;
+        UINavigationController *nav = (UINavigationController *)tabbar.viewControllers[tabbar.selectedIndex];
         // UINavigationController *nav = tabbar.selectedViewController ; 上下两种写法都行
         result=nav.childViewControllers.lastObject;
         
-    }else if ([nextResponder isKindOfClass:[UINavigationController class]]){
-        UIViewController * nav = (UIViewController *)nextResponder;
+    } else if ([nextResponder isKindOfClass:[UINavigationController class]]) {
+        UIViewController *nav = (UIViewController *)nextResponder;
         result = nav.childViewControllers.lastObject;
-    }else{
+    } else {
         result = nextResponder;
     }
-    
     return result;
 }
 

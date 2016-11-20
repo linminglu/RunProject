@@ -12,6 +12,6 @@
 
 - (instancetype)initWithTitle:(NSString *)title content:(NSString *)content;
 
-- (void)addTarget:(id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents;
+- (void)addTarget:(id)target action:(SEL)action;
 
 @end

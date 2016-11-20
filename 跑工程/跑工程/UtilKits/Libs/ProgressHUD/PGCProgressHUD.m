@@ -24,11 +24,10 @@ static PGCProgressHUD *instance = nil;
 #pragma mark -
 #pragma mark - UIAlertController
 
-+ (void)showAlertWithTitle:(NSString *)title {
++ (void)showAlertWithTarget:(id)target
+                      title:(NSString *)title {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:title preferredStyle:UIAlertControllerStyleAlert];
-    UIViewController *vc = [UIApplication sharedApplication].keyWindow.rootViewController;
-    [vc presentViewController:alertController animated:true completion:nil];
-    
+    [target presentViewController:alertController animated:true completion:nil];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [alertController dismissViewControllerAnimated:true completion:nil];
     });

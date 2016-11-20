@@ -20,7 +20,6 @@
 #import "PGCMaterialServiceTypes.h"
 #import "PGCSupply.h"
 #import "PGCDemand.h"
-#import "PGCSupplyAndDemandAPIManager.h"
 #import "PGCSupplyAPIManager.h"
 #import "PGCDemandAPIManager.h"
 #import "PGCManager.h"
@@ -52,9 +51,10 @@
 @property (weak, nonatomic) IBOutlet UIView *centerBackView;// 搜索框背景
 @property (weak, nonatomic) IBOutlet UIButton *conllectionBtn;// 我的收藏按钮
 @property (weak, nonatomic) IBOutlet UIButton *introduceBtn;// 我的发布按钮
-@property (weak, nonatomic) IBOutlet UITableView *tableView;// 表格视图
 @property (strong, nonatomic) UIView *filterView;// 顶部标题按钮绿色游标
 @property (strong, nonatomic) PGCSearchBar *searchBar;// 搜索条
+@property (strong, nonatomic) JSDropDownMenu *menu;/** 下拉菜单 */
+@property (strong, nonatomic) UITableView *tableView;// 表格视图
 @property (nonatomic, assign) BOOL isSelected;// 选择按钮是否被点击
 @property (assign, nonatomic) BOOL demandNotSupply;// 是否为需求信息
 @property (strong, nonatomic) NSMutableDictionary *parameters;/** 参数 */
@@ -119,46 +119,16 @@
     self.demandBtn.selected = true;
     self.demandBtn.userInteractionEnabled = false;
     
-    // 添加游标
-    self.filterView = [[UIView alloc] initWithFrame:CGRectMake(1, STATUS_AND_NAVIGATION_HEIGHT - 2, SCREEN_WIDTH / 2 - 2, 2)];
-    self.filterView.backgroundColor = PGCTintColor;
     [self.view addSubview:self.filterView];
-    
-    // 设置搜索条
-    self.searchBar = [[PGCSearchBar alloc] init];
-    self.searchBar.bounds = CGRectMake(0, 0, SCREEN_WIDTH / 2 - 20, 34);
-    self.searchBar.center = CGPointMake(SCREEN_WIDTH / 4, self.centerBackView.height_sd / 2);
-    self.searchBar.layer.cornerRadius = 17;
-    self.searchBar.layer.masksToBounds = true;
-    self.searchBar.tintColor = PGCTintColor;
-    self.searchBar.returnKeyType = UIReturnKeySearch;
-    self.searchBar.enablesReturnKeyAutomatically = true;
-    self.searchBar.delegate = self;
     [self.centerBackView addSubview:self.searchBar];
-    
-    JSDropDownMenu *menu = [[JSDropDownMenu alloc] initWithOrigin:CGPointMake(0, self.centerBackView.bottom_sd) andHeight:40];
-    menu.backgroundColor = [UIColor whiteColor];
-    menu.dataSource = self;
-    menu.delegate = self;
-    [self.view addSubview:menu];
-    
-    [self.tableView registerClass:[PGCSupplyAndDemandCell class] forCellReuseIdentifier:kSupplyAndDemandCell];
-    
-    // 设置表格视图下拉刷新和上拉加载
-    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadSupplyAndDemandData)];
-    header.automaticallyChangeAlpha = true;
-    header.lastUpdatedTimeLabel.hidden = true;
-    self.tableView.mj_header = header;
-    
-    MJRefreshBackNormalFooter *footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreSupplyAndDemandData)];
-    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 30, 0);
-    footer.ignoredScrollViewContentInsetBottom = 30;
-    self.tableView.mj_footer = footer;
+    [self.view addSubview:self.menu];
+    [self.view addSubview:self.tableView];
     
     [self.tableView.mj_header beginRefreshing];
 }
 
-- (void)registerNotification {
+- (void)registerNotification
+{
     [PGCNotificationCenter addObserver:self selector:@selector(refreshTableData:) name:kRefreshDemandAndSupplyData object:nil];
 }
 
@@ -178,67 +148,66 @@
 }
 
 
-#pragma mark -
-#pragma mark - 网络请求数据
-// 需求信息列表
-- (void)requestDemandData
-{
-    [PGCDemandAPIManager getDemandWithParameters:self.parameters responds:^(RespondsStatus status, NSString *message, id resultData) {
-        [self.tableView.mj_header endRefreshing];
-        
-        if (status == RespondsStatusSuccess) {
-            
-            for (id value in resultData[@"result"]) {
-                PGCDemand *demand = [[PGCDemand alloc] init];
-                [demand mj_setKeyValues:value];
-                
-                [self.demandDataSource addObject:demand];
-            }
-            _page += 10;
-            [self.tableView reloadData];
-        }
-    }];
-}
 
-// 供应信息列表
-- (void)requestSupplyData
-{
-    [PGCSupplyAPIManager getSupplyWithParameters:self.parameters responds:^(RespondsStatus status, NSString *message, id resultData) {
-        [self.tableView.mj_header endRefreshing];
-        
-        if (status == RespondsStatusSuccess) {
-            
-            for (id value in resultData[@"result"]) {
-                PGCSupply *supply = [[PGCSupply alloc] init];
-                [supply mj_setKeyValues:value];
-                
-                [self.supplyDataSource addObject:supply];
-            }
-            _page += 10;
-            [self.tableView reloadData];
-        }
-    }];
-}
-
+#pragma mark -
 #pragma mark - Table Refresh
 
 - (void)loadSupplyAndDemandData
 {
+    PGCManager *manager = [PGCManager manager];
+    [manager readTokenData];
+    PGCUser *user = manager.token.user;
+    if (user) {
+        [self.parameters setObject:@(user.user_id) forKey:@"user_id"];
+        [self.parameters setObject:@"iphone" forKey:@"client_type"];
+        [self.parameters setObject:manager.token.token forKey:@"token"];
+        [self.parameters setObject:@0 forKey:@"days"];
+    } else {
+        [PGCProgressHUD showMessage:@"请先登录" toView:self.view];
+        [self.tableView.mj_header endRefreshing];
+        return;
+    }
     _page = 1;
     _pageSize = 10;
     [self.parameters setObject:@(_page) forKey:@"page"];
     [self.parameters setObject:@(_pageSize) forKey:@"page_size"];
     
     if (_demandNotSupply) {
-        [self.demandDataSource removeAllObjects];
-        
-        [self requestDemandData];
-        
+        // 需求信息列表
+        [PGCDemandAPIManager getDemandWithParameters:self.parameters responds:^(RespondsStatus status, NSString *message, id resultData) {
+            [self.tableView.mj_header endRefreshing];
+            
+            if (status == RespondsStatusSuccess) {
+                [self.demandDataSource removeAllObjects];
+                
+                for (id value in resultData[@"result"]) {
+                    PGCDemand *demand = [[PGCDemand alloc] init];
+                    [demand mj_setKeyValues:value];
+                    
+                    [self.demandDataSource addObject:demand];
+                }
+                _page += 10;
+                [self.tableView reloadData];
+            }
+        }];
     } else {
-        
-        [self.supplyDataSource removeAllObjects];
-        
-        [self requestSupplyData];
+        // 供应信息列表
+        [PGCSupplyAPIManager getSupplyWithParameters:self.parameters responds:^(RespondsStatus status, NSString *message, id resultData) {
+            [self.tableView.mj_header endRefreshing];
+            
+            if (status == RespondsStatusSuccess) {
+                [self.supplyDataSource removeAllObjects];
+                
+                for (id value in resultData[@"result"]) {
+                    PGCSupply *supply = [[PGCSupply alloc] init];
+                    [supply mj_setKeyValues:value];
+                    
+                    [self.supplyDataSource addObject:supply];
+                }
+                _page += 10;
+                [self.tableView reloadData];
+            }
+        }];
     }
 }
 
@@ -248,6 +217,7 @@
     [self.parameters setObject:@(1) forKey:@"page_size"];
     
     if (_demandNotSupply) {
+        // 需求信息列表
         [PGCDemandAPIManager getDemandWithParameters:self.parameters responds:^(RespondsStatus status, NSString *message, id resultData) {
             if (status == RespondsStatusSuccess) {
                 NSArray *resultArr = resultData[@"result"];
@@ -268,8 +238,8 @@
                 [self.tableView.mj_footer endRefreshing];
             }
         }];
-        
     } else {
+        // 供应信息列表
         [PGCSupplyAPIManager getSupplyWithParameters:self.parameters responds:^(RespondsStatus status, NSString *message, id resultData) {
             if (status == RespondsStatusSuccess) {
                 NSArray *resultArr = resultData[@"result"];
@@ -416,7 +386,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     PGCSupplyAndDemandCell *cell = [tableView dequeueReusableCellWithIdentifier:kSupplyAndDemandCell];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     if (_demandNotSupply) {
         cell.demand = self.demandDataSource[indexPath.row];
     } else {
@@ -496,9 +466,7 @@
             }
             else {
                 PGCProvince *province = _areaDatas[leftRow];
-                NSArray *arr = province.city;
-                
-                return arr.count;
+                return province.city.count;
             }
         }
             break;
@@ -539,8 +507,7 @@
             }
             else {
                 PGCProvince *province = _areaDatas[indexPath.leftRow];
-                NSArray *rightArr = province.city;
-                PGCCity *city = rightArr[indexPath.row];
+                PGCCity *city = province.city[indexPath.row];
                 return city.city;
             }
         }
@@ -581,8 +548,7 @@
                 }
             } else {
                 PGCProvince *province = _areaDatas[indexPath.leftRow];
-                NSArray *cities = province.city;
-                PGCCity *city = cities[indexPath.row];
+                PGCCity *city = province.city[indexPath.row];
                 [self.parameters setObject:@(city.id) forKey:@"city_id"];
             }
         }
@@ -617,26 +583,62 @@
 
 #pragma mark - Getter
 
+- (UIView *)filterView {
+    if (!_filterView) {
+        _filterView = [[UIView alloc] initWithFrame:CGRectMake(1, STATUS_AND_NAVIGATION_HEIGHT - 2, SCREEN_WIDTH / 2 - 2, 2)];
+        _filterView.backgroundColor = PGCTintColor;
+    }
+    return _filterView;
+}
+
+- (PGCSearchBar *)searchBar {
+    if (!_searchBar) {
+        _searchBar = [[PGCSearchBar alloc] init];
+        _searchBar.bounds = CGRectMake(0, 0, SCREEN_WIDTH / 2 - 20, 34);
+        _searchBar.center = CGPointMake(SCREEN_WIDTH / 4, self.centerBackView.height_sd / 2);
+        _searchBar.layer.cornerRadius = 17.0;
+        _searchBar.layer.masksToBounds = true;
+        _searchBar.tintColor = PGCTintColor;
+        _searchBar.returnKeyType = UIReturnKeySearch;
+        _searchBar.delegate = self;
+    }
+    return _searchBar;
+}
+
+- (JSDropDownMenu *)menu {
+    if (!_menu) {
+        _menu = [[JSDropDownMenu alloc] initWithOrigin:CGPointMake(0, self.centerBackView.bottom_sd) andHeight:40];
+        _menu.backgroundColor = [UIColor whiteColor];
+        _menu.dataSource = self;
+        _menu.delegate = self;
+    }
+    return _menu;
+}
+
+- (UITableView *)tableView {
+    if (!_tableView) {
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.menu.bottom_sd, SCREEN_WIDTH, SCREEN_HEIGHT - TAB_BAR_HEIGHT - self.menu.bottom_sd) style:UITableViewStylePlain];
+        _tableView.backgroundColor = PGCBackColor;
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        [_tableView registerClass:[PGCSupplyAndDemandCell class] forCellReuseIdentifier:kSupplyAndDemandCell];
+        // 设置表格视图下拉刷新和上拉加载
+        MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadSupplyAndDemandData)];
+        header.automaticallyChangeAlpha = true;
+        header.lastUpdatedTimeLabel.hidden = true;
+        _tableView.mj_header = header;
+        
+        MJRefreshBackNormalFooter *footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreSupplyAndDemandData)];
+        footer.ignoredScrollViewContentInsetBottom = 0;
+        _tableView.mj_footer = footer;
+    }
+    return _tableView;
+}
+
 - (NSMutableDictionary *)parameters {
     if (!_parameters) {
         _parameters = [NSMutableDictionary dictionary];
-        
-        PGCManager *manager = [PGCManager manager];
-        [manager readTokenData];
-        PGCUser *user = manager.token.user;
-        if (user) {
-            _page = 1;
-            _pageSize = 10;
-            [_parameters setObject:@(user.user_id) forKey:@"user_id"];
-            [_parameters setObject:@"iphone" forKey:@"client_type"];
-            [_parameters setObject:manager.token.token forKey:@"token"];
-            [_parameters setObject:@0 forKey:@"days"];
-            [_parameters setObject:@(_page) forKey:@"page"];
-            [_parameters setObject:@(_pageSize) forKey:@"page_size"];
-        } else {
-            [PGCProgressHUD showMessage:@"请先登录" toView:self.view];
-            [self.tableView.mj_header endRefreshing];
-        }
     }
     return _parameters;
 }

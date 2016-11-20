@@ -8,15 +8,9 @@
 
 #import "PGCAppDelegate+AppService.h"
 #import <AMapFoundationKit/AMapFoundationKit.h>
-
+#import "PGCOtherAPIManager.h"
 
 @implementation PGCAppDelegate (AppService)
-
-- (void)configLaunchingUserData
-{
-    
-}
-
 
 - (void)registerAMap
 {
@@ -26,7 +20,11 @@
 
 - (void)checkAppUpDataWithshowOption:(BOOL)showOption
 {
-    
+    [PGCOtherAPIManager getNewVersionRequestWithParameters:@{@"type":@2} responds:^(RespondsStatus status, NSString *message, id resultData) {
+        if (status == RespondsStatusSuccess) {
+            
+        }
+    }];
 }
 
 

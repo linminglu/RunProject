@@ -7,8 +7,8 @@
 //
 
 #import "PGCDemandCollectVC.h"
-#import "PGCSupplyAndDemandCell.h"
 #import "PGCDemandDetailVC.h"
+#import "PGCSupplyAndDemandCell.h"
 #import "PGCSupplyAndDemandAPIManager.h"
 #import "PGCDemand.h"
 
@@ -59,12 +59,10 @@
 }
 
 
-
 #pragma mark - Table Refresh
 
 - (void)loadDemandCollect
 {
-    [self.dataSource removeAllObjects];
     _page = 1;
     _pageSize = 10;
     [self.params setObject:@(_page) forKey:@"page"];
@@ -74,6 +72,8 @@
         [self.tableView.mj_header endRefreshing];
         
         if (status == RespondsStatusSuccess) {
+            [self.dataSource removeAllObjects];
+            
             for (id value in resultData[@"result"]) {
                 PGCDemand *model = [[PGCDemand alloc] init];
                 [model mj_setKeyValues:value];
@@ -164,8 +164,8 @@
                 
                 [self.dataSource removeObjectsInArray:self.deleteData];
                 [self.tableView deleteRowsAtIndexPaths:self.tableView.indexPathsForSelectedRows withRowAnimation:UITableViewRowAnimationLeft];
-                [self.tableView reloadData];
                 [self.deleteData removeAllObjects];
+                [self.tableView reloadData];
                 
                 [weakSelf respondsToCancel:nil];
             }
@@ -202,15 +202,12 @@
 {
     if (tableView.editing) {
         [self.deleteData addObject:self.dataSource[indexPath.row]];
-        
-    } else {
-        [[tableView cellForRowAtIndexPath:indexPath] setSelected:false animated:true];
-        
-        PGCDemand *demand = self.dataSource[indexPath.row];
-        PGCDemandDetailVC *detailVC = [[PGCDemandDetailVC alloc] init];
-        detailVC.demand = demand;
-        [self.navigationController pushViewController:detailVC animated:true];
+        return;
     }
+    PGCDemand *demand = self.dataSource[indexPath.row];
+    PGCDemandDetailVC *detailVC = [[PGCDemandDetailVC alloc] init];
+    detailVC.demand = demand;
+    [self.navigationController pushViewController:detailVC animated:true];
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -269,8 +266,8 @@
     [button setTintColor:PGCTextColor];
     [button addTarget:self action:@selector(respondsToCollectEdit:) forControlEvents:UIControlEventTouchUpInside];
     
-    CGFloat labelInset = [button.titleLabel intrinsicContentSize].width - button.imageView.width - button.width;
-    CGFloat imageInset = button.imageView.width - button.width - button.titleLabel.width;
+    CGFloat labelInset = [button.titleLabel intrinsicContentSize].width - button.imageView.width_sd - button.width_sd;
+    CGFloat imageInset = button.imageView.width_sd - button.width_sd - button.titleLabel.width_sd;
     
     button.titleEdgeInsets = UIEdgeInsetsMake(0, labelInset, 0, 0);
     button.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, imageInset);
@@ -295,8 +292,7 @@
         _tableView.mj_header = header;
         
         MJRefreshBackNormalFooter *footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreDemandCollect)];
-        _tableView.contentInset = UIEdgeInsetsMake(0, 0, 30, 0);
-        footer.ignoredScrollViewContentInsetBottom = 30;
+        footer.ignoredScrollViewContentInsetBottom = 0;
         _tableView.mj_footer = footer;
     }
     return _tableView;
@@ -342,9 +338,6 @@
     if (!_params) {
         _params = [NSMutableDictionary dictionary];
         
-        _page = 1;
-        _pageSize = 10;
-        
         PGCManager *manager = [PGCManager manager];
         [manager readTokenData];
         PGCUser *user = manager.token.user;
@@ -353,8 +346,6 @@
         [_params setObject:@"iphone" forKey:@"client_type"];
         [_params setObject:manager.token.token forKey:@"token"];
         [_params setObject:@(2) forKey:@"type"];
-        [_params setObject:@(_page) forKey:@"page"];
-        [_params setObject:@(_pageSize) forKey:@"page_size"];
     }
     return _params;
 }

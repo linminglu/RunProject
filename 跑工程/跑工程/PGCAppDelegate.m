@@ -26,8 +26,6 @@
     [self setRootViewController];
     // 注册高德地图
     [self registerAMap];
-    // 获取基本数据
-    [self configLaunchingUserData];
     // 设置主窗口并显示在屏幕上
     [self.window makeKeyAndVisible];
     

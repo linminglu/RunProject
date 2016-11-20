@@ -78,7 +78,9 @@
                 [PGCNotificationCenter postNotificationName:kContactReloadData object:nil userInfo:@{@"DeleteContact":@"删除联系人"}];
                 [self.navigationController popViewControllerAnimated:true];
             } else {
-                [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示：" message:message actionWithTitle:@"我知道了" handler:nil];
+                [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示：" message:message actionWithTitle:@"我知道了" handler:^(UIAlertAction *action) {
+                    
+                }];
             }
         }];
     } otherHandler:^(UIAlertAction *action) {

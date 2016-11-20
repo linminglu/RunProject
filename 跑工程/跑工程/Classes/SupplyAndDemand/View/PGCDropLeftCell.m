@@ -24,7 +24,8 @@
 }
 
 
-- (void)createUI {
+- (void)createUI
+{
     self.leftTitleLabel = [[UILabel alloc] init];
     self.leftTitleLabel.textColor = RGB(102, 102, 102);
     self.leftTitleLabel.font = SetFont(14);

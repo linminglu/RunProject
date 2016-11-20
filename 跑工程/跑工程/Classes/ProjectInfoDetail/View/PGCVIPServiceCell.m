@@ -63,8 +63,8 @@
     [self.contentView addSubview:line];
     line.sd_layout
     .topSpaceToView(label, 0)
-    .leftSpaceToView(self.contentView, 0)
-    .rightSpaceToView(self.contentView, 0)
+    .leftSpaceToView(self.contentView, 15)
+    .rightSpaceToView(self.contentView, 15)
     .heightIs(1);
     
     /* 服务说明标签 */
@@ -92,13 +92,16 @@
     self.contentLabel.textColor = RGB(102, 102, 102);
     self.contentLabel.font = SetFont(15);
     self.contentLabel.numberOfLines = 0;
-    self.contentLabel.text = @"1、开通会员服务通会员服务通会员服务通会员服务通会员服务通会员服务通会员服务通会员服务通会员服务通会员服务通会员服务通会员服务通会员服务通会员服务通会员服务通会员服务通会员服务通会员服务通会员服务";
+    
+    NSString *string = [@[@"1、开通会员服务后，使用有效期为一年", @"2、相关的规则和说明", @"3、相关的服务和说明"] componentsJoinedByString:@";\n"];;
+    self.contentLabel.text = string;
     [centerView addSubview:self.contentLabel];
     self.contentLabel.sd_layout
-    .topSpaceToView(centerView, 10)
+    .topSpaceToView(centerView, 5)
     .leftSpaceToView(centerView, 15)
     .rightSpaceToView(centerView, 15)
-    .autoHeightRatio(0);
+    .autoHeightRatio(0)
+    .maxHeightIs(60);
     [centerView setupAutoHeightWithBottomView:self.contentLabel bottomMargin:5];
     
     // 立即支付按钮
@@ -112,7 +115,7 @@
     [payButton addTarget:self action:@selector(respondsToPayButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:payButton];
     payButton.sd_layout
-    .topSpaceToView(centerView, 10)
+    .topSpaceToView(centerView, 0)
     .leftSpaceToView(self.contentView, 20)
     .rightSpaceToView(self.contentView, 20)
     .heightIs(30);
@@ -121,10 +124,12 @@
     bottom.backgroundColor = RGB(244, 244, 244);
     [self.contentView addSubview:bottom];
     bottom.sd_layout
-    .bottomSpaceToView(self.contentView, 0)
-    .leftSpaceToView(self.contentView, 20)
-    .rightSpaceToView(self.contentView, 20)
+    .topSpaceToView(payButton, 7)
+    .leftSpaceToView(self.contentView, 0)
+    .rightSpaceToView(self.contentView, 0)
     .heightIs(1);
+    
+    [self setupAutoHeightWithBottomView:bottom bottomMargin:0];
 }
 
 

@@ -65,7 +65,6 @@ static NSString * const kProjectRootCell = @"ProjectRootCell";
 
 - (void)loadCollectData
 {
-    [self.dataSources removeAllObjects];
     _page = 1;
     _pageSize = 10;
     [self.params setObject:@(_page) forKey:@"page"];
@@ -75,6 +74,8 @@ static NSString * const kProjectRootCell = @"ProjectRootCell";
         [self.tableView.mj_header endRefreshing];
         
         if (status == RespondsStatusSuccess) {
+            [self.dataSources removeAllObjects];
+            
             for (id value in resultData[@"result"]) {
                 PGCProjectInfo *model = [[PGCProjectInfo alloc] init];
                 [model mj_setKeyValues:value];
@@ -152,7 +153,6 @@ static NSString * const kProjectRootCell = @"ProjectRootCell";
     NSString *string = [NSString stringWithFormat:@"是否确定%@?", _bottomBtnTitle];
     
     __weak __typeof(self) weakSelf = self;
-    
     [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示：" message:string actionTitle:@"确定" otherActionTitle:@"取消" handler:^(UIAlertAction *action) {
         
         MBProgressHUD *hud = [PGCProgressHUD showProgressHUD:self.view label:nil];
@@ -165,8 +165,8 @@ static NSString * const kProjectRootCell = @"ProjectRootCell";
             if (status == RespondsStatusSuccess) {
                 [self.dataSources removeObjectsInArray:self.deleteData];
                 [self.tableView deleteRowsAtIndexPaths:self.tableView.indexPathsForSelectedRows withRowAnimation:UITableViewRowAnimationLeft];
-                [self.tableView reloadData];
                 [self.deleteData removeAllObjects];
+                [self.tableView reloadData];
                 
                 [PGCNotificationCenter postNotificationName:kRefreshCollectTable object:nil userInfo:nil];
                 [weakSelf respondsToCancel:nil];
@@ -206,15 +206,12 @@ static NSString * const kProjectRootCell = @"ProjectRootCell";
 {
     if (tableView.editing) {
         [self.deleteData addObject:self.dataSources[indexPath.row]];
-        
-    } else {
-        [[tableView cellForRowAtIndexPath:indexPath] setSelected:false animated:true];
-        
-        PGCProjectInfo *projectInfo = self.dataSources[indexPath.row];
-        PGCProjectInfoDetailVC *detailVC = [[PGCProjectInfoDetailVC alloc] init];
-        detailVC.projectInfoDetail = projectInfo;
-        [self.navigationController pushViewController:detailVC animated:true];
+        return;
     }
+    PGCProjectInfo *projectInfo = self.dataSources[indexPath.row];
+    PGCProjectInfoDetailVC *detailVC = [[PGCProjectInfoDetailVC alloc] init];
+    detailVC.projectInfoDetail = projectInfo;
+    [self.navigationController pushViewController:detailVC animated:true];
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -322,8 +319,7 @@ static NSString * const kProjectRootCell = @"ProjectRootCell";
         _tableView.mj_header = header;
         
         MJRefreshBackNormalFooter *footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreCollectData)];
-        _tableView.contentInset = UIEdgeInsetsMake(0, 0, 30, 0);
-        footer.ignoredScrollViewContentInsetBottom = 30;
+        footer.ignoredScrollViewContentInsetBottom = 0;
         _tableView.mj_footer = footer;
     }
     return _tableView;

@@ -25,4 +25,8 @@
 // 图片上传
 + (NSURLSessionDataTask *)uploadImagesRequestWithParameters:(NSDictionary *)parameters images:(NSArray<UIImage *> *)images responds:(void (^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
 
+
+// 获取最新启动图片
++ (NSURLSessionDataTask *)getLatestAppSplashImageRequestWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
+
 @end

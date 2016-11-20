@@ -18,29 +18,31 @@
  需判断该视图是否已做过适配，若做过适配需要除以PGCAdaptationWidth()
  还原为其设计图上的坐标位置
  */
-// 以iPhone7 plus 为标准
-#define IPHONE_WIDTH 414
-
+// 以 iPhone6s 为标准
+#define IPHONE_WIDTH 375
 
 static inline CGFloat PGCAdaptationWidth() {
     return SCREEN_WIDTH / IPHONE_WIDTH;
 }
 
-static inline CGSize PGCAdaptationSize(CGFloat width, CGFloat height) {
+static inline CGSize PGCAdaptationSize(CGFloat width, CGFloat height)
+{
     CGFloat newWidth = width * PGCAdaptationWidth();
     CGFloat newHeight = height * PGCAdaptationWidth();
     CGSize newSize = CGSizeMake(newWidth, newHeight);
     return newSize;
 }
 
-static inline CGPoint PGCAdaptationCenter(CGFloat x, CGFloat y) {
+static inline CGPoint PGCAdaptationCenter(CGFloat x, CGFloat y)
+{
     CGFloat newX = x * PGCAdaptationWidth();
     CGFloat newY = y * PGCAdaptationWidth();
     CGPoint point = CGPointMake(newX, newY);
     return point;
 }
 
-static inline CGRect PGCAdaptationFrame(CGFloat x,CGFloat y, CGFloat width,CGFloat height)  {
+static inline CGRect PGCAdaptationFrame(CGFloat x, CGFloat y, CGFloat width, CGFloat height)
+{
     CGFloat newX = x * PGCAdaptationWidth();
     CGFloat newY = y * PGCAdaptationWidth();
     CGFloat newWidth = width * PGCAdaptationWidth();

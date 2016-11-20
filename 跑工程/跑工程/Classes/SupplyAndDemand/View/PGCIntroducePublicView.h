@@ -10,6 +10,6 @@
 
 @interface PGCIntroducePublicView : UIView
 
-- (instancetype)initWithTitle:(NSString *)title content:(NSString *)content;
+- (instancetype)initWithTitle:(NSString *)title;
 
 @end

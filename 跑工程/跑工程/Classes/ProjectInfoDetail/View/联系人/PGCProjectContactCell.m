@@ -148,7 +148,7 @@
     line.sd_layout
     .leftSpaceToView(self.contentView, 0)
     .rightSpaceToView(self.contentView, 0)
-    .topSpaceToView(labels.lastObject, 10)
+    .topSpaceToView(labels.lastObject, 0)
     .heightIs(1);
 }
 
@@ -179,9 +179,9 @@
     resultLabel.textColor = PGCTextColor;
     [superView addSubview:resultLabel];
     resultLabel.sd_layout
-    .topSpaceToView(superView, index * 34)
+    .topSpaceToView(superView, index * 30)
     .leftSpaceToView(superView, 15)
-    .heightIs(34)
+    .heightIs(30)
     .widthIs(size.width);
 
     return resultLabel;

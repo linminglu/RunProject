@@ -61,9 +61,9 @@
     .heightIs(30);
 }
 
-- (void)addTarget:(id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents
+- (void)addTarget:(id)target action:(SEL)action
 {
-    [self.button addTarget:target action:action forControlEvents:controlEvents];
+    [self.button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
 }
 
 @end

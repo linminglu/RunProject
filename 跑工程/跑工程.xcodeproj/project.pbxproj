@@ -64,11 +64,6 @@
 		8475AE401DCC2B87004A15A5 /* PGCHintAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8475AE391DCC2B87004A15A5 /* PGCHintAlertView.m */; };
 		8475AE411DCC2B87004A15A5 /* PGCPayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8475AE3B1DCC2B87004A15A5 /* PGCPayView.m */; };
 		8475AE451DCC2CC9004A15A5 /* PGCDetailTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8475AE441DCC2CC9004A15A5 /* PGCDetailTitleView.m */; };
-		8475AE4E1DCC4386004A15A5 /* PGCDetailContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8475AE4D1DCC4386004A15A5 /* PGCDetailContactCell.m */; };
-		8475AE571DCC64F7004A15A5 /* PGCSupplySubviewTop.m in Sources */ = {isa = PBXBuildFile; fileRef = 8475AE561DCC64F7004A15A5 /* PGCSupplySubviewTop.m */; };
-		8475AE5D1DCC6F7D004A15A5 /* PGCDetailSubviewBottom.m in Sources */ = {isa = PBXBuildFile; fileRef = 8475AE5A1DCC6F7D004A15A5 /* PGCDetailSubviewBottom.m */; };
-		8475AE5E1DCC6F7D004A15A5 /* PGCDetailSubviewTop.m in Sources */ = {isa = PBXBuildFile; fileRef = 8475AE5C1DCC6F7D004A15A5 /* PGCDetailSubviewTop.m */; };
-		8475AE641DCC795B004A15A5 /* PGCCollectRootVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8475AE631DCC795B004A15A5 /* PGCCollectRootVC.m */; };
 		8475AE671DCC7CC0004A15A5 /* PGCIntroduceDetailTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8475AE661DCC7CC0004A15A5 /* PGCIntroduceDetailTopView.m */; };
 		8475AE6A1DCC7CD2004A15A5 /* PGCIntroduceDetailBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8475AE691DCC7CD2004A15A5 /* PGCIntroduceDetailBottomView.m */; };
 		8475AE6D1DCC7D31004A15A5 /* PGCAreaAndTypeRootVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8475AE6C1DCC7D31004A15A5 /* PGCAreaAndTypeRootVC.m */; };
@@ -102,7 +97,6 @@
 		849C7A1F1DC89F8B00C229DF /* PGCDemandCollectVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C7A1E1DC89F8B00C229DF /* PGCDemandCollectVC.m */; };
 		849C7A221DC89F9F00C229DF /* PGCDemandIntroduceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C7A211DC89F9F00C229DF /* PGCDemandIntroduceVC.m */; };
 		849C7A271DC8A54C00C229DF /* PGCSupplyAndDemandShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C7A261DC8A54C00C229DF /* PGCSupplyAndDemandShareView.m */; };
-		849C7A2A1DC8A62600C229DF /* PGCSupplyCollectDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C7A291DC8A62600C229DF /* PGCSupplyCollectDetailVC.m */; };
 		849C7A2D1DC8A6E900C229DF /* PGCSupplyIntroduceDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C7A2C1DC8A6E900C229DF /* PGCSupplyIntroduceDetailVC.m */; };
 		849C7A331DC8AFD700C229DF /* PGCRemandIntroduceDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C7A321DC8AFD700C229DF /* PGCRemandIntroduceDetailVC.m */; };
 		849C7A4C1DC9900D00C229DF /* PGCSupplyAndDemandCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C7A4B1DC9900D00C229DF /* PGCSupplyAndDemandCell.m */; };
@@ -216,17 +210,35 @@
 		84B0A3901DDDD239006506D3 /* Files.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B0A38F1DDDD239006506D3 /* Files.m */; };
 		84B0A3931DDEA642006506D3 /* Types.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B0A3921DDEA642006506D3 /* Types.m */; };
 		84B0A3961DDEA8C4006506D3 /* PGCVIPServiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B0A3951DDEA8C4006506D3 /* PGCVIPServiceCell.m */; };
-		84B0A39C1DDEFE56006506D3 /* PGCSupplyAndDemandRootVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B0A39B1DDEFE55006506D3 /* PGCSupplyAndDemandRootVC.m */; };
+		84B0A3A01DE01349006506D3 /* PGCAboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B0A39E1DE01349006506D3 /* PGCAboutUsViewController.m */; };
+		84B0A3A11DE01349006506D3 /* PGCAboutUsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B0A39F1DE01349006506D3 /* PGCAboutUsViewController.xib */; };
+		84B0A3A51DE0135A006506D3 /* PGCFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B0A3A31DE0135A006506D3 /* PGCFeedbackViewController.m */; };
+		84B0A3A61DE0135A006506D3 /* PGCFeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B0A3A41DE0135A006506D3 /* PGCFeedbackViewController.xib */; };
+		84B0A3A91DE01E41006506D3 /* LunchImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B0A3A81DE01E41006506D3 /* LunchImage.m */; };
+		84B0A3BD1DE023A4006506D3 /* UIImage+XHGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B0A3B21DE023A4006506D3 /* UIImage+XHGIF.m */; };
+		84B0A3BE1DE023A4006506D3 /* UIImageView+XHWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B0A3B41DE023A4006506D3 /* UIImageView+XHWebCache.m */; };
+		84B0A3BF1DE023A4006506D3 /* XHImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B0A3B61DE023A4006506D3 /* XHImageCache.m */; };
+		84B0A3C01DE023A4006506D3 /* XHLaunchAd.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B0A3B81DE023A4006506D3 /* XHLaunchAd.m */; };
+		84B0A3C11DE023A4006506D3 /* XHSkipButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B0A3BA1DE023A4006506D3 /* XHSkipButton.m */; };
+		84B0A3C21DE023A4006506D3 /* XHWebImageDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B0A3BC1DE023A4006506D3 /* XHWebImageDownload.m */; };
+		84B0A3C61DE03065006506D3 /* DemandDetailTopCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B0A3C51DE03065006506D3 /* DemandDetailTopCell.m */; };
+		84B0A3C91DE030E6006506D3 /* DemandDetailContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B0A3C81DE030E6006506D3 /* DemandDetailContactCell.m */; };
+		84B0A3CC1DE03311006506D3 /* DemandDetailDescCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B0A3CB1DE03311006506D3 /* DemandDetailDescCell.m */; };
+		84B0A3CF1DE03468006506D3 /* DemandDetailImagesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B0A3CE1DE03468006506D3 /* DemandDetailImagesCell.m */; };
+		84B0A3D21DE034F9006506D3 /* DemandDetailFilesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B0A3D11DE034F9006506D3 /* DemandDetailFilesCell.m */; };
+		84B0A3D61DE04EB0006506D3 /* SupplyDetailTopCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B0A3D51DE04EB0006506D3 /* SupplyDetailTopCell.m */; };
+		84B0A3DB1DE060BB006506D3 /* PGCWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B0A3D91DE060BB006506D3 /* PGCWebViewController.m */; };
+		84B0A3DC1DE060BB006506D3 /* PGCWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B0A3DA1DE060BB006506D3 /* PGCWebViewController.xib */; };
+		84B0A3E01DE1BEF6006506D3 /* IntroduceDemandTopCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B0A3DF1DE1BEF6006506D3 /* IntroduceDemandTopCell.m */; };
+		84B0A3E31DE1BF1B006506D3 /* IntroduceDemandContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B0A3E21DE1BF1B006506D3 /* IntroduceDemandContactCell.m */; };
+		84B0A3E61DE1BF44006506D3 /* IntroduceDemandDescCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B0A3E51DE1BF44006506D3 /* IntroduceDemandDescCell.m */; };
+		84B0A3E91DE1BF50006506D3 /* IntroduceDemandImagesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B0A3E81DE1BF50006506D3 /* IntroduceDemandImagesCell.m */; };
+		84B0A3ED1DE1BF81006506D3 /* IntroduceSupplyTopCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B0A3EC1DE1BF81006506D3 /* IntroduceSupplyTopCell.m */; };
 		84B9C3CE1DCB5AE400035064 /* PGCSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B9C3CD1DCB5AE400035064 /* PGCSearchBar.m */; };
 		84C839401DD710E200A07F76 /* PGCDataCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C8393F1DD710E200A07F76 /* PGCDataCache.m */; };
 		84C839491DD7269200A07F76 /* PGCHeadImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C839481DD7269200A07F76 /* PGCHeadImage.m */; };
 		84ECF1F21DD167CE00697207 /* NSString+Size.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECF1CF1DD167CE00697207 /* NSString+Size.m */; };
 		84ECF1F41DD167CE00697207 /* UIImage+Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECF1D31DD167CE00697207 /* UIImage+Image.m */; };
-		84ECF1F81DD167CE00697207 /* UITableView+FDIndexPathHeightCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECF1E51DD167CE00697207 /* UITableView+FDIndexPathHeightCache.m */; };
-		84ECF1F91DD167CE00697207 /* UITableView+FDKeyedHeightCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECF1E71DD167CE00697207 /* UITableView+FDKeyedHeightCache.m */; };
-		84ECF1FA1DD167CE00697207 /* UITableView+FDTemplateLayoutCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECF1E91DD167CE00697207 /* UITableView+FDTemplateLayoutCell.m */; };
-		84ECF1FB1DD167CE00697207 /* UITableView+FDTemplateLayoutCellDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECF1EB1DD167CE00697207 /* UITableView+FDTemplateLayoutCellDebug.m */; };
-		84ECF1FC1DD167CE00697207 /* GCDHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECF1EE1DD167CE00697207 /* GCDHelper.m */; };
 		84ECF2011DD1684A00697207 /* PGCHttpService.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECF2001DD1684A00697207 /* PGCHttpService.m */; };
 		84ECF2051DD168A700697207 /* PGCInterfaceConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECF2041DD168A700697207 /* PGCInterfaceConfig.m */; };
 		84ECF2101DD16A2000697207 /* PGCBaseAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECF20A1DD16A2000697207 /* PGCBaseAPIManager.m */; };
@@ -362,16 +374,6 @@
 		8475AE3B1DCC2B87004A15A5 /* PGCPayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCPayView.m; sourceTree = "<group>"; };
 		8475AE431DCC2CC9004A15A5 /* PGCDetailTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCDetailTitleView.h; sourceTree = "<group>"; };
 		8475AE441DCC2CC9004A15A5 /* PGCDetailTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCDetailTitleView.m; sourceTree = "<group>"; };
-		8475AE4C1DCC4386004A15A5 /* PGCDetailContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCDetailContactCell.h; sourceTree = "<group>"; };
-		8475AE4D1DCC4386004A15A5 /* PGCDetailContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCDetailContactCell.m; sourceTree = "<group>"; };
-		8475AE551DCC64F7004A15A5 /* PGCSupplySubviewTop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCSupplySubviewTop.h; sourceTree = "<group>"; };
-		8475AE561DCC64F7004A15A5 /* PGCSupplySubviewTop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCSupplySubviewTop.m; sourceTree = "<group>"; };
-		8475AE591DCC6F7D004A15A5 /* PGCDetailSubviewBottom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCDetailSubviewBottom.h; sourceTree = "<group>"; };
-		8475AE5A1DCC6F7D004A15A5 /* PGCDetailSubviewBottom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCDetailSubviewBottom.m; sourceTree = "<group>"; };
-		8475AE5B1DCC6F7D004A15A5 /* PGCDetailSubviewTop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCDetailSubviewTop.h; sourceTree = "<group>"; };
-		8475AE5C1DCC6F7D004A15A5 /* PGCDetailSubviewTop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCDetailSubviewTop.m; sourceTree = "<group>"; };
-		8475AE621DCC795B004A15A5 /* PGCCollectRootVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCCollectRootVC.h; sourceTree = "<group>"; };
-		8475AE631DCC795B004A15A5 /* PGCCollectRootVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCCollectRootVC.m; sourceTree = "<group>"; };
 		8475AE651DCC7CC0004A15A5 /* PGCIntroduceDetailTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCIntroduceDetailTopView.h; sourceTree = "<group>"; };
 		8475AE661DCC7CC0004A15A5 /* PGCIntroduceDetailTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCIntroduceDetailTopView.m; sourceTree = "<group>"; };
 		8475AE681DCC7CD2004A15A5 /* PGCIntroduceDetailBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCIntroduceDetailBottomView.h; sourceTree = "<group>"; };
@@ -438,8 +440,6 @@
 		849C7A211DC89F9F00C229DF /* PGCDemandIntroduceVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCDemandIntroduceVC.m; sourceTree = "<group>"; };
 		849C7A251DC8A54C00C229DF /* PGCSupplyAndDemandShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCSupplyAndDemandShareView.h; sourceTree = "<group>"; };
 		849C7A261DC8A54C00C229DF /* PGCSupplyAndDemandShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCSupplyAndDemandShareView.m; sourceTree = "<group>"; };
-		849C7A281DC8A62600C229DF /* PGCSupplyCollectDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCSupplyCollectDetailVC.h; sourceTree = "<group>"; };
-		849C7A291DC8A62600C229DF /* PGCSupplyCollectDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCSupplyCollectDetailVC.m; sourceTree = "<group>"; };
 		849C7A2B1DC8A6E900C229DF /* PGCSupplyIntroduceDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCSupplyIntroduceDetailVC.h; sourceTree = "<group>"; };
 		849C7A2C1DC8A6E900C229DF /* PGCSupplyIntroduceDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCSupplyIntroduceDetailVC.m; sourceTree = "<group>"; };
 		849C7A311DC8AFD700C229DF /* PGCRemandIntroduceDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCRemandIntroduceDetailVC.h; sourceTree = "<group>"; };
@@ -675,8 +675,51 @@
 		84B0A3921DDEA642006506D3 /* Types.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Types.m; sourceTree = "<group>"; };
 		84B0A3941DDEA8C4006506D3 /* PGCVIPServiceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCVIPServiceCell.h; sourceTree = "<group>"; };
 		84B0A3951DDEA8C4006506D3 /* PGCVIPServiceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCVIPServiceCell.m; sourceTree = "<group>"; };
-		84B0A39A1DDEFE55006506D3 /* PGCSupplyAndDemandRootVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCSupplyAndDemandRootVC.h; sourceTree = "<group>"; };
-		84B0A39B1DDEFE55006506D3 /* PGCSupplyAndDemandRootVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCSupplyAndDemandRootVC.m; sourceTree = "<group>"; };
+		84B0A39D1DE01349006506D3 /* PGCAboutUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCAboutUsViewController.h; sourceTree = "<group>"; };
+		84B0A39E1DE01349006506D3 /* PGCAboutUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCAboutUsViewController.m; sourceTree = "<group>"; };
+		84B0A39F1DE01349006506D3 /* PGCAboutUsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PGCAboutUsViewController.xib; sourceTree = "<group>"; };
+		84B0A3A21DE0135A006506D3 /* PGCFeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCFeedbackViewController.h; sourceTree = "<group>"; };
+		84B0A3A31DE0135A006506D3 /* PGCFeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCFeedbackViewController.m; sourceTree = "<group>"; };
+		84B0A3A41DE0135A006506D3 /* PGCFeedbackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PGCFeedbackViewController.xib; sourceTree = "<group>"; };
+		84B0A3A71DE01E41006506D3 /* LunchImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LunchImage.h; sourceTree = "<group>"; };
+		84B0A3A81DE01E41006506D3 /* LunchImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LunchImage.m; sourceTree = "<group>"; };
+		84B0A3B11DE023A4006506D3 /* UIImage+XHGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+XHGIF.h"; sourceTree = "<group>"; };
+		84B0A3B21DE023A4006506D3 /* UIImage+XHGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+XHGIF.m"; sourceTree = "<group>"; };
+		84B0A3B31DE023A4006506D3 /* UIImageView+XHWebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+XHWebCache.h"; sourceTree = "<group>"; };
+		84B0A3B41DE023A4006506D3 /* UIImageView+XHWebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+XHWebCache.m"; sourceTree = "<group>"; };
+		84B0A3B51DE023A4006506D3 /* XHImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHImageCache.h; sourceTree = "<group>"; };
+		84B0A3B61DE023A4006506D3 /* XHImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHImageCache.m; sourceTree = "<group>"; };
+		84B0A3B71DE023A4006506D3 /* XHLaunchAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHLaunchAd.h; sourceTree = "<group>"; };
+		84B0A3B81DE023A4006506D3 /* XHLaunchAd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHLaunchAd.m; sourceTree = "<group>"; };
+		84B0A3B91DE023A4006506D3 /* XHSkipButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHSkipButton.h; sourceTree = "<group>"; };
+		84B0A3BA1DE023A4006506D3 /* XHSkipButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHSkipButton.m; sourceTree = "<group>"; };
+		84B0A3BB1DE023A4006506D3 /* XHWebImageDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHWebImageDownload.h; sourceTree = "<group>"; };
+		84B0A3BC1DE023A4006506D3 /* XHWebImageDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHWebImageDownload.m; sourceTree = "<group>"; };
+		84B0A3C41DE03065006506D3 /* DemandDetailTopCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemandDetailTopCell.h; sourceTree = "<group>"; };
+		84B0A3C51DE03065006506D3 /* DemandDetailTopCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemandDetailTopCell.m; sourceTree = "<group>"; };
+		84B0A3C71DE030E6006506D3 /* DemandDetailContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemandDetailContactCell.h; sourceTree = "<group>"; };
+		84B0A3C81DE030E6006506D3 /* DemandDetailContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemandDetailContactCell.m; sourceTree = "<group>"; };
+		84B0A3CA1DE03311006506D3 /* DemandDetailDescCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemandDetailDescCell.h; sourceTree = "<group>"; };
+		84B0A3CB1DE03311006506D3 /* DemandDetailDescCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemandDetailDescCell.m; sourceTree = "<group>"; };
+		84B0A3CD1DE03468006506D3 /* DemandDetailImagesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemandDetailImagesCell.h; sourceTree = "<group>"; };
+		84B0A3CE1DE03468006506D3 /* DemandDetailImagesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemandDetailImagesCell.m; sourceTree = "<group>"; };
+		84B0A3D01DE034F9006506D3 /* DemandDetailFilesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemandDetailFilesCell.h; sourceTree = "<group>"; };
+		84B0A3D11DE034F9006506D3 /* DemandDetailFilesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemandDetailFilesCell.m; sourceTree = "<group>"; };
+		84B0A3D41DE04EB0006506D3 /* SupplyDetailTopCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SupplyDetailTopCell.h; sourceTree = "<group>"; };
+		84B0A3D51DE04EB0006506D3 /* SupplyDetailTopCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SupplyDetailTopCell.m; sourceTree = "<group>"; };
+		84B0A3D81DE060BB006506D3 /* PGCWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCWebViewController.h; sourceTree = "<group>"; };
+		84B0A3D91DE060BB006506D3 /* PGCWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCWebViewController.m; sourceTree = "<group>"; };
+		84B0A3DA1DE060BB006506D3 /* PGCWebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PGCWebViewController.xib; sourceTree = "<group>"; };
+		84B0A3DE1DE1BEF6006506D3 /* IntroduceDemandTopCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroduceDemandTopCell.h; sourceTree = "<group>"; };
+		84B0A3DF1DE1BEF6006506D3 /* IntroduceDemandTopCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroduceDemandTopCell.m; sourceTree = "<group>"; };
+		84B0A3E11DE1BF1B006506D3 /* IntroduceDemandContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroduceDemandContactCell.h; sourceTree = "<group>"; };
+		84B0A3E21DE1BF1B006506D3 /* IntroduceDemandContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroduceDemandContactCell.m; sourceTree = "<group>"; };
+		84B0A3E41DE1BF44006506D3 /* IntroduceDemandDescCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroduceDemandDescCell.h; sourceTree = "<group>"; };
+		84B0A3E51DE1BF44006506D3 /* IntroduceDemandDescCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroduceDemandDescCell.m; sourceTree = "<group>"; };
+		84B0A3E71DE1BF50006506D3 /* IntroduceDemandImagesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroduceDemandImagesCell.h; sourceTree = "<group>"; };
+		84B0A3E81DE1BF50006506D3 /* IntroduceDemandImagesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroduceDemandImagesCell.m; sourceTree = "<group>"; };
+		84B0A3EB1DE1BF81006506D3 /* IntroduceSupplyTopCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroduceSupplyTopCell.h; sourceTree = "<group>"; };
+		84B0A3EC1DE1BF81006506D3 /* IntroduceSupplyTopCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroduceSupplyTopCell.m; sourceTree = "<group>"; };
 		84B9C3CC1DCB5AE400035064 /* PGCSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCSearchBar.h; sourceTree = "<group>"; };
 		84B9C3CD1DCB5AE400035064 /* PGCSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCSearchBar.m; sourceTree = "<group>"; };
 		84C8393E1DD710E200A07F76 /* PGCDataCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCDataCache.h; sourceTree = "<group>"; };
@@ -691,16 +734,6 @@
 		84ECF1D61DD167CE00697207 /* PGCConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCConfig.h; sourceTree = "<group>"; };
 		84ECF1D81DD167CE00697207 /* PGCScreenAdaptation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCScreenAdaptation.h; sourceTree = "<group>"; };
 		84ECF1D91DD167CE00697207 /* PGCUtilKits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCUtilKits.h; sourceTree = "<group>"; };
-		84ECF1E41DD167CE00697207 /* UITableView+FDIndexPathHeightCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+FDIndexPathHeightCache.h"; sourceTree = "<group>"; };
-		84ECF1E51DD167CE00697207 /* UITableView+FDIndexPathHeightCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+FDIndexPathHeightCache.m"; sourceTree = "<group>"; };
-		84ECF1E61DD167CE00697207 /* UITableView+FDKeyedHeightCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+FDKeyedHeightCache.h"; sourceTree = "<group>"; };
-		84ECF1E71DD167CE00697207 /* UITableView+FDKeyedHeightCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+FDKeyedHeightCache.m"; sourceTree = "<group>"; };
-		84ECF1E81DD167CE00697207 /* UITableView+FDTemplateLayoutCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+FDTemplateLayoutCell.h"; sourceTree = "<group>"; };
-		84ECF1E91DD167CE00697207 /* UITableView+FDTemplateLayoutCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+FDTemplateLayoutCell.m"; sourceTree = "<group>"; };
-		84ECF1EA1DD167CE00697207 /* UITableView+FDTemplateLayoutCellDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+FDTemplateLayoutCellDebug.h"; sourceTree = "<group>"; };
-		84ECF1EB1DD167CE00697207 /* UITableView+FDTemplateLayoutCellDebug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+FDTemplateLayoutCellDebug.m"; sourceTree = "<group>"; };
-		84ECF1ED1DD167CE00697207 /* GCDHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDHelper.h; sourceTree = "<group>"; };
-		84ECF1EE1DD167CE00697207 /* GCDHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDHelper.m; sourceTree = "<group>"; };
 		84ECF1FF1DD1684A00697207 /* PGCHttpService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCHttpService.h; sourceTree = "<group>"; };
 		84ECF2001DD1684A00697207 /* PGCHttpService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCHttpService.m; sourceTree = "<group>"; };
 		84ECF2031DD168A700697207 /* PGCInterfaceConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCInterfaceConfig.h; sourceTree = "<group>"; };
@@ -946,6 +979,9 @@
 				845938B21DBF625B0086DD53 /* PGCNavigationController.m */,
 				845938B31DBF625B0086DD53 /* PGCTabBarController.h */,
 				845938B41DBF625B0086DD53 /* PGCTabBarController.m */,
+				84B0A3D81DE060BB006506D3 /* PGCWebViewController.h */,
+				84B0A3D91DE060BB006506D3 /* PGCWebViewController.m */,
+				84B0A3DA1DE060BB006506D3 /* PGCWebViewController.xib */,
 			);
 			path = Contorller;
 			sourceTree = "<group>";
@@ -953,6 +989,8 @@
 		845938B51DBF625B0086DD53 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				84B0A3A71DE01E41006506D3 /* LunchImage.h */,
+				84B0A3A81DE01E41006506D3 /* LunchImage.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -995,6 +1033,12 @@
 				845938C81DBF625B0086DD53 /* PGCSettingController.h */,
 				845938C91DBF625B0086DD53 /* PGCSettingController.m */,
 				845938CA1DBF625B0086DD53 /* PGCSettingController.xib */,
+				84B0A39D1DE01349006506D3 /* PGCAboutUsViewController.h */,
+				84B0A39E1DE01349006506D3 /* PGCAboutUsViewController.m */,
+				84B0A39F1DE01349006506D3 /* PGCAboutUsViewController.xib */,
+				84B0A3A21DE0135A006506D3 /* PGCFeedbackViewController.h */,
+				84B0A3A31DE0135A006506D3 /* PGCFeedbackViewController.m */,
+				84B0A3A41DE0135A006506D3 /* PGCFeedbackViewController.xib */,
 				845938CB1DBF625B0086DD53 /* PGCShareToFriendController.h */,
 				845938CC1DBF625B0086DD53 /* PGCShareToFriendController.m */,
 				845938CD1DBF625B0086DD53 /* PGCShareToFriendController.xib */,
@@ -1035,10 +1079,10 @@
 				849C7BE21DC9EED800C229DF /* PGCMapTypeViewController.m */,
 				84A87A961DC2010F00FD8CC3 /* PGCProjectRootViewController.h */,
 				84A87A971DC2010F00FD8CC3 /* PGCProjectRootViewController.m */,
-				845938D91DBF625B0086DD53 /* PGCProjectInfoController.h */,
-				845938DA1DBF625B0086DD53 /* PGCProjectInfoController.m */,
 				84F22C491DDAAD7700AB0325 /* PGCSearchViewController.h */,
 				84F22C4A1DDAAD7700AB0325 /* PGCSearchViewController.m */,
+				845938D91DBF625B0086DD53 /* PGCProjectInfoController.h */,
+				845938DA1DBF625B0086DD53 /* PGCProjectInfoController.m */,
 			);
 			path = Contorller;
 			sourceTree = "<group>";
@@ -1180,7 +1224,6 @@
 		845939001DBF625B0086DD53 /* Contorller */ = {
 			isa = PBXGroup;
 			children = (
-				849C7A091DC89BFA00C229DF /* RootVC */,
 				849C7A0A1DC89D4500C229DF /* 供应 */,
 				849C7A0F1DC89EA300C229DF /* 需求 */,
 				845939011DBF625B0086DD53 /* PGCSupplyAndDemandController.h */,
@@ -1216,17 +1259,24 @@
 		845939051DBF625B0086DD53 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				8475AE581DCC65BA004A15A5 /* 发布详情子视图 */,
-				849C7A561DC9A65D00C229DF /* 详情子视图 */,
-				849C7A241DC8A52C00C229DF /* 分享 */,
 				849C7A4A1DC9900D00C229DF /* PGCSupplyAndDemandCell.h */,
 				849C7A4B1DC9900D00C229DF /* PGCSupplyAndDemandCell.m */,
-				8487941D1DD45A530060D7FD /* PGCDropLeftCell.h */,
-				8487941E1DD45A530060D7FD /* PGCDropLeftCell.m */,
-				8487941F1DD45A530060D7FD /* PGCDropRightCell.h */,
-				848794201DD45A530060D7FD /* PGCDropRightCell.m */,
+				84B0A3EA1DE1BF66006506D3 /* 发布供应cell */,
+				84B0A3DD1DE1BEC4006506D3 /* 发布需求cell */,
+				84B0A3D31DE04E90006506D3 /* 供应详情cell */,
+				84B0A3C31DE03048006506D3 /* 需求详情cell */,
+				8475AE581DCC65BA004A15A5 /* 发布需求 */,
+				84B0A3D71DE051E8006506D3 /* 选择地区cell */,
 				84B9C3CC1DCB5AE400035064 /* PGCSearchBar.h */,
 				84B9C3CD1DCB5AE400035064 /* PGCSearchBar.m */,
+				8475AE431DCC2CC9004A15A5 /* PGCDetailTitleView.h */,
+				8475AE441DCC2CC9004A15A5 /* PGCDetailTitleView.m */,
+				8475AE6E1DCC842A004A15A5 /* PGCIntroducePublicView.h */,
+				8475AE6F1DCC842A004A15A5 /* PGCIntroducePublicView.m */,
+				8475AE711DCC8DA6004A15A5 /* PGCIntroduceSelectView.h */,
+				8475AE721DCC8DA6004A15A5 /* PGCIntroduceSelectView.m */,
+				849C7A251DC8A54C00C229DF /* PGCSupplyAndDemandShareView.h */,
+				849C7A261DC8A54C00C229DF /* PGCSupplyAndDemandShareView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1266,21 +1316,17 @@
 			name = "自定义弹出框";
 			sourceTree = "<group>";
 		};
-		8475AE581DCC65BA004A15A5 /* 发布详情子视图 */ = {
+		8475AE581DCC65BA004A15A5 /* 发布需求 */ = {
 			isa = PBXGroup;
 			children = (
-				8475AE6E1DCC842A004A15A5 /* PGCIntroducePublicView.h */,
-				8475AE6F1DCC842A004A15A5 /* PGCIntroducePublicView.m */,
 				8475AE651DCC7CC0004A15A5 /* PGCIntroduceDetailTopView.h */,
 				8475AE661DCC7CC0004A15A5 /* PGCIntroduceDetailTopView.m */,
 				8475AE681DCC7CD2004A15A5 /* PGCIntroduceDetailBottomView.h */,
 				8475AE691DCC7CD2004A15A5 /* PGCIntroduceDetailBottomView.m */,
-				8475AE711DCC8DA6004A15A5 /* PGCIntroduceSelectView.h */,
-				8475AE721DCC8DA6004A15A5 /* PGCIntroduceSelectView.m */,
 				849BECEE1DCF44F3007936B0 /* PGCIntroduceAddContactCell.h */,
 				849BECEF1DCF44F3007936B0 /* PGCIntroduceAddContactCell.m */,
 			);
-			name = "发布详情子视图";
+			name = "发布需求";
 			sourceTree = "<group>";
 		};
 		848793CB1DD2B4C00060D7FD /* 地区-省市 */ = {
@@ -1402,22 +1448,12 @@
 			name = "添加联系人";
 			sourceTree = "<group>";
 		};
-		849C7A091DC89BFA00C229DF /* RootVC */ = {
-			isa = PBXGroup;
-			children = (
-				84B0A39A1DDEFE55006506D3 /* PGCSupplyAndDemandRootVC.h */,
-				84B0A39B1DDEFE55006506D3 /* PGCSupplyAndDemandRootVC.m */,
-				8475AE621DCC795B004A15A5 /* PGCCollectRootVC.h */,
-				8475AE631DCC795B004A15A5 /* PGCCollectRootVC.m */,
-			);
-			name = RootVC;
-			sourceTree = "<group>";
-		};
 		849C7A0A1DC89D4500C229DF /* 供应 */ = {
 			isa = PBXGroup;
 			children = (
-				849C7A131DC89F1200C229DF /* 供应收藏 */,
 				849C7A141DC89F1A00C229DF /* 供应发布 */,
+				849C7A151DC89F4F00C229DF /* PGCSupplyCollectVC.h */,
+				849C7A161DC89F4F00C229DF /* PGCSupplyCollectVC.m */,
 				849C7A4D1DC9977700C229DF /* PGCSupplyDetailVC.h */,
 				849C7A4E1DC9977700C229DF /* PGCSupplyDetailVC.m */,
 			);
@@ -1427,23 +1463,13 @@
 		849C7A0F1DC89EA300C229DF /* 需求 */ = {
 			isa = PBXGroup;
 			children = (
-				849C7A1C1DC89F7700C229DF /* 需求收藏 */,
 				849C7A1B1DC89F7000C229DF /* 需求发布 */,
+				849C7A1D1DC89F8B00C229DF /* PGCDemandCollectVC.h */,
+				849C7A1E1DC89F8B00C229DF /* PGCDemandCollectVC.m */,
 				849C7A501DC9978700C229DF /* PGCDemandDetailVC.h */,
 				849C7A511DC9978700C229DF /* PGCDemandDetailVC.m */,
 			);
 			name = "需求";
-			sourceTree = "<group>";
-		};
-		849C7A131DC89F1200C229DF /* 供应收藏 */ = {
-			isa = PBXGroup;
-			children = (
-				849C7A151DC89F4F00C229DF /* PGCSupplyCollectVC.h */,
-				849C7A161DC89F4F00C229DF /* PGCSupplyCollectVC.m */,
-				849C7A281DC8A62600C229DF /* PGCSupplyCollectDetailVC.h */,
-				849C7A291DC8A62600C229DF /* PGCSupplyCollectDetailVC.m */,
-			);
-			name = "供应收藏";
 			sourceTree = "<group>";
 		};
 		849C7A141DC89F1A00C229DF /* 供应发布 */ = {
@@ -1470,41 +1496,6 @@
 				849C7A6E1DC9CF4200C229DF /* PGCDemandIntroduceInfoVC.m */,
 			);
 			name = "需求发布";
-			sourceTree = "<group>";
-		};
-		849C7A1C1DC89F7700C229DF /* 需求收藏 */ = {
-			isa = PBXGroup;
-			children = (
-				849C7A1D1DC89F8B00C229DF /* PGCDemandCollectVC.h */,
-				849C7A1E1DC89F8B00C229DF /* PGCDemandCollectVC.m */,
-			);
-			name = "需求收藏";
-			sourceTree = "<group>";
-		};
-		849C7A241DC8A52C00C229DF /* 分享 */ = {
-			isa = PBXGroup;
-			children = (
-				849C7A251DC8A54C00C229DF /* PGCSupplyAndDemandShareView.h */,
-				849C7A261DC8A54C00C229DF /* PGCSupplyAndDemandShareView.m */,
-			);
-			name = "分享";
-			sourceTree = "<group>";
-		};
-		849C7A561DC9A65D00C229DF /* 详情子视图 */ = {
-			isa = PBXGroup;
-			children = (
-				8475AE431DCC2CC9004A15A5 /* PGCDetailTitleView.h */,
-				8475AE441DCC2CC9004A15A5 /* PGCDetailTitleView.m */,
-				8475AE551DCC64F7004A15A5 /* PGCSupplySubviewTop.h */,
-				8475AE561DCC64F7004A15A5 /* PGCSupplySubviewTop.m */,
-				8475AE5B1DCC6F7D004A15A5 /* PGCDetailSubviewTop.h */,
-				8475AE5C1DCC6F7D004A15A5 /* PGCDetailSubviewTop.m */,
-				8475AE591DCC6F7D004A15A5 /* PGCDetailSubviewBottom.h */,
-				8475AE5A1DCC6F7D004A15A5 /* PGCDetailSubviewBottom.m */,
-				8475AE4C1DCC4386004A15A5 /* PGCDetailContactCell.h */,
-				8475AE4D1DCC4386004A15A5 /* PGCDetailContactCell.m */,
-			);
-			name = "详情子视图";
 			sourceTree = "<group>";
 		};
 		84A006D91DD1A75000CC8C83 /* ReactiveCocoa */ = {
@@ -1732,6 +1723,86 @@
 			path = BMChineseStringSort;
 			sourceTree = "<group>";
 		};
+		84B0A3B01DE023A4006506D3 /* XHLaunchAd */ = {
+			isa = PBXGroup;
+			children = (
+				84B0A3B11DE023A4006506D3 /* UIImage+XHGIF.h */,
+				84B0A3B21DE023A4006506D3 /* UIImage+XHGIF.m */,
+				84B0A3B31DE023A4006506D3 /* UIImageView+XHWebCache.h */,
+				84B0A3B41DE023A4006506D3 /* UIImageView+XHWebCache.m */,
+				84B0A3B51DE023A4006506D3 /* XHImageCache.h */,
+				84B0A3B61DE023A4006506D3 /* XHImageCache.m */,
+				84B0A3B71DE023A4006506D3 /* XHLaunchAd.h */,
+				84B0A3B81DE023A4006506D3 /* XHLaunchAd.m */,
+				84B0A3B91DE023A4006506D3 /* XHSkipButton.h */,
+				84B0A3BA1DE023A4006506D3 /* XHSkipButton.m */,
+				84B0A3BB1DE023A4006506D3 /* XHWebImageDownload.h */,
+				84B0A3BC1DE023A4006506D3 /* XHWebImageDownload.m */,
+			);
+			path = XHLaunchAd;
+			sourceTree = "<group>";
+		};
+		84B0A3C31DE03048006506D3 /* 需求详情cell */ = {
+			isa = PBXGroup;
+			children = (
+				84B0A3C41DE03065006506D3 /* DemandDetailTopCell.h */,
+				84B0A3C51DE03065006506D3 /* DemandDetailTopCell.m */,
+				84B0A3C71DE030E6006506D3 /* DemandDetailContactCell.h */,
+				84B0A3C81DE030E6006506D3 /* DemandDetailContactCell.m */,
+				84B0A3CA1DE03311006506D3 /* DemandDetailDescCell.h */,
+				84B0A3CB1DE03311006506D3 /* DemandDetailDescCell.m */,
+				84B0A3CD1DE03468006506D3 /* DemandDetailImagesCell.h */,
+				84B0A3CE1DE03468006506D3 /* DemandDetailImagesCell.m */,
+				84B0A3D01DE034F9006506D3 /* DemandDetailFilesCell.h */,
+				84B0A3D11DE034F9006506D3 /* DemandDetailFilesCell.m */,
+			);
+			name = "需求详情cell";
+			sourceTree = "<group>";
+		};
+		84B0A3D31DE04E90006506D3 /* 供应详情cell */ = {
+			isa = PBXGroup;
+			children = (
+				84B0A3D41DE04EB0006506D3 /* SupplyDetailTopCell.h */,
+				84B0A3D51DE04EB0006506D3 /* SupplyDetailTopCell.m */,
+			);
+			name = "供应详情cell";
+			sourceTree = "<group>";
+		};
+		84B0A3D71DE051E8006506D3 /* 选择地区cell */ = {
+			isa = PBXGroup;
+			children = (
+				8487941D1DD45A530060D7FD /* PGCDropLeftCell.h */,
+				8487941E1DD45A530060D7FD /* PGCDropLeftCell.m */,
+				8487941F1DD45A530060D7FD /* PGCDropRightCell.h */,
+				848794201DD45A530060D7FD /* PGCDropRightCell.m */,
+			);
+			name = "选择地区cell";
+			sourceTree = "<group>";
+		};
+		84B0A3DD1DE1BEC4006506D3 /* 发布需求cell */ = {
+			isa = PBXGroup;
+			children = (
+				84B0A3DE1DE1BEF6006506D3 /* IntroduceDemandTopCell.h */,
+				84B0A3DF1DE1BEF6006506D3 /* IntroduceDemandTopCell.m */,
+				84B0A3E11DE1BF1B006506D3 /* IntroduceDemandContactCell.h */,
+				84B0A3E21DE1BF1B006506D3 /* IntroduceDemandContactCell.m */,
+				84B0A3E41DE1BF44006506D3 /* IntroduceDemandDescCell.h */,
+				84B0A3E51DE1BF44006506D3 /* IntroduceDemandDescCell.m */,
+				84B0A3E71DE1BF50006506D3 /* IntroduceDemandImagesCell.h */,
+				84B0A3E81DE1BF50006506D3 /* IntroduceDemandImagesCell.m */,
+			);
+			name = "发布需求cell";
+			sourceTree = "<group>";
+		};
+		84B0A3EA1DE1BF66006506D3 /* 发布供应cell */ = {
+			isa = PBXGroup;
+			children = (
+				84B0A3EB1DE1BF81006506D3 /* IntroduceSupplyTopCell.h */,
+				84B0A3EC1DE1BF81006506D3 /* IntroduceSupplyTopCell.m */,
+			);
+			name = "发布供应cell";
+			sourceTree = "<group>";
+		};
 		84ECF1CC1DD167CE00697207 /* UtilKits */ = {
 			isa = PBXGroup;
 			children = (
@@ -1766,39 +1837,14 @@
 		84ECF1DA1DD167CE00697207 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				84B0A3B01DE023A4006506D3 /* XHLaunchAd */,
 				84F22C651DDBF6DB00AB0325 /* ProgressHUD */,
 				8440D3621DDD494500747E1F /* MBProgressHUD-MJ */,
 				84A3F66A1DD879A000DB43D3 /* BMChineseStringSort */,
 				848793DD1DD2B96E0060D7FD /* JSDropDownMenu */,
 				84A006D91DD1A75000CC8C83 /* ReactiveCocoa */,
-				84ECF1E31DD167CE00697207 /* FDTemplateLayoutCell */,
-				84ECF1EC1DD167CE00697207 /* GCD */,
 			);
 			path = Libs;
-			sourceTree = "<group>";
-		};
-		84ECF1E31DD167CE00697207 /* FDTemplateLayoutCell */ = {
-			isa = PBXGroup;
-			children = (
-				84ECF1E41DD167CE00697207 /* UITableView+FDIndexPathHeightCache.h */,
-				84ECF1E51DD167CE00697207 /* UITableView+FDIndexPathHeightCache.m */,
-				84ECF1E61DD167CE00697207 /* UITableView+FDKeyedHeightCache.h */,
-				84ECF1E71DD167CE00697207 /* UITableView+FDKeyedHeightCache.m */,
-				84ECF1E81DD167CE00697207 /* UITableView+FDTemplateLayoutCell.h */,
-				84ECF1E91DD167CE00697207 /* UITableView+FDTemplateLayoutCell.m */,
-				84ECF1EA1DD167CE00697207 /* UITableView+FDTemplateLayoutCellDebug.h */,
-				84ECF1EB1DD167CE00697207 /* UITableView+FDTemplateLayoutCellDebug.m */,
-			);
-			path = FDTemplateLayoutCell;
-			sourceTree = "<group>";
-		};
-		84ECF1EC1DD167CE00697207 /* GCD */ = {
-			isa = PBXGroup;
-			children = (
-				84ECF1ED1DD167CE00697207 /* GCDHelper.h */,
-				84ECF1EE1DD167CE00697207 /* GCDHelper.m */,
-			);
-			path = GCD;
 			sourceTree = "<group>";
 		};
 		84ECF1FE1DD1682B00697207 /* HttpService */ = {
@@ -1961,6 +2007,7 @@
 				845939331DBF625B0086DD53 /* PGCLoginController.xib in Resources */,
 				845939251DBF625B0086DD53 /* PGCUserInfoController.xib in Resources */,
 				8459391D1DBF625B0086DD53 /* PGCChooseJobController.xib in Resources */,
+				84B0A3DC1DE060BB006506D3 /* PGCWebViewController.xib in Resources */,
 				845939371DBF625B0086DD53 /* PGCResetPasswordController.xib in Resources */,
 				845939351DBF625B0086DD53 /* PGCRegisterController.xib in Resources */,
 				845939121DBF625B0086DD53 /* PGCProjectCell.xib in Resources */,
@@ -1968,6 +2015,8 @@
 				8459393A1DBF625B0086DD53 /* PGCSupplyAndDemandController.xib in Resources */,
 				8459391F1DBF625B0086DD53 /* PGCProfileController.xib in Resources */,
 				845939231DBF625B0086DD53 /* PGCShareToFriendController.xib in Resources */,
+				84B0A3A61DE0135A006506D3 /* PGCFeedbackViewController.xib in Resources */,
+				84B0A3A11DE01349006506D3 /* PGCAboutUsViewController.xib in Resources */,
 				845939211DBF625B0086DD53 /* PGCSettingController.xib in Resources */,
 				8440D36A1DDD494600747E1F /* MBProgressHUD.bundle in Resources */,
 			);
@@ -2048,6 +2097,7 @@
 				84A007CA1DD1A75000CC8C83 /* RACKVOTrampoline.m in Sources */,
 				84C839491DD7269200A07F76 /* PGCHeadImage.m in Sources */,
 				84A007C71DD1A75000CC8C83 /* RACIndexSetSequence.m in Sources */,
+				84B0A3D21DE034F9006506D3 /* DemandDetailFilesCell.m in Sources */,
 				841383BB1DC6D1EF00A91589 /* PGCVIPServiceController.m in Sources */,
 				848793DC1DD2B4C00060D7FD /* PGCRegisterOrLoginAPIManager.m in Sources */,
 				849BED061DD04FA4007936B0 /* PGCCity.m in Sources */,
@@ -2060,10 +2110,10 @@
 				849C7A521DC9978700C229DF /* PGCDemandDetailVC.m in Sources */,
 				84A007A41DD1A75000CC8C83 /* NSIndexSet+RACSequenceAdditions.m in Sources */,
 				84A007F81DD1A75100CC8C83 /* UITextView+RACSignalSupport.m in Sources */,
-				849C7A2A1DC8A62600C229DF /* PGCSupplyCollectDetailVC.m in Sources */,
 				8475AE3F1DCC2B87004A15A5 /* PGCAlertView.m in Sources */,
 				84A007E51DD1A75100CC8C83 /* RACValueTransformer.m in Sources */,
 				84A007B01DD1A75000CC8C83 /* NSString+RACSequenceAdditions.m in Sources */,
+				84B0A3C11DE023A4006506D3 /* XHSkipButton.m in Sources */,
 				84A007D61DD1A75100CC8C83 /* RACSignal.m in Sources */,
 				84A87A931DC1CD1000FD8CC3 /* PGCProjectInfoNavigationBar.m in Sources */,
 				84A3F6691DD863D900DB43D3 /* PGCContact.m in Sources */,
@@ -2075,21 +2125,22 @@
 				8475AE3C1DCC2B87004A15A5 /* PGCProjectContactCell.m in Sources */,
 				849C7BCF1DC9D48900C229DF /* PGCAppDelegate+AppLifeCircle.m in Sources */,
 				84A007B91DD1A75000CC8C83 /* RACCompoundDisposable.m in Sources */,
+				84B0A3D61DE04EB0006506D3 /* SupplyDetailTopCell.m in Sources */,
 				84A007F11DD1A75100CC8C83 /* UISegmentedControl+RACSignalSupport.m in Sources */,
 				84A007A61DD1A75000CC8C83 /* NSNotificationCenter+RACSupport.m in Sources */,
 				84A007F61DD1A75100CC8C83 /* UITableViewHeaderFooterView+RACSignalSupport.m in Sources */,
 				84A007D31DD1A75100CC8C83 /* RACSequence.m in Sources */,
 				8475AE701DCC842A004A15A5 /* PGCIntroducePublicView.m in Sources */,
-				8475AE571DCC64F7004A15A5 /* PGCSupplySubviewTop.m in Sources */,
 				8475AE401DCC2B87004A15A5 /* PGCHintAlertView.m in Sources */,
-				84ECF1FC1DD167CE00697207 /* GCDHelper.m in Sources */,
 				84ECF2011DD1684A00697207 /* PGCHttpService.m in Sources */,
 				84A007C01DD1A75000CC8C83 /* RACEagerSequence.m in Sources */,
+				84B0A3BE1DE023A4006506D3 /* UIImageView+XHWebCache.m in Sources */,
 				84A007BA1DD1A75000CC8C83 /* RACCompoundDisposableProvider.d in Sources */,
 				8459391C1DBF625B0086DD53 /* PGCChooseJobController.m in Sources */,
 				84A007EA1DD1A75100CC8C83 /* UICollectionReusableView+RACSignalSupport.m in Sources */,
 				84A007A91DD1A75000CC8C83 /* NSObject+RACKVOWrapper.m in Sources */,
 				8487940D1DD303570060D7FD /* PGCProjectType.m in Sources */,
+				84B0A3C91DE030E6006506D3 /* DemandDetailContactCell.m in Sources */,
 				84A3F66D1DD879A000DB43D3 /* BMChineseSort.m in Sources */,
 				84A007CE1DD1A75100CC8C83 /* RACQueueScheduler.m in Sources */,
 				84A007DA1DD1A75100CC8C83 /* RACStringSequence.m in Sources */,
@@ -2098,7 +2149,6 @@
 				84A007E81DD1A75100CC8C83 /* UIBarButtonItem+RACCommandSupport.m in Sources */,
 				84A007DF1DD1A75100CC8C83 /* RACTargetQueueScheduler.m in Sources */,
 				84B0A3901DDDD239006506D3 /* Files.m in Sources */,
-				84ECF1F81DD167CE00697207 /* UITableView+FDIndexPathHeightCache.m in Sources */,
 				845939161DBF625B0086DD53 /* PGCTabBarController.m in Sources */,
 				84F22C5D1DDB33B500AB0325 /* Contacts.m in Sources */,
 				849C7BC91DC9D3CB00C229DF /* PGCAppDelegate.m in Sources */,
@@ -2109,15 +2159,16 @@
 				845939181DBF625B0086DD53 /* PGCTabBar.m in Sources */,
 				84A007CB1DD1A75000CC8C83 /* RACMulticastConnection.m in Sources */,
 				848793EB1DD2C2940060D7FD /* PGCMaterialServiceTypes.m in Sources */,
+				84B0A3C61DE03065006506D3 /* DemandDetailTopCell.m in Sources */,
 				84A007C11DD1A75000CC8C83 /* RACEmptySequence.m in Sources */,
 				84ECF1F21DD167CE00697207 /* NSString+Size.m in Sources */,
 				845939321DBF625B0086DD53 /* PGCLoginController.m in Sources */,
-				84ECF1FB1DD167CE00697207 /* UITableView+FDTemplateLayoutCellDebug.m in Sources */,
 				8440D3611DDC72D800747E1F /* PGCUser.m in Sources */,
 				849C7A331DC8AFD700C229DF /* PGCRemandIntroduceDetailVC.m in Sources */,
 				848793E51DD2C2100060D7FD /* PGCSupplyAPIManager.m in Sources */,
 				845939201DBF625B0086DD53 /* PGCSettingController.m in Sources */,
 				84A007D01DD1A75100CC8C83 /* RACReturnSignal.m in Sources */,
+				84B0A3E31DE1BF1B006506D3 /* IntroduceDemandContactCell.m in Sources */,
 				84A007AB1DD1A75000CC8C83 /* NSObject+RACPropertySubscribing.m in Sources */,
 				849BECF01DCF44F3007936B0 /* PGCIntroduceAddContactCell.m in Sources */,
 				84A007A21DD1A75000CC8C83 /* NSEnumerator+RACSequenceAdditions.m in Sources */,
@@ -2135,9 +2186,11 @@
 				8487941A1DD41BF10060D7FD /* PGCNetworkCache.m in Sources */,
 				84F22C681DDBF6DB00AB0325 /* PGCProgressHUD.m in Sources */,
 				8440D3731DDD849100747E1F /* PGCOtherAPIManager.m in Sources */,
-				84B0A39C1DDEFE56006506D3 /* PGCSupplyAndDemandRootVC.m in Sources */,
+				84B0A3CC1DE03311006506D3 /* DemandDetailDescCell.m in Sources */,
+				84B0A3BD1DE023A4006506D3 /* UIImage+XHGIF.m in Sources */,
 				845939221DBF625B0086DD53 /* PGCShareToFriendController.m in Sources */,
 				8459392F1DBF625B0086DD53 /* PGCProjectInfoCell.m in Sources */,
+				84B0A3DB1DE060BB006506D3 /* PGCWebViewController.m in Sources */,
 				84A007A11DD1A75000CC8C83 /* NSDictionary+RACSequenceAdditions.m in Sources */,
 				84A007AF1DD1A75000CC8C83 /* NSString+RACKeyPathUtilities.m in Sources */,
 				849C7A171DC89F4F00C229DF /* PGCSupplyCollectVC.m in Sources */,
@@ -2146,19 +2199,27 @@
 				84A007EF1DD1A75100CC8C83 /* UIImagePickerController+RACSignalSupport.m in Sources */,
 				848794261DD474690060D7FD /* PGCProjectSurveySubview.m in Sources */,
 				845939091DBF625B0086DD53 /* PGCContactInfoController.m in Sources */,
+				84B0A3A01DE01349006506D3 /* PGCAboutUsViewController.m in Sources */,
+				84B0A3BF1DE023A4006506D3 /* XHImageCache.m in Sources */,
 				84ECF1F41DD167CE00697207 /* UIImage+Image.m in Sources */,
 				84A007C61DD1A75000CC8C83 /* RACImmediateScheduler.m in Sources */,
 				845939341DBF625B0086DD53 /* PGCRegisterController.m in Sources */,
 				84A007F41DD1A75100CC8C83 /* UISwitch+RACSignalSupport.m in Sources */,
 				8440D36F1DDD5FE100747E1F /* PGCDemand.m in Sources */,
+				84B0A3E01DE1BEF6006506D3 /* IntroduceDemandTopCell.m in Sources */,
 				84F22C571DDB0C7E00AB0325 /* PGCSupply.m in Sources */,
+				84B0A3A91DE01E41006506D3 /* LunchImage.m in Sources */,
+				84B0A3ED1DE1BF81006506D3 /* IntroduceSupplyTopCell.m in Sources */,
 				848793DB1DD2B4C00060D7FD /* PGCProjectInfoAPIManager.m in Sources */,
+				84B0A3C21DE023A4006506D3 /* XHWebImageDownload.m in Sources */,
 				84A007DD1DD1A75100CC8C83 /* RACSubscriptingAssignmentTrampoline.m in Sources */,
+				84B0A3C01DE023A4006506D3 /* XHLaunchAd.m in Sources */,
 				84A007EC1DD1A75100CC8C83 /* UIControl+RACSignalSupportPrivate.m in Sources */,
 				84A007CF1DD1A75100CC8C83 /* RACReplaySubject.m in Sources */,
 				8487940A1DD300CD0060D7FD /* PGCContactAPIManager.m in Sources */,
 				848793D91DD2B4C00060D7FD /* PGCAreaAPIManager.m in Sources */,
 				849C7A1F1DC89F8B00C229DF /* PGCDemandCollectVC.m in Sources */,
+				84B0A3CF1DE03468006506D3 /* DemandDetailImagesCell.m in Sources */,
 				849C7A6C1DC9CEA500C229DF /* PGCSupplyIntroduceInfoVC.m in Sources */,
 				8475AE671DCC7CC0004A15A5 /* PGCIntroduceDetailTopView.m in Sources */,
 				845939241DBF625B0086DD53 /* PGCUserInfoController.m in Sources */,
@@ -2173,10 +2234,10 @@
 				8475AE6A1DCC7CD2004A15A5 /* PGCIntroduceDetailBottomView.m in Sources */,
 				8475AE411DCC2B87004A15A5 /* PGCPayView.m in Sources */,
 				8440D35B1DDC5D7D00747E1F /* PGCManager.m in Sources */,
+				84B0A3E61DE1BF44006506D3 /* IntroduceDemandDescCell.m in Sources */,
 				84A007CD1DD1A75000CC8C83 /* RACPassthroughSubscriber.m in Sources */,
 				84A3F6701DD94BB600DB43D3 /* PGCProjectContact.m in Sources */,
 				8475AE731DCC8DA6004A15A5 /* PGCIntroduceSelectView.m in Sources */,
-				8475AE5D1DCC6F7D004A15A5 /* PGCDetailSubviewBottom.m in Sources */,
 				849C7BCC1DC9D46F00C229DF /* PGCAppDelegate+AppService.m in Sources */,
 				8459390B1DBF625B0086DD53 /* PGCContactsController.m in Sources */,
 				84A007EE1DD1A75100CC8C83 /* UIGestureRecognizer+RACSignalSupport.m in Sources */,
@@ -2184,7 +2245,6 @@
 				848794231DD45A530060D7FD /* PGCDropRightCell.m in Sources */,
 				845939171DBF625B0086DD53 /* PGCBadgeView.m in Sources */,
 				845939391DBF625B0086DD53 /* PGCSupplyAndDemandController.m in Sources */,
-				8475AE5E1DCC6F7D004A15A5 /* PGCDetailSubviewTop.m in Sources */,
 				84A007C31DD1A75000CC8C83 /* RACErrorSignal.m in Sources */,
 				849BED031DD04F9B007936B0 /* PGCProvince.m in Sources */,
 				845939301DBF625B0086DD53 /* PGCProjectInfoDetailVC.m in Sources */,
@@ -2213,14 +2273,12 @@
 				84ECF2051DD168A700697207 /* PGCInterfaceConfig.m in Sources */,
 				84A007AA1DD1A75000CC8C83 /* NSObject+RACLifting.m in Sources */,
 				84A007F21DD1A75100CC8C83 /* UISlider+RACSignalSupport.m in Sources */,
-				8475AE4E1DCC4386004A15A5 /* PGCDetailContactCell.m in Sources */,
 				84A007E91DD1A75100CC8C83 /* UIButton+RACCommandSupport.m in Sources */,
 				848794221DD45A530060D7FD /* PGCDropLeftCell.m in Sources */,
 				84A007C91DD1A75000CC8C83 /* RACKVOProxy.m in Sources */,
 				84A007A01DD1A75000CC8C83 /* NSData+RACSupport.m in Sources */,
 				84A007BC1DD1A75000CC8C83 /* RACDisposable.m in Sources */,
 				84A007E61DD1A75100CC8C83 /* UIActionSheet+RACSignalSupport.m in Sources */,
-				8475AE641DCC795B004A15A5 /* PGCCollectRootVC.m in Sources */,
 				84A0079F1DD1A75000CC8C83 /* NSArray+RACSequenceAdditions.m in Sources */,
 				84A007C21DD1A75000CC8C83 /* RACEmptySignal.m in Sources */,
 				84A007E71DD1A75100CC8C83 /* UIAlertView+RACSignalSupport.m in Sources */,
@@ -2232,11 +2290,11 @@
 				84A007C41DD1A75000CC8C83 /* RACEvent.m in Sources */,
 				8440D3691DDD494600747E1F /* MBProgressHUD+MJ.m in Sources */,
 				84A007A71DD1A75000CC8C83 /* NSObject+RACDeallocating.m in Sources */,
-				84ECF1F91DD167CE00697207 /* UITableView+FDKeyedHeightCache.m in Sources */,
 				848793E81DD2C2200060D7FD /* PGCDemandAPIManager.m in Sources */,
 				845939281DBF625B0086DD53 /* PGCProjectInfoController.m in Sources */,
 				8413839D1DC6147B00A91589 /* PGCProjectAddContactController.m in Sources */,
 				84A87A981DC2010F00FD8CC3 /* PGCProjectRootViewController.m in Sources */,
+				84B0A3A51DE0135A006506D3 /* PGCFeedbackViewController.m in Sources */,
 				8475AE451DCC2CC9004A15A5 /* PGCDetailTitleView.m in Sources */,
 				84A007B41DD1A75000CC8C83 /* RACArraySequence.m in Sources */,
 				845939191DBF625B0086DD53 /* PGCTabBarButton.m in Sources */,
@@ -2247,8 +2305,8 @@
 				849C7A271DC8A54C00C229DF /* PGCSupplyAndDemandShareView.m in Sources */,
 				84AA70481DC0B3E000150CFC /* PGCProjectDetailTagView.m in Sources */,
 				84A007BB1DD1A75000CC8C83 /* RACDelegateProxy.m in Sources */,
-				84ECF1FA1DD167CE00697207 /* UITableView+FDTemplateLayoutCell.m in Sources */,
 				84B0A3961DDEA8C4006506D3 /* PGCVIPServiceCell.m in Sources */,
+				84B0A3E91DE1BF50006506D3 /* IntroduceDemandImagesCell.m in Sources */,
 				84A007F51DD1A75100CC8C83 /* UITableViewCell+RACSignalSupport.m in Sources */,
 				84F22C4B1DDAAD7700AB0325 /* PGCSearchViewController.m in Sources */,
 				84A007F31DD1A75100CC8C83 /* UIStepper+RACSignalSupport.m in Sources */,

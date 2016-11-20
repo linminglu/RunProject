@@ -7,179 +7,34 @@
 //
 
 #import "PGCDemandDetailVC.h"
-#import "PGCDetailSubviewBottom.h"
-#import "PGCDemand.h"
+#import "PGCNavigationItem.h"
 #import "PGCSupplyAndDemandAPIManager.h"
 #import "PGCSupplyAndDemandShareView.h"
-#import "PGCNavigationItem.h"
-#import "PGCDetailTitleView.h"
-
-
-#pragma mark -
-#pragma mark - DemandDetailSubviewTop
-
-@interface DemandDetailSubviewTop : UIView
-
-@end
-
-@implementation DemandDetailSubviewTop
-
-- (instancetype)initWithModel:(id)model
-{
-    self = [super init];
-    if (self) {
-        self.backgroundColor = [UIColor whiteColor];
-        
-        [self setupSubviewsWithModel:model];
-    }
-    return self;
-}
-
-- (void)setupSubviewsWithModel:(id)model
-{
-    if (model == nil) {
-        return;
-    }
-    NSArray *titleArr = model[@"title"];
-    NSArray *contentArr = model[@"content"];
-    
-    PGCDetailTitleView *title = [[PGCDetailTitleView alloc] initWithTitle:titleArr[0] content:contentArr[0]];
-    [self addSubview:title];
-    title.sd_layout
-    .topSpaceToView(self, 0)
-    .leftSpaceToView(self, 0)
-    .rightSpaceToView(self, 0)
-    .heightIs(50);
-    
-    // 灰色分割视图
-    UIView *grayView_1 = [[UIView alloc] init];
-    grayView_1.backgroundColor = RGB(244, 244, 244);
-    [self addSubview:grayView_1];
-    grayView_1.sd_layout
-    .topSpaceToView(title, 0)
-    .leftSpaceToView(self, 0)
-    .rightSpaceToView(self, 0)
-    .heightIs(10);
-    
-    
-    PGCDetailTitleView *time = [[PGCDetailTitleView alloc] initWithTitle:titleArr[1] content:contentArr[1]];
-    [self addSubview:time];
-    time.sd_layout
-    .topSpaceToView(grayView_1, 0)
-    .leftSpaceToView(self, 0)
-    .rightSpaceToView(self, 0)
-    .heightIs(50);
-    
-    // 时间下面的分割线
-    UIView *line_1 = [[UIView alloc] init];
-    line_1.backgroundColor = RGB(244, 244, 244);
-    [self addSubview:line_1];
-    line_1.sd_layout
-    .topSpaceToView(time, 0)
-    .leftSpaceToView(self, 0)
-    .rightSpaceToView(self, 0)
-    .heightIs(1);
-    
-    
-    PGCDetailTitleView *unit = [[PGCDetailTitleView alloc] initWithTitle:titleArr[2] content:contentArr[2]];
-    [self addSubview:unit];
-    unit.sd_layout
-    .topSpaceToView(line_1, 0)
-    .leftSpaceToView(self, 0)
-    .rightSpaceToView(self, 0)
-    .heightIs(50);
-    
-    // 采购单位下面的分割线
-    UIView *line_2 = [[UIView alloc] init];
-    line_2.backgroundColor = RGB(244, 244, 244);
-    [self addSubview:line_2];
-    line_2.sd_layout
-    .topSpaceToView(unit, 0)
-    .leftSpaceToView(self, 0)
-    .rightSpaceToView(self, 0)
-    .heightIs(1);
-    
-    
-    PGCDetailTitleView *address = [[PGCDetailTitleView alloc] initWithTitle:titleArr[3] content:contentArr[3]];
-    [self addSubview:address];
-    address.sd_layout
-    .topSpaceToView(line_2, 0)
-    .leftSpaceToView(self, 0)
-    .rightSpaceToView(self, 0)
-    .heightIs(50);
-    
-    // 灰色分割视图
-    UIView *grayView_2 = [[UIView alloc] init];
-    grayView_2.backgroundColor = RGB(244, 244, 244);
-    [self addSubview:grayView_2];
-    grayView_2.sd_layout
-    .topSpaceToView(address, 0)
-    .leftSpaceToView(self, 0)
-    .rightSpaceToView(self, 0)
-    .heightIs(10);
-    
-    
-    PGCDetailTitleView *area = [[PGCDetailTitleView alloc] initWithTitle:titleArr[4] content:contentArr[4]];
-    [self addSubview:area];
-    area.sd_layout
-    .topSpaceToView(grayView_2, 0)
-    .leftSpaceToView(self, 0)
-    .rightSpaceToView(self, 0)
-    .heightIs(50);
-    
-    // 地区下面的分割线
-    UIView *line_3 = [[UIView alloc] init];
-    line_3.backgroundColor = RGB(244, 244, 244);
-    [self addSubview:line_3];
-    line_3.sd_layout
-    .topSpaceToView(area, 0)
-    .leftSpaceToView(self, 0)
-    .rightSpaceToView(self, 0)
-    .heightIs(1);
-    
-    
-    PGCDetailTitleView *demand = [[PGCDetailTitleView alloc] initWithTitle:titleArr[5] content:contentArr[5]];
-    [self addSubview:demand];
-    demand.sd_layout
-    .topSpaceToView(line_3, 0)
-    .leftSpaceToView(self, 0)
-    .rightSpaceToView(self, 0)
-    .heightIs(50);
-    
-    [self setupAutoHeightWithBottomView:demand bottomMargin:0];
-}
-@end
-
-
-#pragma mark -
-#pragma mark - DemandDetailSubviewBottom
-
-@interface DemandDetailSubviewBottom : UIView
-
-@end
-
-@implementation DemandDetailSubviewBottom
-
-
-
-@end
-
-
-#pragma mark -
-#pragma mark - PGCDemandDetailVC
+#import "PGCProjectDetailTagView.h"
+#import "DemandDetailTopCell.h"
+#import "DemandDetailContactCell.h"
+#import "DemandDetailDescCell.h"
+#import "DemandDetailImagesCell.h"
+#import "DemandDetailFilesCell.h"
+#import "PGCAlertView.h"
+#import "PGCHintAlertView.h"
+#import "PGCProjectAddContactController.h"
+#import "PGCProjectContact.h"
+#import "PGCDemand.h"
 
 typedef NS_ENUM(NSUInteger, ButtonTag) {
     ShareBtnTag,
     HeartBtnTag
 };
 
-@interface PGCDemandDetailVC ()  < PGCDetailSubviewBottomDelegate, PGCSupplyAndDemandShareViewDelegate>
+@interface PGCDemandDetailVC ()  <UITableViewDataSource, UITableViewDelegate, DemandDetailContactCellDelegate, PGCSupplyAndDemandShareViewDelegate, PGCAlertViewDelegate, PGCHintAlertViewDelegate>
 
-@property (strong, nonatomic) UIScrollView *scrollView;/** 版块0 底部滚动视图 */
-@property (strong, nonatomic) DemandDetailSubviewTop *topView;/** 板块视图1 */
-@property (strong, nonatomic) PGCDetailSubviewBottom *bottomView;/** 板块视图2 */
+@property (strong, nonatomic) UITableView *tableView;/** 表格试图 */
+@property (copy, nonatomic) NSArray *headerTitles;/** 头部视图标题 */
+@property (strong, nonatomic) NSMutableArray *dataSource;/** 表格视图数据源 */
+@property (strong, nonatomic) Contacts *contact;/** 联系人 */
 
-
+- (void)initializeDataSource; /** 初始化数据源 */
 - (void)initializeUserInterface; /** 初始化用户界面 */
 
 @end
@@ -189,9 +44,15 @@ typedef NS_ENUM(NSUInteger, ButtonTag) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self initializeDataSource];
     [self initializeUserInterface];
 }
 
+
+- (void)initializeDataSource
+{
+    _headerTitles = @[@" ", @"联系人", @"详细介绍", @"图片介绍", @"文件下载"];
+}
 
 - (void)initializeUserInterface
 {
@@ -200,65 +61,7 @@ typedef NS_ENUM(NSUInteger, ButtonTag) {
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = false;
     
-    self.scrollView = [[UIScrollView alloc] init];
-    self.scrollView.backgroundColor = RGB(244, 244, 244);
-    self.scrollView.showsHorizontalScrollIndicator = false;
-    self.scrollView.showsVerticalScrollIndicator = false;
-    [self.view addSubview:self.scrollView];
-    
-    
-    NSString *start = [self.demand.start_time substringToIndex:10];
-    NSString *end = [self.demand.end_time substringToIndex:10];
-    NSArray *array = @[self.demand.title,
-                       [NSString stringWithFormat:@"%@ 至 %@", start, end],
-                       self.demand.company,
-                       self.demand.address,
-                       [self.demand.province stringByAppendingString:self.demand.city],
-                       self.demand.type_name];
-    NSDictionary *model = @{@"title":@[@"标题：",
-                                       @"时间：",
-                                       @"采购单位（个人）：",
-                                       @"地址：",
-                                       @"地区：",
-                                       @"需求："],
-                            @"content":array};
-    // 版块1
-    self.topView = [[DemandDetailSubviewTop alloc] initWithModel:model];
-    [self.scrollView addSubview:self.topView];
-
-    // 版块2
-    self.bottomView = [[PGCDetailSubviewBottom alloc] initWithModel:self.demand];
-    self.bottomView.delegate = self;
-    [self.scrollView addSubview:self.bottomView];
-    
-    [self setPlateViewAutoLayout];
-}
-
-#pragma mark - 三方约束子控件
-
-- (void)setPlateViewAutoLayout
-{    
-    self.scrollView.sd_layout
-    .topSpaceToView(self.view, STATUS_AND_NAVIGATION_HEIGHT)
-    .leftSpaceToView(self.view, 0)
-    .rightSpaceToView(self.view, 0)
-    .bottomSpaceToView(self.view, 0);
-    
-    // 第1个版块布局
-    self.topView.sd_layout
-    .topSpaceToView(self.scrollView, 0)
-    .leftSpaceToView(self.scrollView, 0)
-    .rightSpaceToView(self.scrollView, 0)
-    .heightIs(10);// 给定初始高度，后面根据自身子视图计算高度
-    
-    // 第2个版块布局
-    self.bottomView.sd_layout
-    .topSpaceToView(self.topView, 0)
-    .leftSpaceToView(self.scrollView, 0)
-    .rightSpaceToView(self.scrollView, 0)
-    .heightIs(10);
-    
-    [self.scrollView setupAutoHeightWithBottomView:self.bottomView bottomMargin:0];
+    [self.view addSubview:self.tableView];
 }
 
 
@@ -284,7 +87,7 @@ typedef NS_ENUM(NSUInteger, ButtonTag) {
                     sender.itemLabel.text = @"取消收藏";
                     [PGCNotificationCenter postNotificationName:kRefreshDemandAndSupplyData object:self.demand userInfo:nil];
                 } else {
-                    [PGCProgressHUD showMessage:message toView:self.view];
+                    [PGCProgressHUD showMessage:message toView:self.view afterDelayTime:1.5];
                 }
             }];
         } else {
@@ -300,7 +103,7 @@ typedef NS_ENUM(NSUInteger, ButtonTag) {
                     sender.itemLabel.text = @"收藏";
                     [PGCNotificationCenter postNotificationName:kRefreshDemandAndSupplyData object:self.demand userInfo:nil];
                 } else {
-                    [PGCProgressHUD showMessage:message toView:self.view];
+                    [PGCProgressHUD showMessage:message toView:self.view afterDelayTime:1.5];
                 }
             }];
         }
@@ -311,39 +114,226 @@ typedef NS_ENUM(NSUInteger, ButtonTag) {
     }
 }
 
-
-
-#pragma mark - PGCDetailSubviewBottomDelegate
-
-- (void)detailSubviewBottom:(PGCDetailSubviewBottom *)bottom checkMoreContact:(UIButton *)checkMoreContact
+- (void)checkMoreContact:(UIButton *)sender
 {
     NSLog(@"%@", NSStringFromSelector(_cmd));
 }
 
-- (void)detailSubviewBottom:(PGCDetailSubviewBottom *)bottom callPhone:(UIButton *)callPhone
+
+
+#pragma mark - DemandDetailContactCellDelegate
+
+- (void)demandDetailContactCell:(DemandDetailContactCell *)cell phone:(UIButton *)phone
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+    self.contact = nil;
+    
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    self.contact = (Contacts *)self.dataSource[indexPath.section][indexPath.row];
+    
+    NSString *nameStr = [NSString stringWithFormat:@"联系人：%@", self.contact.name];
+    NSString *phoneStr = [NSString stringWithFormat:@"呼叫%@", self.contact.phone];
+    
+    PGCAlertView *alert = [[PGCAlertView alloc] initWithModel:@{@"name":nameStr, @"phone":phoneStr}];
+    alert.delegate = self;
+    [alert showAlertView];
 }
+
+
+#pragma mark - PGCAlertViewDelegate
+
+- (void)alertView:(PGCAlertView *)alertView phone:(UIButton *)phone
+{
+    PGCHintAlertView *hintAlert = [[PGCHintAlertView alloc] initWithTitle:@"是否确定给联系人拨号？"];
+    hintAlert.delegate = self;
+    [hintAlert showHintAlertView];
+}
+
+
+- (void)alertView:(PGCAlertView *)alertView addContact:(UIButton *)addContact
+{
+    PGCProjectAddContactController *addContactVC = [[PGCProjectAddContactController alloc] init];
+    NSDictionary *dic = @{@"name":self.contact.name, @"phone":self.contact.phone};
+    addContactVC.projectCon = [PGCProjectContact mj_objectWithKeyValues:dic];
+    [self.navigationController pushViewController:addContactVC animated:true];
+}
+
+
+#pragma mark - PGCHintAlertViewDelegate
+
+- (void)hintAlertView:(PGCHintAlertView *)hintAlertView confirm:(UIButton *)confirm
+{
+    NSString *string = [NSString stringWithFormat:@"tel://%@", self.contact.phone];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:string]];
+}
+
 
 
 #pragma mark - PGCSupplyAndDemandShareViewDelegate
 
-- (void)shareView:(PGCSupplyAndDemandShareView *)shareView qqFriend:(UIButton *)qqFriend {
-    
+- (void)shareView:(PGCSupplyAndDemandShareView *)shareView qqFriend:(UIButton *)qqFriend
+{
+    [PGCProgressHUD showMessage:@"分享需求信息到QQ好友成功!" toView:self.view];
 }
 
-- (void)shareView:(PGCSupplyAndDemandShareView *)shareView qqZone:(UIButton *)qqZone {
-    
+- (void)shareView:(PGCSupplyAndDemandShareView *)shareView qqZone:(UIButton *)qqZone
+{
+    [PGCProgressHUD showMessage:@"分享需求信息到QQ好友成功!" toView:self.view];
 }
 
-- (void)shareView:(PGCSupplyAndDemandShareView *)shareView weChat:(UIButton *)weChat {
-    
+- (void)shareView:(PGCSupplyAndDemandShareView *)shareView weChat:(UIButton *)weChat
+{
+    [PGCProgressHUD showMessage:@"分享需求信息到QQ好友成功!" toView:self.view];
 }
 
-- (void)shareView:(PGCSupplyAndDemandShareView *)shareView weChatFriends:(UIButton *)friends {
-    
+- (void)shareView:(PGCSupplyAndDemandShareView *)shareView weChatFriends:(UIButton *)friends
+{
+    [PGCProgressHUD showMessage:@"分享需求信息到QQ好友成功!" toView:self.view];
 }
 
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return self.dataSource.count;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (section == 1) return 1;
+    return [self.dataSource[section] count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    switch (indexPath.section) {
+        case 1:
+        {
+            DemandDetailContactCell *contactCell = [tableView dequeueReusableCellWithIdentifier:kDemandDetailContactCell];
+            contactCell.contact = [self.dataSource[indexPath.section] firstObject];
+            contactCell.delegate = self;
+            return contactCell;
+        }
+            break;
+        case 2:
+        {
+            DemandDetailDescCell *descCell = [tableView dequeueReusableCellWithIdentifier:kDemandDetailDescCell];
+            descCell.introduce = [self.dataSource[indexPath.section] firstObject];
+            return descCell;
+        }
+            break;
+        case 3:
+        {
+            DemandDetailImagesCell *imagesCell = [tableView dequeueReusableCellWithIdentifier:kDemandDetailImagesCell];
+            imagesCell.imageDatas = [self.dataSource[indexPath.section] firstObject];
+            return imagesCell;
+        }
+            break;
+        case 4:
+        {
+            DemandDetailFilesCell *filesCell = [tableView dequeueReusableCellWithIdentifier:kDemandDetailFilesCell];
+            filesCell.fileDatas = [self.dataSource[indexPath.section] firstObject];
+            return filesCell;
+        }
+            break;
+        default:
+        {
+            DemandDetailTopCell *topCell = [tableView dequeueReusableCellWithIdentifier:kDemandDetailTopCell];
+            topCell.topDemand = [self.dataSource[indexPath.section] firstObject];
+            return topCell;
+        }
+            break;
+    }
+}
+
+
+
+#pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) return 0;
+    return 40;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) return nil;
+    return [[PGCProjectDetailTagView alloc] initWithTitle:_headerTitles[section]];
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    if ([self.dataSource[section] count] > 1) return 40;
+    return 0;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    if (section == 1) {
+        UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
+        footerView.backgroundColor = [UIColor whiteColor];
+        
+        UIImage *image = [UIImage imageNamed:@"加号"];
+        NSString *title = @"查看更多联系人";
+        CGSize titleSize = [title sizeWithFont:SetFont(14) constrainedToSize:CGSizeMake(MAXFLOAT, 0)];
+        
+        UIButton *footerBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [footerView addSubview:footerBtn];
+        
+        footerBtn.frame = tableView.tableFooterView.frame;
+        footerBtn.bounds = CGRectMake(0, 0, image.size.width + titleSize.width + 30, footerView.height_sd);
+        footerBtn.center = footerView.center;
+        [footerBtn setImage:image forState:UIControlStateNormal];
+        [footerBtn.titleLabel setFont:SetFont(14)];
+        [footerBtn setTitle:title forState:UIControlStateNormal];
+        [footerBtn setTitleColor:PGCTintColor forState:UIControlStateNormal];
+        [footerBtn addTarget:self action:@selector(checkMoreContact:) forControlEvents:UIControlEventTouchUpInside];
+        
+        footerBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -15, 0, 0);
+        footerBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -15);
+        
+        return footerView;
+    }
+    return nil;
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    switch (indexPath.section) {
+        case 1:
+        {
+            Contacts *contact = [self.dataSource[indexPath.section] firstObject];
+            return [tableView cellHeightForIndexPath:indexPath model:contact keyPath:@"contact" cellClass:[DemandDetailContactCell class] contentViewWidth:SCREEN_WIDTH];
+        }
+            break;
+        case 2:
+        {
+            NSString *introduce = [self.dataSource[indexPath.section] firstObject];
+            return [tableView cellHeightForIndexPath:indexPath model:introduce keyPath:@"introduce" cellClass:[DemandDetailDescCell class] contentViewWidth:SCREEN_WIDTH];
+        }
+            break;
+        case 3:
+        {
+            NSArray *imageDatas = [self.dataSource[indexPath.section] firstObject];
+            return [tableView cellHeightForIndexPath:indexPath model:imageDatas keyPath:@"imageDatas" cellClass:[DemandDetailImagesCell class] contentViewWidth:SCREEN_WIDTH];
+        }
+            break;
+        case 4:
+        {
+            NSArray *fileDatas = [self.dataSource[indexPath.section] firstObject];
+            return [tableView cellHeightForIndexPath:indexPath model:fileDatas keyPath:@"fileDatas" cellClass:[DemandDetailFilesCell class] contentViewWidth:SCREEN_WIDTH];
+        }
+            break;
+        default:
+        {
+            PGCDemand *topDemand = [self.dataSource[indexPath.section] firstObject];
+            return [tableView cellHeightForIndexPath:indexPath model:topDemand keyPath:@"topDemand" cellClass:[DemandDetailTopCell class] contentViewWidth:SCREEN_WIDTH];
+        }
+            break;
+    }
+}
 
 
 #pragma mark - Setter
@@ -367,6 +357,38 @@ typedef NS_ENUM(NSUInteger, ButtonTag) {
     
     self.navigationItem.rightBarButtonItems = @[[[UIBarButtonItem alloc] initWithCustomView:shareBtn],
                                                 [[UIBarButtonItem alloc] initWithCustomView:heartBtn]];
+    
+    [self.dataSource insertObject:@[demand] atIndex:0];
+    [self.dataSource insertObject:demand.contacts atIndex:1];
+    [self.dataSource insertObject:@[demand.desc] atIndex:2];
+    [self.dataSource insertObject:@[demand.images] atIndex:3];
+    [self.dataSource insertObject:@[demand.files] atIndex:4];
+}
+
+#pragma mark - Getter
+
+- (UITableView *)tableView {
+    if (!_tableView) {
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, STATUS_AND_NAVIGATION_HEIGHT, self.view.width_sd, self.view.height_sd - STATUS_AND_NAVIGATION_HEIGHT) style:UITableViewStylePlain];
+        _tableView.backgroundColor = PGCBackColor;
+        _tableView.showsVerticalScrollIndicator = false;
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        _tableView.dataSource = self;
+        _tableView.delegate = self;
+        [_tableView registerClass:[DemandDetailTopCell class] forCellReuseIdentifier:kDemandDetailTopCell];
+        [_tableView registerClass:[DemandDetailContactCell class] forCellReuseIdentifier:kDemandDetailContactCell];
+        [_tableView registerClass:[DemandDetailDescCell class] forCellReuseIdentifier:kDemandDetailDescCell];
+        [_tableView registerClass:[DemandDetailImagesCell class] forCellReuseIdentifier:kDemandDetailImagesCell];
+        [_tableView registerClass:[DemandDetailFilesCell class] forCellReuseIdentifier:kDemandDetailFilesCell];
+    }
+    return _tableView;
+}
+
+- (NSMutableArray *)dataSource {
+    if (!_dataSource) {
+        _dataSource = [NSMutableArray array];
+    }
+    return _dataSource;
 }
 
 

@@ -27,6 +27,8 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.selectedBackgroundView = [[UIView alloc] initWithFrame:self.frame];
+        self.selectedBackgroundView.backgroundColor = [UIColor whiteColor];
         self.contentView.backgroundColor = [UIColor whiteColor];
         
         [self createUI];
@@ -98,8 +100,9 @@
     .topSpaceToView(self.nameLabel, 10)
     .leftSpaceToView(self.contentView, 15)
     .rightSpaceToView(self.contentView, 15)
-    .autoHeightRatio(0);
-    
+    .autoHeightRatio(0)
+    .maxHeightIs(60);
+
     // 项目类别
     self.categoryLabel.sd_layout
     .topSpaceToView(self.contentLabel, 10)

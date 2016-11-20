@@ -98,4 +98,26 @@
     }];
 }
 
+
++ (NSURLSessionDataTask *)getLatestAppSplashImageRequestWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, id))respondsBlock
+{
+    return [self requestPOST:kGetLatestAppSplashImage parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSInteger resultCode = [responseObject[@"code"] integerValue];
+        NSString *resultMsg = responseObject[@"msg"];
+        NSDictionary *resultData = responseObject[@"data"];
+        
+        if (resultCode == 200) {
+            respondsBlock(RespondsStatusSuccess, resultMsg, resultData);
+        }
+        else {
+            respondsBlock(RespondsStatusDataError, resultMsg, nil);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
+    }];
+}
+
+
+
 @end

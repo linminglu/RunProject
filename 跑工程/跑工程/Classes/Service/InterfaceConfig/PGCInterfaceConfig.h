@@ -62,11 +62,11 @@ extern NSString *const kGetAccessOrCollect;// 获取收藏与浏览记录
 
 extern NSString *const kGetMaterialServiceTypes;// 类别
 
-extern NSString *const kAddDemand;// 添加需求
+extern NSString *const kAddOrMidifyDemand;// 添加/修改 需求
 
 extern NSString *const kGetDemand;// 需求列表
 
-extern NSString *const kAddSupply;// 添加供应
+extern NSString *const kAddOrMidifySupply;// 添加/修改 供应
 
 extern NSString *const kGetSupply;// 供应列表
 
@@ -105,6 +105,8 @@ extern NSString *const kGetNewVersion;// 软件更新
 extern NSString *const kFeedback;// 意见反馈
 
 extern NSString *const kSignleImageUpload;// 图片上传
+
+extern NSString *const kGetLatestAppSplashImage;//获取启动图片
 
 
 @interface PGCInterfaceConfig : NSObject

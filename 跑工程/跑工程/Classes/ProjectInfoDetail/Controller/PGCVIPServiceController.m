@@ -49,7 +49,7 @@
     .leftSpaceToView(self.view, 0)
     .rightSpaceToView(self.view, 0)
     .bottomSpaceToView(self.view, 0)
-    .heightIs(60);
+    .heightIs(50);
     
     /* tips标签 */
     UILabel *tipsLabel = [[UILabel alloc] init];
@@ -58,10 +58,10 @@
     tipsLabel.font = SetFont(15);
     [bottomView addSubview:tipsLabel];
     tipsLabel.sd_layout
-    .topSpaceToView(bottomView, 10)
+    .topSpaceToView(bottomView, 5)
     .leftSpaceToView(bottomView, 15)
     .rightSpaceToView(bottomView, 15)
-    .heightIs(20);
+    .autoHeightRatio(0);
     
     /* 电话号码标签 */
     UILabel *phoneNumberLabel = [[UILabel alloc] init];
@@ -70,10 +70,10 @@
     phoneNumberLabel.text = @"023-xxxxxxxx";
     [bottomView addSubview:phoneNumberLabel];
     phoneNumberLabel.sd_layout
-    .topSpaceToView(tipsLabel, 0)
+    .bottomSpaceToView(bottomView, 5)
     .leftSpaceToView(bottomView, 15)
     .rightSpaceToView(bottomView, 15)
-    .heightIs(20);
+    .autoHeightRatio(0);
 }
 
 
@@ -109,7 +109,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    return _dataSource.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -124,7 +124,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 200;
+    return [tableView cellHeightForIndexPath:indexPath cellContentViewWidth:SCREEN_WIDTH tableView:self.tableView];
 }
 
 

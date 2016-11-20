@@ -106,7 +106,7 @@
                 }];
             }
             else {
-                [PGCProgressHUD showAlertWithTarget:self title:@"密码重置失败：" message:message actionWithTitle:@"确定" handler:nil];
+                [PGCProgressHUD showAlertWithTarget:self title:@"密码重置失败：" message:message actionWithTitle:@"我知道了" handler:nil];
             }
         }];
         
@@ -127,9 +127,8 @@
                     [self.navigationController popToRootViewControllerAnimated:false];
                     [PGCNotificationCenter postNotificationName:kProfileNotification object:loginVC userInfo:nil];
                 }];
-            }
-            else {
-                [PGCProgressHUD showAlertWithTarget:self title:@"密码修改失败：" message:message actionWithTitle:@"确定" handler:nil];
+            } else {
+                [PGCProgressHUD showAlertWithTarget:self title:@"密码修改失败：" message:message actionWithTitle:@"我知道了" handler:nil];
             }
         }];
     }
@@ -138,23 +137,23 @@
 /**
  获取验证
  */
-- (IBAction)recevieIDBtnClick:(UIButton *)sender {
-    
+- (IBAction)recevieIDBtnClick:(UIButton *)sender
+{    
     [self.view endEditing:true];
     
     if ([self.phoneTF.text isPhoneNumber]) {
-        //倒计时
-        [self timeCount];
-        
         NSDictionary *params = @{@"phone":self.phoneTF.text, @"type":@0};
+        MBProgressHUD *hud = [PGCProgressHUD showProgressHUD:self.view label:nil];
         [PGCRegisterOrLoginAPIManager sendVerifyCodeURLRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
+            [hud hideAnimated:true];
             if (status == RespondsStatusSuccess) {
-                [PGCProgressHUD showMessage:@"验证码发送成功，请查看您的手机短信！" toView:self.view];
+                //倒计时
+                [self timeCount];
+                [PGCProgressHUD showMessage:@"验证码发送成功，请查看您的手机短信！" toView:self.view afterDelayTime:2.0];
             }
         }];
     } else {
         [PGCProgressHUD showMessage:@"请输入正确的手机号" toView:self.view];
-        return;
     }
 }
 

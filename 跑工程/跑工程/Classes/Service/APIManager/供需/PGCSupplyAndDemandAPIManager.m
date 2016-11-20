@@ -28,6 +28,7 @@
             respondsBlock(RespondsStatusDataError, resultMsg, nil);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [PGCProgressHUD showMessage:@"网络错误(未连接)" toView:KeyWindow afterDelayTime:1.0];
         respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
     }];
 }
@@ -87,6 +88,7 @@
             respondsBlock(RespondsStatusDataError, resultMsg, nil);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [PGCProgressHUD showMessage:@"网络错误(未连接)" toView:KeyWindow afterDelayTime:1.0];
         respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
     }];
 }

@@ -25,7 +25,7 @@
 
 - (void)setupSubviewsWithModel:(id)model
 {
-    PGCIntroducePublicView *title = [[PGCIntroducePublicView alloc] initWithTitle:@"标题：" content:@""];
+    PGCIntroducePublicView *title = [[PGCIntroducePublicView alloc] initWithTitle:@"标题："];
     [self addSubview:title];
     title.sd_layout
     .topSpaceToView(self, 0)
@@ -44,7 +44,7 @@
     .heightIs(10);
     
     
-    PGCIntroducePublicView *time = [[PGCIntroducePublicView alloc] initWithTitle:@"时间：" content:@""];
+    PGCIntroducePublicView *time = [[PGCIntroducePublicView alloc] initWithTitle:@"时间："];
     [self addSubview:time];
     time.sd_layout
     .topSpaceToView(grayView_1, 0)
@@ -63,7 +63,7 @@
     .heightIs(1);
     
     
-    PGCIntroducePublicView *unit = [[PGCIntroducePublicView alloc] initWithTitle:@"采购单位（个人）：" content:@""];
+    PGCIntroducePublicView *unit = [[PGCIntroducePublicView alloc] initWithTitle:@"采购单位（个人）："];
     [self addSubview:unit];
     unit.sd_layout
     .topSpaceToView(line_1, 0)
@@ -82,7 +82,7 @@
     .heightIs(1);
     
     
-    PGCIntroducePublicView *address = [[PGCIntroducePublicView alloc] initWithTitle:@"地址：" content:@""];
+    PGCIntroducePublicView *address = [[PGCIntroducePublicView alloc] initWithTitle:@"地址："];
     [self addSubview:address];
     address.sd_layout
     .topSpaceToView(line_2, 0)
@@ -102,7 +102,7 @@
     
     
     PGCIntroduceSelectView *area = [[PGCIntroduceSelectView alloc] initWithTitle:@"地区：" content:@"当前位置"];
-    [area addTarget:self action:@selector(selectArea:) forControlEvents:UIControlEventTouchUpInside];
+    [area addTarget:self action:@selector(selectArea:)];
     [self addSubview:area];
     area.sd_layout
     .topSpaceToView(grayView_2, 0)
@@ -122,7 +122,7 @@
     
     
     PGCIntroduceSelectView *demand = [[PGCIntroduceSelectView alloc] initWithTitle:@"需求：" content:@"点击选择"];
-    [demand addTarget:self action:@selector(selectDemand:) forControlEvents:UIControlEventTouchUpInside];
+    [demand addTarget:self action:@selector(selectDemand:)];
     [self addSubview:demand];
     demand.sd_layout
     .topSpaceToView(line_3, 0)

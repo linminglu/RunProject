@@ -88,8 +88,10 @@
             PGCHintAlertView *hintAlert = [[PGCHintAlertView alloc] initWithContent:@"该联系人已成功添加到《通讯录》，方便你查找和联系。"];
             hintAlert.delegate = self;
             [hintAlert showHintAlertView];
-        } else {
-            [PGCProgressHUD showAlertWithTarget:self title:@"添加失败：" message:message actionWithTitle:@"我知道了" handler:nil];
+        } else {            
+            [PGCProgressHUD showAlertWithTarget:self title:@"添加失败：" message:message actionWithTitle:@"我知道了" handler:^(UIAlertAction *action) {
+                
+            }];
         }
     }];
 }

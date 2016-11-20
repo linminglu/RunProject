@@ -9,6 +9,8 @@
 #import "PGCUserInfoController.h"
 #import "PGCChooseJobController.h"
 #import <MobileCoreServices/MobileCoreServices.h>
+#import "PGCLoginController.h"
+#import "PGCRegisterOrLoginAPIManager.h"
 #import "PGCProfileAPIManager.h"
 #import "PGCHeadImage.h"
 #import "PGCNetworkHelper.h"
@@ -43,14 +45,14 @@
     PGCManager *manager = [PGCManager manager];
     [manager readTokenData];
     PGCUser *user = manager.token.user;
-    
-    if (user.headimage) {
-        NSURL *url = [NSURL URLWithString:[kBaseURL stringByAppendingString:user.headimage]];
-        [self.iconBtn sd_setImageWithURL:url forState:UIControlStateNormal];
-    } else {
-        [self.iconBtn setImage:[UIImage imageNamed:@"头像"] forState:UIControlStateNormal];
-    }
+    // 用户头像
+    NSURL *url = [NSURL URLWithString:[kBaseURL stringByAppendingString:user.headimage]];
+    [self.iconBtn sd_setImageWithURL:url forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"头像"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+        
+    }];
+    // 用户名
     self.nameLabel.text = user.name;
+    // 性别
     if (user.sex == 1) {
         self.sexLabel.text = @"男";
     } else {
@@ -59,7 +61,7 @@
     self.phoneLabel.text = user.phone;
     self.jobLabel.text = user.post ? user.post : @"未填写";
     self.companyLabel.text = user.company;
-}
+}  
 
 - (void)initializeUserInterface
 {
@@ -71,9 +73,29 @@
     self.iconBtn.layer.borderColor = RGB(239, 239, 241).CGColor;
 }
 
+
+- (void)updateSession
+{
+    PGCManager *manager = [PGCManager manager];
+    [manager readTokenData];
+    PGCUser *user = manager.token.user;
+    NSDictionary *params = @{@"user_id":@(user.user_id),
+                             @"client_type":@"iphone",
+                             @"token":manager.token.token};
+    // 更新用户session
+    [PGCRegisterOrLoginAPIManager updateSessionRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
+        if (status != RespondsStatusSuccess) {
+            [PGCProgressHUD showAlertWithTarget:self title:message];
+        }
+    }];
+}
+
 #pragma mark - Events
 // 选择头像
-- (IBAction)iconBtnClick:(UIButton *)sender {
+- (IBAction)iconBtnClick:(UIButton *)sender
+{
+    PGCManager *manager = [PGCManager manager];
+    [manager readTokenData];
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     __weak __typeof(self) weakSelf = self;
@@ -88,28 +110,33 @@
 }
 
 // 选择性别
-- (IBAction)sexBtnClick:(UIButton *)sender {
+- (IBAction)sexBtnClick:(UIButton *)sender
+{
+    PGCManager *manager = [PGCManager manager];
+    [manager readTokenData];
     
     UIAlertController *alertView = [UIAlertController alertControllerWithTitle:@"选择性别" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [alertView addAction:[UIAlertAction actionWithTitle:@"男" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        self.sexLabel.text = @"男";
-        
-        [self.parameters setObject:@(1) forKey:@"sex"];
-        
+        [self.parameters setObject:@(1) forKey:@"sex"];        
         [PGCProfileAPIManager completeInfoRequestWithParameters:self.parameters responds:^(RespondsStatus status, NSString *message, id resultData) {
-            if (status != RespondsStatusSuccess) {
-                [PGCProgressHUD showMessage:message toView:self.view];
+            if (status == RespondsStatusSuccess) {
+                self.sexLabel.text = @"男";
+            } else {
+                [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示：" message:message actionWithTitle:@"我知道了" handler:^(UIAlertAction *action) {
+                    
+                }];
             }
         }];
     }]];
     [alertView addAction:[UIAlertAction actionWithTitle:@"女" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        self.sexLabel.text = @"女";
-        
         [self.parameters setObject:@(0) forKey:@"sex"];
-        
         [PGCProfileAPIManager completeInfoRequestWithParameters:self.parameters responds:^(RespondsStatus status, NSString *message, id resultData) {
-            if (status != RespondsStatusSuccess) {
-                [PGCProgressHUD showMessage:message toView:self.view];
+            if (status == RespondsStatusSuccess) {
+                self.sexLabel.text = @"女";
+            } else {
+                [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示：" message:message actionWithTitle:@"我知道了" handler:^(UIAlertAction *action) {
+                    
+                }];
             }
         }];
     }]];
@@ -119,7 +146,8 @@
 }
 
 //选择职位
-- (IBAction)jobBtnClick:(UIButton *)sender {
+- (IBAction)jobBtnClick:(UIButton *)sender
+{
     __weak PGCUserInfoController *weakSelf = self;
     PGCChooseJobController *jobVC = [[PGCChooseJobController alloc] init];
     jobVC.parameters = self.parameters;
@@ -166,19 +194,22 @@
     NSString *jsonStr = [PGCBaseAPIManager jsonToString:params];
     
     [PGCProfileAPIManager uploadHeadImageRequestWithParameters:@{@"jsonStr":jsonStr} image:image responds:^(RespondsStatus status, NSString *message, id resultData) {
+        
         if (status == RespondsStatusSuccess) {
-            [PGCProgressHUD showMessage:@"头像上传成功" toView:self.view];
-            
+            [PGCProgressHUD showAlertWithTarget:self title:@"头像上传成功！"];
             [PGCNotificationCenter postNotificationName:kReloadProfileInfo object:nil userInfo:@{@"HeadImage":resultData}];
         } else {
-            [PGCProgressHUD showMessage:[NSString stringWithFormat:@"头像上传失败：%@", message] toView:self.view];
+            [PGCProgressHUD showAlertWithTarget:self title:@"头像上传失败：" message:message actionWithTitle:@"我知道了" handler:^(UIAlertAction *action) {
+                
+            }];
         }
     }];
     [self dismissViewControllerAnimated:true completion:nil];
 }
 
 
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
     [self.presentedViewController dismissViewControllerAnimated:true completion:nil];
 }
 

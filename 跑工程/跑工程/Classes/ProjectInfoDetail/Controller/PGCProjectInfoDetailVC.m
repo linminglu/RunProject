@@ -165,6 +165,8 @@
                 [sender setTitle:@"取消收藏" forState:UIControlStateNormal];
                 [PGCProgressHUD showMessage:@"收藏成功" toView:self.view];
                 [PGCNotificationCenter postNotificationName:kRefreshCollectTable object:nil userInfo:nil];
+            } else {
+                [PGCProgressHUD showMessage:message toView:self.view afterDelayTime:1.5];
             }
         }];
     } else {
@@ -179,6 +181,8 @@
                 [sender setTitle:@"收藏此项目" forState:UIControlStateNormal];
                 [PGCProgressHUD showMessage:@"已取消收藏" toView:self.view];
                 [PGCNotificationCenter postNotificationName:kRefreshCollectTable object:nil userInfo:nil];
+            } else {
+                [PGCProgressHUD showMessage:message toView:self.view afterDelayTime:1.5];
             }
         }];
     }

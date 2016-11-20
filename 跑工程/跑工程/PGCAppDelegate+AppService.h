@@ -9,18 +9,14 @@
 #import "PGCAppDelegate.h"
 
 @interface PGCAppDelegate (AppService)
-/**
- *  基本配置
- */
-- (void)configLaunchingUserData;
-/**
- *  注册高德地图
- */
-- (void)registerAMap;
+
 /**
  *  检查更新
  */
 - (void)checkAppUpDataWithshowOption:(BOOL)showOption;
-
+/**
+ *  注册高德地图
+ */
+- (void)registerAMap;
 
 @end

@@ -11,7 +11,7 @@
 @interface PGCSupplyAPIManager : PGCBaseAPIManager
 
 // 添加供应
-+ (NSURLSessionDataTask *)addSupplyWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
++ (NSURLSessionDataTask *)addOrMidifySupplyWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
 
 // 供应列表
 + (NSURLSessionDataTask *)getSupplyWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;

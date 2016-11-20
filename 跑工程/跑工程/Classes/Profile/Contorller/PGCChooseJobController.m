@@ -32,7 +32,8 @@
 }
 
 
-- (void)initializeUserInterface {
+- (void)initializeUserInterface
+{
     UIBarButtonItem *saveItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleDone target:self action:@selector(saveInfo:)];
     
     self.navigationItem.rightBarButtonItem = saveItem;
@@ -62,13 +63,12 @@
         [hud hideAnimated:true];
         
         if (status == RespondsStatusSuccess) {
-            
             self.block(self.jobTextField.text);
-            
-            [self.navigationController popViewControllerAnimated:true];
-            
+            [self.navigationController popViewControllerAnimated:true];            
         } else {
-            [PGCProgressHUD showAlertWithTarget:self title:@"保存失败：" message:message actionWithTitle:@"我知道了" handler:nil];
+            [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示：" message:message actionWithTitle:@"我知道了" handler:^(UIAlertAction *action) {
+                
+            }];
         }
     }];
 }

@@ -111,7 +111,12 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
 
 - (void)loadProjectData
 {
-    [self.dataSource removeAllObjects];
+    PGCManager *manager = [PGCManager manager];
+    [manager readTokenData];
+    PGCUser *user = manager.token.user;
+    if (user) {
+        [self.parameters setObject:@(user.user_id) forKey:@"user_id"];
+    }
     _page = 1;
     _pageSize = 10;
     [self.parameters setObject:@(_page) forKey:@"page"];
@@ -125,6 +130,9 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
         [self.tableView.mj_header endRefreshing];
         
         if (status == RespondsStatusSuccess) {
+            // 清空之前的数据
+            [self.dataSource removeAllObjects];
+            // 添加新数据
             for (id value in resultData[@"result"]) {
                 PGCProjectInfo *project = [[PGCProjectInfo alloc] init];
                 [project mj_setKeyValues:value];
@@ -174,7 +182,6 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     PGCProjectInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:kProjectInfoCell];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.project = self.dataSource[indexPath.row];
     return cell;
 }
@@ -297,8 +304,7 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
                 return _areaDatas.count;
             } else {
                 PGCProvince *province = _areaDatas[leftRow];
-                NSArray *arr = province.city;
-                return arr.count;
+                return province.city.count;
             }
         }
             break;
@@ -327,8 +333,7 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
                 
             } else {
                 PGCProvince *province = _areaDatas[indexPath.leftRow];
-                NSArray *rightArr = province.city;
-                PGCCity *city = rightArr[indexPath.row];
+                PGCCity *city = province.city[indexPath.row];
                 return city.city;
             }
         }
@@ -367,8 +372,7 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
                 
             } else {
                 PGCProvince *province = _areaDatas[indexPath.leftRow];
-                NSArray *cities = province.city;
-                PGCCity *city = cities[indexPath.row];
+                PGCCity *city = province.city[indexPath.row];
                 [self.parameters setObject:@(city.id) forKey:@"city_id"];
             }
         }
@@ -388,24 +392,21 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
         }
             break;
     }
-    [self.dataSource removeAllObjects];
     _page = 1;
-    _pageSize = 20;
+    _pageSize = 10;
     [self.parameters setObject:@(_page) forKey:@"page"];
     [self.parameters setObject:@(_pageSize) forKey:@"page_size"];
     
     [PGCProjectInfoAPIManager getProjectsRequestWithParameters:self.parameters responds:^(RespondsStatus status, NSString *message, id resultData) {
         if (status == RespondsStatusSuccess) {
+            [self.dataSource removeAllObjects];
+            
             for (id value in resultData[@"result"]) {
                 PGCProjectInfo *project = [[PGCProjectInfo alloc] init];
-                [project mj_setKeyValues:value];
-                
+                [project mj_setKeyValues:value];                
                 [self.dataSource addObject:project];
             }
-            if ([resultData[@"lastPage"] integerValue] >= 20) {
-                self.tableView.mj_footer.hidden = false;
-                _page += 20;
-            }
+            _page += 10;
             [self.tableView reloadData];
         }
     }];
@@ -449,8 +450,7 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
         _tableView.mj_header = header;
         
         MJRefreshBackNormalFooter *footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
-        _tableView.contentInset = UIEdgeInsetsMake(0, 0, 30, 0);
-        footer.ignoredScrollViewContentInsetBottom = 30;
+        footer.ignoredScrollViewContentInsetBottom = 0;
         _tableView.mj_footer = footer;
     }
     return _tableView;
@@ -468,13 +468,6 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
 - (NSMutableDictionary *)parameters {
     if (!_parameters) {
         _parameters = [NSMutableDictionary dictionary];
-        
-        PGCManager *manager = [PGCManager manager];
-        [manager readTokenData];
-        PGCUser *user = manager.token.user;
-        if (user) {
-            [_parameters setObject:@(user.user_id) forKey:@"user_id"];
-        }
     }
     return _parameters;
 }

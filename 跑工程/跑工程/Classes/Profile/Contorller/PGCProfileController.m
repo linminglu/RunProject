@@ -70,17 +70,20 @@
     if (_isLogin) {
         // 用户已登录，加载用户头像和名字
         [self.loginAndRegisterBtn setTitle:user.name forState:UIControlStateNormal];
-        if (user.headimage) {
-            NSURL *url = [NSURL URLWithString:[kBaseURL stringByAppendingString:user.headimage]];
-            [self.headImageBtn sd_setImageWithURL:url forState:UIControlStateNormal];
-        }
+        // 用户头像
+        NSURL *url = [NSURL URLWithString:[kBaseURL stringByAppendingString:user.headimage]];
+        [self.headImageBtn sd_setImageWithURL:url forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"头像"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+            
+        }];
+        
     } else {
         [self.loginAndRegisterBtn setTitle:@"登录/注册" forState:UIControlStateNormal];
         [self.headImageBtn setImage:[UIImage imageNamed:@"头像"] forState:UIControlStateNormal];
     }
 }
 
-- (void)registerNotification {
+- (void)registerNotification
+{
     [PGCNotificationCenter addObserver:self selector:@selector(profileNotification:) name:kProfileNotification object:nil];
     [PGCNotificationCenter addObserver:self selector:@selector(reloadProfileInfo:) name:kReloadProfileInfo object:nil];
 }
@@ -97,6 +100,13 @@
 
 - (void)reloadProfileInfo:(NSNotification *)notifi
 {
+    if ([notifi.userInfo objectForKey:@"Logout"]) {// 收到用户退出登录的通知
+        _isLogin = false;
+        [self.headImageBtn setImage:[UIImage imageNamed:@"头像"] forState:UIControlStateNormal];
+        [self.loginAndRegisterBtn setTitle:@"登录/注册" forState:UIControlStateNormal];
+        return;
+    }
+    
     PGCManager *manager = [PGCManager manager];
     [manager readTokenData];
     PGCUser *user = manager.token.user;
@@ -105,17 +115,11 @@
         _isLogin = true;
         [self.loginAndRegisterBtn setTitle:user.name forState:UIControlStateNormal];
         
-        if (user.headimage) {
-            NSURL *url = [NSURL URLWithString:[kBaseURL stringByAppendingString:user.headimage]];
-            [self.headImageBtn sd_setImageWithURL:url forState:UIControlStateNormal];
-        }
-    }    
-    if ([notifi.userInfo objectForKey:@"Logout"]) {// 收到用户退出登录的通知
-        [manager logout];
-        
-        _isLogin = false;
-        [self.headImageBtn setImage:[UIImage imageNamed:@"头像"] forState:UIControlStateNormal];
-        [self.loginAndRegisterBtn setTitle:@"登录/注册" forState:UIControlStateNormal];
+        NSURL *url = [NSURL URLWithString:[kBaseURL stringByAppendingString:user.headimage]];
+        [self.headImageBtn sd_setImageWithURL:url forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"头像"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+            
+        }];
+        return;
     }
     if ([notifi.userInfo objectForKey:@"HeadImage"]) {// 收到用户修改头像的通知
         
@@ -124,43 +128,25 @@
                                  @"token":manager.token.token,
                                  @"client_type":@"iphone",
                                  @"headimage":headImage.path};
-        // 
-        [self updateSession];
         [PGCProfileAPIManager completeInfoRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
+            
             if (status == RespondsStatusSuccess) {
                 [manager readTokenData];
-                
-                if (manager.token.user.headimage) {
-                    NSURL *url = [NSURL URLWithString:[kBaseURL stringByAppendingString:manager.token.user.headimage]];
-                    [self.headImageBtn sd_setImageWithURL:url forState:UIControlStateNormal];
-                }
+                NSString *imageStr = manager.token.user.headimage;
+                NSURL *url = [NSURL URLWithString:[kBaseURL stringByAppendingString:imageStr]];
+                [self.headImageBtn sd_setImageWithURL:url forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"头像"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                    
+                }];
             } else {
-                if (status != RespondsStatusSuccess) {
-                    [PGCProgressHUD showMessage:message toView:self.view];
+                [PGCProgressHUD showMessage:message toView:self.view];
+                
+                if (status == RespondsStatusDataError) {
+                    PGCLoginController *loginVC = [[PGCLoginController alloc] init];
+                    [self.navigationController pushViewController:loginVC animated:true];
                 }
             }
         }];
     }
-}
-
-
-- (void)updateSession
-{
-    PGCManager *manager = [PGCManager manager];
-    [manager readTokenData];
-    PGCUser *user = manager.token.user;
-    NSDictionary *params = @{@"user_id":@(user.user_id),
-                             @"client_type":@"iphone",
-                             @"token":manager.token.token};
-    // 更新用户session
-    [PGCRegisterOrLoginAPIManager updateSessionRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
-        if (status != RespondsStatusSuccess) {
-            [PGCProgressHUD showMessage:message toView:self.view];
-            
-            PGCLoginController *loginVC = [[PGCLoginController alloc] init];
-            [self.navigationController pushViewController:loginVC animated:true];
-        }
-    }];
 }
 
 

@@ -99,7 +99,7 @@
     PGCProjectDetailTagView *otherView = [[PGCProjectDetailTagView alloc] initWithTitle:@"可能用到的设备，材料"];
     [scrollView addSubview:otherView];
     otherView.sd_layout
-    .topSpaceToView(introContentLabel, 30)
+    .topSpaceToView(introContentLabel, 10)
     .leftSpaceToView(scrollView, 0)
     .rightSpaceToView(scrollView, 0)
     .heightIs(40);
@@ -137,7 +137,7 @@
     
     PGCAlertView *alert = nil;
     
-    if (_isVIP) {
+    if (user.is_vip == 0) {
         
     } else {
         if (isRemind) {
@@ -219,11 +219,14 @@
     
     self.materialLabel.text = project.material;
     
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:self.introContentLabel.text];
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     [paragraphStyle setLineSpacing:8];
-    [attributedString addAttributes:@{NSParagraphStyleAttributeName:paragraphStyle} range:NSMakeRange(0, [self.introContentLabel.text length])];
-    [self.introContentLabel setAttributedText:attributedString];
+    
+    self.introContentLabel.attributedText = [[NSAttributedString alloc] initWithString:project.desc attributes:@{NSParagraphStyleAttributeName:paragraphStyle}];
+    self.introContentLabel.isAttributedContent = true;
+    
+    self.materialLabel.attributedText = [[NSAttributedString alloc] initWithString:project.material attributes:@{NSParagraphStyleAttributeName:paragraphStyle}];
+    self.materialLabel.isAttributedContent = true;
 }
 
 

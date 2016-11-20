@@ -557,7 +557,7 @@ static NSString *const kJSCollectionViewCell = @"JSCollectionViewCell";
             
             NSInteger number = [collectionView numberOfItemsInSection:0];
             // 根据item的个数来计算集合视图的高度
-            collectionViewHeight = ((number % 10) > 0) ? (number / 3 + 1) * 65 : number / 3 * 65;
+            collectionViewHeight = ((number % 3) > 0) ? (number / 3 + 1) * 65 : number / 3 * 65;
         }
         
         [UIView animateWithDuration:0.2 animations:^{

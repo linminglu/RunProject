@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@class PGCProvince;
 
 static NSString *const kPGCDropLeftCell = @"PGCDropLeftCell";
 

@@ -11,7 +11,7 @@
 @interface PGCDemandAPIManager : PGCBaseAPIManager
 
 // 添加需求
-+ (NSURLSessionDataTask *)addDemandWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
++ (NSURLSessionDataTask *)addOrMidifyDemandWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
 
 // 需求列表
 + (NSURLSessionDataTask *)getDemandWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;

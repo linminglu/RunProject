@@ -12,9 +12,9 @@
 @implementation PGCSupplyAPIManager
 
 
-+ (NSURLSessionDataTask *)addSupplyWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, id))respondsBlock
++ (NSURLSessionDataTask *)addOrMidifySupplyWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, id))respondsBlock
 {
-    return [self requestPOST:kAddSupply parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [self requestPOST:kAddOrMidifySupply parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
         
         NSInteger resultCode = [responseObject[@"code"] integerValue];
         NSString *resultMsg = responseObject[@"msg"];
@@ -47,6 +47,7 @@
             respondsBlock(RespondsStatusDataError, resultMsg, nil);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [PGCProgressHUD showMessage:@"网络错误(未连接)" toView:KeyWindow afterDelayTime:1.0];
         respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
     }];
 }

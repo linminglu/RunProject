@@ -19,7 +19,6 @@
                 <outlet property="introduceBtn" destination="Ukq-Gh-LNH" id="dOL-iA-V2F"/>
                 <outlet property="introduceBtnX" destination="Irr-IU-st7" id="Kdf-RF-r5B"/>
                 <outlet property="supplyBtn" destination="A23-Dt-5Cc" id="EO4-vX-ShX"/>
-                <outlet property="tableView" destination="6L7-NT-6cE" id="cPi-dR-Hby"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -200,31 +199,19 @@
                         </mask>
                     </variation>
                 </view>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6L7-NT-6cE">
-                    <rect key="frame" x="0.0" y="144" width="375" height="473"/>
-                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <connections>
-                        <outlet property="dataSource" destination="-1" id="VoY-I4-b6e"/>
-                        <outlet property="delegate" destination="-1" id="0dO-bz-Z1Y"/>
-                    </connections>
-                </tableView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="bHi-pm-RfW" firstAttribute="top" secondItem="A23-Dt-5Cc" secondAttribute="bottom" constant="4" id="08F-pY-TNV"/>
-                <constraint firstItem="6L7-NT-6cE" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="1xm-gD-cfy"/>
                 <constraint firstAttribute="trailing" secondItem="bHi-pm-RfW" secondAttribute="trailing" id="3eb-aj-7Mh"/>
                 <constraint firstItem="us5-Xm-QLq" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="30" id="4rJ-PC-wcL"/>
                 <constraint firstItem="us5-Xm-QLq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="8Pw-35-M6y"/>
                 <constraint firstItem="xbG-Wh-c3V" firstAttribute="height" secondItem="us5-Xm-QLq" secondAttribute="height" multiplier="0.8" constant="2" id="MJs-8F-z8c"/>
-                <constraint firstAttribute="trailing" secondItem="6L7-NT-6cE" secondAttribute="trailing" id="QB4-2P-dIC"/>
                 <constraint firstItem="bHi-pm-RfW" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="R5W-eW-yTD"/>
                 <constraint firstItem="xbG-Wh-c3V" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="RV7-Qj-YC3"/>
-                <constraint firstItem="6L7-NT-6cE" firstAttribute="top" secondItem="bHi-pm-RfW" secondAttribute="bottom" constant="40" id="SbT-Fy-Vfo"/>
                 <constraint firstItem="A23-Dt-5Cc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="30" id="TR8-Uf-Iz4"/>
                 <constraint firstItem="A23-Dt-5Cc" firstAttribute="height" secondItem="us5-Xm-QLq" secondAttribute="height" id="ezc-RJ-tDb"/>
                 <constraint firstItem="A23-Dt-5Cc" firstAttribute="width" secondItem="us5-Xm-QLq" secondAttribute="width" id="fcg-co-cdL"/>
-                <constraint firstAttribute="bottom" secondItem="6L7-NT-6cE" secondAttribute="bottom" constant="50" id="oAe-At-lcO"/>
                 <constraint firstAttribute="trailing" secondItem="A23-Dt-5Cc" secondAttribute="trailing" id="oih-ZW-8ja"/>
                 <constraint firstItem="xbG-Wh-c3V" firstAttribute="top" secondItem="us5-Xm-QLq" secondAttribute="bottom" constant="-28" id="q0f-f0-rdt"/>
                 <constraint firstItem="us5-Xm-QLq" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="0.5" id="wzw-Yn-4EH"/>
@@ -235,7 +222,6 @@
                     <exclude reference="A23-Dt-5Cc"/>
                     <exclude reference="xbG-Wh-c3V"/>
                     <exclude reference="bHi-pm-RfW"/>
-                    <exclude reference="6L7-NT-6cE"/>
                 </mask>
                 <mask key="constraints">
                     <exclude reference="3eb-aj-7Mh"/>
@@ -247,13 +233,12 @@
                     <include reference="A23-Dt-5Cc"/>
                     <include reference="xbG-Wh-c3V"/>
                     <include reference="bHi-pm-RfW"/>
-                    <include reference="6L7-NT-6cE"/>
                 </mask>
                 <mask key="constraints">
                     <include reference="3eb-aj-7Mh"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="-2263" y="-2639"/>
+            <point key="canvasLocation" x="-2384" y="-2703"/>
         </view>
     </objects>
     <resources>

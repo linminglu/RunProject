@@ -9,42 +9,37 @@
 #import "PGCIntroducePublicView.h"
 
 @interface PGCIntroducePublicView ()
-/**
- 标题标签
- */
-@property (strong, nonatomic) UILabel *titleLabel;
-/**
- 内容文本输入框
- */
-@property (strong, nonatomic) UITextField *contentTF;
+
+@property (strong, nonatomic) UILabel *titleLabel;/** 标题标签 */
+@property (strong, nonatomic) UITextField *contentTF;/** 内容文本输入框 */
 
 @end
 
 @implementation PGCIntroducePublicView
 
-- (instancetype)initWithTitle:(NSString *)title content:(NSString *)content
+- (instancetype)initWithTitle:(NSString *)title
 {
     self = [super init];
     if (self) {
         
-        [self createUITitle:title content:content];
+        [self createUITitle:title];
     }
     return self;
 }
 
-- (void)createUITitle:(NSString *)title content:(NSString *)content
+- (void)createUITitle:(NSString *)title
 {
     self.backgroundColor = [UIColor whiteColor];
     // 标题标签
     self.titleLabel = [[UILabel alloc] init];
     self.titleLabel.text = title;
     self.titleLabel.textColor = RGB(51, 51, 51);
-    self.titleLabel.font = SetFont(15);
+    self.titleLabel.font = SetFont(14);
     [self addSubview:self.titleLabel];
     self.titleLabel.sd_layout
     .centerYEqualToView(self)
     .leftSpaceToView(self, 15)
-    .widthIs([title sizeWithFont:SetFont(15) constrainedToSize:CGSizeMake(MAXFLOAT, 0)].width)
+    .widthIs([title sizeWithFont:SetFont(14) constrainedToSize:CGSizeMake(MAXFLOAT, 0)].width)
     .autoHeightRatio(0);
     
     // 内容输入框

@@ -117,9 +117,8 @@
             [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示：" message:@"注册成功，请返回登录！" actionWithTitle:@"确定" handler:^(UIAlertAction *action) {
                 [self.navigationController popViewControllerAnimated:true];
             }];
-        }
-        else {
-            [PGCProgressHUD showAlertWithTarget:self title:@"注册失败：" message:message actionWithTitle:@"确定" handler:nil];
+        } else {
+            [PGCProgressHUD showAlertWithTarget:self title:@"注册失败：" message:message actionWithTitle:@"我知道了" handler:nil];
         }
     }];
 }
@@ -131,23 +130,23 @@
 
  @param sender
  */
-- (IBAction)recevieIDBtnClick:(UIButton *)sender {
-    
+- (IBAction)recevieIDBtnClick:(UIButton *)sender
+{    
     [self.view endEditing:true];
     
     if ([self.phoneTF.text isPhoneNumber]) {
-        //倒计时
-        [self timeCount];
-        
         NSDictionary *params = @{@"phone":self.phoneTF.text, @"type":@0};
+        MBProgressHUD *hud = [PGCProgressHUD showProgressHUD:self.view label:nil];
         [PGCRegisterOrLoginAPIManager sendVerifyCodeURLRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
+            [hud hideAnimated:true];
             if (status == RespondsStatusSuccess) {
-                [PGCProgressHUD showMessage:@"验证码发送成功，请查看您的手机短信！" toView:self.view];
+                //倒计时
+                [self timeCount];
+                [PGCProgressHUD showMessage:@"验证码发送成功，请查看您的手机短信！" toView:self.view afterDelayTime:2.0];
             }
         }];
     } else {
         [PGCProgressHUD showMessage:@"请输入正确的手机号" toView:self.view];
-        return;
     }
 }
 

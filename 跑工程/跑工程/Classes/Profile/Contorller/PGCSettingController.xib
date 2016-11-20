@@ -261,6 +261,24 @@
                                 </mask>
                             </variation>
                         </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6AO-qX-geQ" userLabel="关于我们">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="51"/>
+                            <state key="normal">
+                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="aboutUsBtnClick:" destination="-1" eventType="touchUpInside" id="oA8-Hu-O1c"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YQx-6C-1BX" userLabel="意见反馈">
+                            <rect key="frame" x="0.0" y="101" width="375" height="51"/>
+                            <state key="normal">
+                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="feedbackBtnClick:" destination="-1" eventType="touchUpInside" id="MA7-Xb-GWv"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
@@ -269,19 +287,27 @@
                         <constraint firstAttribute="trailing" secondItem="UPj-mo-kqq" secondAttribute="trailing" constant="15" id="50i-Jj-Mm8"/>
                         <constraint firstItem="M8T-kk-aNM" firstAttribute="leading" secondItem="dOw-Si-GqA" secondAttribute="leading" constant="20" id="6D1-cb-I4y"/>
                         <constraint firstItem="zNk-j7-TTy" firstAttribute="centerY" secondItem="DXl-7B-Ilp" secondAttribute="centerY" id="6YP-oo-P6t"/>
+                        <constraint firstItem="6AO-qX-geQ" firstAttribute="leading" secondItem="dOw-Si-GqA" secondAttribute="leading" id="9w9-ib-aTf"/>
+                        <constraint firstAttribute="trailing" secondItem="YQx-6C-1BX" secondAttribute="trailing" id="ANh-so-hpc"/>
                         <constraint firstItem="HFm-SU-hvf" firstAttribute="top" secondItem="dOw-Si-GqA" secondAttribute="top" constant="15" id="B9Q-Xk-GUS"/>
                         <constraint firstItem="DXl-7B-Ilp" firstAttribute="top" secondItem="AZX-AF-gW5" secondAttribute="bottom" constant="15" id="D1f-vq-NtU"/>
                         <constraint firstAttribute="trailing" secondItem="AZX-AF-gW5" secondAttribute="trailing" id="E6B-JI-Qt6"/>
                         <constraint firstItem="Nwl-l7-Wpd" firstAttribute="leading" secondItem="dOw-Si-GqA" secondAttribute="leading" id="MUn-GT-e5t"/>
+                        <constraint firstItem="YQx-6C-1BX" firstAttribute="leading" secondItem="dOw-Si-GqA" secondAttribute="leading" id="MeF-1Z-A7f"/>
                         <constraint firstAttribute="height" constant="152" id="PTv-Eu-pgy"/>
+                        <constraint firstItem="6AO-qX-geQ" firstAttribute="bottom" secondItem="AZX-AF-gW5" secondAttribute="bottom" id="Stc-af-HBN"/>
                         <constraint firstItem="HFm-SU-hvf" firstAttribute="leading" secondItem="dOw-Si-GqA" secondAttribute="leading" constant="20" id="a4H-ag-4iv"/>
                         <constraint firstAttribute="trailing" secondItem="zNk-j7-TTy" secondAttribute="trailing" constant="15" id="adQ-uL-oAq"/>
+                        <constraint firstAttribute="bottom" secondItem="YQx-6C-1BX" secondAttribute="bottom" id="dkJ-HJ-Qsr"/>
                         <constraint firstItem="M8T-kk-aNM" firstAttribute="top" secondItem="Nwl-l7-Wpd" secondAttribute="bottom" constant="15" id="fmE-jb-sK6"/>
                         <constraint firstAttribute="trailing" secondItem="Nwl-l7-Wpd" secondAttribute="trailing" id="ftP-uw-G12"/>
                         <constraint firstItem="AZX-AF-gW5" firstAttribute="top" secondItem="HFm-SU-hvf" secondAttribute="bottom" constant="15" id="haI-mo-8gW"/>
                         <constraint firstAttribute="trailing" secondItem="dzH-TO-Dg9" secondAttribute="trailing" constant="15" id="iIM-5D-Aud"/>
                         <constraint firstItem="DXl-7B-Ilp" firstAttribute="leading" secondItem="dOw-Si-GqA" secondAttribute="leading" constant="20" id="iye-Zg-6ZE"/>
+                        <constraint firstAttribute="trailing" secondItem="6AO-qX-geQ" secondAttribute="trailing" id="kn8-ca-hRR"/>
+                        <constraint firstItem="6AO-qX-geQ" firstAttribute="top" secondItem="dOw-Si-GqA" secondAttribute="top" id="leY-Wj-SJe"/>
                         <constraint firstItem="UPj-mo-kqq" firstAttribute="centerY" secondItem="HFm-SU-hvf" secondAttribute="centerY" id="oZT-at-Pc2"/>
+                        <constraint firstItem="YQx-6C-1BX" firstAttribute="top" secondItem="Nwl-l7-Wpd" secondAttribute="top" id="pKs-Ng-A41"/>
                         <constraint firstItem="dzH-TO-Dg9" firstAttribute="centerY" secondItem="M8T-kk-aNM" secondAttribute="centerY" id="zbM-e6-Mz7"/>
                     </constraints>
                     <variation key="default">
@@ -363,7 +389,7 @@
                         </mask>
                     </variation>
                     <connections>
-                        <action selector="logoutEvent:" destination="-1" eventType="touchUpInside" id="Qlo-we-JgD"/>
+                        <action selector="logoutBtnClick:" destination="-1" eventType="touchUpInside" id="iN7-nc-HkT"/>
                     </connections>
                 </button>
             </subviews>
@@ -415,7 +441,7 @@
                     <include reference="gSp-kk-eie"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="-650.5" y="-18.5"/>
+            <point key="canvasLocation" x="-475" y="32"/>
         </view>
     </objects>
     <resources>

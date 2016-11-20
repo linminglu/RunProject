@@ -44,7 +44,6 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
     
-    [self refreshContactList];
     [self initializeUserInterface];
     [self registerNotification];
 }
@@ -77,9 +76,6 @@
 
 - (void)refreshContactList
 {
-    [self.indexArray removeAllObjects];
-    [self.letterArray removeAllObjects];
-    
     _isSearching = false;
     
     PGCManager *manager = [PGCManager manager];
@@ -97,6 +93,10 @@
         [self.tableView.mj_header endRefreshing];
         
         if (status == RespondsStatusSuccess) {
+            // 清空之前的数据
+            [self.indexArray removeAllObjects];
+            [self.letterArray removeAllObjects];
+            // 添加新数据
             [self.indexArray addObjectsFromArray:[BMChineseSort IndexWithArray:resultData Key:@"name"]];
             [self.letterArray addObjectsFromArray:[BMChineseSort sortObjectArray:resultData Key:@"name"]];
             

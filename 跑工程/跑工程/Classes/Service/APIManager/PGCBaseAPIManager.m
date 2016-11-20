@@ -108,19 +108,23 @@ static NSString * const PGCHttpCache = @"HttpYYCache";
     
     id cacheData = [cache objectForKey:cacheKey];
     
+    // 1.获得网络监控的管理者
     AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];
+    // 2.设置网络状态改变后的处理
     [manager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        // 当网络状态改变了, 就会调用这个block
         switch (status) {
-            case AFNetworkReachabilityStatusUnknown:
-                [PGCProgressHUD showMessage:@"未识别的网络" toView:KeyWindow];
+            case AFNetworkReachabilityStatusUnknown: //NSLog(@"未知网络");
                 break;
-            case AFNetworkReachabilityStatusNotReachable:
-                [PGCProgressHUD showMessage:@"网络错误(未连接)" toView:KeyWindow];
+            case AFNetworkReachabilityStatusNotReachable: //NSLog(@"没有网络(断网)");
                 break;
-            default:
+            case AFNetworkReachabilityStatusReachableViaWWAN: //NSLog(@"手机自带网络");
+                break;
+            case AFNetworkReachabilityStatusReachableViaWiFi: //NSLog(@"WIFI");
                 break;
         }
     }];
+    // 3.开始监控 
     [manager startMonitoring];
     
     switch (cachePolicy) {
@@ -134,7 +138,7 @@ static NSString * const PGCHttpCache = @"HttpYYCache";
             break;
         case RequestReturnCacheDataElseLoad:
             if (cacheData) {
-                if (![self requestBeforeJudgeConnect]) {
+                if (!manager.isReachable) {
                     success(nil, cacheData);
                 }
             }
@@ -258,7 +262,8 @@ static NSString * const PGCHttpCache = @"HttpYYCache";
     BOOL needsConnection = flags & kSCNetworkFlagsConnectionRequired;
     BOOL isNetworkEnable  =(isReachable && !needsConnection) ? true : false;
     dispatch_async(dispatch_get_main_queue(), ^{
-        [UIApplication sharedApplication].networkActivityIndicatorVisible =isNetworkEnable;/*  网络指示器的状态： 有网络 ： 开  没有网络： 关  */
+        /* 网络指示器的状态： 有网络 ： 开  没有网络： 关  */
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = isNetworkEnable;
     });
     return isNetworkEnable;
 }

@@ -12,22 +12,12 @@
 #import "PGCProvince.h"
 
 @interface PGCAreaAndTypeRootVC () <UITableViewDataSource, UITableViewDelegate>
-/**
- 左边表格视图
- */
-@property (strong, nonatomic) UITableView *leftTableView;
-/**
- 右边表格视图
- */
-@property (strong, nonatomic) UITableView *rightTableView;
-/**
- 选中左边表的行数
- */
-@property (nonatomic, assign) NSInteger leftSelectedRow;
-/**
- 是否选中
- */
-@property (assign, nonatomic) BOOL isSelected;
+
+@property (strong, nonatomic) UITableView *leftTableView;/** 左边表格视图 */
+@property (strong, nonatomic) UITableView *rightTableView;/** 右边表格视图 */
+@property (nonatomic, assign) NSInteger leftSelectedRow;/** 选中左边表的行数 */
+@property (copy, nonatomic) NSArray<PGCProvince *> *dataSource;/** 数据源 */
+@property (assign, nonatomic) BOOL isSelected;/** 是否选中 */
 
 @end
 
@@ -36,10 +26,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self initDataSource];
     [self initializeUI];
 }
 
-- (void)initializeUI {
+- (void)initDataSource
+{
+    _isSelected = false;
+    _dataSource = [PGCProvince province].areaArray;
+}
+
+- (void)initializeUI
+{
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = false;
     
@@ -70,41 +68,52 @@
     .topSpaceToView(self.view, STATUS_AND_NAVIGATION_HEIGHT)
     .widthRatioToView(self.view, 0.5)
     .bottomSpaceToView(self.view, 0);
-    
-    self.isSelected = false;
 }
 
 
 #pragma mark - UITableViewDataSource
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 6;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (self.leftTableView == tableView) {
+        return _dataSource.count;
+    }
+    
+    PGCProvince *province = _dataSource[section];
+    return province.city.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     if (self.leftTableView == tableView) {
         PGCDropLeftCell *cell = [tableView dequeueReusableCellWithIdentifier:kPGCDropLeftCell];
-        cell.leftTitleLabel.text = @"左边";
+        PGCProvince *province = _dataSource[indexPath.row];
+        cell.leftTitleLabel.text = province.province;
         
         return cell;
     }
-    else {
-        PGCDropRightCell *cell = [tableView dequeueReusableCellWithIdentifier:kPGCDropRightCell];
-        cell.rightTitleLabel.text = @"右边";
-        
-        return cell;
-    }
+    
+    PGCDropRightCell *cell = [tableView dequeueReusableCellWithIdentifier:kPGCDropRightCell];
+    PGCProvince *province = _dataSource[indexPath.row];
+    PGCCity *city = province.city[indexPath.row];
+    cell.rightTitleLabel.text = city.city;
+    
+    return cell;
 }
 
 
 #pragma mark - UITableViewDelegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
     if (self.leftTableView == tableView) {
-        NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:self.leftSelectedRow inSection:0];
-        
-        [self.leftTableView selectRowAtIndexPath:selectedIndexPath animated:false scrollPosition:UITableViewScrollPositionNone];
-        
+        if (!_isSelected) {
+            _isSelected = true;
+            [self.leftTableView reloadData];
+            NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:_leftSelectedRow inSection:0];
+            
+            [_leftTableView selectRowAtIndexPath:selectedIndexPath animated:false scrollPosition:UITableViewScrollPositionNone];
+        }
         [self.rightTableView reloadData];
     }
 }

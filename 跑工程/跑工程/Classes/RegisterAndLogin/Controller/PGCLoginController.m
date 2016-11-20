@@ -92,7 +92,7 @@
                 [self.navigationController popViewControllerAnimated:true];
             }
         } else {
-            [PGCProgressHUD showAlertWithTarget:self title:@"登录失败：" message:message actionWithTitle:@"确定" handler:nil];
+            [PGCProgressHUD showAlertWithTarget:self title:@"登录失败：" message:message actionWithTitle:@"我知道了" handler:nil];
         }
     }];
 }

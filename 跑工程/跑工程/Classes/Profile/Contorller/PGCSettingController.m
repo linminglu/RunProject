@@ -9,6 +9,8 @@
 #import "PGCSettingController.h"
 #import "PGCRegisterOrLoginAPIManager.h"
 #import "PGCLoginController.h"
+#import "PGCAboutUsViewController.h"
+#import "PGCFeedbackViewController.h"
 
 @interface PGCSettingController ()
 
@@ -27,8 +29,23 @@
 
 
 #pragma mark - Events
+
+// 关于我们按钮点击事件
+- (IBAction)aboutUsBtnClick:(UIButton *)sender
+{
+    PGCAboutUsViewController *aboutUsVC = [[PGCAboutUsViewController alloc] init];
+    [self.navigationController pushViewController:aboutUsVC animated:true];
+}
+
+// 意见反馈按钮点击事件
+- (IBAction)feedbackBtnClick:(UIButton *)sender
+{
+    PGCFeedbackViewController *feedbackVC = [[PGCFeedbackViewController alloc] init];
+    [self.navigationController pushViewController:feedbackVC animated:true];
+}
+
 // 退出登录
-- (IBAction)logoutEvent:(UIButton *)sender
+- (IBAction)logoutBtnClick:(UIButton *)sender
 {
     PGCManager *manager = [PGCManager manager];
     [manager readTokenData];
@@ -47,14 +64,16 @@
             [hud hideAnimated:true];
             
             if (status == RespondsStatusSuccess) {
-                [PGCProgressHUD showMessage:@"成功退出登录!" toView:self.view];
-                
+                [PGCProgressHUD showAlertWithTarget:self title:@"成功退出登录！"];
+                [manager logout];
                 // 发送退出登录的通知给 我的 控制器
                 [PGCNotificationCenter postNotificationName:kReloadProfileInfo object:nil userInfo:@{@"Logout":@"退出登录"}];
             } else {
                 [PGCProgressHUD showAlertWithTarget:self title:@"退出登录失败：" message:message actionWithTitle:@"我知道了" handler:^(UIAlertAction *action) {
-                    PGCLoginController *loginVC = [[PGCLoginController alloc] init];
-                    [self.navigationController pushViewController:loginVC animated:true];
+                    if (status == RespondsStatusDataError) {
+                        PGCLoginController *loginVC = [[PGCLoginController alloc] init];
+                        [self.navigationController pushViewController:loginVC animated:true];
+                    }
                 }];
             }
         }];

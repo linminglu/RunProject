@@ -29,9 +29,11 @@ typedef NS_ENUM(NSUInteger, ProgressMode) {
 /**
  *  1.5s后消失的弹出框提示
  *
- *  @param title 提示语句
+ *  @param target 调用UIAlertController的对象
+ *  @param title  提示语句
  */
-+ (void)showAlertWithTitle:(NSString *)title;
++ (void)showAlertWithTarget:(id)target
+                      title:(NSString *)title;
 
 /**
  *  1.5s后消失的弹出框提示
