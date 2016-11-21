@@ -56,6 +56,19 @@
 		845939391DBF625B0086DD53 /* PGCSupplyAndDemandController.m in Sources */ = {isa = PBXBuildFile; fileRef = 845939021DBF625B0086DD53 /* PGCSupplyAndDemandController.m */; };
 		8459393A1DBF625B0086DD53 /* PGCSupplyAndDemandController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845939031DBF625B0086DD53 /* PGCSupplyAndDemandController.xib */; };
 		845B41EE1DC824C5000351D7 /* PGCAddContactTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 845B41ED1DC824C5000351D7 /* PGCAddContactTableCell.m */; };
+		846C0B3A1DE2E34100EF2D53 /* libGeTuiSdk-1.5.3-noidfa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 846C0B381DE2E34100EF2D53 /* libGeTuiSdk-1.5.3-noidfa.a */; };
+		846C0B3B1DE2E34100EF2D53 /* libGtExtensionSdk-1.0.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 846C0B391DE2E34100EF2D53 /* libGtExtensionSdk-1.0.0.a */; };
+		846C0B3D1DE2E3F800EF2D53 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 846C0B3C1DE2E3F800EF2D53 /* libc++.tbd */; };
+		846C0B3F1DE2E40500EF2D53 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 846C0B3E1DE2E40500EF2D53 /* libz.tbd */; };
+		846C0B411DE2E41100EF2D53 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 846C0B401DE2E41100EF2D53 /* libsqlite3.tbd */; };
+		846C0B431DE2E41E00EF2D53 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 846C0B421DE2E41E00EF2D53 /* Security.framework */; };
+		846C0B451DE2E42A00EF2D53 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 846C0B441DE2E42A00EF2D53 /* MobileCoreServices.framework */; };
+		846C0B471DE2E43200EF2D53 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 846C0B461DE2E43200EF2D53 /* SystemConfiguration.framework */; };
+		846C0B491DE2E43F00EF2D53 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 846C0B481DE2E43F00EF2D53 /* CoreTelephony.framework */; };
+		846C0B4B1DE2E44B00EF2D53 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 846C0B4A1DE2E44B00EF2D53 /* AVFoundation.framework */; };
+		846C0B4D1DE2E45200EF2D53 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 846C0B4C1DE2E45200EF2D53 /* JavaScriptCore.framework */; };
+		846C0B4E1DE2E45D00EF2D53 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845938801DBF48320086DD53 /* CoreLocation.framework */; };
+		846C0B501DE2E46900EF2D53 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 846C0B4F1DE2E46900EF2D53 /* UserNotifications.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		8475AE2D1DCC2203004A15A5 /* PGCNavigationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8475AE2C1DCC2203004A15A5 /* PGCNavigationItem.m */; };
 		8475AE3C1DCC2B87004A15A5 /* PGCProjectContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8475AE301DCC2B87004A15A5 /* PGCProjectContactCell.m */; };
 		8475AE3D1DCC2B87004A15A5 /* PGCProjectContactScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8475AE321DCC2B87004A15A5 /* PGCProjectContactScrollView.m */; };
@@ -64,8 +77,6 @@
 		8475AE401DCC2B87004A15A5 /* PGCHintAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8475AE391DCC2B87004A15A5 /* PGCHintAlertView.m */; };
 		8475AE411DCC2B87004A15A5 /* PGCPayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8475AE3B1DCC2B87004A15A5 /* PGCPayView.m */; };
 		8475AE451DCC2CC9004A15A5 /* PGCDetailTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8475AE441DCC2CC9004A15A5 /* PGCDetailTitleView.m */; };
-		8475AE671DCC7CC0004A15A5 /* PGCIntroduceDetailTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8475AE661DCC7CC0004A15A5 /* PGCIntroduceDetailTopView.m */; };
-		8475AE6A1DCC7CD2004A15A5 /* PGCIntroduceDetailBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8475AE691DCC7CD2004A15A5 /* PGCIntroduceDetailBottomView.m */; };
 		8475AE6D1DCC7D31004A15A5 /* PGCAreaAndTypeRootVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8475AE6C1DCC7D31004A15A5 /* PGCAreaAndTypeRootVC.m */; };
 		8475AE701DCC842A004A15A5 /* PGCIntroducePublicView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8475AE6F1DCC842A004A15A5 /* PGCIntroducePublicView.m */; };
 		8475AE731DCC8DA6004A15A5 /* PGCIntroduceSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8475AE721DCC8DA6004A15A5 /* PGCIntroduceSelectView.m */; };
@@ -88,7 +99,6 @@
 		848794291DD498C10060D7FD /* PGCRegistInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 848794281DD498C10060D7FD /* PGCRegistInfo.m */; };
 		8487942C1DD4A2900060D7FD /* PGCNetworkHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8487942B1DD4A2900060D7FD /* PGCNetworkHelper.m */; };
 		849BECEC1DCF27A3007936B0 /* PGCAddContactRemarkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 849BECEB1DCF27A3007936B0 /* PGCAddContactRemarkCell.m */; };
-		849BECF01DCF44F3007936B0 /* PGCIntroduceAddContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 849BECEF1DCF44F3007936B0 /* PGCIntroduceAddContactCell.m */; };
 		849BED031DD04F9B007936B0 /* PGCProvince.m in Sources */ = {isa = PBXBuildFile; fileRef = 849BED021DD04F9B007936B0 /* PGCProvince.m */; };
 		849BED061DD04FA4007936B0 /* PGCCity.m in Sources */ = {isa = PBXBuildFile; fileRef = 849BED051DD04FA4007936B0 /* PGCCity.m */; };
 		849BED091DD04FAE007936B0 /* PGCProjectInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 849BED081DD04FAE007936B0 /* PGCProjectInfo.m */; };
@@ -97,8 +107,6 @@
 		849C7A1F1DC89F8B00C229DF /* PGCDemandCollectVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C7A1E1DC89F8B00C229DF /* PGCDemandCollectVC.m */; };
 		849C7A221DC89F9F00C229DF /* PGCDemandIntroduceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C7A211DC89F9F00C229DF /* PGCDemandIntroduceVC.m */; };
 		849C7A271DC8A54C00C229DF /* PGCSupplyAndDemandShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C7A261DC8A54C00C229DF /* PGCSupplyAndDemandShareView.m */; };
-		849C7A2D1DC8A6E900C229DF /* PGCSupplyIntroduceDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C7A2C1DC8A6E900C229DF /* PGCSupplyIntroduceDetailVC.m */; };
-		849C7A331DC8AFD700C229DF /* PGCRemandIntroduceDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C7A321DC8AFD700C229DF /* PGCRemandIntroduceDetailVC.m */; };
 		849C7A4C1DC9900D00C229DF /* PGCSupplyAndDemandCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C7A4B1DC9900D00C229DF /* PGCSupplyAndDemandCell.m */; };
 		849C7A4F1DC9977700C229DF /* PGCSupplyDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C7A4E1DC9977700C229DF /* PGCSupplyDetailVC.m */; };
 		849C7A521DC9978700C229DF /* PGCDemandDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C7A511DC9978700C229DF /* PGCDemandDetailVC.m */; };
@@ -109,6 +117,20 @@
 		849C7BCF1DC9D48900C229DF /* PGCAppDelegate+AppLifeCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C7BCE1DC9D48900C229DF /* PGCAppDelegate+AppLifeCircle.m */; };
 		849C7BD21DC9D4A500C229DF /* PGCAppDelegate+RootController.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C7BD11DC9D4A500C229DF /* PGCAppDelegate+RootController.m */; };
 		849C7BE31DC9EED800C229DF /* PGCMapTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C7BE21DC9EED800C229DF /* PGCMapTypeViewController.m */; };
+		849D801D1DE318BA003BF29C /* MBProgressHUD+PY.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D7FFE1DE318BA003BF29C /* MBProgressHUD+PY.m */; };
+		849D801E1DE318BA003BF29C /* UIView+PYExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D80001DE318BA003BF29C /* UIView+PYExtension.m */; };
+		849D801F1DE318BA003BF29C /* PYNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D80031DE318BA003BF29C /* PYNavigationController.m */; };
+		849D80201DE318BA003BF29C /* PYPhotosPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D80051DE318BA003BF29C /* PYPhotosPreviewController.m */; };
+		849D80211DE318BA003BF29C /* PYPhotosReaderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D80071DE318BA003BF29C /* PYPhotosReaderController.m */; };
+		849D80221DE318BA003BF29C /* PYPhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D80091DE318BA003BF29C /* PYPhotosViewController.m */; };
+		849D80231DE318BB003BF29C /* PYPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D800C1DE318BA003BF29C /* PYPhoto.m */; };
+		849D80241DE318BB003BF29C /* PYConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D800F1DE318BA003BF29C /* PYConst.m */; };
+		849D80251DE318BB003BF29C /* PYProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D80111DE318BA003BF29C /* PYProgressView.m */; };
+		849D80261DE318BB003BF29C /* PYPhotosView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 849D80131DE318BA003BF29C /* PYPhotosView.bundle */; };
+		849D80271DE318BB003BF29C /* PYPhotoBrowseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D80161DE318BA003BF29C /* PYPhotoBrowseView.m */; };
+		849D80281DE318BB003BF29C /* PYPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D80181DE318BA003BF29C /* PYPhotoCell.m */; };
+		849D80291DE318BB003BF29C /* PYPhotosView.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D801A1DE318BA003BF29C /* PYPhotosView.m */; };
+		849D802A1DE318BB003BF29C /* PYPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D801C1DE318BA003BF29C /* PYPhotoView.m */; };
 		84A0079D1DD1A75000CC8C83 /* EXTRuntimeExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A006DE1DD1A75000CC8C83 /* EXTRuntimeExtensions.m */; };
 		84A0079E1DD1A75000CC8C83 /* MKAnnotationView+RACSignalSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A006E21DD1A75000CC8C83 /* MKAnnotationView+RACSignalSupport.m */; };
 		84A0079F1DD1A75000CC8C83 /* NSArray+RACSequenceAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A006E41DD1A75000CC8C83 /* NSArray+RACSequenceAdditions.m */; };
@@ -358,6 +380,21 @@
 		845939031DBF625B0086DD53 /* PGCSupplyAndDemandController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PGCSupplyAndDemandController.xib; sourceTree = "<group>"; };
 		845B41EC1DC824C5000351D7 /* PGCAddContactTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCAddContactTableCell.h; sourceTree = "<group>"; };
 		845B41ED1DC824C5000351D7 /* PGCAddContactTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCAddContactTableCell.m; sourceTree = "<group>"; };
+		846C0B361DE2E34100EF2D53 /* GeTuiExtSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeTuiExtSdk.h; sourceTree = "<group>"; };
+		846C0B371DE2E34100EF2D53 /* GeTuiSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeTuiSdk.h; sourceTree = "<group>"; };
+		846C0B381DE2E34100EF2D53 /* libGeTuiSdk-1.5.3-noidfa.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libGeTuiSdk-1.5.3-noidfa.a"; sourceTree = "<group>"; };
+		846C0B391DE2E34100EF2D53 /* libGtExtensionSdk-1.0.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libGtExtensionSdk-1.0.0.a"; sourceTree = "<group>"; };
+		846C0B3C1DE2E3F800EF2D53 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		846C0B3E1DE2E40500EF2D53 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		846C0B401DE2E41100EF2D53 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		846C0B421DE2E41E00EF2D53 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		846C0B441DE2E42A00EF2D53 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		846C0B461DE2E43200EF2D53 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		846C0B481DE2E43F00EF2D53 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		846C0B4A1DE2E44B00EF2D53 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		846C0B4C1DE2E45200EF2D53 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		846C0B4F1DE2E46900EF2D53 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		846C0B521DE2F7BC00EF2D53 /* 跑工程.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "跑工程.entitlements"; sourceTree = "<group>"; };
 		8475AE2B1DCC2203004A15A5 /* PGCNavigationItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCNavigationItem.h; sourceTree = "<group>"; };
 		8475AE2C1DCC2203004A15A5 /* PGCNavigationItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCNavigationItem.m; sourceTree = "<group>"; };
 		8475AE2F1DCC2B87004A15A5 /* PGCProjectContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCProjectContactCell.h; sourceTree = "<group>"; };
@@ -374,10 +411,6 @@
 		8475AE3B1DCC2B87004A15A5 /* PGCPayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCPayView.m; sourceTree = "<group>"; };
 		8475AE431DCC2CC9004A15A5 /* PGCDetailTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCDetailTitleView.h; sourceTree = "<group>"; };
 		8475AE441DCC2CC9004A15A5 /* PGCDetailTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCDetailTitleView.m; sourceTree = "<group>"; };
-		8475AE651DCC7CC0004A15A5 /* PGCIntroduceDetailTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCIntroduceDetailTopView.h; sourceTree = "<group>"; };
-		8475AE661DCC7CC0004A15A5 /* PGCIntroduceDetailTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCIntroduceDetailTopView.m; sourceTree = "<group>"; };
-		8475AE681DCC7CD2004A15A5 /* PGCIntroduceDetailBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCIntroduceDetailBottomView.h; sourceTree = "<group>"; };
-		8475AE691DCC7CD2004A15A5 /* PGCIntroduceDetailBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCIntroduceDetailBottomView.m; sourceTree = "<group>"; };
 		8475AE6B1DCC7D31004A15A5 /* PGCAreaAndTypeRootVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCAreaAndTypeRootVC.h; sourceTree = "<group>"; };
 		8475AE6C1DCC7D31004A15A5 /* PGCAreaAndTypeRootVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCAreaAndTypeRootVC.m; sourceTree = "<group>"; };
 		8475AE6E1DCC842A004A15A5 /* PGCIntroducePublicView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCIntroducePublicView.h; sourceTree = "<group>"; };
@@ -422,8 +455,6 @@
 		8487942B1DD4A2900060D7FD /* PGCNetworkHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCNetworkHelper.m; sourceTree = "<group>"; };
 		849BECEA1DCF27A3007936B0 /* PGCAddContactRemarkCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCAddContactRemarkCell.h; sourceTree = "<group>"; };
 		849BECEB1DCF27A3007936B0 /* PGCAddContactRemarkCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCAddContactRemarkCell.m; sourceTree = "<group>"; };
-		849BECEE1DCF44F3007936B0 /* PGCIntroduceAddContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCIntroduceAddContactCell.h; sourceTree = "<group>"; };
-		849BECEF1DCF44F3007936B0 /* PGCIntroduceAddContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCIntroduceAddContactCell.m; sourceTree = "<group>"; };
 		849BED011DD04F9B007936B0 /* PGCProvince.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCProvince.h; sourceTree = "<group>"; };
 		849BED021DD04F9B007936B0 /* PGCProvince.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCProvince.m; sourceTree = "<group>"; };
 		849BED041DD04FA4007936B0 /* PGCCity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCCity.h; sourceTree = "<group>"; };
@@ -440,10 +471,6 @@
 		849C7A211DC89F9F00C229DF /* PGCDemandIntroduceVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCDemandIntroduceVC.m; sourceTree = "<group>"; };
 		849C7A251DC8A54C00C229DF /* PGCSupplyAndDemandShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCSupplyAndDemandShareView.h; sourceTree = "<group>"; };
 		849C7A261DC8A54C00C229DF /* PGCSupplyAndDemandShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCSupplyAndDemandShareView.m; sourceTree = "<group>"; };
-		849C7A2B1DC8A6E900C229DF /* PGCSupplyIntroduceDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCSupplyIntroduceDetailVC.h; sourceTree = "<group>"; };
-		849C7A2C1DC8A6E900C229DF /* PGCSupplyIntroduceDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCSupplyIntroduceDetailVC.m; sourceTree = "<group>"; };
-		849C7A311DC8AFD700C229DF /* PGCRemandIntroduceDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCRemandIntroduceDetailVC.h; sourceTree = "<group>"; };
-		849C7A321DC8AFD700C229DF /* PGCRemandIntroduceDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCRemandIntroduceDetailVC.m; sourceTree = "<group>"; };
 		849C7A4A1DC9900D00C229DF /* PGCSupplyAndDemandCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCSupplyAndDemandCell.h; sourceTree = "<group>"; };
 		849C7A4B1DC9900D00C229DF /* PGCSupplyAndDemandCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCSupplyAndDemandCell.m; sourceTree = "<group>"; };
 		849C7A4D1DC9977700C229DF /* PGCSupplyDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCSupplyDetailVC.h; sourceTree = "<group>"; };
@@ -464,6 +491,34 @@
 		849C7BD11DC9D4A500C229DF /* PGCAppDelegate+RootController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PGCAppDelegate+RootController.m"; sourceTree = "<group>"; };
 		849C7BE11DC9EED800C229DF /* PGCMapTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCMapTypeViewController.h; sourceTree = "<group>"; };
 		849C7BE21DC9EED800C229DF /* PGCMapTypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCMapTypeViewController.m; sourceTree = "<group>"; };
+		849D7FFD1DE318BA003BF29C /* MBProgressHUD+PY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+PY.h"; sourceTree = "<group>"; };
+		849D7FFE1DE318BA003BF29C /* MBProgressHUD+PY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+PY.m"; sourceTree = "<group>"; };
+		849D7FFF1DE318BA003BF29C /* UIView+PYExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+PYExtension.h"; sourceTree = "<group>"; };
+		849D80001DE318BA003BF29C /* UIView+PYExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+PYExtension.m"; sourceTree = "<group>"; };
+		849D80021DE318BA003BF29C /* PYNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYNavigationController.h; sourceTree = "<group>"; };
+		849D80031DE318BA003BF29C /* PYNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYNavigationController.m; sourceTree = "<group>"; };
+		849D80041DE318BA003BF29C /* PYPhotosPreviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYPhotosPreviewController.h; sourceTree = "<group>"; };
+		849D80051DE318BA003BF29C /* PYPhotosPreviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYPhotosPreviewController.m; sourceTree = "<group>"; };
+		849D80061DE318BA003BF29C /* PYPhotosReaderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYPhotosReaderController.h; sourceTree = "<group>"; };
+		849D80071DE318BA003BF29C /* PYPhotosReaderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYPhotosReaderController.m; sourceTree = "<group>"; };
+		849D80081DE318BA003BF29C /* PYPhotosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYPhotosViewController.h; sourceTree = "<group>"; };
+		849D80091DE318BA003BF29C /* PYPhotosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYPhotosViewController.m; sourceTree = "<group>"; };
+		849D800B1DE318BA003BF29C /* PYPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYPhoto.h; sourceTree = "<group>"; };
+		849D800C1DE318BA003BF29C /* PYPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYPhoto.m; sourceTree = "<group>"; };
+		849D800E1DE318BA003BF29C /* PYConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYConst.h; sourceTree = "<group>"; };
+		849D800F1DE318BA003BF29C /* PYConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYConst.m; sourceTree = "<group>"; };
+		849D80101DE318BA003BF29C /* PYProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYProgressView.h; sourceTree = "<group>"; };
+		849D80111DE318BA003BF29C /* PYProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYProgressView.m; sourceTree = "<group>"; };
+		849D80121DE318BA003BF29C /* PYPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYPhotoBrowser.h; sourceTree = "<group>"; };
+		849D80131DE318BA003BF29C /* PYPhotosView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = PYPhotosView.bundle; sourceTree = "<group>"; };
+		849D80151DE318BA003BF29C /* PYPhotoBrowseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYPhotoBrowseView.h; sourceTree = "<group>"; };
+		849D80161DE318BA003BF29C /* PYPhotoBrowseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYPhotoBrowseView.m; sourceTree = "<group>"; };
+		849D80171DE318BA003BF29C /* PYPhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYPhotoCell.h; sourceTree = "<group>"; };
+		849D80181DE318BA003BF29C /* PYPhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYPhotoCell.m; sourceTree = "<group>"; };
+		849D80191DE318BA003BF29C /* PYPhotosView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYPhotosView.h; sourceTree = "<group>"; };
+		849D801A1DE318BA003BF29C /* PYPhotosView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYPhotosView.m; sourceTree = "<group>"; };
+		849D801B1DE318BA003BF29C /* PYPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYPhotoView.h; sourceTree = "<group>"; };
+		849D801C1DE318BA003BF29C /* PYPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYPhotoView.m; sourceTree = "<group>"; };
 		84A006DC1DD1A75000CC8C83 /* EXTKeyPathCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTKeyPathCoding.h; sourceTree = "<group>"; };
 		84A006DD1DD1A75000CC8C83 /* EXTRuntimeExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTRuntimeExtensions.h; sourceTree = "<group>"; };
 		84A006DE1DD1A75000CC8C83 /* EXTRuntimeExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EXTRuntimeExtensions.m; sourceTree = "<group>"; };
@@ -764,6 +819,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				846C0B501DE2E46900EF2D53 /* UserNotifications.framework in Frameworks */,
+				846C0B4E1DE2E45D00EF2D53 /* CoreLocation.framework in Frameworks */,
+				846C0B4D1DE2E45200EF2D53 /* JavaScriptCore.framework in Frameworks */,
+				846C0B4B1DE2E44B00EF2D53 /* AVFoundation.framework in Frameworks */,
+				846C0B491DE2E43F00EF2D53 /* CoreTelephony.framework in Frameworks */,
+				846C0B471DE2E43200EF2D53 /* SystemConfiguration.framework in Frameworks */,
+				846C0B451DE2E42A00EF2D53 /* MobileCoreServices.framework in Frameworks */,
+				846C0B431DE2E41E00EF2D53 /* Security.framework in Frameworks */,
+				846C0B411DE2E41100EF2D53 /* libsqlite3.tbd in Frameworks */,
+				846C0B3F1DE2E40500EF2D53 /* libz.tbd in Frameworks */,
+				846C0B3D1DE2E3F800EF2D53 /* libc++.tbd in Frameworks */,
+				846C0B3B1DE2E34100EF2D53 /* libGtExtensionSdk-1.0.0.a in Frameworks */,
+				846C0B3A1DE2E34100EF2D53 /* libGeTuiSdk-1.5.3-noidfa.a in Frameworks */,
 				5113E39F5A0F5588E9D9ED9D /* Pods____.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -810,6 +878,7 @@
 		0483E2D11DAF33D200EF89F0 /* 跑工程 */ = {
 			isa = PBXGroup;
 			children = (
+				846C0B521DE2F7BC00EF2D53 /* 跑工程.entitlements */,
 				84ECF1CC1DD167CE00697207 /* UtilKits */,
 				845938911DBF625B0086DD53 /* Classes */,
 				0483E3311DAF3C0200EF89F0 /* Other */,
@@ -894,6 +963,16 @@
 		8459387F1DBF48310086DD53 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				846C0B4F1DE2E46900EF2D53 /* UserNotifications.framework */,
+				846C0B4C1DE2E45200EF2D53 /* JavaScriptCore.framework */,
+				846C0B4A1DE2E44B00EF2D53 /* AVFoundation.framework */,
+				846C0B481DE2E43F00EF2D53 /* CoreTelephony.framework */,
+				846C0B461DE2E43200EF2D53 /* SystemConfiguration.framework */,
+				846C0B441DE2E42A00EF2D53 /* MobileCoreServices.framework */,
+				846C0B421DE2E41E00EF2D53 /* Security.framework */,
+				846C0B401DE2E41100EF2D53 /* libsqlite3.tbd */,
+				846C0B3E1DE2E40500EF2D53 /* libz.tbd */,
+				846C0B3C1DE2E3F800EF2D53 /* libc++.tbd */,
 				845938801DBF48320086DD53 /* CoreLocation.framework */,
 				BEA06E02B51C4C6B6E6C8727 /* Pods____.framework */,
 			);
@@ -1265,7 +1344,6 @@
 				84B0A3DD1DE1BEC4006506D3 /* 发布需求cell */,
 				84B0A3D31DE04E90006506D3 /* 供应详情cell */,
 				84B0A3C31DE03048006506D3 /* 需求详情cell */,
-				8475AE581DCC65BA004A15A5 /* 发布需求 */,
 				84B0A3D71DE051E8006506D3 /* 选择地区cell */,
 				84B9C3CC1DCB5AE400035064 /* PGCSearchBar.h */,
 				84B9C3CD1DCB5AE400035064 /* PGCSearchBar.m */,
@@ -1279,6 +1357,17 @@
 				849C7A261DC8A54C00C229DF /* PGCSupplyAndDemandShareView.m */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		846C0B351DE2E34100EF2D53 /* GtSdkLib-noidfa */ = {
+			isa = PBXGroup;
+			children = (
+				846C0B361DE2E34100EF2D53 /* GeTuiExtSdk.h */,
+				846C0B371DE2E34100EF2D53 /* GeTuiSdk.h */,
+				846C0B381DE2E34100EF2D53 /* libGeTuiSdk-1.5.3-noidfa.a */,
+				846C0B391DE2E34100EF2D53 /* libGtExtensionSdk-1.0.0.a */,
+			);
+			path = "GtSdkLib-noidfa";
 			sourceTree = "<group>";
 		};
 		8475AE2E1DCC2B87004A15A5 /* 联系人 */ = {
@@ -1314,19 +1403,6 @@
 				8475AE3B1DCC2B87004A15A5 /* PGCPayView.m */,
 			);
 			name = "自定义弹出框";
-			sourceTree = "<group>";
-		};
-		8475AE581DCC65BA004A15A5 /* 发布需求 */ = {
-			isa = PBXGroup;
-			children = (
-				8475AE651DCC7CC0004A15A5 /* PGCIntroduceDetailTopView.h */,
-				8475AE661DCC7CC0004A15A5 /* PGCIntroduceDetailTopView.m */,
-				8475AE681DCC7CD2004A15A5 /* PGCIntroduceDetailBottomView.h */,
-				8475AE691DCC7CD2004A15A5 /* PGCIntroduceDetailBottomView.m */,
-				849BECEE1DCF44F3007936B0 /* PGCIntroduceAddContactCell.h */,
-				849BECEF1DCF44F3007936B0 /* PGCIntroduceAddContactCell.m */,
-			);
-			name = "发布需求";
 			sourceTree = "<group>";
 		};
 		848793CB1DD2B4C00060D7FD /* 地区-省市 */ = {
@@ -1451,7 +1527,10 @@
 		849C7A0A1DC89D4500C229DF /* 供应 */ = {
 			isa = PBXGroup;
 			children = (
-				849C7A141DC89F1A00C229DF /* 供应发布 */,
+				849C7A6A1DC9CEA500C229DF /* PGCSupplyIntroduceInfoVC.h */,
+				849C7A6B1DC9CEA500C229DF /* PGCSupplyIntroduceInfoVC.m */,
+				849C7A181DC89F6600C229DF /* PGCSupplyIntroduceVC.h */,
+				849C7A191DC89F6600C229DF /* PGCSupplyIntroduceVC.m */,
 				849C7A151DC89F4F00C229DF /* PGCSupplyCollectVC.h */,
 				849C7A161DC89F4F00C229DF /* PGCSupplyCollectVC.m */,
 				849C7A4D1DC9977700C229DF /* PGCSupplyDetailVC.h */,
@@ -1463,7 +1542,10 @@
 		849C7A0F1DC89EA300C229DF /* 需求 */ = {
 			isa = PBXGroup;
 			children = (
-				849C7A1B1DC89F7000C229DF /* 需求发布 */,
+				849C7A6D1DC9CF4200C229DF /* PGCDemandIntroduceInfoVC.h */,
+				849C7A6E1DC9CF4200C229DF /* PGCDemandIntroduceInfoVC.m */,
+				849C7A201DC89F9F00C229DF /* PGCDemandIntroduceVC.h */,
+				849C7A211DC89F9F00C229DF /* PGCDemandIntroduceVC.m */,
 				849C7A1D1DC89F8B00C229DF /* PGCDemandCollectVC.h */,
 				849C7A1E1DC89F8B00C229DF /* PGCDemandCollectVC.m */,
 				849C7A501DC9978700C229DF /* PGCDemandDetailVC.h */,
@@ -1472,30 +1554,79 @@
 			name = "需求";
 			sourceTree = "<group>";
 		};
-		849C7A141DC89F1A00C229DF /* 供应发布 */ = {
+		849D7FFB1DE318BA003BF29C /* PYPhotoBrowser */ = {
 			isa = PBXGroup;
 			children = (
-				849C7A181DC89F6600C229DF /* PGCSupplyIntroduceVC.h */,
-				849C7A191DC89F6600C229DF /* PGCSupplyIntroduceVC.m */,
-				849C7A2B1DC8A6E900C229DF /* PGCSupplyIntroduceDetailVC.h */,
-				849C7A2C1DC8A6E900C229DF /* PGCSupplyIntroduceDetailVC.m */,
-				849C7A6A1DC9CEA500C229DF /* PGCSupplyIntroduceInfoVC.h */,
-				849C7A6B1DC9CEA500C229DF /* PGCSupplyIntroduceInfoVC.m */,
+				849D7FFC1DE318BA003BF29C /* Category */,
+				849D80011DE318BA003BF29C /* Controller */,
+				849D800A1DE318BA003BF29C /* Model */,
+				849D800D1DE318BA003BF29C /* Other */,
+				849D80121DE318BA003BF29C /* PYPhotoBrowser.h */,
+				849D80131DE318BA003BF29C /* PYPhotosView.bundle */,
+				849D80141DE318BA003BF29C /* View */,
 			);
-			name = "供应发布";
+			path = PYPhotoBrowser;
 			sourceTree = "<group>";
 		};
-		849C7A1B1DC89F7000C229DF /* 需求发布 */ = {
+		849D7FFC1DE318BA003BF29C /* Category */ = {
 			isa = PBXGroup;
 			children = (
-				849C7A201DC89F9F00C229DF /* PGCDemandIntroduceVC.h */,
-				849C7A211DC89F9F00C229DF /* PGCDemandIntroduceVC.m */,
-				849C7A311DC8AFD700C229DF /* PGCRemandIntroduceDetailVC.h */,
-				849C7A321DC8AFD700C229DF /* PGCRemandIntroduceDetailVC.m */,
-				849C7A6D1DC9CF4200C229DF /* PGCDemandIntroduceInfoVC.h */,
-				849C7A6E1DC9CF4200C229DF /* PGCDemandIntroduceInfoVC.m */,
+				849D7FFD1DE318BA003BF29C /* MBProgressHUD+PY.h */,
+				849D7FFE1DE318BA003BF29C /* MBProgressHUD+PY.m */,
+				849D7FFF1DE318BA003BF29C /* UIView+PYExtension.h */,
+				849D80001DE318BA003BF29C /* UIView+PYExtension.m */,
 			);
-			name = "需求发布";
+			path = Category;
+			sourceTree = "<group>";
+		};
+		849D80011DE318BA003BF29C /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				849D80021DE318BA003BF29C /* PYNavigationController.h */,
+				849D80031DE318BA003BF29C /* PYNavigationController.m */,
+				849D80041DE318BA003BF29C /* PYPhotosPreviewController.h */,
+				849D80051DE318BA003BF29C /* PYPhotosPreviewController.m */,
+				849D80061DE318BA003BF29C /* PYPhotosReaderController.h */,
+				849D80071DE318BA003BF29C /* PYPhotosReaderController.m */,
+				849D80081DE318BA003BF29C /* PYPhotosViewController.h */,
+				849D80091DE318BA003BF29C /* PYPhotosViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		849D800A1DE318BA003BF29C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				849D800B1DE318BA003BF29C /* PYPhoto.h */,
+				849D800C1DE318BA003BF29C /* PYPhoto.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		849D800D1DE318BA003BF29C /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				849D800E1DE318BA003BF29C /* PYConst.h */,
+				849D800F1DE318BA003BF29C /* PYConst.m */,
+				849D80101DE318BA003BF29C /* PYProgressView.h */,
+				849D80111DE318BA003BF29C /* PYProgressView.m */,
+			);
+			path = Other;
+			sourceTree = "<group>";
+		};
+		849D80141DE318BA003BF29C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				849D80151DE318BA003BF29C /* PYPhotoBrowseView.h */,
+				849D80161DE318BA003BF29C /* PYPhotoBrowseView.m */,
+				849D80171DE318BA003BF29C /* PYPhotoCell.h */,
+				849D80181DE318BA003BF29C /* PYPhotoCell.m */,
+				849D80191DE318BA003BF29C /* PYPhotosView.h */,
+				849D801A1DE318BA003BF29C /* PYPhotosView.m */,
+				849D801B1DE318BA003BF29C /* PYPhotoView.h */,
+				849D801C1DE318BA003BF29C /* PYPhotoView.m */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		84A006D91DD1A75000CC8C83 /* ReactiveCocoa */ = {
@@ -1837,6 +1968,8 @@
 		84ECF1DA1DD167CE00697207 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				846C0B351DE2E34100EF2D53 /* GtSdkLib-noidfa */,
+				849D7FFB1DE318BA003BF29C /* PYPhotoBrowser */,
 				84B0A3B01DE023A4006506D3 /* XHLaunchAd */,
 				84F22C651DDBF6DB00AB0325 /* ProgressHUD */,
 				8440D3621DDD494500747E1F /* MBProgressHUD-MJ */,
@@ -1965,7 +2098,16 @@
 				TargetAttributes = {
 					0483E2CE1DAF33D200EF89F0 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 5VNYFS5E7K;
+						DevelopmentTeam = 3NQQS9APTM;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+							com.apple.Push = {
+								enabled = 0;
+							};
+						};
 					};
 					0483E2E71DAF33D200EF89F0 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -2018,6 +2160,7 @@
 				84B0A3A61DE0135A006506D3 /* PGCFeedbackViewController.xib in Resources */,
 				84B0A3A11DE01349006506D3 /* PGCAboutUsViewController.xib in Resources */,
 				845939211DBF625B0086DD53 /* PGCSettingController.xib in Resources */,
+				849D80261DE318BB003BF29C /* PYPhotosView.bundle in Resources */,
 				8440D36A1DDD494600747E1F /* MBProgressHUD.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2098,8 +2241,10 @@
 				84C839491DD7269200A07F76 /* PGCHeadImage.m in Sources */,
 				84A007C71DD1A75000CC8C83 /* RACIndexSetSequence.m in Sources */,
 				84B0A3D21DE034F9006506D3 /* DemandDetailFilesCell.m in Sources */,
+				849D801F1DE318BA003BF29C /* PYNavigationController.m in Sources */,
 				841383BB1DC6D1EF00A91589 /* PGCVIPServiceController.m in Sources */,
 				848793DC1DD2B4C00060D7FD /* PGCRegisterOrLoginAPIManager.m in Sources */,
+				849D801E1DE318BA003BF29C /* UIView+PYExtension.m in Sources */,
 				849BED061DD04FA4007936B0 /* PGCCity.m in Sources */,
 				848794291DD498C10060D7FD /* PGCRegistInfo.m in Sources */,
 				84A007AD1DD1A75000CC8C83 /* NSOrderedSet+RACSequenceAdditions.m in Sources */,
@@ -2145,6 +2290,7 @@
 				84A007CE1DD1A75100CC8C83 /* RACQueueScheduler.m in Sources */,
 				84A007DA1DD1A75100CC8C83 /* RACStringSequence.m in Sources */,
 				84F22C511DDAB89900AB0325 /* PGCSearchView.m in Sources */,
+				849D80221DE318BA003BF29C /* PYPhotosViewController.m in Sources */,
 				84A0079D1DD1A75000CC8C83 /* EXTRuntimeExtensions.m in Sources */,
 				84A007E81DD1A75100CC8C83 /* UIBarButtonItem+RACCommandSupport.m in Sources */,
 				84A007DF1DD1A75100CC8C83 /* RACTargetQueueScheduler.m in Sources */,
@@ -2154,9 +2300,11 @@
 				849C7BC91DC9D3CB00C229DF /* PGCAppDelegate.m in Sources */,
 				84A007E41DD1A75100CC8C83 /* RACUnit.m in Sources */,
 				84F22C451DD9D9AC00AB0325 /* MZTimerLabel.m in Sources */,
+				849D80271DE318BB003BF29C /* PYPhotoBrowseView.m in Sources */,
 				84A007E11DD1A75100CC8C83 /* RACTuple.m in Sources */,
 				84A007D21DD1A75100CC8C83 /* RACScopedDisposable.m in Sources */,
 				845939181DBF625B0086DD53 /* PGCTabBar.m in Sources */,
+				849D802A1DE318BB003BF29C /* PYPhotoView.m in Sources */,
 				84A007CB1DD1A75000CC8C83 /* RACMulticastConnection.m in Sources */,
 				848793EB1DD2C2940060D7FD /* PGCMaterialServiceTypes.m in Sources */,
 				84B0A3C61DE03065006506D3 /* DemandDetailTopCell.m in Sources */,
@@ -2164,13 +2312,11 @@
 				84ECF1F21DD167CE00697207 /* NSString+Size.m in Sources */,
 				845939321DBF625B0086DD53 /* PGCLoginController.m in Sources */,
 				8440D3611DDC72D800747E1F /* PGCUser.m in Sources */,
-				849C7A331DC8AFD700C229DF /* PGCRemandIntroduceDetailVC.m in Sources */,
 				848793E51DD2C2100060D7FD /* PGCSupplyAPIManager.m in Sources */,
 				845939201DBF625B0086DD53 /* PGCSettingController.m in Sources */,
 				84A007D01DD1A75100CC8C83 /* RACReturnSignal.m in Sources */,
 				84B0A3E31DE1BF1B006506D3 /* IntroduceDemandContactCell.m in Sources */,
 				84A007AB1DD1A75000CC8C83 /* NSObject+RACPropertySubscribing.m in Sources */,
-				849BECF01DCF44F3007936B0 /* PGCIntroduceAddContactCell.m in Sources */,
 				84A007A21DD1A75000CC8C83 /* NSEnumerator+RACSequenceAdditions.m in Sources */,
 				849C7A4F1DC9977700C229DF /* PGCSupplyDetailVC.m in Sources */,
 				849C7A4C1DC9900D00C229DF /* PGCSupplyAndDemandCell.m in Sources */,
@@ -2179,6 +2325,7 @@
 				8475AE3D1DCC2B87004A15A5 /* PGCProjectContactScrollView.m in Sources */,
 				84A007D81DD1A75100CC8C83 /* RACSignalSequence.m in Sources */,
 				84B0A3931DDEA642006506D3 /* Types.m in Sources */,
+				849D80291DE318BB003BF29C /* PYPhotosView.m in Sources */,
 				84A007A31DD1A75000CC8C83 /* NSFileHandle+RACSupport.m in Sources */,
 				84A007D91DD1A75100CC8C83 /* RACStream.m in Sources */,
 				845B41EE1DC824C5000351D7 /* PGCAddContactTableCell.m in Sources */,
@@ -2221,25 +2368,25 @@
 				849C7A1F1DC89F8B00C229DF /* PGCDemandCollectVC.m in Sources */,
 				84B0A3CF1DE03468006506D3 /* DemandDetailImagesCell.m in Sources */,
 				849C7A6C1DC9CEA500C229DF /* PGCSupplyIntroduceInfoVC.m in Sources */,
-				8475AE671DCC7CC0004A15A5 /* PGCIntroduceDetailTopView.m in Sources */,
 				845939241DBF625B0086DD53 /* PGCUserInfoController.m in Sources */,
-				849C7A2D1DC8A6E900C229DF /* PGCSupplyIntroduceDetailVC.m in Sources */,
 				84F22C541DDB01BD00AB0325 /* PGCContacInfoHeaderView.m in Sources */,
 				8487942C1DD4A2900060D7FD /* PGCNetworkHelper.m in Sources */,
 				84A0079E1DD1A75000CC8C83 /* MKAnnotationView+RACSignalSupport.m in Sources */,
+				849D80281DE318BB003BF29C /* PYPhotoCell.m in Sources */,
 				84A007EB1DD1A75100CC8C83 /* UIControl+RACSignalSupport.m in Sources */,
 				84A007D41DD1A75100CC8C83 /* RACSerialDisposable.m in Sources */,
 				84A007D51DD1A75100CC8C83 /* RACSignal+Operations.m in Sources */,
 				849C7A221DC89F9F00C229DF /* PGCDemandIntroduceVC.m in Sources */,
-				8475AE6A1DCC7CD2004A15A5 /* PGCIntroduceDetailBottomView.m in Sources */,
 				8475AE411DCC2B87004A15A5 /* PGCPayView.m in Sources */,
 				8440D35B1DDC5D7D00747E1F /* PGCManager.m in Sources */,
 				84B0A3E61DE1BF44006506D3 /* IntroduceDemandDescCell.m in Sources */,
 				84A007CD1DD1A75000CC8C83 /* RACPassthroughSubscriber.m in Sources */,
+				849D80201DE318BA003BF29C /* PYPhotosPreviewController.m in Sources */,
 				84A3F6701DD94BB600DB43D3 /* PGCProjectContact.m in Sources */,
 				8475AE731DCC8DA6004A15A5 /* PGCIntroduceSelectView.m in Sources */,
 				849C7BCC1DC9D46F00C229DF /* PGCAppDelegate+AppService.m in Sources */,
 				8459390B1DBF625B0086DD53 /* PGCContactsController.m in Sources */,
+				849D801D1DE318BA003BF29C /* MBProgressHUD+PY.m in Sources */,
 				84A007EE1DD1A75100CC8C83 /* UIGestureRecognizer+RACSignalSupport.m in Sources */,
 				84A007C81DD1A75000CC8C83 /* RACKVOChannel.m in Sources */,
 				848794231DD45A530060D7FD /* PGCDropRightCell.m in Sources */,
@@ -2247,13 +2394,16 @@
 				845939391DBF625B0086DD53 /* PGCSupplyAndDemandController.m in Sources */,
 				84A007C31DD1A75000CC8C83 /* RACErrorSignal.m in Sources */,
 				849BED031DD04F9B007936B0 /* PGCProvince.m in Sources */,
+				849D80231DE318BB003BF29C /* PYPhoto.m in Sources */,
 				845939301DBF625B0086DD53 /* PGCProjectInfoDetailVC.m in Sources */,
 				84A007DB1DD1A75100CC8C83 /* RACSubject.m in Sources */,
 				0483E2D41DAF33D200EF89F0 /* main.m in Sources */,
+				849D80241DE318BB003BF29C /* PYConst.m in Sources */,
 				84ECF2101DD16A2000697207 /* PGCBaseAPIManager.m in Sources */,
 				84A007B11DD1A75000CC8C83 /* NSString+RACSupport.m in Sources */,
 				849C7A6F1DC9CF4200C229DF /* PGCDemandIntroduceInfoVC.m in Sources */,
 				84A007C51DD1A75000CC8C83 /* RACGroupedSignal.m in Sources */,
+				849D80211DE318BA003BF29C /* PYPhotosReaderController.m in Sources */,
 				84A007A81DD1A75000CC8C83 /* NSObject+RACDescription.m in Sources */,
 				845939111DBF625B0086DD53 /* PGCProjectCell.m in Sources */,
 				849BECEC1DCF27A3007936B0 /* PGCAddContactRemarkCell.m in Sources */,
@@ -2285,6 +2435,7 @@
 				84A007A51DD1A75000CC8C83 /* NSInvocation+RACTypeParsing.m in Sources */,
 				84A007ED1DD1A75100CC8C83 /* UIDatePicker+RACSignalSupport.m in Sources */,
 				848794071DD300B90060D7FD /* PGCProfileAPIManager.m in Sources */,
+				849D80251DE318BB003BF29C /* PYProgressView.m in Sources */,
 				84A007B31DD1A75000CC8C83 /* NSUserDefaults+RACSupport.m in Sources */,
 				84C839401DD710E200A07F76 /* PGCDataCache.m in Sources */,
 				84A007C41DD1A75000CC8C83 /* RACEvent.m in Sources */,
@@ -2456,13 +2607,21 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
-				DEVELOPMENT_TEAM = 5VNYFS5E7K;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 3NQQS9APTM;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/跑工程/PGCPrefixHeader.pch";
 				INFOPLIST_FILE = "跑工程/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/跑工程/UtilKits/Libs/GtSdkLib-noidfa",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "macaa.---";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -2473,13 +2632,21 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
-				DEVELOPMENT_TEAM = 5VNYFS5E7K;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 3NQQS9APTM;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/跑工程/PGCPrefixHeader.pch";
 				INFOPLIST_FILE = "跑工程/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/跑工程/UtilKits/Libs/GtSdkLib-noidfa",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "macaa.---";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

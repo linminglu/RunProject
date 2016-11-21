@@ -115,7 +115,18 @@ typedef NS_ENUM(NSUInteger, ButtonTag) {
 
 - (void)checkMoreContact:(UIButton *)sender
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+    NSMutableArray *array = (NSMutableArray *)self.dataSource[1];
+    [array removeAllObjects];
+    [array addObjectsFromArray:self.supply.contacts];
+    
+//    NSMutableArray *indexPaths = [NSMutableArray array];
+//    for (int i = 0; i < array.count; i++) {
+//        [indexPaths addObject:[NSIndexPath indexPathForRow:i inSection:1]];
+//    }
+//    [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView reloadData];
+    
+    NSLog(@"%@", array);
 }
 
 
@@ -150,8 +161,11 @@ typedef NS_ENUM(NSUInteger, ButtonTag) {
 - (void)alertView:(PGCAlertView *)alertView addContact:(UIButton *)addContact
 {
     PGCProjectAddContactController *addContactVC = [[PGCProjectAddContactController alloc] init];
-    NSDictionary *dic = @{@"name":self.contact.name, @"phone":self.contact.phone};
-    addContactVC.projectCon = [PGCProjectContact mj_objectWithKeyValues:dic];
+    NSDictionary *dic = @{@"name":self.contact.name,
+                          @"phone":self.contact.phone};
+    PGCProjectContact *model = [[PGCProjectContact alloc] init];
+    [model mj_setKeyValues:dic];
+    addContactVC.projectCon = model;
     [self.navigationController pushViewController:addContactVC animated:true];
 }
 
@@ -163,7 +177,6 @@ typedef NS_ENUM(NSUInteger, ButtonTag) {
     NSString *string = [NSString stringWithFormat:@"tel://%@", self.contact.phone];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:string]];
 }
-
 
 
 #pragma mark - PGCSupplyAndDemandShareViewDelegate
@@ -193,12 +206,11 @@ typedef NS_ENUM(NSUInteger, ButtonTag) {
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return self.dataSource.count;
+    return _headerTitles.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 1) return 1;
     return [self.dataSource[section] count];
 }
 
@@ -263,7 +275,9 @@ typedef NS_ENUM(NSUInteger, ButtonTag) {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    if ([self.dataSource[section] count] > 1) return 40;
+    if (section == 1) {
+        if (self.supply.contacts.count > 1) return 40;
+    }
     return 0;
 }
 
@@ -359,7 +373,7 @@ typedef NS_ENUM(NSUInteger, ButtonTag) {
                                                 [[UIBarButtonItem alloc] initWithCustomView:heartBtn]];
     
     [self.dataSource insertObject:@[supply] atIndex:0];
-    [self.dataSource insertObject:supply.contacts atIndex:1];
+    [self.dataSource insertObject:[@[supply.contacts.firstObject] mutableCopy] atIndex:1];
     [self.dataSource insertObject:@[supply.desc] atIndex:2];
     [self.dataSource insertObject:@[supply.images] atIndex:3];
     [self.dataSource insertObject:@[supply.files] atIndex:4];

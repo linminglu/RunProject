@@ -116,7 +116,16 @@ typedef NS_ENUM(NSUInteger, ButtonTag) {
 
 - (void)checkMoreContact:(UIButton *)sender
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+    NSMutableArray *array = (NSMutableArray *)self.dataSource[1];
+    [array removeAllObjects];
+    [array addObjectsFromArray:self.demand.contacts];
+    
+//    NSMutableArray *indexPaths = [NSMutableArray array];
+//    for (int i = 0; i < array.count; i++) {
+//        [indexPaths addObject:[NSIndexPath indexPathForRow:i inSection:1]];
+//    }
+//    [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView reloadData];
 }
 
 
@@ -167,7 +176,6 @@ typedef NS_ENUM(NSUInteger, ButtonTag) {
 }
 
 
-
 #pragma mark - PGCSupplyAndDemandShareViewDelegate
 
 - (void)shareView:(PGCSupplyAndDemandShareView *)shareView qqFriend:(UIButton *)qqFriend
@@ -190,16 +198,16 @@ typedef NS_ENUM(NSUInteger, ButtonTag) {
     [PGCProgressHUD showMessage:@"分享需求信息到QQ好友成功!" toView:self.view];
 }
 
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return self.dataSource.count;
+    return _headerTitles.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 1) return 1;
     return [self.dataSource[section] count];
 }
 
@@ -264,7 +272,9 @@ typedef NS_ENUM(NSUInteger, ButtonTag) {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    if ([self.dataSource[section] count] > 1) return 40;
+    if (section == 1) {
+        if (self.demand.contacts.count > 1) return 40;
+    }
     return 0;
 }
 
@@ -359,7 +369,7 @@ typedef NS_ENUM(NSUInteger, ButtonTag) {
                                                 [[UIBarButtonItem alloc] initWithCustomView:heartBtn]];
     
     [self.dataSource insertObject:@[demand] atIndex:0];
-    [self.dataSource insertObject:demand.contacts atIndex:1];
+    [self.dataSource insertObject:[@[demand.contacts.firstObject] mutableCopy] atIndex:1];
     [self.dataSource insertObject:@[demand.desc] atIndex:2];
     [self.dataSource insertObject:@[demand.images] atIndex:3];
     [self.dataSource insertObject:@[demand.files] atIndex:4];

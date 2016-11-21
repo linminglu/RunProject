@@ -11,23 +11,22 @@
 @interface PGCIntroducePublicView ()
 
 @property (strong, nonatomic) UILabel *titleLabel;/** 标题标签 */
-@property (strong, nonatomic) UITextField *contentTF;/** 内容文本输入框 */
 
 @end
 
 @implementation PGCIntroducePublicView
 
-- (instancetype)initWithTitle:(NSString *)title
+- (instancetype)initWithTitle:(NSString *)title placeholder:(NSString *)placeholder
 {
     self = [super init];
     if (self) {
         
-        [self createUITitle:title];
+        [self createUITitle:title placeholder:placeholder];
     }
     return self;
 }
 
-- (void)createUITitle:(NSString *)title
+- (void)createUITitle:(NSString *)title placeholder:(NSString *)placeholder
 {
     self.backgroundColor = [UIColor whiteColor];
     // 标题标签
@@ -45,7 +44,7 @@
     // 内容输入框
     self.contentTF = [[UITextField alloc] init];
     self.contentTF.borderStyle = UITextBorderStyleNone;
-    self.contentTF.placeholder = @"请输入文字";
+    self.contentTF.placeholder = placeholder;
     self.contentTF.textColor = RGB(102, 102, 102);
     self.contentTF.font = SetFont(14);
     [self addSubview:self.contentTF];

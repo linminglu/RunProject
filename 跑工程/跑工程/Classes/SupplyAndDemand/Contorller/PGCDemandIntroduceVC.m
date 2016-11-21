@@ -8,7 +8,6 @@
 
 #import "PGCDemandIntroduceVC.h"
 #import "PGCSupplyAndDemandCell.h"
-#import "PGCRemandIntroduceDetailVC.h"
 #import "PGCDemandIntroduceInfoVC.h"
 #import "PGCDemandAPIManager.h"
 #import "PGCDemand.h"
@@ -143,7 +142,7 @@
         return;
     }
     PGCDemand *demand = self.dataSource[indexPath.row];
-    PGCRemandIntroduceDetailVC *detailVC = [[PGCRemandIntroduceDetailVC alloc] init];;
+    PGCDemandIntroduceInfoVC *detailVC = [[PGCDemandIntroduceInfoVC alloc] init];;
     detailVC.demandDetail = demand;
     [self.navigationController pushViewController:detailVC animated:true];
 }

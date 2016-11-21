@@ -8,7 +8,6 @@
 
 #import "PGCSupplyIntroduceVC.h"
 #import "PGCSupplyAndDemandCell.h"
-#import "PGCSupplyIntroduceDetailVC.h"
 #import "PGCSupplyIntroduceInfoVC.h"
 #import "PGCSupplyAPIManager.h"
 #import "PGCSupply.h"
@@ -139,7 +138,7 @@
         return;
     }
     PGCSupply *supply = self.dataSource[indexPath.row];
-    PGCSupplyIntroduceDetailVC *detailVC = [PGCSupplyIntroduceDetailVC new];
+    PGCSupplyIntroduceInfoVC *detailVC = [PGCSupplyIntroduceInfoVC new];
     detailVC.supplyDetail = supply;
     [self.navigationController pushViewController:detailVC animated:true];
 }

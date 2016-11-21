@@ -10,6 +10,9 @@
 
 //工程信息管理系统
 NSString *const kBaseURL = @"http://gcb.letide.cn";
+NSString *const kBaseImageURL = @"http://gcb.letide.cn";
+//NSString *const kBaseURL = @"http://192.168.0.154:8080/zbapp";
+//NSString *const kBaseImageURL = @"http://192.168.0.154:8080";
 
 #pragma mark - 注册登录
 // 获取验证码

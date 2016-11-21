@@ -10,6 +10,8 @@
 
 @interface PGCIntroduceSelectView : UIView
 
+@property (strong, nonatomic) UIButton *selectBtn;/** 选择按钮 */
+
 - (instancetype)initWithTitle:(NSString *)title content:(NSString *)content;
 
 - (void)addTarget:(id)target action:(SEL)action;

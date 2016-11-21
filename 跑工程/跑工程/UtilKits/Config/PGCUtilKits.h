@@ -19,6 +19,9 @@
 #import <MJRefresh/MJRefresh.h>//上拉刷新，下拉加载
 #import <SDWebImage/UIButton+WebCache.h>//按钮图片下载缓存库
 #import <SDWebImage/UIImageView+WebCache.h>//图片下载缓存库
+#import <MobileCoreServices/MobileCoreServices.h>
+#import "GeTuiSdk.h"
+#import "GeTuiExtSdk.h"
 #import "PGCConfig.h"//全局配置
 #import "PGCScreenAdaptation.h"//屏幕比例适配
 

@@ -65,8 +65,8 @@
                 
                 LunchImage *model = [[LunchImage alloc] init];
                 [model mj_setKeyValues:resultData];
-                
-                NSString *imageUrl = [kBaseURL stringByAppendingString:model.image];
+                NSString *string = [model.image substringFromIndex:3];
+                NSString *imageUrl = [kBaseImageURL stringByAppendingString:string];
                 //定义一个weakLaunchAd
                 __weak __typeof(launchAd) weakLaunchAd = launchAd;
                 [launchAd setImageUrl:imageUrl duration:3 skipType:SkipTypeTimeText options:XHWebImageRefreshCached completed:^(UIImage *image, NSURL *url) {

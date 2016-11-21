@@ -9,14 +9,8 @@
 #import "PGCIntroduceSelectView.h"
 
 @interface PGCIntroduceSelectView ()
-/**
- 标题标签
- */
-@property (strong, nonatomic) UILabel *titleLabel;
-/**
- 选择按钮
- */
-@property (strong, nonatomic) UIButton *button;
+
+@property (strong, nonatomic) UILabel *titleLabel;/** 标题标签 */
 
 @end
 
@@ -48,13 +42,13 @@
     .autoHeightRatio(0);
     
     // 选择按钮
-    self.button = [UIButton buttonWithType:UIButtonTypeSystem];
-    self.button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [self.button setTitle:content forState:UIControlStateNormal];
-    [self.button setTitleColor:RGB(182, 182, 182) forState:UIControlStateNormal];
-    self.button.titleLabel.font = SetFont(14);
-    [self addSubview:self.button];
-    self.button.sd_layout
+    self.selectBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    self.selectBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [self.selectBtn setTitle:content forState:UIControlStateNormal];
+    [self.selectBtn setTitleColor:RGB(182, 182, 182) forState:UIControlStateNormal];
+    self.selectBtn.titleLabel.font = SetFont(14);
+    [self addSubview:self.selectBtn];
+    self.selectBtn.sd_layout
     .centerYEqualToView(self.titleLabel)
     .leftSpaceToView(self.titleLabel, 10)
     .rightSpaceToView(self, 15)
@@ -63,7 +57,7 @@
 
 - (void)addTarget:(id)target action:(SEL)action
 {
-    [self.button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    [self.selectBtn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
 }
 
 @end

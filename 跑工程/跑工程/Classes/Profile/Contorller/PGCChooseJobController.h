@@ -12,8 +12,6 @@ typedef void (^JobBlock) (NSString *job);
 
 @interface PGCChooseJobController : UIViewController
 
-@property (strong, nonatomic) NSMutableDictionary *parameters;/** 上传参数 */
-
 @property (nonatomic,copy) JobBlock block;
 
 @end

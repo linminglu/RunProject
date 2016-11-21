@@ -18,5 +18,9 @@
  *  注册高德地图
  */
 - (void)registerAMap;
+/**
+ *  注册个推
+ */
+- (void)registerGeTui;
 
 @end

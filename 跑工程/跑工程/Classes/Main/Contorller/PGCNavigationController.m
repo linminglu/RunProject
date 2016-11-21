@@ -21,7 +21,7 @@
 + (void)initialize
 {
     UINavigationBar *bar = [UINavigationBar appearance];
-    //设置导航条按钮的文字颜色
+    bar.barTintColor = [UIColor whiteColor];
     bar.tintColor = PGCTextColor;
     bar.titleTextAttributes = @{NSForegroundColorAttributeName:PGCTextColor};
     bar.translucent = true;

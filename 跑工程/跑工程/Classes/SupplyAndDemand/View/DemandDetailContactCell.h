@@ -20,7 +20,6 @@ static NSString * const kDemandDetailContactCell = @"DemandDetailContactCell";
 @interface DemandDetailContactCell : UITableViewCell
 
 @property (weak, nonatomic) id <DemandDetailContactCellDelegate> delegate;
-
 @property (strong, nonatomic) Contacts *contact;/** 需求联系人 */
 
 @end

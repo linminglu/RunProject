@@ -71,11 +71,8 @@
         // 用户已登录，加载用户头像和名字
         [self.loginAndRegisterBtn setTitle:user.name forState:UIControlStateNormal];
         // 用户头像
-        NSURL *url = [NSURL URLWithString:[kBaseURL stringByAppendingString:user.headimage]];
-        [self.headImageBtn sd_setImageWithURL:url forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"头像"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-            
-        }];
-        
+        NSURL *url = [NSURL URLWithString:[kBaseImageURL stringByAppendingString:user.headimage]];
+        [self.headImageBtn sd_setImageWithURL:url forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"头像"]];        
     } else {
         [self.loginAndRegisterBtn setTitle:@"登录/注册" forState:UIControlStateNormal];
         [self.headImageBtn setImage:[UIImage imageNamed:@"头像"] forState:UIControlStateNormal];
@@ -115,10 +112,8 @@
         _isLogin = true;
         [self.loginAndRegisterBtn setTitle:user.name forState:UIControlStateNormal];
         
-        NSURL *url = [NSURL URLWithString:[kBaseURL stringByAppendingString:user.headimage]];
-        [self.headImageBtn sd_setImageWithURL:url forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"头像"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-            
-        }];
+        NSURL *url = [NSURL URLWithString:[kBaseImageURL stringByAppendingString:user.headimage]];
+        [self.headImageBtn sd_setImageWithURL:url forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"头像"]];
         return;
     }
     if ([notifi.userInfo objectForKey:@"HeadImage"]) {// 收到用户修改头像的通知
@@ -133,10 +128,9 @@
             if (status == RespondsStatusSuccess) {
                 [manager readTokenData];
                 NSString *imageStr = manager.token.user.headimage;
-                NSURL *url = [NSURL URLWithString:[kBaseURL stringByAppendingString:imageStr]];
-                [self.headImageBtn sd_setImageWithURL:url forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"头像"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-                    
-                }];
+                NSURL *url = [NSURL URLWithString:[kBaseImageURL stringByAppendingString:imageStr]];
+                NSLog(@"%@", url);
+                [self.headImageBtn sd_setImageWithURL:url forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"头像"]];
             } else {
                 [PGCProgressHUD showMessage:message toView:self.view];
                 

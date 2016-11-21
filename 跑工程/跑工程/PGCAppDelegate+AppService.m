@@ -17,6 +17,10 @@
     [AMapServices sharedServices].apiKey = AMapKey;
 }
 
+- (void)registerGeTui
+{
+    
+}
 
 - (void)checkAppUpDataWithshowOption:(BOOL)showOption
 {

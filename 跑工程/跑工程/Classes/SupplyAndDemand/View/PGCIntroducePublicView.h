@@ -10,6 +10,8 @@
 
 @interface PGCIntroducePublicView : UIView
 
-- (instancetype)initWithTitle:(NSString *)title;
+@property (strong, nonatomic) UITextField *contentTF;/** 内容文本输入框 */
+
+- (instancetype)initWithTitle:(NSString *)title placeholder:(NSString *)placeholder;
 
 @end

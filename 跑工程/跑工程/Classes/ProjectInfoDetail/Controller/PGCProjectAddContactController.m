@@ -62,11 +62,6 @@
 
 #pragma mark - Events
 
-//- (void)respondsToAddOtherContact:(UIButton *)sender
-//{
-//    
-//}
-
 - (void)respondsToBarItemSave:(UIBarButtonItem *)sender
 {
     [self.view endEditing:true];
@@ -79,7 +74,7 @@
     [params setObject:@(user.user_id) forKey:@"user_id"];
     [params setObject:@"iphone" forKey:@"client_type"];
     [params setObject:manager.token.token forKey:@"token"];
-    
+    NSLog(@"%@", params);
     MBProgressHUD *hud = [PGCProgressHUD showProgressHUD:self.view label:@"正在添加联系人..."];
     [PGCContactAPIManager addContactRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
         [hud hideAnimated:true];
@@ -207,37 +202,6 @@
     return tagView;
 }
 
-//- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-//    UIView *footerView = [[UIView alloc] init];
-//    footerView.frame = CGRectMake(0, 0, tableView.width, 40);
-//    footerView.backgroundColor = [UIColor whiteColor];
-//    
-//    if (section == 0) {
-//        UIImage *image = [UIImage imageNamed:@"加号"];
-//        NSString *title = @"添加其他的联系方式";
-//        CGSize titleSize = [title sizeWithFont:SetFont(14) constrainedToSize:CGSizeMake(MAXFLOAT, 0)];
-//        
-//        UIButton *checkMoreContactBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//        [checkMoreContactBtn setImage:image forState:UIControlStateNormal];
-//        [checkMoreContactBtn.titleLabel setFont:SetFont(14)];
-//        [checkMoreContactBtn setTitle:title forState:UIControlStateNormal];
-//        [checkMoreContactBtn setTitleColor:PGCTintColor forState:UIControlStateNormal];
-//        [checkMoreContactBtn addTarget:self action:@selector(respondsToAddOtherContact:) forControlEvents:UIControlEventTouchUpInside];
-//        [footerView addSubview:checkMoreContactBtn];
-//        checkMoreContactBtn.sd_layout
-//        .centerXEqualToView(footerView)
-//        .centerYEqualToView(footerView)
-//        .heightIs(40)
-//        .widthIs(image.size.width + titleSize.width + 30);
-//        
-//        checkMoreContactBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -15);
-//        checkMoreContactBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -15, 0, 0);
-//        
-//        return footerView;
-//    }
-//    return nil;
-//}
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return indexPath.section < 2 ? 45 : 90;
@@ -247,40 +211,6 @@
 {
     return 40;
 }
-
-//- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-//{
-//    return section == 0 ? 40 : 0;
-//}
-
-
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//    if (scrollView == self.tableView) {
-//        UITableView *tableView = (UITableView *)scrollView;
-//        CGFloat sectionHeaderHeight = 40;
-//        CGFloat sectionFooterHeight = 40;
-//        
-//        CGFloat offsetY = tableView.contentOffset.y;
-//        
-//        if (offsetY >= 0 && offsetY <= sectionHeaderHeight)
-//        {
-//            tableView.contentInset = UIEdgeInsetsMake(-offsetY, 0, -sectionFooterHeight, 0);
-//        }
-//        else if (offsetY >= sectionHeaderHeight
-//                 && offsetY <= tableView.contentSize.height - tableView.frame.size.height - sectionFooterHeight)
-//        {
-//            tableView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, -sectionFooterHeight, 0);
-//        }
-//        else if (offsetY >= tableView.contentSize.height - tableView.frame.size.height - sectionFooterHeight
-//                 && offsetY <= tableView.contentSize.height - tableView.frame.size.height)
-//        {
-//            
-//            tableView.contentInset = UIEdgeInsetsMake(-offsetY, 0, -(tableView.contentSize.height - tableView.frame.size.height - sectionFooterHeight), 0);
-//            
-//        }
-//    }
-//}
-
 
 
 #pragma mark - Setter

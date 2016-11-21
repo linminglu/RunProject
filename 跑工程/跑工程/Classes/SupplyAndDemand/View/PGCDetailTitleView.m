@@ -17,16 +17,6 @@
 
 @implementation PGCDetailTitleView
 
-- (instancetype)initWithTitle:(NSString *)title content:(NSString *)content
-{
-    self = [super init];
-    if (self) {
-        
-        [self createUITitle:title];
-    }
-    return self;
-}
-
 - (instancetype)initWithTitle:(NSString *)title
 {
     self = [super init];

@@ -12,4 +12,6 @@ static NSString * const kIntroduceDemandDescCell = @"IntroduceDemandDescCell";
 
 @interface IntroduceDemandDescCell : UITableViewCell
 
+@property (copy, nonatomic) NSString *introduceDescs;/** 需求详细介绍 */
+
 @end

@@ -20,9 +20,9 @@
     [super viewDidLoad];
     
     self.navigationItem.title = @"详情";
-    NSLog(@"%@", self.urlString);
-    [self.imageView sd_setImageWithURL:[NSURL URLWithString:self.urlString] placeholderImage:[UIImage imageNamed:@"头像"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-        NSLog(@"%@", error);
+    
+    [self.imageView sd_setImageWithURL:[NSURL URLWithString:self.urlString] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+        
     }];
 }
 

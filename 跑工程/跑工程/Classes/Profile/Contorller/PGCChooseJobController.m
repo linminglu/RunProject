@@ -12,6 +12,7 @@
 @interface PGCChooseJobController ()
 
 @property (weak, nonatomic) IBOutlet UITextField *jobTextField;
+@property (strong, nonatomic) NSMutableDictionary *parameters;/** 上传参数 */
 
 - (void)initializeUserInterface; /** 初始化用户界面 */
 
@@ -55,9 +56,15 @@
 {
     [self.view endEditing:true];
     
+    PGCManager *manager = [PGCManager manager];
+    [manager readTokenData];
+    PGCUser *user = manager.token.user;
+    [self.parameters setObject:@"iphone" forKey:@"client_type"];
+    [self.parameters setObject:manager.token.token forKey:@"token"];
+    [self.parameters setObject:@(user.user_id) forKey:@"user_id"];
     [self.parameters setObject:self.jobTextField.text forKey:@"post"];
     
-    MBProgressHUD *hud = [PGCProgressHUD showProgressHUD:self.view label:@"保存中..."];
+    MBProgressHUD *hud = [PGCProgressHUD showProgressHUD:self.view label:nil];
     
     [PGCProfileAPIManager completeInfoRequestWithParameters:self.parameters responds:^(RespondsStatus status, NSString *message, id resultData) {
         [hud hideAnimated:true];
@@ -72,6 +79,17 @@
         }
     }];
 }
+
+
+#pragma mark - Getter
+
+- (NSMutableDictionary *)parameters {
+    if (!_parameters) {
+        _parameters = [NSMutableDictionary dictionary];
+    }
+    return _parameters;
+}
+
 
 #pragma mark - Touches
 

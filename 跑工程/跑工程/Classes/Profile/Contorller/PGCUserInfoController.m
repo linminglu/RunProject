@@ -8,7 +8,6 @@
 
 #import "PGCUserInfoController.h"
 #import "PGCChooseJobController.h"
-#import <MobileCoreServices/MobileCoreServices.h>
 #import "PGCLoginController.h"
 #import "PGCRegisterOrLoginAPIManager.h"
 #import "PGCProfileAPIManager.h"
@@ -46,10 +45,8 @@
     [manager readTokenData];
     PGCUser *user = manager.token.user;
     // 用户头像
-    NSURL *url = [NSURL URLWithString:[kBaseURL stringByAppendingString:user.headimage]];
-    [self.iconBtn sd_setImageWithURL:url forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"头像"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-        
-    }];
+    NSURL *url = [NSURL URLWithString:[kBaseImageURL stringByAppendingString:user.headimage]];
+    [self.iconBtn sd_setImageWithURL:url forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"头像"]];
     // 用户名
     self.nameLabel.text = user.name;
     // 性别
@@ -90,6 +87,7 @@
     }];
 }
 
+
 #pragma mark - Events
 // 选择头像
 - (IBAction)iconBtnClick:(UIButton *)sender
@@ -114,11 +112,19 @@
 {
     PGCManager *manager = [PGCManager manager];
     [manager readTokenData];
+    PGCUser *user = manager.token.user;
+    [self.parameters setObject:@"iphone" forKey:@"client_type"];
+    [self.parameters setObject:manager.token.token forKey:@"token"];
+    [self.parameters setObject:@(user.user_id) forKey:@"user_id"];
     
     UIAlertController *alertView = [UIAlertController alertControllerWithTitle:@"选择性别" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [alertView addAction:[UIAlertAction actionWithTitle:@"男" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self.parameters setObject:@(1) forKey:@"sex"];        
+        [self.parameters setObject:@(1) forKey:@"sex"];
+        
+        MBProgressHUD *hud = [PGCProgressHUD showProgressHUD:self.view label:nil];
         [PGCProfileAPIManager completeInfoRequestWithParameters:self.parameters responds:^(RespondsStatus status, NSString *message, id resultData) {
+            [hud hideAnimated:true];
+            
             if (status == RespondsStatusSuccess) {
                 self.sexLabel.text = @"男";
             } else {
@@ -130,7 +136,11 @@
     }]];
     [alertView addAction:[UIAlertAction actionWithTitle:@"女" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self.parameters setObject:@(0) forKey:@"sex"];
+        
+        MBProgressHUD *hud = [PGCProgressHUD showProgressHUD:self.view label:nil];
         [PGCProfileAPIManager completeInfoRequestWithParameters:self.parameters responds:^(RespondsStatus status, NSString *message, id resultData) {
+            [hud hideAnimated:true];
+            
             if (status == RespondsStatusSuccess) {
                 self.sexLabel.text = @"女";
             } else {
@@ -150,7 +160,6 @@
 {
     __weak PGCUserInfoController *weakSelf = self;
     PGCChooseJobController *jobVC = [[PGCChooseJobController alloc] init];
-    jobVC.parameters = self.parameters;
     jobVC.block = ^(NSString *job) {
         weakSelf.jobLabel.text = job;
     };
@@ -177,14 +186,12 @@
     
     if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
         if ([info[UIImagePickerControllerMediaType] isEqualToString:(NSString *)kUTTypeImage]) {
-            [self.iconBtn setImage:info[UIImagePickerControllerOriginalImage] forState:UIControlStateNormal];
             image = info[UIImagePickerControllerOriginalImage];
         }
-    }
-    else if (picker.sourceType == UIImagePickerControllerSourceTypePhotoLibrary){
-        [self.iconBtn setImage:info[UIImagePickerControllerEditedImage] forState:UIControlStateNormal];
+    } else if (picker.sourceType == UIImagePickerControllerSourceTypePhotoLibrary){
         image = info[UIImagePickerControllerEditedImage];
     }
+    [self.iconBtn setImage:image forState:UIControlStateNormal];
     
     NSDictionary *params = @{@"clientType":@"user",
                              @"category":@"1000",
@@ -251,13 +258,6 @@
 - (NSMutableDictionary *)parameters {
     if (!_parameters) {
         _parameters = [NSMutableDictionary dictionary];
-        
-        PGCManager *manager = [PGCManager manager];
-        [manager readTokenData];
-        PGCUser *user = manager.token.user;
-        [_parameters setObject:@"iphone" forKey:@"client_type"];
-        [_parameters setObject:manager.token.token forKey:@"token"];
-        [_parameters setObject:@(user.user_id) forKey:@"user_id"];
     }
     return _parameters;
 }

@@ -12,8 +12,6 @@
 
 @property (copy, nonatomic) NSString *content;/** 内容标签 */
 
-- (instancetype)initWithTitle:(NSString *)title content:(NSString *)content;
-
 - (instancetype)initWithTitle:(NSString *)title;
 
 @end

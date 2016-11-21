@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 extern NSString *const kBaseURL;
-
+extern NSString *const kBaseImageURL;
 
 #pragma mark - 注册登录
 
