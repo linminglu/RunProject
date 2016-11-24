@@ -17,7 +17,7 @@
             <rect key="frame" x="0.0" y="0.0" width="493" height="428"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="493" height="428"/>
+                <rect key="frame" x="0.0" y="0.0" width="493" height="427"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="手机" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GcL-dP-RVx">
@@ -448,7 +448,7 @@
                             </mask>
                         </variation>
                     </label>
-                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="3yq-ok-4cz">
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3yq-ok-4cz">
                         <rect key="frame" x="10" y="332" width="473" height="80"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -456,7 +456,7 @@
                         </constraints>
                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                     </textView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IyH-tP-lsM">
                         <rect key="frame" x="15" y="340" width="463" height="17"/>
@@ -596,11 +596,11 @@
                         <exclude reference="mLL-mB-t9n"/>
                         <exclude reference="Tur-RA-MNd"/>
                         <exclude reference="gCa-dU-Qzl"/>
-                        <exclude reference="GMF-ye-XeQ"/>
-                        <exclude reference="oz5-xl-jmM"/>
                         <exclude reference="0hS-xi-DZk"/>
                         <exclude reference="A2N-wK-Tf9"/>
                         <exclude reference="v72-Hs-nzH"/>
+                        <exclude reference="GMF-ye-XeQ"/>
+                        <exclude reference="oz5-xl-jmM"/>
                         <exclude reference="9VH-s4-mfU"/>
                         <exclude reference="iIR-KL-dO5"/>
                         <exclude reference="AAF-BD-ZrR"/>
@@ -610,11 +610,11 @@
                         <exclude reference="LQE-pm-ycx"/>
                         <exclude reference="oLq-Ti-e3b"/>
                         <exclude reference="oUj-Is-vQM"/>
-                        <exclude reference="wHz-fu-5Ig"/>
-                        <exclude reference="yXc-xo-j3m"/>
                         <exclude reference="Ewi-Y1-e4q"/>
                         <exclude reference="eQd-nE-p5y"/>
                         <exclude reference="iFW-8r-FbT"/>
+                        <exclude reference="wHz-fu-5Ig"/>
+                        <exclude reference="yXc-xo-j3m"/>
                         <exclude reference="MMR-jx-cnn"/>
                         <exclude reference="zDr-KK-ebd"/>
                         <exclude reference="FkO-uP-JUq"/>
@@ -675,11 +675,11 @@
                         <include reference="mLL-mB-t9n"/>
                         <include reference="Tur-RA-MNd"/>
                         <include reference="gCa-dU-Qzl"/>
-                        <include reference="GMF-ye-XeQ"/>
-                        <include reference="oz5-xl-jmM"/>
                         <include reference="0hS-xi-DZk"/>
                         <include reference="A2N-wK-Tf9"/>
                         <include reference="v72-Hs-nzH"/>
+                        <include reference="GMF-ye-XeQ"/>
+                        <include reference="oz5-xl-jmM"/>
                         <include reference="9VH-s4-mfU"/>
                         <include reference="iIR-KL-dO5"/>
                         <include reference="AAF-BD-ZrR"/>
@@ -689,11 +689,11 @@
                         <include reference="LQE-pm-ycx"/>
                         <include reference="oLq-Ti-e3b"/>
                         <include reference="oUj-Is-vQM"/>
-                        <include reference="wHz-fu-5Ig"/>
-                        <include reference="yXc-xo-j3m"/>
                         <include reference="Ewi-Y1-e4q"/>
                         <include reference="eQd-nE-p5y"/>
                         <include reference="iFW-8r-FbT"/>
+                        <include reference="wHz-fu-5Ig"/>
+                        <include reference="yXc-xo-j3m"/>
                         <include reference="MMR-jx-cnn"/>
                         <include reference="zDr-KK-ebd"/>
                         <include reference="FkO-uP-JUq"/>

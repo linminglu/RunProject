@@ -12,7 +12,7 @@
 @protocol IntroduceDemandTopCellDelegate <NSObject>
 
 @optional
-- (void)introduceDemandTopCell:(IntroduceDemandTopCell *)topView selectArea:(UIButton *)sender;
+- (void)introduceDemandTopCell:(IntroduceDemandTopCell *)topView selectArea:(UIButton *)area;
 - (void)introduceDemandTopCell:(IntroduceDemandTopCell *)topView slectDemand:(UIButton *)demand;
 
 @end

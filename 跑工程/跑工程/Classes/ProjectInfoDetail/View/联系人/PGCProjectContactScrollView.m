@@ -141,7 +141,7 @@
     
     PGCAlertView *alert = nil;
     
-    if (user.is_vip == 0) {
+    if (user.is_vip == 1) {
         NSString *name = [NSString stringWithFormat:@"联系人：%@", self.projectContact.name];
         NSString *phone = [NSString stringWithFormat:@"呼叫%@", self.projectContact.phone];
         alert = [[PGCAlertView alloc] initWithModel:@{@"name":name, @"phone":phone}];

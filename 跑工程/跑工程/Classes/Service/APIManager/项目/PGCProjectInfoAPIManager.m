@@ -7,8 +7,7 @@
 //
 
 #import "PGCProjectInfoAPIManager.h"
-#import "PGCProjectType.h"
-#import "PGCProjectProgress.h"
+#import "PGCProjectManager.h"
 #import "PGCProjectInfo.h"
 #import "PGCProjectContact.h"
 
@@ -30,13 +29,14 @@
                 // 将模型添加到数组中
                 [typeArr addObject:projectType];
             }
+            [PGCProjectManager manager].projectTypes = typeArr;
+            
             respondsBlock(RespondsStatusSuccess, resultMsg, typeArr);
         }
         else {
             respondsBlock(RespondsStatusDataError, resultMsg, nil);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        [PGCProgressHUD showMessage:@"网络错误(未连接)" toView:KeyWindow afterDelayTime:1.0];
         respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
     }];
 }
@@ -58,13 +58,14 @@
                 // 将模型添加到数组中
                 [progressArr addObject:progress];
             }
+            [PGCProjectManager manager].projectProgresses = progressArr;
+            
             respondsBlock(RespondsStatusSuccess, resultMsg, progressArr);
         }
         else {
             respondsBlock(RespondsStatusDataError, resultMsg, nil);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        [PGCProgressHUD showMessage:@"网络错误(未连接)" toView:KeyWindow afterDelayTime:1.0];
         respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
     }];
 }
@@ -184,6 +185,26 @@
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [PGCProgressHUD showMessage:@"网络错误(未连接)" toView:KeyWindow afterDelayTime:1.0];
+        respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
+    }];
+}
+
+
++ (NSURLSessionDataTask *)getNearProjectsRequestWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, id))respondsBlock
+{
+    return [self requestPOST:kGetNearProjects parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSInteger resultCode = [responseObject[@"code"] integerValue];
+        NSString *resultMsg = responseObject[@"msg"];
+        NSDictionary *resultData = responseObject[@"data"];
+        
+        if (resultCode == 200) {
+            respondsBlock(RespondsStatusSuccess, resultMsg, resultData);
+        }
+        else {
+            respondsBlock(RespondsStatusDataError, resultMsg, nil);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
     }];
 }

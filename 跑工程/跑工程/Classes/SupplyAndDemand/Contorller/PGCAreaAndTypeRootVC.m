@@ -9,14 +9,15 @@
 #import "PGCAreaAndTypeRootVC.h"
 #import "PGCDropLeftCell.h"
 #import "PGCDropRightCell.h"
-#import "PGCProvince.h"
+#import "PGCAreaManager.h"
+#import "PGCMaterialServiceTypes.h"
 
 @interface PGCAreaAndTypeRootVC () <UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) UITableView *leftTableView;/** 左边表格视图 */
 @property (strong, nonatomic) UITableView *rightTableView;/** 右边表格视图 */
 @property (nonatomic, assign) NSInteger leftSelectedRow;/** 选中左边表的行数 */
-@property (copy, nonatomic) NSArray<PGCProvince *> *dataSource;/** 数据源 */
+
 @property (assign, nonatomic) BOOL isSelected;/** 是否选中 */
 
 @end
@@ -32,8 +33,8 @@
 
 - (void)initDataSource
 {
+    _leftSelectedRow = 0;    
     _isSelected = false;
-    _dataSource = [PGCProvince province].areaArray;
 }
 
 - (void)initializeUI
@@ -75,29 +76,45 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (self.leftTableView == tableView) {
+    if (tableView == self.leftTableView) {
         return _dataSource.count;
     }
-    
-    PGCProvince *province = _dataSource[section];
-    return province.city.count;
+    if ([_dataSource[_leftSelectedRow] isKindOfClass:[PGCProvince class]]) {
+        
+        PGCProvince *province = _dataSource[_leftSelectedRow];
+        return province.cities.count;
+    }
+    PGCMaterialServiceTypes *type = _dataSource[_leftSelectedRow];
+    return type.secondArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.leftTableView == tableView) {
+    if (tableView == self.leftTableView) {
         PGCDropLeftCell *cell = [tableView dequeueReusableCellWithIdentifier:kPGCDropLeftCell];
-        PGCProvince *province = _dataSource[indexPath.row];
-        cell.leftTitleLabel.text = province.province;
         
+        if ([_dataSource[_leftSelectedRow] isKindOfClass:[PGCProvince class]]) {
+            
+            PGCProvince *province = _dataSource[indexPath.row];
+            cell.leftTitleLabel.text = province.province;
+        } else {
+            PGCMaterialServiceTypes *type = _dataSource[indexPath.row];
+            cell.leftTitleLabel.text = type.name;
+        }
         return cell;
     }
-    
     PGCDropRightCell *cell = [tableView dequeueReusableCellWithIdentifier:kPGCDropRightCell];
-    PGCProvince *province = _dataSource[indexPath.row];
-    PGCCity *city = province.city[indexPath.row];
-    cell.rightTitleLabel.text = city.city;
     
+    if ([_dataSource[_leftSelectedRow] isKindOfClass:[PGCProvince class]]) {
+        
+        PGCProvince *province = _dataSource[_leftSelectedRow];
+        PGCCity *city = province.cities[indexPath.row];
+        cell.rightTitleLabel.text = city.city;
+    } else {
+        PGCMaterialServiceTypes *type = _dataSource[_leftSelectedRow];
+        PGCMaterialServiceTypes *secondType = type.secondArray[indexPath.row];
+        cell.rightTitleLabel.text = secondType.name;
+    }
     return cell;
 }
 
@@ -106,15 +123,40 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.leftTableView == tableView) {
-        if (!_isSelected) {
-            _isSelected = true;
-            [self.leftTableView reloadData];
-            NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:_leftSelectedRow inSection:0];
-            
-            [_leftTableView selectRowAtIndexPath:selectedIndexPath animated:false scrollPosition:UITableViewScrollPositionNone];
-        }
+    // 判断是否为 左侧 的 tableView
+    if (tableView == self.leftTableView) {
+        _leftSelectedRow = indexPath.row;
+        
         [self.rightTableView reloadData];
+        
+        if ([self.rightTableView numberOfRowsInSection:0] == 0) {
+            
+            if ([_dataSource[_leftSelectedRow] isKindOfClass:[PGCProvince class]]) {
+                PGCProvince *province = _dataSource[_leftSelectedRow];
+                self.block(province.province);
+                
+            } else {
+                PGCMaterialServiceTypes *type = _dataSource[_leftSelectedRow];
+                self.block(type.name);
+            }
+            [self.navigationController popViewControllerAnimated:true];
+            return;
+        }        
+    }
+    if (tableView == self.rightTableView) {
+        if ([_dataSource[_leftSelectedRow] isKindOfClass:[PGCProvince class]]) {
+            
+            PGCProvince *province = _dataSource[_leftSelectedRow];
+            PGCCity *city = province.cities[indexPath.row];
+            NSString *areaStr = [province.province stringByAppendingString:city.city];
+            self.block(areaStr);
+            
+        } else {
+            PGCMaterialServiceTypes *type = _dataSource[_leftSelectedRow];
+            PGCMaterialServiceTypes *secondType = type.secondArray[indexPath.row];
+            self.block(secondType.name);
+        }
+        [self.navigationController popViewControllerAnimated:true];
     }
 }
 

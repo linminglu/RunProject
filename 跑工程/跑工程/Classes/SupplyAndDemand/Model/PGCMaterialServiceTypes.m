@@ -10,15 +10,6 @@
 
 @implementation PGCMaterialServiceTypes
 
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        
-    }
-    return self;
-}
-
 + (instancetype)materialServiceTypes {
     static PGCMaterialServiceTypes *type = nil;
     static dispatch_once_t onceToken;
@@ -26,6 +17,19 @@
         type = [[PGCMaterialServiceTypes alloc] init];
     });
     return type;
+}
+
+- (NSMutableArray *)setMaterialTypes
+{
+    NSMutableArray *results = [NSMutableArray array];
+    
+    PGCMaterialServiceTypes *tempType = [[PGCMaterialServiceTypes alloc] init];
+    tempType.id = -1;
+    tempType.name = @"不限";
+    [results addObjectsFromArray:[PGCMaterialServiceTypes materialServiceTypes].typeArray];
+    [results insertObject:tempType atIndex:0];
+    
+    return results;
 }
 
 - (NSMutableArray<PGCMaterialServiceTypes *> *)secondArray {

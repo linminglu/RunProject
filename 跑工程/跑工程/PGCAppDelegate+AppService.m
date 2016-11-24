@@ -9,6 +9,11 @@
 #import "PGCAppDelegate+AppService.h"
 #import <AMapFoundationKit/AMapFoundationKit.h>
 #import "PGCOtherAPIManager.h"
+#import "PGCAreaAPIManager.h"
+#import "PGCProjectInfoAPIManager.h"
+#import "PGCSupplyAndDemandAPIManager.h"
+#import "PGCAreaManager.h"
+#import "PGCProjectManager.h"
 
 @implementation PGCAppDelegate (AppService)
 
@@ -30,6 +35,5 @@
         }
     }];
 }
-
 
 @end

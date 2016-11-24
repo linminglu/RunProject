@@ -8,12 +8,15 @@
 
 #import "PGCVIPServiceController.h"
 #import "PGCVIPServiceCell.h"
+#import "PGCVIPServiceAPIManager.h"
+#import "PGCProduct.h"
 #import "PGCPayView.h"
 
 @interface PGCVIPServiceController () <UITableViewDataSource, UITableViewDelegate, PGCPayViewDelegate, PGCVIPServiceCellDelegate>
 
 @property (copy, nonatomic) NSArray *dataSource;/** 表格视图数据源 */
 @property (strong, nonatomic) UITableView *tableView;/** 表格视图 */
+@property (strong, nonatomic) NSMutableDictionary *params;/** 参数 */
 
 - (void)initializeDataSource;/* 初始化数据源 */
 - (void)initializeUserInterface;/* 初始化用户界面 */
@@ -29,15 +32,22 @@
     [self initializeUserInterface];
 }
 
-- (void)initializeDataSource {
-    _dataSource = @[@"1、开通会员服务后，使用有效期为一年", @"2、相关的规则和说明", @"3、相关的服务和说明"];
+- (void)initializeDataSource
+{
+    [PGCVIPServiceAPIManager getVipProductListRequestWithParameters:@{} responds:^(RespondsStatus status, NSString *message, NSMutableArray *resultData) {
+        if (status == RespondsStatusSuccess) {
+            
+            _dataSource = resultData;
+            [self.tableView reloadData];
+        }
+    }];
 }
 
 - (void)initializeUserInterface
 {
     self.navigationItem.title = @"开通服务";
     self.automaticallyAdjustsScrollViewInsets = false;
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = RGB(244, 244, 244);
 
     [self.view addSubview:self.tableView];
     
@@ -81,12 +91,14 @@
 
 - (void)vipServiceCell:(PGCVIPServiceCell *)cell payButton:(UIButton *)payButton
 {
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    NSLog(@"%ld-%ld", indexPath.section, indexPath.row);
-    
     PGCPayView *payView = [[PGCPayView alloc] init];
     payView.delegate = self;
     [payView showPayView];
+    
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    PGCProduct *product = _dataSource[indexPath.row];
+    
+    [self.params setObject:@(product.id) forKey:@"product_id"];
 }
 
 
@@ -94,12 +106,22 @@
 
 - (void)payView:(PGCPayView *)payView weChat:(UIButton *)weChat
 {
+    [self.params setObject:@"weixinApp" forKey:@"pay_way"];
+    [PGCVIPServiceAPIManager buyVipRequestWithParameters:self.params responds:^(RespondsStatus status, NSString *message, id resultData) {
+        
+    }];
+    
     PGCPayView *succeedView = [[PGCPayView alloc] initWithSuccessPay];
     [succeedView showPayViewWithGCD];
 }
 
 - (void)payView:(PGCPayView *)payView alipay:(UIButton *)alipay
 {
+    [self.params setObject:@"alipay" forKey:@"pay_way"];    
+    [PGCVIPServiceAPIManager buyVipRequestWithParameters:self.params responds:^(RespondsStatus status, NSString *message, id resultData) {
+        
+    }];
+    
     PGCPayView *succeedView = [[PGCPayView alloc] initWithSuccessPay];
     [succeedView showPayViewWithGCD];
 }
@@ -115,6 +137,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     PGCVIPServiceCell *cell = [tableView dequeueReusableCellWithIdentifier:kVIPServiceCell];
+    cell.product = _dataSource[indexPath.row];
     cell.delegate = self;
     return cell;
 }
@@ -124,7 +147,8 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [tableView cellHeightForIndexPath:indexPath cellContentViewWidth:SCREEN_WIDTH tableView:self.tableView];
+    PGCProduct *product = _dataSource[indexPath.row];
+    return [tableView cellHeightForIndexPath:indexPath model:product keyPath:@"product" cellClass:[PGCVIPServiceCell class] contentViewWidth:SCREEN_WIDTH];
 }
 
 
@@ -142,4 +166,18 @@
     return _tableView;
 }
 
+- (NSMutableDictionary *)params {
+    if (!_params) {
+        _params = [NSMutableDictionary dictionary];
+        
+        PGCManager *manager = [PGCManager manager];
+        [manager readTokenData];
+        PGCUser *user = manager.token.user;
+        
+        [_params setObject:@(user.user_id) forKey:@"user_id"];
+        [_params setObject:@"iphone" forKey:@"client_type"];
+        [_params setObject:manager.token.token forKey:@"token"];
+    }
+    return _params;
+}
 @end

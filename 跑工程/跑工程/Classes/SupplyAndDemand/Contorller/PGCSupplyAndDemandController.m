@@ -9,14 +9,13 @@
 #import "PGCSupplyAndDemandController.h"
 #import "PGCSupplyAndDemandCell.h"
 #import "JSDropDownMenu.h"
-#import "PGCSearchBar.h"
 #import "PGCSupplyDetailVC.h"
 #import "PGCDemandDetailVC.h"
 #import "PGCDemandCollectVC.h"
 #import "PGCSupplyCollectVC.h"
 #import "PGCDemandIntroduceVC.h"
 #import "PGCSupplyIntroduceVC.h"
-#import "PGCProvince.h"
+#import "PGCAreaManager.h"
 #import "PGCMaterialServiceTypes.h"
 #import "PGCSupply.h"
 #import "PGCDemand.h"
@@ -27,7 +26,7 @@
 #define TopButtonTag 500
 #define CenterButtonTag 400
 
-@interface PGCSupplyAndDemandController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, JSDropDownMenuDataSource, JSDropDownMenuDelegate>
+@interface PGCSupplyAndDemandController () <UITableViewDelegate, UITableViewDataSource, JSDropDownMenuDataSource, JSDropDownMenuDelegate>
 {
     NSArray *_areaDatas;
     NSArray *_typeDatas;
@@ -39,6 +38,8 @@
     
     NSInteger _page;/** 查询第一页 */
     NSInteger _pageSize;/** 查询页数 */
+    
+    BOOL _isSearching; /** 记录当前搜索状态 */
 }
 
 #pragma mark - 控件约束属性
@@ -52,7 +53,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *conllectionBtn;// 我的收藏按钮
 @property (weak, nonatomic) IBOutlet UIButton *introduceBtn;// 我的发布按钮
 @property (strong, nonatomic) UIView *filterView;// 顶部标题按钮绿色游标
-@property (strong, nonatomic) PGCSearchBar *searchBar;// 搜索条
+@property (strong, nonatomic) UITextField *searchBar;// 搜索框
 @property (strong, nonatomic) JSDropDownMenu *menu;/** 下拉菜单 */
 @property (strong, nonatomic) UITableView *tableView;// 表格视图
 @property (nonatomic, assign) BOOL isSelected;// 选择按钮是否被点击
@@ -60,6 +61,8 @@
 @property (strong, nonatomic) NSMutableDictionary *parameters;/** 参数 */
 @property (strong, nonatomic) NSMutableArray *demandDataSource;/** 需求信息数据源 */
 @property (strong, nonatomic) NSMutableArray *supplyDataSource;/** 供应信息数据源 */
+@property (strong, nonatomic) NSMutableArray *searchDemandResults;/** 搜索需求信息结果 */
+@property (strong, nonatomic) NSMutableArray *searchSupplyResults;/** 搜索供应信息结果 */
 
 - (void)initializeDataSource; /** 初始化数据源 */
 - (void)initializeUserInterface; /** 初始化用户界面 */
@@ -102,10 +105,13 @@
 {
     _isSelected = false;
     _demandNotSupply = true;
+    _isSearching = false;
     
-    _areaDatas = [PGCProvince province].areaArray;
-    _typeDatas = [PGCMaterialServiceTypes materialServiceTypes].typeArray;    
-    _timeDatas = @[@"一天", @"三天", @"一周", @"一个月", @"三个月", @"半年", @"一年"];
+    _areaDatas = [[PGCAreaManager manager] setAreaData];
+    
+    _typeDatas = [[PGCMaterialServiceTypes materialServiceTypes] setMaterialTypes];
+    
+    _timeDatas = @[@"不限", @"一天", @"三天", @"一周", @"一个月", @"三个月", @"半年", @"一年"];
 }
 
 - (void)initializeUserInterface
@@ -127,8 +133,7 @@
     [self.tableView.mj_header beginRefreshing];
 }
 
-- (void)registerNotification
-{
+- (void)registerNotification {
     [PGCNotificationCenter addObserver:self selector:@selector(refreshTableData:) name:kRefreshDemandAndSupplyData object:nil];
 }
 
@@ -161,7 +166,6 @@
         [self.parameters setObject:@(user.user_id) forKey:@"user_id"];
         [self.parameters setObject:@"iphone" forKey:@"client_type"];
         [self.parameters setObject:manager.token.token forKey:@"token"];
-        [self.parameters setObject:@0 forKey:@"days"];
     } else {
         [PGCProgressHUD showMessage:@"请先登录" toView:self.view];
         [self.tableView.mj_header endRefreshing];
@@ -282,10 +286,13 @@
  
  @param sender
  */
-- (IBAction)demandAndSupplyBtn:(UIButton *)sender {
-    
+- (IBAction)demandAndSupplyBtn:(UIButton *)sender
+{
     [UIView animateWithDuration:0.25 animations:^{
         self.filterView.centerX = sender.centerX;
+        
+        _isSearching = false;
+        [self.searchBar resignFirstResponder];
         
         switch (sender.tag) {
             case TopButtonTag:
@@ -294,6 +301,7 @@
                            otherButton:self.supplyBtn
                                enabled:false
                               selected:true];
+                [self.searchDemandResults removeAllObjects];
                 _demandNotSupply = true;
                 if (!(self.demandDataSource.count > 0)) {
                     [self loadSupplyAndDemandData];
@@ -308,6 +316,7 @@
                            otherButton:self.supplyBtn
                                enabled:true
                               selected:false];
+                [self.searchSupplyResults removeAllObjects];
                 _demandNotSupply = false;
                 if (!(self.supplyDataSource.count > 0)) {
                     [self loadSupplyAndDemandData];
@@ -365,14 +374,81 @@
 }
 
 
-#pragma mark - UITextFieldDelegate
+#pragma mark - TextField Event
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+- (void)textFieldDidChange:(UITextField *)textField
 {
+    if (!(textField.text.length > 0)) {
+        _isSearching = false;
+        [self.tableView reloadData];
+        return;
+    }
+    _isSearching = true;
     
-    
-    
-    return true;
+    if (_demandNotSupply) {
+        // 获取搜索框上的文本
+        NSString *text = textField.text;
+        // 谓词判断，创建搜索条件
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[cd] %@", text];
+        // 获取搜索源
+        NSMutableArray *nameSearchs = [NSMutableArray array];
+        NSMutableArray *descSearchs = [NSMutableArray array];
+        for (PGCDemand *demand in self.demandDataSource) {
+            [nameSearchs addObject:demand.title];
+            [descSearchs addObject:demand.desc];
+        }
+        // 根据谓词在搜索源中查找符合条件的对象并且赋值给searchResults;
+        [self.searchDemandResults removeAllObjects];
+        
+        NSArray *nameResults = [nameSearchs filteredArrayUsingPredicate:predicate];
+        for (NSString *string in nameResults) {
+            for (PGCDemand *demand in self.demandDataSource) {
+                if ([string isEqualToString:demand.title]) {
+                    [self.searchDemandResults addObject:demand];
+                }
+            }
+        }
+        NSArray *descResults = [descSearchs filteredArrayUsingPredicate:predicate];
+        for (NSString *string in descResults) {
+            for (PGCDemand *demand in self.demandDataSource) {
+                if ([string isEqualToString:demand.desc]) {
+                    [self.searchDemandResults addObject:demand];
+                }
+            }
+        }
+    } else {
+        // 获取搜索框上的文本
+        NSString *text = textField.text;
+        // 谓词判断，创建搜索条件
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[cd] %@", text];
+        // 获取搜索源
+        NSMutableArray *nameSearchs = [NSMutableArray array];
+        NSMutableArray *descSearchs = [NSMutableArray array];
+        for (PGCSupply *supply in self.supplyDataSource) {
+            [nameSearchs addObject:supply.title];
+            [descSearchs addObject:supply.desc];
+        }
+        // 根据谓词在搜索源中查找符合条件的对象并且赋值给searchResults;
+        [self.searchSupplyResults removeAllObjects];
+        
+        NSArray *nameResults = [nameSearchs filteredArrayUsingPredicate:predicate];
+        for (NSString *string in nameResults) {
+            for (PGCSupply *supply in self.supplyDataSource) {
+                if ([string isEqualToString:supply.title]) {
+                    [self.searchSupplyResults addObject:supply];
+                }
+            }
+        }
+        NSArray *descResults = [descSearchs filteredArrayUsingPredicate:predicate];
+        for (NSString *string in descResults) {
+            for (PGCSupply *supply in self.supplyDataSource) {
+                if ([string isEqualToString:supply.desc]) {
+                    [self.searchSupplyResults addObject:supply];
+                }
+            }
+        }
+    }
+    [self.tableView reloadData];
 }
 
 
@@ -380,7 +456,10 @@
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _demandNotSupply ? self.demandDataSource.count : self.supplyDataSource.count;
+    if (_demandNotSupply) {
+        return _isSearching ? self.searchDemandResults.count : self.demandDataSource.count;
+    }
+    return _isSearching ? self.searchSupplyResults.count : self.supplyDataSource.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -388,9 +467,9 @@
     PGCSupplyAndDemandCell *cell = [tableView dequeueReusableCellWithIdentifier:kSupplyAndDemandCell];
     
     if (_demandNotSupply) {
-        cell.demand = self.demandDataSource[indexPath.row];
+        cell.demand = _isSearching ? self.searchDemandResults[indexPath.row] : self.demandDataSource[indexPath.row];
     } else {
-        cell.supply = self.supplyDataSource[indexPath.row];
+        cell.supply = _isSearching ? self.searchSupplyResults[indexPath.row] : self.supplyDataSource[indexPath.row];
     }
     return cell;
 }
@@ -401,10 +480,10 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (_demandNotSupply) {
-        PGCDemand *demand = self.demandDataSource[indexPath.row];
+        PGCDemand *demand = _isSearching ? self.searchDemandResults[indexPath.row] : self.demandDataSource[indexPath.row];
         return [tableView cellHeightForIndexPath:indexPath model:demand keyPath:@"demand" cellClass:[PGCSupplyAndDemandCell class] contentViewWidth:SCREEN_WIDTH];
     } else {
-        PGCSupply *supply = self.supplyDataSource[indexPath.row];
+        PGCSupply *supply = _isSearching ? self.searchSupplyResults[indexPath.row] : self.supplyDataSource[indexPath.row];
         return [tableView cellHeightForIndexPath:indexPath model:supply keyPath:@"supply" cellClass:[PGCSupplyAndDemandCell class] contentViewWidth:SCREEN_WIDTH];
     }
 }
@@ -414,14 +493,14 @@
     if (_demandNotSupply) {
         PGCDemandDetailVC *demandVC = [[PGCDemandDetailVC alloc] init];
         
-        demandVC.demand = self.demandDataSource[indexPath.row];
+        demandVC.demand = _isSearching ? self.searchDemandResults[indexPath.row] : self.demandDataSource[indexPath.row];
         
         [self.navigationController pushViewController:demandVC animated:true];
         
     } else {
         PGCSupplyDetailVC *supplyVC = [[PGCSupplyDetailVC alloc] init];
         
-        supplyVC.supply = self.supplyDataSource[indexPath.row];
+        supplyVC.supply = _isSearching ? self.searchSupplyResults[indexPath.row] : self.supplyDataSource[indexPath.row];
         
         [self.navigationController pushViewController:supplyVC animated:true];
     }
@@ -466,7 +545,7 @@
             }
             else {
                 PGCProvince *province = _areaDatas[leftRow];
-                return province.city.count;
+                return province.cities.count;
             }
         }
             break;
@@ -507,7 +586,7 @@
             }
             else {
                 PGCProvince *province = _areaDatas[indexPath.leftRow];
-                PGCCity *city = province.city[indexPath.row];
+                PGCCity *city = province.cities[indexPath.row];
                 return city.city;
             }
         }
@@ -543,12 +622,12 @@
                 _areaCurrentIndex = indexPath.row;
                 PGCProvince *province = _areaDatas[indexPath.row];
                 
-                if (!(province.city.count > 0)) {
+                if (!(province.cities.count > 0)) {
                     [self.parameters setObject:@(province.id) forKey:@"province_id"];
                 }
             } else {
                 PGCProvince *province = _areaDatas[indexPath.leftRow];
-                PGCCity *city = province.city[indexPath.row];
+                PGCCity *city = province.cities[indexPath.row];
                 [self.parameters setObject:@(city.id) forKey:@"city_id"];
             }
         }
@@ -572,11 +651,12 @@
         default:
         {
             _timeCurrentIndex = indexPath.row;
-            NSArray *array = @[@1, @3, @7 ,@30, @90, @180, @365];
+            NSArray *array = @[@0, @1, @3, @7 ,@30, @90, @180, @365];
             [self.parameters setObject:array[indexPath.row] forKey:@"days"];
         }
             break;
     }
+    [self loadSupplyAndDemandData];
 }
 
 
@@ -591,16 +671,30 @@
     return _filterView;
 }
 
-- (PGCSearchBar *)searchBar {
+- (UITextField *)searchBar {
     if (!_searchBar) {
-        _searchBar = [[PGCSearchBar alloc] init];
-        _searchBar.bounds = CGRectMake(0, 0, SCREEN_WIDTH / 2 - 20, 34);
+        _searchBar = [[UITextField alloc] init];
+        _searchBar.font = [UIFont systemFontOfSize:13];
+        _searchBar.borderStyle = UITextBorderStyleNone;
+        _searchBar.textColor = RGB(102, 102, 102);
+        _searchBar.placeholder = @"请输入关键字";
+        _searchBar.background = [UIImage imageNamed:@"搜索框背景"];
+        
+        UIImageView *searchIcon = [[UIImageView alloc] init];
+        searchIcon.width_sd = 30;
+        searchIcon.height_sd = 30;
+        searchIcon.image = [UIImage imageNamed:@"搜索"];
+        searchIcon.contentMode = UIViewContentModeCenter;
+        _searchBar.leftView = searchIcon;
+        _searchBar.leftViewMode = UITextFieldViewModeAlways;
+        
+        _searchBar.bounds = CGRectMake(0, 0, SCREEN_WIDTH / 2 - 10, 34);
         _searchBar.center = CGPointMake(SCREEN_WIDTH / 4, self.centerBackView.height_sd / 2);
         _searchBar.layer.cornerRadius = 17.0;
         _searchBar.layer.masksToBounds = true;
         _searchBar.tintColor = PGCTintColor;
         _searchBar.returnKeyType = UIReturnKeySearch;
-        _searchBar.delegate = self;
+        [_searchBar addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     }
     return _searchBar;
 }
@@ -657,6 +751,20 @@
         _supplyDataSource = [NSMutableArray array];
     }
     return _supplyDataSource;
+}
+
+- (NSMutableArray *)searchDemandResults {
+    if (!_searchDemandResults) {
+        _searchDemandResults = [NSMutableArray array];
+    }
+    return _searchDemandResults;
+}
+
+- (NSMutableArray *)searchSupplyResults {
+    if (!_searchSupplyResults) {
+        _searchSupplyResults = [NSMutableArray array];
+    }
+    return _searchSupplyResults;
 }
 
 

@@ -17,9 +17,10 @@
     NSInteger _page;/** 查询第一页 */
     NSInteger _pageSize;/** 查询页数 */
 }
+
 @property (strong, nonatomic) NSMutableDictionary *params;/** 查询参数 */
-@property (strong, nonatomic) UITableView *tableView;
-@property (strong, nonatomic) UIView *bottomView;
+@property (strong, nonatomic) UITableView *tableView;/** 表格视图 */
+@property (strong, nonatomic) UIView *bottomView;/** 底部标记视图 */
 @property (strong, nonatomic) NSMutableArray *dataSource;/** 数据源 */
 @property (strong, nonatomic) NSMutableArray *deleteData;/** 需要删除的数据源 */
 

@@ -8,13 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+// 项目进度模型
 @interface PGCProjectProgress : NSObject
 
-@property (assign, nonatomic) int id;
-@property (copy, nonatomic) NSString *name;//进度名称
-@property (copy, nonatomic) NSString *sequence;//序号
-@property (copy, nonatomic) NSArray *progressArray;//项目进度数组
-
-+ (instancetype)projectProgress;
+@property (assign, nonatomic) int progress_id;
+@property (copy, nonatomic) NSString *name;/** 进度名称 */
+@property (copy, nonatomic) NSString *sequence;/** 序号 */
+@property (copy, nonatomic) NSString *status;/** 状态 */
 
 @end

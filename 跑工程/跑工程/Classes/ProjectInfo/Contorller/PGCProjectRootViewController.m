@@ -281,6 +281,9 @@ static NSString * const kProjectRootCell = @"ProjectRootCell";
 
 #pragma mark - Getter
 
+/**
+ 自定义导航栏按钮
+ */
 - (UIButton *)barButtonItem
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -294,7 +297,7 @@ static NSString * const kProjectRootCell = @"ProjectRootCell";
     
     CGFloat labelInset = [button.titleLabel intrinsicContentSize].width - button.imageView.width - button.width;
     CGFloat imageInset = button.imageView.width - button.width - button.titleLabel.width;
-    
+    // 设置button图片和文字的偏移
     button.titleEdgeInsets = UIEdgeInsetsMake(0, labelInset, 0, 0);
     button.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, imageInset);
     
@@ -302,22 +305,22 @@ static NSString * const kProjectRootCell = @"ProjectRootCell";
 }
 
 
-- (UITableView *)tableView
-{
+- (UITableView *)tableView {
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, STATUS_AND_NAVIGATION_HEIGHT, self.view.width_sd, self.view.height_sd - STATUS_AND_NAVIGATION_HEIGHT) style:UITableViewStylePlain];
         _tableView.backgroundColor = PGCBackColor;
+        // 是否允许编辑状态下多选
         _tableView.allowsMultipleSelectionDuringEditing = true;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.dataSource = self;
         _tableView.delegate = self;
         [_tableView registerClass:[PGCProjectInfoCell class] forCellReuseIdentifier:kProjectRootCell];
-        // 设置表格视图下拉刷新和上拉加载
+        // 设置表格视图下拉刷新
         MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadCollectData)];
         header.automaticallyChangeAlpha = true;
         header.lastUpdatedTimeLabel.hidden = true;
         _tableView.mj_header = header;
-        
+        // 设置表格视图上拉加载
         MJRefreshBackNormalFooter *footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreCollectData)];
         footer.ignoredScrollViewContentInsetBottom = 0;
         _tableView.mj_footer = footer;
@@ -325,24 +328,21 @@ static NSString * const kProjectRootCell = @"ProjectRootCell";
     return _tableView;
 }
 
-- (NSMutableArray<PGCProjectInfo *> *)dataSources
-{
+- (NSMutableArray<PGCProjectInfo *> *)dataSources {
     if (!_dataSources) {
         _dataSources = [NSMutableArray array];
     }
     return _dataSources;
 }
 
-- (NSMutableArray<PGCProjectInfo *> *)deleteData
-{
+- (NSMutableArray<PGCProjectInfo *> *)deleteData {
     if (!_deleteData) {
         _deleteData = [NSMutableArray array];
     }
     return _deleteData;
 }
 
-- (NSMutableDictionary *)params
-{
+- (NSMutableDictionary *)params {
     if (!_params) {
         _params = [NSMutableDictionary dictionary];
     }
@@ -350,8 +350,7 @@ static NSString * const kProjectRootCell = @"ProjectRootCell";
 }
 
 
-- (UIView *)bottomView
-{
+- (UIView *)bottomView {
     if (!_bottomView) {
         _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height_sd, self.view.width_sd, TAB_BAR_HEIGHT)];
         _bottomView.backgroundColor = [UIColor whiteColor];

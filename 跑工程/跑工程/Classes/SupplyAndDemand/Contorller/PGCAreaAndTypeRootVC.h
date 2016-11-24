@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^BackBlock)(NSString *area);
+
 @interface PGCAreaAndTypeRootVC : UIViewController
+
+@property (strong, nonatomic) NSMutableArray *dataSource;/** 数据源 */
+@property (copy, nonatomic) BackBlock block;/** 地区回调block */
 
 @end

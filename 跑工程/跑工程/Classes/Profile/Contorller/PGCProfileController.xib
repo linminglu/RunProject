@@ -11,7 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PGCProfileController">
             <connections>
-                <outlet property="headImageBtn" destination="92H-Os-apC" id="Tkf-5K-hkE"/>
+                <outlet property="headImageView" destination="9Ig-dz-U4W" id="plG-Pl-B8L"/>
                 <outlet property="loginAndRegisterBtn" destination="tqc-8p-dwS" id="4ga-3h-umV"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -24,38 +24,21 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3oi-BE-BaH" userLabel="顶部橙色背景">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="186"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="92H-Os-apC">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="头像" translatesAutoresizingMaskIntoConstraints="NO" id="9Ig-dz-U4W">
                             <rect key="frame" x="155" y="60" width="65" height="65"/>
+                            <gestureRecognizers/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="65" id="Yk1-uk-GJl"/>
-                                <constraint firstAttribute="height" constant="65" id="c91-p6-6Dd"/>
+                                <constraint firstAttribute="height" constant="65" id="hTQ-IX-xMt"/>
+                                <constraint firstAttribute="width" constant="65" id="tI5-qH-lS9"/>
                             </constraints>
-                            <state key="normal" image="头像">
-                                <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </state>
-                            <state key="disabled">
-                                <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </state>
-                            <variation key="default">
-                                <mask key="constraints">
-                                    <exclude reference="Yk1-uk-GJl"/>
-                                    <exclude reference="c91-p6-6Dd"/>
-                                </mask>
-                            </variation>
-                            <variation key="heightClass=regular-widthClass=compact">
-                                <mask key="constraints">
-                                    <include reference="Yk1-uk-GJl"/>
-                                    <include reference="c91-p6-6Dd"/>
-                                </mask>
-                            </variation>
                             <connections>
-                                <action selector="iconButtonClick:" destination="-1" eventType="touchUpInside" id="lP5-d1-dSs"/>
+                                <outletCollection property="gestureRecognizers" destination="tig-Pc-Jp2" appends="YES" id="Qt6-T2-GPl"/>
                             </connections>
-                        </button>
+                        </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tqc-8p-dwS">
-                            <rect key="frame" x="155" y="143" width="66" height="15"/>
+                            <rect key="frame" x="155" y="145" width="66" height="20"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="15" id="1aZ-1y-b0b"/>
+                                <constraint firstAttribute="height" constant="20" id="1aZ-1y-b0b"/>
                                 <constraint firstAttribute="width" constant="66" id="ap9-D8-KTY"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -69,32 +52,28 @@
                     </subviews>
                     <color key="backgroundColor" red="0.97467929124832153" green="0.5351448655128479" blue="0.17870476841926575" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstItem="92H-Os-apC" firstAttribute="top" secondItem="3oi-BE-BaH" secondAttribute="top" constant="60" id="Pj7-Bm-ol0"/>
-                        <constraint firstItem="92H-Os-apC" firstAttribute="centerX" secondItem="3oi-BE-BaH" secondAttribute="centerX" id="QPB-Zb-NsW"/>
-                        <constraint firstItem="tqc-8p-dwS" firstAttribute="top" secondItem="92H-Os-apC" secondAttribute="bottom" constant="18" id="UWp-QM-Eca"/>
-                        <constraint firstItem="tqc-8p-dwS" firstAttribute="centerX" secondItem="92H-Os-apC" secondAttribute="centerX" id="bq3-Qn-m6O"/>
+                        <constraint firstItem="tqc-8p-dwS" firstAttribute="top" secondItem="9Ig-dz-U4W" secondAttribute="bottom" constant="20" id="01r-Ad-VQA"/>
+                        <constraint firstItem="9Ig-dz-U4W" firstAttribute="centerX" secondItem="3oi-BE-BaH" secondAttribute="centerX" id="1v9-hg-8Y3"/>
+                        <constraint firstItem="9Ig-dz-U4W" firstAttribute="top" secondItem="3oi-BE-BaH" secondAttribute="top" constant="60" id="43e-FU-BSI"/>
+                        <constraint firstItem="tqc-8p-dwS" firstAttribute="centerX" secondItem="3oi-BE-BaH" secondAttribute="centerX" id="fu2-9F-Clo"/>
                         <constraint firstAttribute="height" constant="180" id="ufm-zS-DMh">
                             <variation key="heightClass=regular-widthClass=compact" constant="186"/>
                         </constraint>
                     </constraints>
                     <variation key="default">
                         <mask key="subviews">
-                            <exclude reference="92H-Os-apC"/>
                             <exclude reference="tqc-8p-dwS"/>
                         </mask>
                         <mask key="constraints">
                             <exclude reference="ufm-zS-DMh"/>
-                            <exclude reference="Pj7-Bm-ol0"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=regular-widthClass=compact">
                         <mask key="subviews">
-                            <include reference="92H-Os-apC"/>
                             <include reference="tqc-8p-dwS"/>
                         </mask>
                         <mask key="constraints">
                             <include reference="ufm-zS-DMh"/>
-                            <include reference="Pj7-Bm-ol0"/>
                         </mask>
                     </variation>
                 </view>
@@ -879,8 +858,13 @@
                     <include reference="L8X-o6-HKv"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="-1053" y="-944"/>
+            <point key="canvasLocation" x="-1139" y="-955"/>
         </view>
+        <tapGestureRecognizer id="tig-Pc-Jp2">
+            <connections>
+                <action selector="iconGesture:" destination="-1" id="yHv-N1-4QE"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
     <resources>
         <image name="right" width="5" height="10"/>

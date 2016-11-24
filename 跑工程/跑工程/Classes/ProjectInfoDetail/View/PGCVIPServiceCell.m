@@ -7,11 +7,13 @@
 //
 
 #import "PGCVIPServiceCell.h"
+#import "PGCProduct.h"
 
 @interface PGCVIPServiceCell ()
 
 @property (strong, nonatomic) UILabel *costLabel;/** 费用标签 */
 @property (strong, nonatomic) UILabel *contentLabel;/** 服务说明标签 */
+@property (strong, nonatomic) UIView *bottom;/** 底部分割线 */
 
 @end
 
@@ -86,15 +88,12 @@
     .topSpaceToView(titleLabel, 0)
     .leftSpaceToView(self.contentView, 0)
     .rightSpaceToView(self.contentView, 0)
-    .heightIs(70);
+    .heightIs(60);
 
     self.contentLabel = [[UILabel alloc] init];
     self.contentLabel.textColor = RGB(102, 102, 102);
     self.contentLabel.font = SetFont(15);
     self.contentLabel.numberOfLines = 0;
-    
-    NSString *string = [@[@"1、开通会员服务后，使用有效期为一年", @"2、相关的规则和说明", @"3、相关的服务和说明"] componentsJoinedByString:@";\n"];;
-    self.contentLabel.text = string;
     [centerView addSubview:self.contentLabel];
     self.contentLabel.sd_layout
     .topSpaceToView(centerView, 5)
@@ -102,7 +101,7 @@
     .rightSpaceToView(centerView, 15)
     .autoHeightRatio(0)
     .maxHeightIs(60);
-    [centerView setupAutoHeightWithBottomView:self.contentLabel bottomMargin:5];
+    [centerView setupAutoHeightWithBottomView:self.contentLabel bottomMargin:10];
     
     // 立即支付按钮
     UIButton *payButton = [[UIButton alloc] init];
@@ -115,23 +114,24 @@
     [payButton addTarget:self action:@selector(respondsToPayButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:payButton];
     payButton.sd_layout
-    .topSpaceToView(centerView, 0)
-    .leftSpaceToView(self.contentView, 20)
-    .rightSpaceToView(self.contentView, 20)
+    .topSpaceToView(centerView, 5)
+    .leftSpaceToView(self.contentView, 30)
+    .rightSpaceToView(self.contentView, 30)
     .heightIs(30);
     
     UIView *bottom = [[UIView alloc] init];
     bottom.backgroundColor = RGB(244, 244, 244);
+    self.bottom = bottom;
     [self.contentView addSubview:bottom];
     bottom.sd_layout
-    .topSpaceToView(payButton, 7)
+    .topSpaceToView(payButton, 5)
     .leftSpaceToView(self.contentView, 0)
     .rightSpaceToView(self.contentView, 0)
     .heightIs(1);
-    
-    [self setupAutoHeightWithBottomView:bottom bottomMargin:0];
 }
 
+
+#pragma mark - Event
 
 - (void)respondsToPayButton:(UIButton *)sender
 {
@@ -139,6 +139,20 @@
         [self.delegate vipServiceCell:self payButton:sender];
     }
 }
+
+
+#pragma mark - Setter
+
+- (void)setProduct:(PGCProduct *)product
+{
+    _product = product;
+    
+    self.costLabel.text = [NSString stringWithFormat:@"%d", product.price];
+    self.contentLabel.text = product.remark;
+    
+    [self setupAutoHeightWithBottomView:self.bottom bottomMargin:0];
+}
+
 
 
 - (void)awakeFromNib {

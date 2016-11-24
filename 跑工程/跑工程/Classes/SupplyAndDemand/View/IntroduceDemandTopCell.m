@@ -11,7 +11,14 @@
 #import "PGCIntroduceSelectView.h"
 #import "PGCDemand.h"
 
-@interface IntroduceDemandTopCell ()
+typedef NS_ENUM(NSUInteger, TopTextFieldTag) {
+    TitleTF,
+    TimeTF,
+    UnitTF,
+    AddressTF,
+};
+
+@interface IntroduceDemandTopCell () <UITextFieldDelegate>
 
 @property (strong, nonatomic) PGCIntroducePublicView *title;/** 标题 */
 @property (strong, nonatomic) PGCIntroducePublicView *time;/** 时间 */
@@ -42,6 +49,8 @@
 - (void)createUI
 {
     self.title = [[PGCIntroducePublicView alloc] initWithTitle:@"标题：" placeholder:@"请输入标题"];
+    self.title.contentTF.delegate = self;
+    self.title.contentTF.tag = TitleTF;
     [self.contentView addSubview:self.title];
     self.title.sd_layout
     .topSpaceToView(self.contentView, 0)
@@ -61,6 +70,8 @@
     
     
     self.time = [[PGCIntroducePublicView alloc] initWithTitle:@"时间：" placeholder:@"请选择时间"];
+    self.time.contentTF.delegate = self;
+    self.time.contentTF.tag = TimeTF;
     [self.contentView addSubview:self.time];
     self.time.contentTF.inputView = self.timeAccessoryView;
     self.time.sd_layout
@@ -81,6 +92,8 @@
     
     
     self.unit = [[PGCIntroducePublicView alloc] initWithTitle:@"采购单位（个人）：" placeholder:@"请输入采购单位"];
+    self.unit.contentTF.delegate = self;
+    self.unit.contentTF.tag = UnitTF;
     [self.contentView addSubview:self.unit];
     self.unit.sd_layout
     .topSpaceToView(line_1, 0)
@@ -100,6 +113,8 @@
     
     
     self.address = [[PGCIntroducePublicView alloc] initWithTitle:@"地址：" placeholder:@"请输入地址"];
+    self.address.contentTF.delegate = self;
+    self.address.contentTF.tag = AddressTF;
     [self.contentView addSubview:self.address];
     self.address.sd_layout
     .topSpaceToView(line_2, 0)
@@ -118,7 +133,7 @@
     .heightIs(8);
     
     
-    self.area = [[PGCIntroduceSelectView alloc] initWithTitle:@"地区：" content:@"当前位置"];
+    self.area = [[PGCIntroduceSelectView alloc] initWithTitle:@"地区：" content:@"点击选择"];
     [self.area addTarget:self action:@selector(selectArea:)];
     [self.contentView addSubview:self.area];
     self.area.sd_layout
@@ -151,6 +166,29 @@
 }
 
 
+
+#pragma mark - UITextFieldDelegate
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if (!(textField.text.length > 0)) {
+        return;
+    }
+    switch (textField.tag) {
+        case TitleTF: self.topDemand.title = textField.text;
+            break;
+        case TimeTF: self.topDemand.start_time = textField.text;
+            break;
+        case UnitTF: self.topDemand.company = textField.text;
+            break;
+        case AddressTF: self.topDemand.address = textField.text;
+            break;
+        default:
+            break;
+    }
+}
+
+
 #pragma mark - Event
 
 - (void)selectArea:(UIButton *)sender
@@ -167,15 +205,17 @@
     }
 }
 
+
 - (void)btnClickedEvent:(UIButton *)sender
 {
-    [self.time.contentTF endEditing:true];
+    [self endEditing:true];
 }
+
 
 - (void)surebtnClickedEvent:(UIButton *)sender
 {
+    [self endEditing:true];
     self.time.contentTF.text = [self stringFromDate:self.datePicker.date];
-    [self.time.contentTF endEditing:true];
 }
 
 
@@ -188,7 +228,7 @@
     [formatter setTimeStyle:NSDateFormatterShortStyle];
     [formatter setLocale:[NSLocale systemLocale]];
     [formatter setTimeZone:[NSTimeZone systemTimeZone]];
-    [formatter setDateFormat:@"yyyy年MM月dd日"];
+    [formatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
     
     return [formatter stringFromDate:date];
 }
@@ -201,18 +241,16 @@
 {
     _topDemand = topDemand;
     
-    if (!topDemand) {
-        return;
-    }
-    NSString *start = [topDemand.start_time substringToIndex:10];
-    NSString *end = [topDemand.end_time substringToIndex:10];
+    NSString *start = topDemand.start_time ? [topDemand.start_time substringToIndex:10] : @"";
+    NSString *end = topDemand.end_time ? [topDemand.end_time substringToIndex:10] : @"";
     
-    self.title.contentTF.text = topDemand.title;
-    self.time.contentTF.text = [NSString stringWithFormat:@"%@ 至 %@", start, end];
-    self.unit.contentTF.text = topDemand.company;
-    self.address.contentTF.text = topDemand.address;
-    [self.area.selectBtn setTitle:[topDemand.province stringByAppendingString:topDemand.city] forState:UIControlStateNormal];
-    [self.demand.selectBtn setTitle:topDemand.type_name forState:UIControlStateNormal];
+    self.title.contentTF.text = topDemand.title ? topDemand.title : @"";
+    self.time.contentTF.text = topDemand.start_time ? [NSString stringWithFormat:@"%@ 至 %@", start, end] : @"";
+    self.unit.contentTF.text = topDemand.company ? topDemand.company : @"";
+    self.address.contentTF.text = topDemand.address ? topDemand.address : @"";
+    NSString *areaStr = topDemand.city ? [topDemand.province stringByAppendingString:topDemand.city] : @"点击选择";
+    [self.area.selectBtn setTitle:areaStr forState:UIControlStateNormal];
+    [self.demand.selectBtn setTitle:topDemand.type_name ? topDemand.type_name : @"点击选择" forState:UIControlStateNormal];
 }
 
 

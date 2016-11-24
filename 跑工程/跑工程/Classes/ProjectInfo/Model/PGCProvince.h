@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PGCCity.h"
+@class PGCCity;
 
 //省份模型
 @interface PGCProvince : NSObject
@@ -19,9 +19,6 @@
 @property (assign, nonatomic) double lat;//维度
 @property (assign, nonatomic) double lng;//经度
 @property (copy, nonatomic) NSString *short_name;//简称
-@property (copy, nonatomic) NSArray<PGCCity *> *city;//城市数组
-@property (copy, nonatomic) NSArray<PGCProvince *> *areaArray;//省份数组
-
-+ (instancetype)province;
+@property (copy, nonatomic) NSArray *cities;/** 城市数组 */
 
 @end

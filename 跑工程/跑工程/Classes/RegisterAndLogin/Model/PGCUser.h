@@ -20,7 +20,7 @@
 @property (assign, nonatomic) int sex;              /** 性别 <0：女   1：男> */
 @property (copy, nonatomic) NSString *post;         /** 职位 */
 @property (copy, nonatomic) NSString *company;      /** 公司 */
-@property (assign, nonatomic) int is_vip;           /** 是不是会员 <0：会员 1：不是会员> */
+@property (assign, nonatomic) int is_vip;           /** 是不是会员 <0：不是会员 1：会员> */
 @property (copy, nonatomic) NSString *vip_expired; /** vip 到期时间 */
 @property (copy, nonatomic) NSString *device;       /** 用户设备 */
 @property (copy, nonatomic) NSString *device_type;  /** 用户设备类型 */

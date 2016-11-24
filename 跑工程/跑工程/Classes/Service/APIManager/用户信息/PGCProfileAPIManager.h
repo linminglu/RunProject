@@ -13,10 +13,6 @@
 // 修改用户信息
 + (NSURLSessionDataTask *)completeInfoRequestWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
 
-// 购买会员
-+ (NSURLSessionDataTask *)buyVipRequestWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
-
-
 // 上传用户头像
 + (NSURLSessionDataTask *)uploadHeadImageRequestWithParameters:(NSDictionary *)parameters image:(UIImage *)image responds:(void (^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
 

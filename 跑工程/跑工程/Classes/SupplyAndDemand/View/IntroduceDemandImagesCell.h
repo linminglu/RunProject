@@ -12,4 +12,6 @@ static NSString * const kIntroduceDemandImagesCell = @"IntroduceDemandImagesCell
 
 @interface IntroduceDemandImagesCell : UITableViewCell
 
+@property (strong, nonatomic) NSMutableArray *publishImages;/** 图片数组 */
+
 @end

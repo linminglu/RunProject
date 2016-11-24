@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 @class PGCSupply;
 
-@interface PGCSupplyIntroduceInfoVC : UIViewController
+@interface PGCSupplyIntroduceInfoVC : UITableViewController
 
 @property (strong, nonatomic) PGCSupply *supplyDetail;/** 供应模型 */
 

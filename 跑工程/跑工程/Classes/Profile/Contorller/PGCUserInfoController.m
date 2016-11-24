@@ -12,7 +12,6 @@
 #import "PGCRegisterOrLoginAPIManager.h"
 #import "PGCProfileAPIManager.h"
 #import "PGCHeadImage.h"
-#import "PGCNetworkHelper.h"
 
 @interface PGCUserInfoController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -158,23 +157,12 @@
 //选择职位
 - (IBAction)jobBtnClick:(UIButton *)sender
 {
-    __weak PGCUserInfoController *weakSelf = self;
+    __weak __typeof(self) weakSelf = self;
     PGCChooseJobController *jobVC = [[PGCChooseJobController alloc] init];
     jobVC.block = ^(NSString *job) {
         weakSelf.jobLabel.text = job;
     };
     [self.navigationController pushViewController:jobVC animated:true];
-}
-
-- (void)showAlertSheetWithTitle:(NSString *)string
-                     otherTitle:(NSString *)otherString
-                        handler:(void (^ __nullable)(UIAlertAction *action))handler
-                   otherHandler:(void (^ __nullable)(UIAlertAction *action))otherHandler {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [alert addAction:[UIAlertAction actionWithTitle:string style:UIAlertActionStyleDefault handler:handler]];
-    [alert addAction:[UIAlertAction actionWithTitle:otherString style:UIAlertActionStyleDefault handler:otherHandler]];
-    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
-    [self presentViewController:alert animated:true completion:nil];
 }
 
 

@@ -179,9 +179,9 @@ static NSString * const PGCHttpCache = @"HttpYYCache";
                 if ([responseObject isKindOfClass:[NSData class]]) {
                     NSError *error;
                     responseObject = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:&error];
-                }
-                success ? success(task, responseObject) : nil;
+                }                
                 [cache setObject:responseObject forKey:cacheKey withBlock:nil];
+                success ? success(task, responseObject) : nil;
                 
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 failure ? failure(task, error) : nil;
@@ -197,8 +197,8 @@ static NSString * const PGCHttpCache = @"HttpYYCache";
                     NSError *error;
                     responseObject = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:&error];
                 }
-                success ? success(task, responseObject) : nil;
                 [cache setObject:responseObject forKey:cacheKey withBlock:nil];
+                success ? success(task, responseObject) : nil;
                 
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 failure ? failure(task, error) : nil;

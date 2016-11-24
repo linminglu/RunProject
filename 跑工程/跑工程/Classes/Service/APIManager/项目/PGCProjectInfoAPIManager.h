@@ -7,7 +7,6 @@
 //
 
 #import "PGCBaseAPIManager.h"
-#import "PGCNetworkHelper.h"
 
 @interface PGCProjectInfoAPIManager : PGCBaseAPIManager
 
@@ -37,6 +36,10 @@
 
 // 获取收藏与浏览记录
 + (NSURLSessionDataTask *)getAccessOrCollectRequestWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
+
+
+// 地图项目
++ (NSURLSessionDataTask *)getNearProjectsRequestWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
 
 
 @end

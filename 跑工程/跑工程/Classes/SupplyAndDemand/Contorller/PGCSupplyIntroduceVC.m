@@ -17,6 +17,8 @@
     NSInteger _page;/** 查询第一页 */
     NSInteger _pageSize;/** 查询页数 */
 }
+@property (strong, nonatomic) UIView *bottomView;/** 底部是否删除的选择视图 */
+@property (strong, nonatomic) UIButton *editBtn;/** 编辑按钮 */
 @property (strong, nonatomic) NSMutableDictionary *params;/** 查询参数 */
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *dataSource;/** 数据源 */
@@ -38,9 +40,11 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = false;
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:[self barButtonItem]];
+    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:[self barButtonItem]];
+    self.navigationItem.rightBarButtonItem = barButtonItem;
     
     [self.view addSubview:self.tableView];
+    [self.view addSubview:self.editBtn];
     
     [self.tableView.mj_header beginRefreshing];
 }
@@ -65,6 +69,9 @@
                 PGCSupply *model = [[PGCSupply alloc] init];
                 [model mj_setKeyValues:value];
                 [self.dataSource addObject:model];
+            }
+            if (self.dataSource.count > 1) {
+                self.navigationItem.rightBarButtonItem = nil;
             }
             _page += 10;
             [self.tableView reloadData];
@@ -109,6 +116,61 @@
     [self.navigationController pushViewController:infoVC animated:true];
 }
 
+- (void)respondsToEdit:(UIButton *)sender
+{
+    [self.tableView setEditing:true animated:true];
+    [self animateBottomView:self.bottomView show:true complete:^{
+        
+    }];
+}
+
+- (void)respondsToDelete:(UIButton *)sender
+{
+    if (!(self.deleteData.count > 0)) {
+        [PGCProgressHUD showMessage:@"请先选择需要删除的项目！" toView:self.view];
+        return;
+    }
+    PGCManager *manager = [PGCManager manager];
+    [manager readTokenData];
+    PGCUser *user = manager.token.user;
+    
+    PGCSupply *supply = self.deleteData.firstObject;
+    
+    __weak __typeof(self) weakSelf = self;
+    [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示：" message:@"是否确定关闭供应？" actionTitle:@"确定" otherActionTitle:@"取消" handler:^(UIAlertAction *action) {
+        
+        MBProgressHUD *hud = [PGCProgressHUD showProgressHUD:self.view label:nil];
+        NSDictionary *params = @{@"user_id":@(user.user_id),
+                                 @"client_type":@"iphone",
+                                 @"token":manager.token.token,
+                                 @"id":@(supply.id)};
+        [PGCSupplyAPIManager closeMySupplyWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
+            [hud hideAnimated:true];
+            
+            if (status == RespondsStatusSuccess) {
+                [self.dataSource removeObjectsInArray:self.deleteData];
+                [self.tableView deleteRowsAtIndexPaths:self.tableView.indexPathsForSelectedRows withRowAnimation:UITableViewRowAnimationLeft];
+                [self.deleteData removeAllObjects];
+                [self.tableView reloadData];
+                
+                [weakSelf respondsToCancel:nil];
+            }
+        }];
+    } otherHandler:^(UIAlertAction *action) {
+        [self.deleteData removeAllObjects];
+    }];
+}
+
+- (void)respondsToCancel:(UIButton *)sender
+{
+    [self.tableView setEditing:false animated:true];
+    [self animateBottomView:self.bottomView show:false complete:^{
+        
+    }];
+}
+
+
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -144,6 +206,28 @@
 }
 
 
+#pragma mark - Animation
+
+- (void)animateBottomView:(UIView *)bottomView show:(BOOL)show complete:(void(^)())complete
+{
+    if (show) {
+        [UIView animateWithDuration:0.25 animations:^{
+            self.bottomView.frame = CGRectMake(0, self.view.height_sd - TAB_BAR_HEIGHT, self.view.width_sd, TAB_BAR_HEIGHT);
+            [self.view addSubview:bottomView];
+        }];
+    } else {
+        [UIView animateWithDuration:0.25 animations:^{
+            self.bottomView.frame = CGRectMake(0, self.view.height_sd, self.view.width_sd, TAB_BAR_HEIGHT);
+        } completion:^(BOOL finished) {
+            [bottomView removeFromSuperview];
+            [self.deleteData removeAllObjects];
+        }];
+    }
+    complete();
+}
+
+
+
 #pragma mark - Getter
 
 - (UIButton *)barButtonItem
@@ -165,8 +249,8 @@
 
 - (UITableView *)tableView {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, STATUS_AND_NAVIGATION_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - STATUS_AND_NAVIGATION_HEIGHT) style:UITableViewStylePlain];
-        _tableView.backgroundColor = RGB(244, 244, 244);
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, STATUS_AND_NAVIGATION_HEIGHT, self.view.width_sd, self.view.height_sd - STATUS_AND_NAVIGATION_HEIGHT - TAB_BAR_HEIGHT) style:UITableViewStylePlain];
+        _tableView.backgroundColor = PGCBackColor;
         _tableView.allowsMultipleSelectionDuringEditing = true;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.dataSource = self;
@@ -214,5 +298,39 @@
     }
     return _params;
 }
+
+- (UIView *)bottomView {
+    if (!_bottomView) {
+        _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height_sd, self.view.width_sd, TAB_BAR_HEIGHT)];
+        _bottomView.backgroundColor = [UIColor whiteColor];
+        UIButton *delete = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, _bottomView.width / 2, _bottomView.height)];
+        delete.backgroundColor = PGCTintColor;
+        [delete setTitle:@"关闭" forState:UIControlStateNormal];
+        [delete setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [delete addTarget:self action:@selector(respondsToDelete:) forControlEvents:UIControlEventTouchUpInside];
+        [_bottomView addSubview:delete];
+        
+        UIButton *cancel = [[UIButton alloc] initWithFrame:CGRectMake(delete.right, 0, _bottomView.width / 2, _bottomView.height)];
+        cancel.backgroundColor = [UIColor whiteColor];
+        [cancel setTitle:@"取消" forState:UIControlStateNormal];
+        [cancel setTitleColor:PGCTextColor forState:UIControlStateNormal];
+        [cancel addTarget:self action:@selector(respondsToCancel:) forControlEvents:UIControlEventTouchUpInside];
+        [_bottomView addSubview:cancel];
+    }
+    return _bottomView;
+}
+
+
+- (UIButton *)editBtn {
+    if (!_editBtn) {
+        _editBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.height_sd - TAB_BAR_HEIGHT, self.view.width_sd, TAB_BAR_HEIGHT)];
+        _editBtn.backgroundColor = PGCTintColor;
+        [_editBtn setTitle:@"编辑" forState:UIControlStateNormal];
+        [_editBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_editBtn addTarget:self action:@selector(respondsToEdit:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _editBtn;
+}
+
 
 @end

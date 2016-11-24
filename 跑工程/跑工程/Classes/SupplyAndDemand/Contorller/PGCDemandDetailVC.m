@@ -27,9 +27,8 @@ typedef NS_ENUM(NSUInteger, ButtonTag) {
     HeartBtnTag
 };
 
-@interface PGCDemandDetailVC ()  <UITableViewDataSource, UITableViewDelegate, DemandDetailContactCellDelegate, PGCSupplyAndDemandShareViewDelegate, PGCAlertViewDelegate, PGCHintAlertViewDelegate>
+@interface PGCDemandDetailVC ()  <DemandDetailContactCellDelegate, PGCSupplyAndDemandShareViewDelegate, PGCAlertViewDelegate, PGCHintAlertViewDelegate>
 
-@property (strong, nonatomic) UITableView *tableView;/** 表格试图 */
 @property (copy, nonatomic) NSArray *headerTitles;/** 头部视图标题 */
 @property (strong, nonatomic) NSMutableArray *dataSource;/** 表格视图数据源 */
 @property (strong, nonatomic) Contacts *contact;/** 联系人 */
@@ -57,11 +56,22 @@ typedef NS_ENUM(NSUInteger, ButtonTag) {
 - (void)initializeUserInterface
 {
     self.navigationItem.title = @"需求信息详情";
-    
-    self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = false;
     
-    [self.view addSubview:self.tableView];
+    CGRect rect = self.tableView.frame;
+    rect = CGRectMake(0, STATUS_AND_NAVIGATION_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - STATUS_AND_NAVIGATION_HEIGHT);
+    self.tableView.frame = rect;
+    
+    self.tableView.backgroundColor = PGCBackColor;
+    self.tableView.showsVerticalScrollIndicator = false;
+    self.tableView.showsHorizontalScrollIndicator = false;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    [self.tableView registerClass:[DemandDetailTopCell class] forCellReuseIdentifier:kDemandDetailTopCell];
+    [self.tableView registerClass:[DemandDetailContactCell class] forCellReuseIdentifier:kDemandDetailContactCell];
+    [self.tableView registerClass:[DemandDetailDescCell class] forCellReuseIdentifier:kDemandDetailDescCell];
+    [self.tableView registerClass:[DemandDetailImagesCell class] forCellReuseIdentifier:kDemandDetailImagesCell];
+    [self.tableView registerClass:[DemandDetailFilesCell class] forCellReuseIdentifier:kDemandDetailFilesCell];
 }
 
 
@@ -120,14 +130,8 @@ typedef NS_ENUM(NSUInteger, ButtonTag) {
     [array removeAllObjects];
     [array addObjectsFromArray:self.demand.contacts];
     
-//    NSMutableArray *indexPaths = [NSMutableArray array];
-//    for (int i = 0; i < array.count; i++) {
-//        [indexPaths addObject:[NSIndexPath indexPathForRow:i inSection:1]];
-//    }
-//    [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
     [self.tableView reloadData];
 }
-
 
 
 #pragma mark - DemandDetailContactCellDelegate
@@ -217,7 +221,7 @@ typedef NS_ENUM(NSUInteger, ButtonTag) {
         case 1:
         {
             DemandDetailContactCell *contactCell = [tableView dequeueReusableCellWithIdentifier:kDemandDetailContactCell];
-            contactCell.contact = [self.dataSource[indexPath.section] firstObject];
+            contactCell.contact = self.dataSource[indexPath.section][indexPath.row];
             contactCell.delegate = self;
             return contactCell;
         }
@@ -376,23 +380,6 @@ typedef NS_ENUM(NSUInteger, ButtonTag) {
 }
 
 #pragma mark - Getter
-
-- (UITableView *)tableView {
-    if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, STATUS_AND_NAVIGATION_HEIGHT, self.view.width_sd, self.view.height_sd - STATUS_AND_NAVIGATION_HEIGHT) style:UITableViewStylePlain];
-        _tableView.backgroundColor = PGCBackColor;
-        _tableView.showsVerticalScrollIndicator = false;
-        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        _tableView.dataSource = self;
-        _tableView.delegate = self;
-        [_tableView registerClass:[DemandDetailTopCell class] forCellReuseIdentifier:kDemandDetailTopCell];
-        [_tableView registerClass:[DemandDetailContactCell class] forCellReuseIdentifier:kDemandDetailContactCell];
-        [_tableView registerClass:[DemandDetailDescCell class] forCellReuseIdentifier:kDemandDetailDescCell];
-        [_tableView registerClass:[DemandDetailImagesCell class] forCellReuseIdentifier:kDemandDetailImagesCell];
-        [_tableView registerClass:[DemandDetailFilesCell class] forCellReuseIdentifier:kDemandDetailFilesCell];
-    }
-    return _tableView;
-}
 
 - (NSMutableArray *)dataSource {
     if (!_dataSource) {

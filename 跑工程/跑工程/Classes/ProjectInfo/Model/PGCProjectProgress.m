@@ -10,28 +10,11 @@
 
 @implementation PGCProjectProgress
 
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        
-    }
-    return self;
-}
-
-+ (instancetype)projectProgress {
-    static PGCProjectProgress *progress = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        progress = [[PGCProjectProgress alloc] init];
-    });
-    return progress;
-}
-
 MJExtensionCodingImplementation
 
-+ (NSArray *)mj_ignoredCodingPropertyNames {
-    return @[@"progressArray"];
++ (NSDictionary *)mj_replacedKeyFromPropertyName
+{
+    return @{@"progress_id":@"id"};
 }
 
 @end

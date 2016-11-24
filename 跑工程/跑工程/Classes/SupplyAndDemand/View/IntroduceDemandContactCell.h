@@ -22,4 +22,6 @@ static NSString * const kIntroduceDemandContactCell = @"IntroduceDemandContactCe
 @property (weak, nonatomic) id <IntroduceDemandContactCellDelegate> delegate;
 @property (strong, nonatomic) Contacts *contact;/** 联系人 */
 
+- (void)setButtonHidden:(BOOL)hidden;
+
 @end

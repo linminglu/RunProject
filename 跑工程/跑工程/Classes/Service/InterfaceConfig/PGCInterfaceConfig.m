@@ -58,6 +58,8 @@ NSString *const kAddAccessOrCollect = @"/mobile/api/access/addAccessOrCollect.ht
 NSString *const kDeleteAccessOrCollect = @"/mobile/api/access/deleteAccessOrCollect.htm";
 // 获取收藏与浏览记录
 NSString *const kGetAccessOrCollect = @"/mobile/api/access/getAccessOrCollect.htm";
+// 地图项目
+NSString *const kGetNearProjects = @"/mobile/api/open/getNearProjects.htm";
 
 
 #pragma mark - 供需
@@ -95,9 +97,15 @@ NSString *const kGetContactsList = @"/mobile/api/access/getContactsList.htm";
 // 删除联系人
 NSString *const kDeleteContact = @"/mobile/api/access/deleteContact.htm";
 
+
 #pragma mark - 会员
 // 购买会员
 NSString *const kBuyVip = @"/mobile/api/access/buyVip.htm";
+// 获取产品列表
+NSString *const kGetVipProductList = @"/mobile/api/open/getVipProductList.htm";
+
+
+#pragma mark - 其他
 // 广告轮播
 NSString *const kAdList = @"/mobile/api/open/adList.htm";
 // 软件更新

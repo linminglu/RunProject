@@ -151,9 +151,9 @@
 {
     _contactHeader = contactHeader;
     
-    self.headImageView.image = [UIImage imageNamed:@"QQ好友"];
+    self.headImageView.image = [UIImage imageNamed:@"头像"];
     self.contactNameLabel.text = contactHeader.name;
-    self.projectNameLabel.text = @"项目名称";
+    self.projectNameLabel.text = contactHeader.company;
 }
 
 

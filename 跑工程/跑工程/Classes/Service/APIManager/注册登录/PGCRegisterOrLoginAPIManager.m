@@ -65,6 +65,11 @@
             PGCToken *token = [[PGCToken alloc] init];
             [token mj_setKeyValues:resultData];
             
+            if (token.user.headimage) {
+//                NSString *string = [token.user.headimage substringFromIndex:3];
+//                token.user.headimage = string;
+            }
+            
             // 保存用户登录信息
             [PGCManager manager].token = token;
             [[PGCManager manager] saveTokenData];

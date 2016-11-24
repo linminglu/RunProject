@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class PGCVIPServiceCell;
+@class PGCVIPServiceCell, PGCProduct;
 
 @protocol PGCVIPServiceCellDelegate <NSObject>
 
@@ -20,5 +20,7 @@ static NSString * const kVIPServiceCell = @"VIPServiceCell";
 @interface PGCVIPServiceCell : UITableViewCell
 
 @property (weak, nonatomic) id <PGCVIPServiceCellDelegate> delegate;
+
+@property (strong, nonatomic) PGCProduct *product;/** 产品模型 */
 
 @end

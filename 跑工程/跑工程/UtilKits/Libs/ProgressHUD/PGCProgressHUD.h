@@ -20,14 +20,10 @@ typedef NS_ENUM(NSUInteger, ProgressMode) {
 
 @interface PGCProgressHUD : NSObject
 
-@property (strong, nonatomic) MBProgressHUD *hud;
-
-+ (instancetype)shareinstance;
-
 #pragma mark -
 #pragma mark - UIAlertController
 /**
- *  1.5s后消失的弹出框提示
+ *  1.0s后消失的弹出框提示
  *
  *  @param target 调用UIAlertController的对象
  *  @param title  提示语句
@@ -36,7 +32,7 @@ typedef NS_ENUM(NSUInteger, ProgressMode) {
                       title:(NSString *)title;
 
 /**
- *  1.5s后消失的弹出框提示
+ *  1.0s后消失的弹出框提示
  *
  *  @param title 提示语句
  *  @param block block回调
@@ -79,6 +75,10 @@ typedef NS_ENUM(NSUInteger, ProgressMode) {
 
 #pragma mark -
 #pragma mark - MBProgressHUD
+
+@property (strong, nonatomic) MBProgressHUD *hud;
+
++ (instancetype)shareinstance;
 
 /**
  进度(菊花)提示的MBProgressHUD

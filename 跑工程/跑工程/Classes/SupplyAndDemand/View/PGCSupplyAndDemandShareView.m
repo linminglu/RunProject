@@ -95,12 +95,12 @@
         label.text = imageNames[i] ;
         label.textAlignment = NSTextAlignmentCenter;
         label.textColor = RGB(102, 102, 102);
-        label.font = SetFont(14);
+        label.font = SetFont(12);
         [view addSubview:label];
         label.sd_layout
         .leftSpaceToView(view, 5)
         .rightSpaceToView(view, 5)
-        .topSpaceToView(button, 8)
+        .topSpaceToView(button, 15)
         .autoHeightRatio(0);
         
         if (i == imageNames.count - 1) {

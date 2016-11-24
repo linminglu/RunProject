@@ -20,4 +20,6 @@
 
 + (instancetype)materialServiceTypes;
 
+- (NSMutableArray *)setMaterialTypes;
+
 @end

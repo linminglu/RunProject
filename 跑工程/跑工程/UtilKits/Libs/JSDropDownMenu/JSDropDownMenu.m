@@ -51,13 +51,6 @@ static NSString *const kJSCollectionViewCell = @"JSCollectionViewCell";
     .rightSpaceToView(centerView, 5)
     .autoHeightRatio(0);
 }
-
-- (void)setSelected:(BOOL)selected
-{
-    [super setSelected:selected];
-    
-    self.textLabel.textColor = selected ? SelectColor : DetailColor;
-}
 @end
 
 @implementation JSIndexPath
@@ -110,6 +103,18 @@ static NSString *const kJSCollectionViewCell = @"JSCollectionViewCell";
 - (NSString *)titleForRowAtIndexPath:(JSIndexPath *)indexPath
 {
     return [self.dataSource menu:self titleForRowAtIndexPath:indexPath];
+}
+
+- (void)reloadData
+{
+    [self.leftTableView reloadData];
+    
+    if ([self.dataSource haveRightTableViewInColumn:_currentSelectedMenudIndex]) {
+        [self.rightTableView reloadData];
+    }
+    if ([self.dataSource displayByCollectionViewInColumn:_currentSelectedMenudIndex]) {
+        [self.collectionView reloadData];
+    }
 }
 
 
@@ -765,8 +770,9 @@ static NSString *const kJSCollectionViewCell = @"JSCollectionViewCell";
         cell.textLabel.text = [self.dataSource menu:self titleForRowAtIndexPath:[JSIndexPath indexPathWithCol:self.currentSelectedMenudIndex leftOrRight:-1 leftRow:-1 row:indexPath.row]];
     }
     if ([cell.textLabel.text isEqualToString:[(CATextLayer *)[_titles objectAtIndex:_currentSelectedMenudIndex] string]]) {
-        
-        cell.selected = true;
+        cell.textLabel.textColor = SelectColor;
+    } else {
+        cell.textLabel.textColor = DetailColor;
     }
     return cell;
 }

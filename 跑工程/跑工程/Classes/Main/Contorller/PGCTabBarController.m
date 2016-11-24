@@ -44,75 +44,11 @@
     [self setUpTabBar];
     
     // 网络请求通用数据
-    [self initAreaData];
-    [self initProjectTypeData];
-    [self initProjectStageData];
     [self initMaterialServiceTypesData];
     
     // 每隔一段时间请求未读数
 }
 
-
-#pragma mark - 获取公共数据
-
-/**
- 网络请求地区数据
- */
-- (void)initAreaData
-{
-    [PGCAreaAPIManager getCitiesRequestWithParameters:@{} responds:^(RespondsStatus status, NSString *message, NSMutableArray *cities) {
-        if (status == RespondsStatusSuccess) {
-            [PGCAreaAPIManager getProvincesRequestWithParameters:@{} responds:^(RespondsStatus status, NSString *message, id provinceData) {
-                if (status == RespondsStatusSuccess) {
-                    NSMutableArray *results = [NSMutableArray array];
-                    
-                    for (id value in provinceData) {
-                        // 构造省份可变数组
-                        NSMutableDictionary *provinceDic = [value mutableCopy];
-                        // 用于存储同一省份下的城市数组
-                        NSMutableArray *cityData = [NSMutableArray array];
-                        
-                        for (PGCCity *city in cities) {
-                            if (city.province_id == [value[@"id"] intValue]) {
-                                [cityData addObject:city];
-                            }
-                        }
-                        // 将城市数组添加到省份字典中
-                        [provinceDic setObject:cityData forKey:@"city"];
-                        
-                        PGCProvince *province = [[PGCProvince alloc] init];
-                        [province mj_setKeyValues:provinceDic];
-                        // 将模型添加到数组中
-                        [results addObject:province];
-                    }
-                    [PGCProvince province].areaArray = results;
-                }
-            }];
-        }
-    }];
-}
-/**
- 网路请求项目类型数据
- */
-- (void)initProjectTypeData
-{
-    [PGCProjectInfoAPIManager getProjectTypesRequestWithParameters:@{} responds:^(RespondsStatus status, NSString *message, NSMutableArray *resultData) {
-        if (status == RespondsStatusSuccess) {
-            [PGCProjectType projectType].projectTypes = resultData;
-        }
-    }];
-}
-/**
- 网络请求项目阶段数据
- */
-- (void)initProjectStageData
-{
-    [PGCProjectInfoAPIManager getProjectProgressesRequestWithParameters:@{} responds:^(RespondsStatus status, NSString *message, NSMutableArray *resultData) {
-        if (status == RespondsStatusSuccess) {            
-            [PGCProjectProgress projectProgress].progressArray = resultData;
-        }
-    }];
-}
 /**
  网网络请求供需类别数据
  */

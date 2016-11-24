@@ -9,10 +9,9 @@
 #import "PGCMapTypeViewController.h"
 #import <MAMapKit/MAMapKit.h>
 #import <AMapFoundationKit/AMapFoundationKit.h>
-#import <AMapSearchKit/AMapSearchKit.h>
 #import <AMapLocationKit/AMapLocationKit.h>
 
-@interface PGCMapTypeViewController () <MAMapViewDelegate, AMapSearchDelegate, AMapLocationManagerDelegate>
+@interface PGCMapTypeViewController () <MAMapViewDelegate, AMapLocationManagerDelegate>
 
 @property (strong, nonatomic) MAMapView *mapView;
 @property (strong, nonatomic) AMapLocationManager *locationManager;

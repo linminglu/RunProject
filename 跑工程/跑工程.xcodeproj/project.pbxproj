@@ -18,8 +18,6 @@
 		84237A2B1DD5D1B2001B929C /* PGCToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 84237A2A1DD5D1B1001B929C /* PGCToken.m */; };
 		8440D35B1DDC5D7D00747E1F /* PGCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8440D35A1DDC5D7D00747E1F /* PGCManager.m */; };
 		8440D3611DDC72D800747E1F /* PGCUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8440D3601DDC72D700747E1F /* PGCUser.m */; };
-		8440D3691DDD494600747E1F /* MBProgressHUD+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = 8440D3641DDD494500747E1F /* MBProgressHUD+MJ.m */; };
-		8440D36A1DDD494600747E1F /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8440D3651DDD494500747E1F /* MBProgressHUD.bundle */; };
 		8440D36F1DDD5FE100747E1F /* PGCDemand.m in Sources */ = {isa = PBXBuildFile; fileRef = 8440D36E1DDD5FE100747E1F /* PGCDemand.m */; };
 		8440D3731DDD849100747E1F /* PGCOtherAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8440D3721DDD849100747E1F /* PGCOtherAPIManager.m */; };
 		845939091DBF625B0086DD53 /* PGCContactInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8459389C1DBF625B0086DD53 /* PGCContactInfoController.m */; };
@@ -92,12 +90,10 @@
 		8487940A1DD300CD0060D7FD /* PGCContactAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 848794091DD300CD0060D7FD /* PGCContactAPIManager.m */; };
 		8487940D1DD303570060D7FD /* PGCProjectType.m in Sources */ = {isa = PBXBuildFile; fileRef = 8487940C1DD303570060D7FD /* PGCProjectType.m */; };
 		848794131DD30A860060D7FD /* PGCProjectProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 848794121DD30A860060D7FD /* PGCProjectProgress.m */; };
-		8487941A1DD41BF10060D7FD /* PGCNetworkCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 848794191DD41BF10060D7FD /* PGCNetworkCache.m */; };
 		848794221DD45A530060D7FD /* PGCDropLeftCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8487941E1DD45A530060D7FD /* PGCDropLeftCell.m */; };
 		848794231DD45A530060D7FD /* PGCDropRightCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 848794201DD45A530060D7FD /* PGCDropRightCell.m */; };
 		848794261DD474690060D7FD /* PGCProjectSurveySubview.m in Sources */ = {isa = PBXBuildFile; fileRef = 848794251DD474690060D7FD /* PGCProjectSurveySubview.m */; };
 		848794291DD498C10060D7FD /* PGCRegistInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 848794281DD498C10060D7FD /* PGCRegistInfo.m */; };
-		8487942C1DD4A2900060D7FD /* PGCNetworkHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8487942B1DD4A2900060D7FD /* PGCNetworkHelper.m */; };
 		849BECEC1DCF27A3007936B0 /* PGCAddContactRemarkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 849BECEB1DCF27A3007936B0 /* PGCAddContactRemarkCell.m */; };
 		849BED031DD04F9B007936B0 /* PGCProvince.m in Sources */ = {isa = PBXBuildFile; fileRef = 849BED021DD04F9B007936B0 /* PGCProvince.m */; };
 		849BED061DD04FA4007936B0 /* PGCCity.m in Sources */ = {isa = PBXBuildFile; fileRef = 849BED051DD04FA4007936B0 /* PGCCity.m */; };
@@ -117,20 +113,12 @@
 		849C7BCF1DC9D48900C229DF /* PGCAppDelegate+AppLifeCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C7BCE1DC9D48900C229DF /* PGCAppDelegate+AppLifeCircle.m */; };
 		849C7BD21DC9D4A500C229DF /* PGCAppDelegate+RootController.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C7BD11DC9D4A500C229DF /* PGCAppDelegate+RootController.m */; };
 		849C7BE31DC9EED800C229DF /* PGCMapTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C7BE21DC9EED800C229DF /* PGCMapTypeViewController.m */; };
-		849D801D1DE318BA003BF29C /* MBProgressHUD+PY.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D7FFE1DE318BA003BF29C /* MBProgressHUD+PY.m */; };
-		849D801E1DE318BA003BF29C /* UIView+PYExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D80001DE318BA003BF29C /* UIView+PYExtension.m */; };
-		849D801F1DE318BA003BF29C /* PYNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D80031DE318BA003BF29C /* PYNavigationController.m */; };
-		849D80201DE318BA003BF29C /* PYPhotosPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D80051DE318BA003BF29C /* PYPhotosPreviewController.m */; };
-		849D80211DE318BA003BF29C /* PYPhotosReaderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D80071DE318BA003BF29C /* PYPhotosReaderController.m */; };
-		849D80221DE318BA003BF29C /* PYPhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D80091DE318BA003BF29C /* PYPhotosViewController.m */; };
-		849D80231DE318BB003BF29C /* PYPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D800C1DE318BA003BF29C /* PYPhoto.m */; };
-		849D80241DE318BB003BF29C /* PYConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D800F1DE318BA003BF29C /* PYConst.m */; };
-		849D80251DE318BB003BF29C /* PYProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D80111DE318BA003BF29C /* PYProgressView.m */; };
-		849D80261DE318BB003BF29C /* PYPhotosView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 849D80131DE318BA003BF29C /* PYPhotosView.bundle */; };
-		849D80271DE318BB003BF29C /* PYPhotoBrowseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D80161DE318BA003BF29C /* PYPhotoBrowseView.m */; };
-		849D80281DE318BB003BF29C /* PYPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D80181DE318BA003BF29C /* PYPhotoCell.m */; };
-		849D80291DE318BB003BF29C /* PYPhotosView.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D801A1DE318BA003BF29C /* PYPhotosView.m */; };
-		849D802A1DE318BB003BF29C /* PYPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D801C1DE318BA003BF29C /* PYPhotoView.m */; };
+		849D802D1DE3D5F5003BF29C /* PGCProjectManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D802C1DE3D5F5003BF29C /* PGCProjectManager.m */; };
+		849D80301DE3E36D003BF29C /* PGCAreaManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D802F1DE3E36D003BF29C /* PGCAreaManager.m */; };
+		849D80371DE44F77003BF29C /* PGCFeedback.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D80361DE44F77003BF29C /* PGCFeedback.m */; };
+		849D803A1DE47AF3003BF29C /* PGCProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D80391DE47AF3003BF29C /* PGCProduct.m */; };
+		849D804D1DE5473F003BF29C /* MBProgressHUD+PGC.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D804C1DE5473F003BF29C /* MBProgressHUD+PGC.m */; };
+		849D804F1DE54757003BF29C /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 849D804E1DE54757003BF29C /* MBProgressHUD.bundle */; };
 		84A0079D1DD1A75000CC8C83 /* EXTRuntimeExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A006DE1DD1A75000CC8C83 /* EXTRuntimeExtensions.m */; };
 		84A0079E1DD1A75000CC8C83 /* MKAnnotationView+RACSignalSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A006E21DD1A75000CC8C83 /* MKAnnotationView+RACSignalSupport.m */; };
 		84A0079F1DD1A75000CC8C83 /* NSArray+RACSequenceAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A006E41DD1A75000CC8C83 /* NSArray+RACSequenceAdditions.m */; };
@@ -256,12 +244,15 @@
 		84B0A3E61DE1BF44006506D3 /* IntroduceDemandDescCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B0A3E51DE1BF44006506D3 /* IntroduceDemandDescCell.m */; };
 		84B0A3E91DE1BF50006506D3 /* IntroduceDemandImagesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B0A3E81DE1BF50006506D3 /* IntroduceDemandImagesCell.m */; };
 		84B0A3ED1DE1BF81006506D3 /* IntroduceSupplyTopCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B0A3EC1DE1BF81006506D3 /* IntroduceSupplyTopCell.m */; };
-		84B9C3CE1DCB5AE400035064 /* PGCSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B9C3CD1DCB5AE400035064 /* PGCSearchBar.m */; };
 		84C839401DD710E200A07F76 /* PGCDataCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C8393F1DD710E200A07F76 /* PGCDataCache.m */; };
 		84C839491DD7269200A07F76 /* PGCHeadImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C839481DD7269200A07F76 /* PGCHeadImage.m */; };
+		84E906421DE679FB00E0151F /* PGCPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E906411DE679FB00E0151F /* PGCPhotoBrowser.m */; };
+		84E906451DE67A2100E0151F /* PGCPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E906441DE67A2100E0151F /* PGCPhoto.m */; };
+		84E906481DE67D6E00E0151F /* PhotoBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E906471DE67D6E00E0151F /* PhotoBrowserCell.m */; };
+		84E9064B1DE67D8700E0151F /* PhotoProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E9064A1DE67D8700E0151F /* PhotoProgressView.m */; };
+		84E9064F1DE69D6000E0151F /* PGCVIPServiceAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E9064E1DE69D6000E0151F /* PGCVIPServiceAPIManager.m */; };
 		84ECF1F21DD167CE00697207 /* NSString+Size.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECF1CF1DD167CE00697207 /* NSString+Size.m */; };
 		84ECF1F41DD167CE00697207 /* UIImage+Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECF1D31DD167CE00697207 /* UIImage+Image.m */; };
-		84ECF2011DD1684A00697207 /* PGCHttpService.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECF2001DD1684A00697207 /* PGCHttpService.m */; };
 		84ECF2051DD168A700697207 /* PGCInterfaceConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECF2041DD168A700697207 /* PGCInterfaceConfig.m */; };
 		84ECF2101DD16A2000697207 /* PGCBaseAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECF20A1DD16A2000697207 /* PGCBaseAPIManager.m */; };
 		84F22C451DD9D9AC00AB0325 /* MZTimerLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F22C441DD9D9AC00AB0325 /* MZTimerLabel.m */; };
@@ -315,9 +306,6 @@
 		8440D35A1DDC5D7D00747E1F /* PGCManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCManager.m; sourceTree = "<group>"; };
 		8440D35F1DDC72D700747E1F /* PGCUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCUser.h; sourceTree = "<group>"; };
 		8440D3601DDC72D700747E1F /* PGCUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCUser.m; sourceTree = "<group>"; };
-		8440D3631DDD494500747E1F /* MBProgressHUD+MJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+MJ.h"; sourceTree = "<group>"; };
-		8440D3641DDD494500747E1F /* MBProgressHUD+MJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+MJ.m"; sourceTree = "<group>"; };
-		8440D3651DDD494500747E1F /* MBProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MBProgressHUD.bundle; sourceTree = "<group>"; };
 		8440D36D1DDD5FE100747E1F /* PGCDemand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCDemand.h; sourceTree = "<group>"; };
 		8440D36E1DDD5FE100747E1F /* PGCDemand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCDemand.m; sourceTree = "<group>"; };
 		8440D3711DDD849100747E1F /* PGCOtherAPIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCOtherAPIManager.h; sourceTree = "<group>"; };
@@ -441,8 +429,6 @@
 		8487940C1DD303570060D7FD /* PGCProjectType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCProjectType.m; sourceTree = "<group>"; };
 		848794111DD30A860060D7FD /* PGCProjectProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCProjectProgress.h; sourceTree = "<group>"; };
 		848794121DD30A860060D7FD /* PGCProjectProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCProjectProgress.m; sourceTree = "<group>"; };
-		848794181DD41BF10060D7FD /* PGCNetworkCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCNetworkCache.h; sourceTree = "<group>"; };
-		848794191DD41BF10060D7FD /* PGCNetworkCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCNetworkCache.m; sourceTree = "<group>"; };
 		8487941D1DD45A530060D7FD /* PGCDropLeftCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCDropLeftCell.h; sourceTree = "<group>"; };
 		8487941E1DD45A530060D7FD /* PGCDropLeftCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCDropLeftCell.m; sourceTree = "<group>"; };
 		8487941F1DD45A530060D7FD /* PGCDropRightCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCDropRightCell.h; sourceTree = "<group>"; };
@@ -451,8 +437,6 @@
 		848794251DD474690060D7FD /* PGCProjectSurveySubview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCProjectSurveySubview.m; sourceTree = "<group>"; };
 		848794271DD498C10060D7FD /* PGCRegistInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCRegistInfo.h; sourceTree = "<group>"; };
 		848794281DD498C10060D7FD /* PGCRegistInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCRegistInfo.m; sourceTree = "<group>"; };
-		8487942A1DD4A2900060D7FD /* PGCNetworkHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCNetworkHelper.h; sourceTree = "<group>"; };
-		8487942B1DD4A2900060D7FD /* PGCNetworkHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCNetworkHelper.m; sourceTree = "<group>"; };
 		849BECEA1DCF27A3007936B0 /* PGCAddContactRemarkCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCAddContactRemarkCell.h; sourceTree = "<group>"; };
 		849BECEB1DCF27A3007936B0 /* PGCAddContactRemarkCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCAddContactRemarkCell.m; sourceTree = "<group>"; };
 		849BED011DD04F9B007936B0 /* PGCProvince.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCProvince.h; sourceTree = "<group>"; };
@@ -491,34 +475,17 @@
 		849C7BD11DC9D4A500C229DF /* PGCAppDelegate+RootController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PGCAppDelegate+RootController.m"; sourceTree = "<group>"; };
 		849C7BE11DC9EED800C229DF /* PGCMapTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCMapTypeViewController.h; sourceTree = "<group>"; };
 		849C7BE21DC9EED800C229DF /* PGCMapTypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCMapTypeViewController.m; sourceTree = "<group>"; };
-		849D7FFD1DE318BA003BF29C /* MBProgressHUD+PY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+PY.h"; sourceTree = "<group>"; };
-		849D7FFE1DE318BA003BF29C /* MBProgressHUD+PY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+PY.m"; sourceTree = "<group>"; };
-		849D7FFF1DE318BA003BF29C /* UIView+PYExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+PYExtension.h"; sourceTree = "<group>"; };
-		849D80001DE318BA003BF29C /* UIView+PYExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+PYExtension.m"; sourceTree = "<group>"; };
-		849D80021DE318BA003BF29C /* PYNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYNavigationController.h; sourceTree = "<group>"; };
-		849D80031DE318BA003BF29C /* PYNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYNavigationController.m; sourceTree = "<group>"; };
-		849D80041DE318BA003BF29C /* PYPhotosPreviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYPhotosPreviewController.h; sourceTree = "<group>"; };
-		849D80051DE318BA003BF29C /* PYPhotosPreviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYPhotosPreviewController.m; sourceTree = "<group>"; };
-		849D80061DE318BA003BF29C /* PYPhotosReaderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYPhotosReaderController.h; sourceTree = "<group>"; };
-		849D80071DE318BA003BF29C /* PYPhotosReaderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYPhotosReaderController.m; sourceTree = "<group>"; };
-		849D80081DE318BA003BF29C /* PYPhotosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYPhotosViewController.h; sourceTree = "<group>"; };
-		849D80091DE318BA003BF29C /* PYPhotosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYPhotosViewController.m; sourceTree = "<group>"; };
-		849D800B1DE318BA003BF29C /* PYPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYPhoto.h; sourceTree = "<group>"; };
-		849D800C1DE318BA003BF29C /* PYPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYPhoto.m; sourceTree = "<group>"; };
-		849D800E1DE318BA003BF29C /* PYConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYConst.h; sourceTree = "<group>"; };
-		849D800F1DE318BA003BF29C /* PYConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYConst.m; sourceTree = "<group>"; };
-		849D80101DE318BA003BF29C /* PYProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYProgressView.h; sourceTree = "<group>"; };
-		849D80111DE318BA003BF29C /* PYProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYProgressView.m; sourceTree = "<group>"; };
-		849D80121DE318BA003BF29C /* PYPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYPhotoBrowser.h; sourceTree = "<group>"; };
-		849D80131DE318BA003BF29C /* PYPhotosView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = PYPhotosView.bundle; sourceTree = "<group>"; };
-		849D80151DE318BA003BF29C /* PYPhotoBrowseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYPhotoBrowseView.h; sourceTree = "<group>"; };
-		849D80161DE318BA003BF29C /* PYPhotoBrowseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYPhotoBrowseView.m; sourceTree = "<group>"; };
-		849D80171DE318BA003BF29C /* PYPhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYPhotoCell.h; sourceTree = "<group>"; };
-		849D80181DE318BA003BF29C /* PYPhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYPhotoCell.m; sourceTree = "<group>"; };
-		849D80191DE318BA003BF29C /* PYPhotosView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYPhotosView.h; sourceTree = "<group>"; };
-		849D801A1DE318BA003BF29C /* PYPhotosView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYPhotosView.m; sourceTree = "<group>"; };
-		849D801B1DE318BA003BF29C /* PYPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYPhotoView.h; sourceTree = "<group>"; };
-		849D801C1DE318BA003BF29C /* PYPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYPhotoView.m; sourceTree = "<group>"; };
+		849D802B1DE3D5F5003BF29C /* PGCProjectManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCProjectManager.h; sourceTree = "<group>"; };
+		849D802C1DE3D5F5003BF29C /* PGCProjectManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCProjectManager.m; sourceTree = "<group>"; };
+		849D802E1DE3E36D003BF29C /* PGCAreaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCAreaManager.h; sourceTree = "<group>"; };
+		849D802F1DE3E36D003BF29C /* PGCAreaManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCAreaManager.m; sourceTree = "<group>"; };
+		849D80351DE44F77003BF29C /* PGCFeedback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCFeedback.h; sourceTree = "<group>"; };
+		849D80361DE44F77003BF29C /* PGCFeedback.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCFeedback.m; sourceTree = "<group>"; };
+		849D80381DE47AF3003BF29C /* PGCProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCProduct.h; sourceTree = "<group>"; };
+		849D80391DE47AF3003BF29C /* PGCProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCProduct.m; sourceTree = "<group>"; };
+		849D804B1DE5473F003BF29C /* MBProgressHUD+PGC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+PGC.h"; sourceTree = "<group>"; };
+		849D804C1DE5473F003BF29C /* MBProgressHUD+PGC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+PGC.m"; sourceTree = "<group>"; };
+		849D804E1DE54757003BF29C /* MBProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MBProgressHUD.bundle; sourceTree = "<group>"; };
 		84A006DC1DD1A75000CC8C83 /* EXTKeyPathCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTKeyPathCoding.h; sourceTree = "<group>"; };
 		84A006DD1DD1A75000CC8C83 /* EXTRuntimeExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTRuntimeExtensions.h; sourceTree = "<group>"; };
 		84A006DE1DD1A75000CC8C83 /* EXTRuntimeExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EXTRuntimeExtensions.m; sourceTree = "<group>"; };
@@ -775,12 +742,20 @@
 		84B0A3E81DE1BF50006506D3 /* IntroduceDemandImagesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroduceDemandImagesCell.m; sourceTree = "<group>"; };
 		84B0A3EB1DE1BF81006506D3 /* IntroduceSupplyTopCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroduceSupplyTopCell.h; sourceTree = "<group>"; };
 		84B0A3EC1DE1BF81006506D3 /* IntroduceSupplyTopCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroduceSupplyTopCell.m; sourceTree = "<group>"; };
-		84B9C3CC1DCB5AE400035064 /* PGCSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCSearchBar.h; sourceTree = "<group>"; };
-		84B9C3CD1DCB5AE400035064 /* PGCSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCSearchBar.m; sourceTree = "<group>"; };
 		84C8393E1DD710E200A07F76 /* PGCDataCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCDataCache.h; sourceTree = "<group>"; };
 		84C8393F1DD710E200A07F76 /* PGCDataCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCDataCache.m; sourceTree = "<group>"; };
 		84C839471DD7269200A07F76 /* PGCHeadImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCHeadImage.h; sourceTree = "<group>"; };
 		84C839481DD7269200A07F76 /* PGCHeadImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCHeadImage.m; sourceTree = "<group>"; };
+		84E906401DE679FB00E0151F /* PGCPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCPhotoBrowser.h; sourceTree = "<group>"; };
+		84E906411DE679FB00E0151F /* PGCPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCPhotoBrowser.m; sourceTree = "<group>"; };
+		84E906431DE67A2100E0151F /* PGCPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCPhoto.h; sourceTree = "<group>"; };
+		84E906441DE67A2100E0151F /* PGCPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCPhoto.m; sourceTree = "<group>"; };
+		84E906461DE67D6E00E0151F /* PhotoBrowserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoBrowserCell.h; sourceTree = "<group>"; };
+		84E906471DE67D6E00E0151F /* PhotoBrowserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoBrowserCell.m; sourceTree = "<group>"; };
+		84E906491DE67D8700E0151F /* PhotoProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoProgressView.h; sourceTree = "<group>"; };
+		84E9064A1DE67D8700E0151F /* PhotoProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoProgressView.m; sourceTree = "<group>"; };
+		84E9064D1DE69D6000E0151F /* PGCVIPServiceAPIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCVIPServiceAPIManager.h; sourceTree = "<group>"; };
+		84E9064E1DE69D6000E0151F /* PGCVIPServiceAPIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCVIPServiceAPIManager.m; sourceTree = "<group>"; };
 		84ECF1CB1DD1674B00697207 /* PGCPrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCPrefixHeader.pch; sourceTree = "<group>"; };
 		84ECF1CE1DD167CE00697207 /* NSString+Size.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Size.h"; sourceTree = "<group>"; };
 		84ECF1CF1DD167CE00697207 /* NSString+Size.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Size.m"; sourceTree = "<group>"; };
@@ -789,8 +764,6 @@
 		84ECF1D61DD167CE00697207 /* PGCConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCConfig.h; sourceTree = "<group>"; };
 		84ECF1D81DD167CE00697207 /* PGCScreenAdaptation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCScreenAdaptation.h; sourceTree = "<group>"; };
 		84ECF1D91DD167CE00697207 /* PGCUtilKits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCUtilKits.h; sourceTree = "<group>"; };
-		84ECF1FF1DD1684A00697207 /* PGCHttpService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCHttpService.h; sourceTree = "<group>"; };
-		84ECF2001DD1684A00697207 /* PGCHttpService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCHttpService.m; sourceTree = "<group>"; };
 		84ECF2031DD168A700697207 /* PGCInterfaceConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCInterfaceConfig.h; sourceTree = "<group>"; };
 		84ECF2041DD168A700697207 /* PGCInterfaceConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCInterfaceConfig.m; sourceTree = "<group>"; };
 		84ECF2091DD16A2000697207 /* PGCBaseAPIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCBaseAPIManager.h; sourceTree = "<group>"; };
@@ -939,16 +912,6 @@
 				2CC28A3333CDFD316518BDBF /* Pods-跑工程.release.xcconfig */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		8440D3621DDD494500747E1F /* MBProgressHUD-MJ */ = {
-			isa = PBXGroup;
-			children = (
-				8440D3631DDD494500747E1F /* MBProgressHUD+MJ.h */,
-				8440D3641DDD494500747E1F /* MBProgressHUD+MJ.m */,
-				8440D3651DDD494500747E1F /* MBProgressHUD.bundle */,
-			);
-			path = "MBProgressHUD-MJ";
 			sourceTree = "<group>";
 		};
 		8440D3701DDD846700747E1F /* 其他 */ = {
@@ -1130,6 +1093,10 @@
 			children = (
 				84C839471DD7269200A07F76 /* PGCHeadImage.h */,
 				84C839481DD7269200A07F76 /* PGCHeadImage.m */,
+				849D80351DE44F77003BF29C /* PGCFeedback.h */,
+				849D80361DE44F77003BF29C /* PGCFeedback.m */,
+				849D80381DE47AF3003BF29C /* PGCProduct.h */,
+				849D80391DE47AF3003BF29C /* PGCProduct.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1169,6 +1136,8 @@
 		845938DD1DBF625B0086DD53 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				849D802E1DE3E36D003BF29C /* PGCAreaManager.h */,
+				849D802F1DE3E36D003BF29C /* PGCAreaManager.m */,
 				849BED011DD04F9B007936B0 /* PGCProvince.h */,
 				849BED021DD04F9B007936B0 /* PGCProvince.m */,
 				849BED041DD04FA4007936B0 /* PGCCity.h */,
@@ -1319,18 +1288,11 @@
 			children = (
 				848793E91DD2C2940060D7FD /* PGCMaterialServiceTypes.h */,
 				848793EA1DD2C2940060D7FD /* PGCMaterialServiceTypes.m */,
-				84F22C5B1DDB33B500AB0325 /* Contacts.h */,
-				84F22C5C1DDB33B500AB0325 /* Contacts.m */,
-				84F22C5E1DDB33BD00AB0325 /* Images.h */,
-				84F22C5F1DDB33BD00AB0325 /* Images.m */,
-				84B0A38E1DDDD239006506D3 /* Files.h */,
-				84B0A38F1DDDD239006506D3 /* Files.m */,
-				84B0A3911DDEA642006506D3 /* Types.h */,
-				84B0A3921DDEA642006506D3 /* Types.m */,
 				84F22C551DDB0C7E00AB0325 /* PGCSupply.h */,
 				84F22C561DDB0C7E00AB0325 /* PGCSupply.m */,
 				8440D36D1DDD5FE100747E1F /* PGCDemand.h */,
 				8440D36E1DDD5FE100747E1F /* PGCDemand.m */,
+				849D80311DE3FBCE003BF29C /* 供需模型的子模型 */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1344,9 +1306,8 @@
 				84B0A3DD1DE1BEC4006506D3 /* 发布需求cell */,
 				84B0A3D31DE04E90006506D3 /* 供应详情cell */,
 				84B0A3C31DE03048006506D3 /* 需求详情cell */,
+				849D80421DE53091003BF29C /* 图片浏览器 */,
 				84B0A3D71DE051E8006506D3 /* 选择地区cell */,
-				84B9C3CC1DCB5AE400035064 /* PGCSearchBar.h */,
-				84B9C3CD1DCB5AE400035064 /* PGCSearchBar.m */,
 				8475AE431DCC2CC9004A15A5 /* PGCDetailTitleView.h */,
 				8475AE441DCC2CC9004A15A5 /* PGCDetailTitleView.m */,
 				8475AE6E1DCC842A004A15A5 /* PGCIntroducePublicView.h */,
@@ -1481,6 +1442,8 @@
 				8487940C1DD303570060D7FD /* PGCProjectType.m */,
 				848794111DD30A860060D7FD /* PGCProjectProgress.h */,
 				848794121DD30A860060D7FD /* PGCProjectProgress.m */,
+				849D802B1DE3D5F5003BF29C /* PGCProjectManager.h */,
+				849D802C1DE3D5F5003BF29C /* PGCProjectManager.m */,
 			);
 			name = "项目相关";
 			sourceTree = "<group>";
@@ -1501,7 +1464,6 @@
 			children = (
 				84ECF2061DD16A2000697207 /* APIManager */,
 				84ECF2021DD1689A00697207 /* InterfaceConfig */,
-				84ECF1FE1DD1682B00697207 /* HttpService */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -1531,10 +1493,10 @@
 				849C7A6B1DC9CEA500C229DF /* PGCSupplyIntroduceInfoVC.m */,
 				849C7A181DC89F6600C229DF /* PGCSupplyIntroduceVC.h */,
 				849C7A191DC89F6600C229DF /* PGCSupplyIntroduceVC.m */,
-				849C7A151DC89F4F00C229DF /* PGCSupplyCollectVC.h */,
-				849C7A161DC89F4F00C229DF /* PGCSupplyCollectVC.m */,
 				849C7A4D1DC9977700C229DF /* PGCSupplyDetailVC.h */,
 				849C7A4E1DC9977700C229DF /* PGCSupplyDetailVC.m */,
+				849C7A151DC89F4F00C229DF /* PGCSupplyCollectVC.h */,
+				849C7A161DC89F4F00C229DF /* PGCSupplyCollectVC.m */,
 			);
 			name = "供应";
 			sourceTree = "<group>";
@@ -1546,87 +1508,42 @@
 				849C7A6E1DC9CF4200C229DF /* PGCDemandIntroduceInfoVC.m */,
 				849C7A201DC89F9F00C229DF /* PGCDemandIntroduceVC.h */,
 				849C7A211DC89F9F00C229DF /* PGCDemandIntroduceVC.m */,
-				849C7A1D1DC89F8B00C229DF /* PGCDemandCollectVC.h */,
-				849C7A1E1DC89F8B00C229DF /* PGCDemandCollectVC.m */,
 				849C7A501DC9978700C229DF /* PGCDemandDetailVC.h */,
 				849C7A511DC9978700C229DF /* PGCDemandDetailVC.m */,
+				849C7A1D1DC89F8B00C229DF /* PGCDemandCollectVC.h */,
+				849C7A1E1DC89F8B00C229DF /* PGCDemandCollectVC.m */,
 			);
 			name = "需求";
 			sourceTree = "<group>";
 		};
-		849D7FFB1DE318BA003BF29C /* PYPhotoBrowser */ = {
+		849D80311DE3FBCE003BF29C /* 供需模型的子模型 */ = {
 			isa = PBXGroup;
 			children = (
-				849D7FFC1DE318BA003BF29C /* Category */,
-				849D80011DE318BA003BF29C /* Controller */,
-				849D800A1DE318BA003BF29C /* Model */,
-				849D800D1DE318BA003BF29C /* Other */,
-				849D80121DE318BA003BF29C /* PYPhotoBrowser.h */,
-				849D80131DE318BA003BF29C /* PYPhotosView.bundle */,
-				849D80141DE318BA003BF29C /* View */,
+				84F22C5B1DDB33B500AB0325 /* Contacts.h */,
+				84F22C5C1DDB33B500AB0325 /* Contacts.m */,
+				84F22C5E1DDB33BD00AB0325 /* Images.h */,
+				84F22C5F1DDB33BD00AB0325 /* Images.m */,
+				84B0A38E1DDDD239006506D3 /* Files.h */,
+				84B0A38F1DDDD239006506D3 /* Files.m */,
+				84B0A3911DDEA642006506D3 /* Types.h */,
+				84B0A3921DDEA642006506D3 /* Types.m */,
 			);
-			path = PYPhotoBrowser;
+			name = "供需模型的子模型";
 			sourceTree = "<group>";
 		};
-		849D7FFC1DE318BA003BF29C /* Category */ = {
+		849D80421DE53091003BF29C /* 图片浏览器 */ = {
 			isa = PBXGroup;
 			children = (
-				849D7FFD1DE318BA003BF29C /* MBProgressHUD+PY.h */,
-				849D7FFE1DE318BA003BF29C /* MBProgressHUD+PY.m */,
-				849D7FFF1DE318BA003BF29C /* UIView+PYExtension.h */,
-				849D80001DE318BA003BF29C /* UIView+PYExtension.m */,
+				84E906401DE679FB00E0151F /* PGCPhotoBrowser.h */,
+				84E906411DE679FB00E0151F /* PGCPhotoBrowser.m */,
+				84E906461DE67D6E00E0151F /* PhotoBrowserCell.h */,
+				84E906471DE67D6E00E0151F /* PhotoBrowserCell.m */,
+				84E906491DE67D8700E0151F /* PhotoProgressView.h */,
+				84E9064A1DE67D8700E0151F /* PhotoProgressView.m */,
+				84E906431DE67A2100E0151F /* PGCPhoto.h */,
+				84E906441DE67A2100E0151F /* PGCPhoto.m */,
 			);
-			path = Category;
-			sourceTree = "<group>";
-		};
-		849D80011DE318BA003BF29C /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				849D80021DE318BA003BF29C /* PYNavigationController.h */,
-				849D80031DE318BA003BF29C /* PYNavigationController.m */,
-				849D80041DE318BA003BF29C /* PYPhotosPreviewController.h */,
-				849D80051DE318BA003BF29C /* PYPhotosPreviewController.m */,
-				849D80061DE318BA003BF29C /* PYPhotosReaderController.h */,
-				849D80071DE318BA003BF29C /* PYPhotosReaderController.m */,
-				849D80081DE318BA003BF29C /* PYPhotosViewController.h */,
-				849D80091DE318BA003BF29C /* PYPhotosViewController.m */,
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
-		849D800A1DE318BA003BF29C /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				849D800B1DE318BA003BF29C /* PYPhoto.h */,
-				849D800C1DE318BA003BF29C /* PYPhoto.m */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		849D800D1DE318BA003BF29C /* Other */ = {
-			isa = PBXGroup;
-			children = (
-				849D800E1DE318BA003BF29C /* PYConst.h */,
-				849D800F1DE318BA003BF29C /* PYConst.m */,
-				849D80101DE318BA003BF29C /* PYProgressView.h */,
-				849D80111DE318BA003BF29C /* PYProgressView.m */,
-			);
-			path = Other;
-			sourceTree = "<group>";
-		};
-		849D80141DE318BA003BF29C /* View */ = {
-			isa = PBXGroup;
-			children = (
-				849D80151DE318BA003BF29C /* PYPhotoBrowseView.h */,
-				849D80161DE318BA003BF29C /* PYPhotoBrowseView.m */,
-				849D80171DE318BA003BF29C /* PYPhotoCell.h */,
-				849D80181DE318BA003BF29C /* PYPhotoCell.m */,
-				849D80191DE318BA003BF29C /* PYPhotosView.h */,
-				849D801A1DE318BA003BF29C /* PYPhotosView.m */,
-				849D801B1DE318BA003BF29C /* PYPhotoView.h */,
-				849D801C1DE318BA003BF29C /* PYPhotoView.m */,
-			);
-			path = View;
+			name = "图片浏览器";
 			sourceTree = "<group>";
 		};
 		84A006D91DD1A75000CC8C83 /* ReactiveCocoa */ = {
@@ -1934,6 +1851,15 @@
 			name = "发布供应cell";
 			sourceTree = "<group>";
 		};
+		84E9064C1DE69D4000E0151F /* 会员服务 */ = {
+			isa = PBXGroup;
+			children = (
+				84E9064D1DE69D6000E0151F /* PGCVIPServiceAPIManager.h */,
+				84E9064E1DE69D6000E0151F /* PGCVIPServiceAPIManager.m */,
+			);
+			name = "会员服务";
+			sourceTree = "<group>";
+		};
 		84ECF1CC1DD167CE00697207 /* UtilKits */ = {
 			isa = PBXGroup;
 			children = (
@@ -1951,6 +1877,9 @@
 				84ECF1CF1DD167CE00697207 /* NSString+Size.m */,
 				84ECF1D21DD167CE00697207 /* UIImage+Image.h */,
 				84ECF1D31DD167CE00697207 /* UIImage+Image.m */,
+				849D804B1DE5473F003BF29C /* MBProgressHUD+PGC.h */,
+				849D804C1DE5473F003BF29C /* MBProgressHUD+PGC.m */,
+				849D804E1DE54757003BF29C /* MBProgressHUD.bundle */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -1969,24 +1898,13 @@
 			isa = PBXGroup;
 			children = (
 				846C0B351DE2E34100EF2D53 /* GtSdkLib-noidfa */,
-				849D7FFB1DE318BA003BF29C /* PYPhotoBrowser */,
 				84B0A3B01DE023A4006506D3 /* XHLaunchAd */,
 				84F22C651DDBF6DB00AB0325 /* ProgressHUD */,
-				8440D3621DDD494500747E1F /* MBProgressHUD-MJ */,
 				84A3F66A1DD879A000DB43D3 /* BMChineseStringSort */,
 				848793DD1DD2B96E0060D7FD /* JSDropDownMenu */,
 				84A006D91DD1A75000CC8C83 /* ReactiveCocoa */,
 			);
 			path = Libs;
-			sourceTree = "<group>";
-		};
-		84ECF1FE1DD1682B00697207 /* HttpService */ = {
-			isa = PBXGroup;
-			children = (
-				84ECF1FF1DD1684A00697207 /* PGCHttpService.h */,
-				84ECF2001DD1684A00697207 /* PGCHttpService.m */,
-			);
-			path = HttpService;
 			sourceTree = "<group>";
 		};
 		84ECF2021DD1689A00697207 /* InterfaceConfig */ = {
@@ -2003,11 +1921,8 @@
 			children = (
 				84ECF2091DD16A2000697207 /* PGCBaseAPIManager.h */,
 				84ECF20A1DD16A2000697207 /* PGCBaseAPIManager.m */,
-				848794181DD41BF10060D7FD /* PGCNetworkCache.h */,
-				848794191DD41BF10060D7FD /* PGCNetworkCache.m */,
-				8487942A1DD4A2900060D7FD /* PGCNetworkHelper.h */,
-				8487942B1DD4A2900060D7FD /* PGCNetworkHelper.m */,
 				8440D3701DDD846700747E1F /* 其他 */,
+				84E9064C1DE69D4000E0151F /* 会员服务 */,
 				848793CB1DD2B4C00060D7FD /* 地区-省市 */,
 				848793CE1DD2B4C00060D7FD /* 供需 */,
 				848793D11DD2B4C00060D7FD /* 联系人 */,
@@ -2149,6 +2064,7 @@
 				845939331DBF625B0086DD53 /* PGCLoginController.xib in Resources */,
 				845939251DBF625B0086DD53 /* PGCUserInfoController.xib in Resources */,
 				8459391D1DBF625B0086DD53 /* PGCChooseJobController.xib in Resources */,
+				849D804F1DE54757003BF29C /* MBProgressHUD.bundle in Resources */,
 				84B0A3DC1DE060BB006506D3 /* PGCWebViewController.xib in Resources */,
 				845939371DBF625B0086DD53 /* PGCResetPasswordController.xib in Resources */,
 				845939351DBF625B0086DD53 /* PGCRegisterController.xib in Resources */,
@@ -2160,8 +2076,6 @@
 				84B0A3A61DE0135A006506D3 /* PGCFeedbackViewController.xib in Resources */,
 				84B0A3A11DE01349006506D3 /* PGCAboutUsViewController.xib in Resources */,
 				845939211DBF625B0086DD53 /* PGCSettingController.xib in Resources */,
-				849D80261DE318BB003BF29C /* PYPhotosView.bundle in Resources */,
-				8440D36A1DDD494600747E1F /* MBProgressHUD.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2236,21 +2150,21 @@
 			files = (
 				84A007BF1DD1A75000CC8C83 /* RACDynamicSignal.m in Sources */,
 				84A007BD1DD1A75000CC8C83 /* RACDynamicPropertySuperclass.m in Sources */,
+				849D802D1DE3D5F5003BF29C /* PGCProjectManager.m in Sources */,
 				84F22C601DDB33BD00AB0325 /* Images.m in Sources */,
 				84A007CA1DD1A75000CC8C83 /* RACKVOTrampoline.m in Sources */,
 				84C839491DD7269200A07F76 /* PGCHeadImage.m in Sources */,
 				84A007C71DD1A75000CC8C83 /* RACIndexSetSequence.m in Sources */,
 				84B0A3D21DE034F9006506D3 /* DemandDetailFilesCell.m in Sources */,
-				849D801F1DE318BA003BF29C /* PYNavigationController.m in Sources */,
 				841383BB1DC6D1EF00A91589 /* PGCVIPServiceController.m in Sources */,
 				848793DC1DD2B4C00060D7FD /* PGCRegisterOrLoginAPIManager.m in Sources */,
-				849D801E1DE318BA003BF29C /* UIView+PYExtension.m in Sources */,
 				849BED061DD04FA4007936B0 /* PGCCity.m in Sources */,
 				848794291DD498C10060D7FD /* PGCRegistInfo.m in Sources */,
 				84A007AD1DD1A75000CC8C83 /* NSOrderedSet+RACSequenceAdditions.m in Sources */,
 				8459390D1DBF625B0086DD53 /* PGCContactInfoCell.m in Sources */,
 				84A007B21DD1A75000CC8C83 /* NSURLConnection+RACSupport.m in Sources */,
 				845939151DBF625B0086DD53 /* PGCNavigationController.m in Sources */,
+				84E906481DE67D6E00E0151F /* PhotoBrowserCell.m in Sources */,
 				84A007B51DD1A75000CC8C83 /* RACBehaviorSubject.m in Sources */,
 				849C7A521DC9978700C229DF /* PGCDemandDetailVC.m in Sources */,
 				84A007A41DD1A75000CC8C83 /* NSIndexSet+RACSequenceAdditions.m in Sources */,
@@ -2277,7 +2191,6 @@
 				84A007D31DD1A75100CC8C83 /* RACSequence.m in Sources */,
 				8475AE701DCC842A004A15A5 /* PGCIntroducePublicView.m in Sources */,
 				8475AE401DCC2B87004A15A5 /* PGCHintAlertView.m in Sources */,
-				84ECF2011DD1684A00697207 /* PGCHttpService.m in Sources */,
 				84A007C01DD1A75000CC8C83 /* RACEagerSequence.m in Sources */,
 				84B0A3BE1DE023A4006506D3 /* UIImageView+XHWebCache.m in Sources */,
 				84A007BA1DD1A75000CC8C83 /* RACCompoundDisposableProvider.d in Sources */,
@@ -2290,21 +2203,20 @@
 				84A007CE1DD1A75100CC8C83 /* RACQueueScheduler.m in Sources */,
 				84A007DA1DD1A75100CC8C83 /* RACStringSequence.m in Sources */,
 				84F22C511DDAB89900AB0325 /* PGCSearchView.m in Sources */,
-				849D80221DE318BA003BF29C /* PYPhotosViewController.m in Sources */,
 				84A0079D1DD1A75000CC8C83 /* EXTRuntimeExtensions.m in Sources */,
+				849D80371DE44F77003BF29C /* PGCFeedback.m in Sources */,
 				84A007E81DD1A75100CC8C83 /* UIBarButtonItem+RACCommandSupport.m in Sources */,
 				84A007DF1DD1A75100CC8C83 /* RACTargetQueueScheduler.m in Sources */,
 				84B0A3901DDDD239006506D3 /* Files.m in Sources */,
 				845939161DBF625B0086DD53 /* PGCTabBarController.m in Sources */,
+				84E906451DE67A2100E0151F /* PGCPhoto.m in Sources */,
 				84F22C5D1DDB33B500AB0325 /* Contacts.m in Sources */,
 				849C7BC91DC9D3CB00C229DF /* PGCAppDelegate.m in Sources */,
 				84A007E41DD1A75100CC8C83 /* RACUnit.m in Sources */,
 				84F22C451DD9D9AC00AB0325 /* MZTimerLabel.m in Sources */,
-				849D80271DE318BB003BF29C /* PYPhotoBrowseView.m in Sources */,
 				84A007E11DD1A75100CC8C83 /* RACTuple.m in Sources */,
 				84A007D21DD1A75100CC8C83 /* RACScopedDisposable.m in Sources */,
 				845939181DBF625B0086DD53 /* PGCTabBar.m in Sources */,
-				849D802A1DE318BB003BF29C /* PYPhotoView.m in Sources */,
 				84A007CB1DD1A75000CC8C83 /* RACMulticastConnection.m in Sources */,
 				848793EB1DD2C2940060D7FD /* PGCMaterialServiceTypes.m in Sources */,
 				84B0A3C61DE03065006506D3 /* DemandDetailTopCell.m in Sources */,
@@ -2319,18 +2231,17 @@
 				84A007AB1DD1A75000CC8C83 /* NSObject+RACPropertySubscribing.m in Sources */,
 				84A007A21DD1A75000CC8C83 /* NSEnumerator+RACSequenceAdditions.m in Sources */,
 				849C7A4F1DC9977700C229DF /* PGCSupplyDetailVC.m in Sources */,
+				84E9064F1DE69D6000E0151F /* PGCVIPServiceAPIManager.m in Sources */,
 				849C7A4C1DC9900D00C229DF /* PGCSupplyAndDemandCell.m in Sources */,
 				84A007DC1DD1A75100CC8C83 /* RACSubscriber.m in Sources */,
 				8475AE3E1DCC2B87004A15A5 /* PGCProjectSurveyScrollView.m in Sources */,
 				8475AE3D1DCC2B87004A15A5 /* PGCProjectContactScrollView.m in Sources */,
 				84A007D81DD1A75100CC8C83 /* RACSignalSequence.m in Sources */,
 				84B0A3931DDEA642006506D3 /* Types.m in Sources */,
-				849D80291DE318BB003BF29C /* PYPhotosView.m in Sources */,
 				84A007A31DD1A75000CC8C83 /* NSFileHandle+RACSupport.m in Sources */,
 				84A007D91DD1A75100CC8C83 /* RACStream.m in Sources */,
 				845B41EE1DC824C5000351D7 /* PGCAddContactTableCell.m in Sources */,
 				849C7BE31DC9EED800C229DF /* PGCMapTypeViewController.m in Sources */,
-				8487941A1DD41BF10060D7FD /* PGCNetworkCache.m in Sources */,
 				84F22C681DDBF6DB00AB0325 /* PGCProgressHUD.m in Sources */,
 				8440D3731DDD849100747E1F /* PGCOtherAPIManager.m in Sources */,
 				84B0A3CC1DE03311006506D3 /* DemandDetailDescCell.m in Sources */,
@@ -2370,9 +2281,7 @@
 				849C7A6C1DC9CEA500C229DF /* PGCSupplyIntroduceInfoVC.m in Sources */,
 				845939241DBF625B0086DD53 /* PGCUserInfoController.m in Sources */,
 				84F22C541DDB01BD00AB0325 /* PGCContacInfoHeaderView.m in Sources */,
-				8487942C1DD4A2900060D7FD /* PGCNetworkHelper.m in Sources */,
 				84A0079E1DD1A75000CC8C83 /* MKAnnotationView+RACSignalSupport.m in Sources */,
-				849D80281DE318BB003BF29C /* PYPhotoCell.m in Sources */,
 				84A007EB1DD1A75100CC8C83 /* UIControl+RACSignalSupport.m in Sources */,
 				84A007D41DD1A75100CC8C83 /* RACSerialDisposable.m in Sources */,
 				84A007D51DD1A75100CC8C83 /* RACSignal+Operations.m in Sources */,
@@ -2381,12 +2290,10 @@
 				8440D35B1DDC5D7D00747E1F /* PGCManager.m in Sources */,
 				84B0A3E61DE1BF44006506D3 /* IntroduceDemandDescCell.m in Sources */,
 				84A007CD1DD1A75000CC8C83 /* RACPassthroughSubscriber.m in Sources */,
-				849D80201DE318BA003BF29C /* PYPhotosPreviewController.m in Sources */,
 				84A3F6701DD94BB600DB43D3 /* PGCProjectContact.m in Sources */,
 				8475AE731DCC8DA6004A15A5 /* PGCIntroduceSelectView.m in Sources */,
 				849C7BCC1DC9D46F00C229DF /* PGCAppDelegate+AppService.m in Sources */,
 				8459390B1DBF625B0086DD53 /* PGCContactsController.m in Sources */,
-				849D801D1DE318BA003BF29C /* MBProgressHUD+PY.m in Sources */,
 				84A007EE1DD1A75100CC8C83 /* UIGestureRecognizer+RACSignalSupport.m in Sources */,
 				84A007C81DD1A75000CC8C83 /* RACKVOChannel.m in Sources */,
 				848794231DD45A530060D7FD /* PGCDropRightCell.m in Sources */,
@@ -2394,16 +2301,13 @@
 				845939391DBF625B0086DD53 /* PGCSupplyAndDemandController.m in Sources */,
 				84A007C31DD1A75000CC8C83 /* RACErrorSignal.m in Sources */,
 				849BED031DD04F9B007936B0 /* PGCProvince.m in Sources */,
-				849D80231DE318BB003BF29C /* PYPhoto.m in Sources */,
 				845939301DBF625B0086DD53 /* PGCProjectInfoDetailVC.m in Sources */,
 				84A007DB1DD1A75100CC8C83 /* RACSubject.m in Sources */,
 				0483E2D41DAF33D200EF89F0 /* main.m in Sources */,
-				849D80241DE318BB003BF29C /* PYConst.m in Sources */,
 				84ECF2101DD16A2000697207 /* PGCBaseAPIManager.m in Sources */,
 				84A007B11DD1A75000CC8C83 /* NSString+RACSupport.m in Sources */,
 				849C7A6F1DC9CF4200C229DF /* PGCDemandIntroduceInfoVC.m in Sources */,
 				84A007C51DD1A75000CC8C83 /* RACGroupedSignal.m in Sources */,
-				849D80211DE318BA003BF29C /* PYPhotosReaderController.m in Sources */,
 				84A007A81DD1A75000CC8C83 /* NSObject+RACDescription.m in Sources */,
 				845939111DBF625B0086DD53 /* PGCProjectCell.m in Sources */,
 				849BECEC1DCF27A3007936B0 /* PGCAddContactRemarkCell.m in Sources */,
@@ -2412,7 +2316,6 @@
 				84A007DE1DD1A75100CC8C83 /* RACSubscriptionScheduler.m in Sources */,
 				84A007E21DD1A75100CC8C83 /* RACTupleSequence.m in Sources */,
 				84A007B71DD1A75000CC8C83 /* RACChannel.m in Sources */,
-				84B9C3CE1DCB5AE400035064 /* PGCSearchBar.m in Sources */,
 				84A007AE1DD1A75000CC8C83 /* NSSet+RACSequenceAdditions.m in Sources */,
 				8459391E1DBF625B0086DD53 /* PGCProfileController.m in Sources */,
 				8475AE2D1DCC2203004A15A5 /* PGCNavigationItem.m in Sources */,
@@ -2435,13 +2338,14 @@
 				84A007A51DD1A75000CC8C83 /* NSInvocation+RACTypeParsing.m in Sources */,
 				84A007ED1DD1A75100CC8C83 /* UIDatePicker+RACSignalSupport.m in Sources */,
 				848794071DD300B90060D7FD /* PGCProfileAPIManager.m in Sources */,
-				849D80251DE318BB003BF29C /* PYProgressView.m in Sources */,
+				849D803A1DE47AF3003BF29C /* PGCProduct.m in Sources */,
+				849D80301DE3E36D003BF29C /* PGCAreaManager.m in Sources */,
 				84A007B31DD1A75000CC8C83 /* NSUserDefaults+RACSupport.m in Sources */,
 				84C839401DD710E200A07F76 /* PGCDataCache.m in Sources */,
 				84A007C41DD1A75000CC8C83 /* RACEvent.m in Sources */,
-				8440D3691DDD494600747E1F /* MBProgressHUD+MJ.m in Sources */,
 				84A007A71DD1A75000CC8C83 /* NSObject+RACDeallocating.m in Sources */,
 				848793E81DD2C2200060D7FD /* PGCDemandAPIManager.m in Sources */,
+				84E906421DE679FB00E0151F /* PGCPhotoBrowser.m in Sources */,
 				845939281DBF625B0086DD53 /* PGCProjectInfoController.m in Sources */,
 				8413839D1DC6147B00A91589 /* PGCProjectAddContactController.m in Sources */,
 				84A87A981DC2010F00FD8CC3 /* PGCProjectRootViewController.m in Sources */,
@@ -2451,6 +2355,7 @@
 				845939191DBF625B0086DD53 /* PGCTabBarButton.m in Sources */,
 				84237A2B1DD5D1B2001B929C /* PGCToken.m in Sources */,
 				84A007AC1DD1A75000CC8C83 /* NSObject+RACSelectorSignal.m in Sources */,
+				84E9064B1DE67D8700E0151F /* PhotoProgressView.m in Sources */,
 				84A007E31DD1A75100CC8C83 /* RACUnarySequence.m in Sources */,
 				848793DA1DD2B4C00060D7FD /* PGCSupplyAndDemandAPIManager.m in Sources */,
 				849C7A271DC8A54C00C229DF /* PGCSupplyAndDemandShareView.m in Sources */,
@@ -2461,6 +2366,7 @@
 				84A007F51DD1A75100CC8C83 /* UITableViewCell+RACSignalSupport.m in Sources */,
 				84F22C4B1DDAAD7700AB0325 /* PGCSearchViewController.m in Sources */,
 				84A007F31DD1A75100CC8C83 /* UIStepper+RACSignalSupport.m in Sources */,
+				849D804D1DE5473F003BF29C /* MBProgressHUD+PGC.m in Sources */,
 				84A007E01DD1A75100CC8C83 /* RACTestScheduler.m in Sources */,
 				84A007B61DD1A75000CC8C83 /* RACBlockTrampoline.m in Sources */,
 				845939361DBF625B0086DD53 /* PGCResetPasswordController.m in Sources */,
@@ -2622,7 +2528,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -2647,7 +2553,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

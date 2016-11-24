@@ -65,5 +65,6 @@
 
 - (instancetype)initWithOrigin:(CGPoint)origin andHeight:(CGFloat)height;
 - (NSString *)titleForRowAtIndexPath:(JSIndexPath *)indexPath;
+- (void)reloadData;
 
 @end

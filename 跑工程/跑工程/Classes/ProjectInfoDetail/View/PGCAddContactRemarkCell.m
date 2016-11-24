@@ -29,6 +29,9 @@
         textView.returnKeyType = UIReturnKeyDefault;
         textView.enablesReturnKeyAutomatically = true;
         textView.delegate = self;
+        textView.layer.cornerRadius = 5.0;
+        textView.layer.borderColor = PGCBackColor.CGColor;
+        textView.layer.borderWidth = 0.5;
         [self.contentView addSubview:textView];
         self.addRemarkTextView = textView;
         textView.sd_layout

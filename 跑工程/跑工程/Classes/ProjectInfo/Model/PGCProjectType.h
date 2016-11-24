@@ -8,15 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+// 项目类型模型
 @interface PGCProjectType : NSObject
 
-@property (assign, nonatomic) int id;
-@property (copy, nonatomic) NSString *name;//进度名称
-@property (copy, nonatomic) NSString *image;//图片
-@property (copy, nonatomic) NSString *descType;//描述
-@property (assign, nonatomic) int sequence;//序号
-@property (copy, nonatomic) NSArray *projectTypes;//项目类型数组
-
-+ (instancetype)projectType;
+@property (assign, nonatomic) int type_id;/** 类型id */
+@property (copy, nonatomic) NSString *name;/** 类型名称 */
+@property (copy, nonatomic) NSString *image;/** 图片 */
+@property (copy, nonatomic) NSString *descType;/** 描述 */
+@property (assign, nonatomic) int sequence;/** 序号 */
+@property (copy, nonatomic) NSString *status;/** 状态 */
 
 @end

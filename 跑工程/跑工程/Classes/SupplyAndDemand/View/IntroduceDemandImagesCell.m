@@ -7,14 +7,11 @@
 //
 
 #import "IntroduceDemandImagesCell.h"
-#import "PYPhotoBrowser.h"
-#import "PYPhotosPreviewController.h"
 
-@interface IntroduceDemandImagesCell () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, PYPhotosViewDelegate>
+@interface IntroduceDemandImagesCell () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (strong, nonatomic) UIImagePickerController *imagePickerController;
-@property (strong, nonatomic) PYPhotosView *publishImagesView;/** 上传图片视图 */
-@property (strong, nonatomic) NSMutableArray *publishImages;/** 图片数组 */
+
 
 @end
 
@@ -28,31 +25,11 @@
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.contentView.backgroundColor = [UIColor whiteColor];
         
-        [self createUI];
     }
     return self;
 }
 
 - (void)createUI
-{
-    self.publishImagesView = [PYPhotosView photosView];
-    self.publishImagesView.delegate = self;
-    self.publishImagesView.photosMaxCol = 4;
-    self.publishImagesView.imagesMaxCountWhenWillCompose = 8;
-    [self.contentView addSubview:self.publishImagesView];
-    self.publishImagesView.sd_layout
-    .topSpaceToView(self.contentView, 8)
-    .leftSpaceToView(self.contentView, 10)
-    .rightSpaceToView(self.contentView, 10)
-    .heightIs(70);
-    
-    [self setupAutoHeightWithBottomView:self.publishImagesView bottomMargin:8];
-}
-
-
-#pragma mark - PYPhotosViewDelegate
-
-- (void)photosView:(PYPhotosView *)photosView didAddImageClickedWithImages:(NSMutableArray *)images
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     __weak __typeof(self) weakSelf = self;
@@ -65,14 +42,6 @@
     [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
     [KeyWindow.rootViewController presentViewController:alert animated:true completion:nil];
 }
-
-- (void)photosView:(PYPhotosView *)photosView didPreviewImagesWithPreviewControlelr:(PYPhotosPreviewController *)previewControlelr
-{
-    previewControlelr.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-    previewControlelr.navigationController.navigationBar.tintColor = PGCTextColor;
-    previewControlelr.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:PGCTextColor};
-}
-
 
 
 #pragma mark - UIImagePickerControllerDelegate
@@ -92,16 +61,6 @@
         
     }
     
-    [self.publishImagesView reloadDataWithImages:self.publishImages];
-    
-    if (self.publishImages.count > 4) {
-        self.publishImagesView.sd_resetNewLayout
-        .topSpaceToView(self.contentView, 8)
-        .leftSpaceToView(self.contentView, 10)
-        .rightSpaceToView(self.contentView, 10)
-        .heightIs(70 * 2 + 5);
-    }
-    [self setupAutoHeightWithBottomView:self.publishImagesView bottomMargin:8];
     
     [KeyWindow.rootViewController dismissViewControllerAnimated:true completion:nil];
 }
@@ -143,6 +102,25 @@
 }
 
 
+#pragma mark - Setter
+
+- (void)setPublishImages:(NSMutableArray *)publishImages
+{
+    _publishImages = publishImages;
+    
+//            NSArray *images = self.demandDetail.images;
+//            for (Images *image in images) {
+//                NSString *string = [image.image substringFromIndex:3];
+//                NSString *url = [kBaseImageURL stringByAppendingString:string];
+//            }
+    if (!publishImages) {
+        _publishImages = [NSMutableArray array];
+        return;
+    }
+    
+}
+
+
 #pragma mark - Getter
 
 - (UIImagePickerController *)imagePickerController {
@@ -154,12 +132,6 @@
     return _imagePickerController;
 }
 
-- (NSMutableArray *)publishImages {
-    if (!_publishImages) {
-        _publishImages = [NSMutableArray array];
-    }
-    return _publishImages;
-}
 
 
 - (void)awakeFromNib {

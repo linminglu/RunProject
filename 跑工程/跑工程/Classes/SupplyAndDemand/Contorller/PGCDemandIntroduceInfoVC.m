@@ -14,11 +14,12 @@
 #import "IntroduceDemandContactCell.h"
 #import "IntroduceDemandDescCell.h"
 #import "IntroduceDemandImagesCell.h"
+#import "PGCAreaManager.h"
+#import "PGCMaterialServiceTypes.h"
 #import "PGCDemand.h"
 
-@interface PGCDemandIntroduceInfoVC () <UITableViewDataSource, UITableViewDelegate, IntroduceDemandTopCellDelegate, IntroduceDemandContactCellDelegate>
+@interface PGCDemandIntroduceInfoVC () <IntroduceDemandTopCellDelegate, IntroduceDemandContactCellDelegate>
 
-@property (strong, nonatomic) UITableView *tableView;/** 表格试图 */
 @property (copy, nonatomic) NSArray *headerTitles;/** 头部视图标题 */
 @property (strong, nonatomic) NSMutableArray *dataSource;/** 表格视图数据源 */
 @property (strong, nonatomic) UIButton *introduceBtn;/** 底部发布按钮 */
@@ -47,11 +48,21 @@
 - (void)initializeUserInterface
 {
     self.navigationItem.title = @"需求信息";
-    
-    self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = false;
     
-    [self.view addSubview:self.tableView];
+    CGRect rect = self.tableView.frame;
+    rect = CGRectMake(0, STATUS_AND_NAVIGATION_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - STATUS_AND_NAVIGATION_HEIGHT - TAB_BAR_HEIGHT);
+    self.tableView.frame = rect;
+    
+    self.tableView.backgroundColor = PGCBackColor;
+    self.tableView.showsVerticalScrollIndicator = false;
+    self.tableView.showsHorizontalScrollIndicator = false;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    [self.tableView registerClass:[IntroduceDemandTopCell class] forCellReuseIdentifier:kIntroduceDemandTopCell];
+    [self.tableView registerClass:[IntroduceDemandContactCell class] forCellReuseIdentifier:kIntroduceDemandContactCell];
+    [self.tableView registerClass:[IntroduceDemandDescCell class] forCellReuseIdentifier:kIntroduceDemandDescCell];
+    [self.tableView registerClass:[IntroduceDemandImagesCell class] forCellReuseIdentifier:kIntroduceDemandImagesCell];
     
     // 发布按钮
     self.introduceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -73,35 +84,54 @@
 
 - (void)respondsToIntroduceBtn:(UIButton *)sender
 {
-//    PGCManager *manager = [PGCManager manager];
-//    [manager readTokenData];
-//    PGCUser *user = manager.token.user;
-//    [self.params setObject:@"iphone" forKey:@"client_type"];
-//    [self.params setObject:manager.token.token forKey:@"token"];
-//    [self.params setObject:@(user.user_id) forKey:@"user_id"];
-//    
-//    [PGCDemandAPIManager addOrMidifyDemandWithParameters:self.params responds:^(RespondsStatus status, NSString *message, id resultData) {
-//        
-//    }];
+    PGCManager *manager = [PGCManager manager];
+    [manager readTokenData];
+    PGCUser *user = manager.token.user;
+    [self.params setObject:@"iphone" forKey:@"client_type"];
+    [self.params setObject:manager.token.token forKey:@"token"];
+    [self.params setObject:@(user.user_id) forKey:@"user_id"];
+    
+    
+    
+    [PGCDemandAPIManager addOrMidifyDemandWithParameters:self.params responds:^(RespondsStatus status, NSString *message, id resultData) {
+        
+    }];
 }
 
 - (void)addMoreContact:(UIButton *)sender
 {
-    
+    Contacts *contact = [[Contacts alloc] init];
+    [(NSMutableArray *)self.dataSource[1] addObject:contact];
+    [self.tableView reloadData];
 }
 
 
 #pragma mark - IntroduceDemandTopCellDelegate
 
-- (void)introduceDemandTopCell:(IntroduceDemandTopCell *)topView selectArea:(UIButton *)sender
+- (void)introduceDemandTopCell:(IntroduceDemandTopCell *)topView selectArea:(UIButton *)area
 {
     PGCAreaAndTypeRootVC *areaVC = [[PGCAreaAndTypeRootVC alloc] init];
+    areaVC.navigationItem.title = @"选择地区";
+    areaVC.dataSource = [[PGCAreaManager manager] setAreaData];
+    [areaVC.dataSource removeObjectAtIndex:0];
+    
+    areaVC.block = ^(NSString *text) {
+        [area setTitle:text forState:UIControlStateNormal];
+    };
     [self.navigationController pushViewController:areaVC animated:true];
 }
 
 - (void)introduceDemandTopCell:(IntroduceDemandTopCell *)topView slectDemand:(UIButton *)demand
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+    PGCAreaAndTypeRootVC *demandVC = [[PGCAreaAndTypeRootVC alloc] init];
+    demandVC.navigationItem.title = @"选择需求类别";
+    demandVC.dataSource = [[PGCMaterialServiceTypes materialServiceTypes] setMaterialTypes];
+    [demandVC.dataSource removeObjectAtIndex:0];
+    
+    demandVC.block = ^(NSString *text) {
+        [demand setTitle:text forState:UIControlStateNormal];
+    };
+    [self.navigationController pushViewController:demandVC animated:true];
 }
 
 
@@ -109,7 +139,11 @@
 
 - (void)introduceDemandContactCell:(IntroduceDemandContactCell *)cell deleteBtn:(UIButton *)deleteBtn
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+    NSMutableArray *array = (NSMutableArray *)self.dataSource[1];
+    if (array.count > 1) {
+        [array removeLastObject];
+    }
+    [self.tableView reloadData];
 }
 
 
@@ -122,12 +156,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    switch (section) {
-        case 1: return 1; break;
-        case 2: return 1; break;
-        case 3: return 1; break;
-        default: return 1; break;
-    }
+    return [self.dataSource[section] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -136,6 +165,13 @@
         case 1:
         {
             IntroduceDemandContactCell *contactCell = [tableView dequeueReusableCellWithIdentifier:kIntroduceDemandContactCell];
+            NSMutableArray *array = self.dataSource[indexPath.section];
+            if (array.count > 1) {
+                [contactCell setButtonHidden:false];
+            } else {
+                [contactCell setButtonHidden:true];
+            }
+            contactCell.contact = array[indexPath.row];
             contactCell.delegate = self;
             return contactCell;
         }
@@ -143,19 +179,21 @@
         case 2:
         {
             IntroduceDemandDescCell *descCell = [tableView dequeueReusableCellWithIdentifier:kIntroduceDemandDescCell];
-            descCell.introduceDescs = @"";
+            descCell.introduceDescs = [self.dataSource[indexPath.section] firstObject];
             return descCell;
         }
             break;
         case 3:
         {
             IntroduceDemandImagesCell *imagesCell = [tableView dequeueReusableCellWithIdentifier:kIntroduceDemandImagesCell];
+            imagesCell.publishImages = [self.dataSource[indexPath.section] firstObject];
             return imagesCell;
         }
             break;
         default:
         {
             IntroduceDemandTopCell *topCell = [tableView dequeueReusableCellWithIdentifier:kIntroduceDemandTopCell];
+            topCell.topDemand = [self.dataSource[indexPath.section] firstObject];
             topCell.delegate = self;
             return topCell;
         }
@@ -222,43 +260,23 @@
 }
 
 
-#pragma mark - Setter
-
-- (void)setDemandDetail:(PGCDemand *)demandDetail
-{
-    _demandDetail = demandDetail;
-    
-    if (!demandDetail) {
-        return;
-    }
-    [self.dataSource insertObject:@[demandDetail] atIndex:0];
-    [self.dataSource insertObject:[@[demandDetail.contacts.firstObject] mutableCopy] atIndex:1];
-    [self.dataSource insertObject:@[demandDetail.desc] atIndex:2];
-    [self.dataSource insertObject:@[demandDetail.images] atIndex:3];
-}
-
-
 #pragma mark - Getter
-
-- (UITableView *)tableView {
-    if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, STATUS_AND_NAVIGATION_HEIGHT, self.view.width_sd, self.view.height_sd - STATUS_AND_NAVIGATION_HEIGHT - TAB_BAR_HEIGHT) style:UITableViewStylePlain];
-        _tableView.backgroundColor = PGCBackColor;
-        _tableView.showsVerticalScrollIndicator = false;
-        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        _tableView.dataSource = self;
-        _tableView.delegate = self;
-        [_tableView registerClass:[IntroduceDemandTopCell class] forCellReuseIdentifier:kIntroduceDemandTopCell];
-        [_tableView registerClass:[IntroduceDemandContactCell class] forCellReuseIdentifier:kIntroduceDemandContactCell];
-        [_tableView registerClass:[IntroduceDemandDescCell class] forCellReuseIdentifier:kIntroduceDemandDescCell];
-        [_tableView registerClass:[IntroduceDemandImagesCell class] forCellReuseIdentifier:kIntroduceDemandImagesCell];
-    }
-    return _tableView;
-}
 
 - (NSMutableArray *)dataSource {
     if (!_dataSource) {
         _dataSource = [NSMutableArray array];
+        if (!self.demandDetail) {
+            self.demandDetail = [[PGCDemand alloc] init];
+            NSMutableArray *contacts = [NSMutableArray array];
+            [contacts addObject:[[Contacts alloc] init]];
+            self.demandDetail.contacts = contacts;
+            self.demandDetail.desc = @"";
+            self.demandDetail.images = [NSMutableArray array];
+        }
+        [_dataSource insertObject:@[self.demandDetail] atIndex:0];
+        [_dataSource insertObject:[@[self.demandDetail.contacts.firstObject] mutableCopy] atIndex:1];
+        [_dataSource insertObject:@[self.demandDetail.desc] atIndex:2];
+        [_dataSource insertObject:@[self.demandDetail.images] atIndex:3];
     }
     return _dataSource;
 }
@@ -266,8 +284,6 @@
 - (NSMutableDictionary *)params {
     if (!_params) {
         _params = [NSMutableDictionary dictionary];
-        
-        
     }
     return _params;
 }

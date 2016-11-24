@@ -14,19 +14,21 @@
 #import "PGCSearchViewController.h"
 #import "PGCProjectInfoDetailVC.h"
 #import "JSDropDownMenu.h"
-#import "PGCProvince.h"
-#import "PGCProjectType.h"
-#import "PGCProjectProgress.h"
-#import "PGCProjectInfoAPIManager.h"
 #import "PGCProjectInfo.h"
+#import "PGCAreaManager.h"
+#import "PGCProjectManager.h"
+#import "PGCProjectInfoAPIManager.h"
+#import "PGCAreaAPIManager.h"
+#import "PGCProjectInfoAPIManager.h"
+
 
 static NSString * const kProjectInfoCell = @"ProjectInfoCell";
 
 @interface PGCProjectInfoController () <UITableViewDataSource, UITableViewDelegate, JSDropDownMenuDataSource, JSDropDownMenuDelegate, PGCProjectInfoNavigationBarDelegate>
 {
-    NSMutableArray *_areaDatas;/** 地区数据源 */
-    NSMutableArray *_typeDatas;/** 项目类型数据源 */
-    NSMutableArray *_stageDatas;/** 项目阶段数据源 */
+    NSArray *_areaDatas;/** 地区数据源 */
+    NSArray *_typeDatas;/** 项目类型数据源 */
+    NSArray *_progressDatas;/** 项目阶段数据源 */
     
     NSInteger _currentProvinceIndex;/** 当前省份的下标 */
     NSInteger _currentTypeIndex;/** 当前类型的下标 */
@@ -42,8 +44,9 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
 @property (strong, nonatomic) NSMutableDictionary *parameters;/** 参数 */
 @property (strong, nonatomic) NSMutableArray *dataSource;/** 表格数据源 */
 
-- (void)initializeDataSource; /** 初始化数据 */
+- (void)initializeDataSource; /** 初始化数据源 */
 - (void)initializeUserInterface; /** 初始化用户界面 */
+- (void)registerNotification; /** 注册通知 */
 
 @end
 
@@ -74,17 +77,34 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
     [self registerNotification];
 }
 
-
-#pragma mark - Initialize
-
 - (void)initializeDataSource
 {
-    _areaDatas = [NSMutableArray arrayWithArray:[PGCProvince province].areaArray];
-//    [_areaDatas insertObject:@"全国" atIndex:0];
-    _typeDatas = [NSMutableArray arrayWithArray:[PGCProjectType projectType].projectTypes];
-//    [_typeDatas insertObject:@"全部类别" atIndex:0];
-    _stageDatas = [NSMutableArray arrayWithArray:[PGCProjectProgress projectProgress].progressArray];
-//    [_stageDatas insertObject:@"全部阶段" atIndex:0];
+    // 网络请求城市列表数据
+    [PGCAreaAPIManager getCitiesRequestWithParameters:@{} responds:^(RespondsStatus status, NSString *message, NSMutableArray *cities) {
+        if (status == RespondsStatusSuccess) {
+            // 网络请求省份列表数据
+            [PGCAreaAPIManager getProvincesRequestWithParameters:@{} responds:^(RespondsStatus status, NSString *message, NSMutableArray *provinces) {
+                if (status == RespondsStatusSuccess) {
+                    _areaDatas = [[PGCAreaManager manager] setAreaData];                    
+                    [self.menu reloadData];
+                }
+            }];
+        }
+    }];
+    // 网络请求项目类型数据
+    [PGCProjectInfoAPIManager getProjectTypesRequestWithParameters:@{} responds:^(RespondsStatus status, NSString *message, NSMutableArray *resultData) {
+        if (status == RespondsStatusSuccess) {
+            _typeDatas = [[PGCProjectManager manager] setProjectType];
+            [self.menu reloadData];
+        }
+    }];
+    // 网络请求项目进度数据
+    [PGCProjectInfoAPIManager getProjectProgressesRequestWithParameters:@{} responds:^(RespondsStatus status, NSString *message, NSMutableArray *resultData) {
+        if (status == RespondsStatusSuccess) {
+            _progressDatas = [[PGCProjectManager manager] setProjectProgress];
+            [self.menu reloadData];
+        }
+    }];
 }
 
 - (void)initializeUserInterface
@@ -101,13 +121,14 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
 
 
 - (void)registerNotification {
+    // 添加项目收藏与取消收藏的通知
     [PGCNotificationCenter addObserver:self selector:@selector(loadProjectData) name:kRefreshCollectTable object:nil];
 }
 
 
 
 #pragma mark - 
-#pragma mark - Table Header Refresh
+#pragma mark - Table Refresh
 
 - (void)loadProjectData
 {
@@ -121,10 +142,6 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
     _pageSize = 10;
     [self.parameters setObject:@(_page) forKey:@"page"];
     [self.parameters setObject:@(_pageSize) forKey:@"page_size"];
-    [self.parameters setObject:@(-1) forKey:@"province_id"];
-    [self.parameters setObject:@(-1) forKey:@"city_id"];
-    [self.parameters setObject:@(-1) forKey:@"type_id"];
-    [self.parameters setObject:@(-1) forKey:@"progress_id"];
     
     [PGCProjectInfoAPIManager getProjectsRequestWithParameters:self.parameters responds:^(RespondsStatus status, NSString *message, id resultData) {
         [self.tableView.mj_header endRefreshing];
@@ -193,6 +210,7 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     PGCProjectInfo *projectInfo = self.dataSource[indexPath.row];
+    // SDAutoLayout 的cell高度自适应
     return [tableView cellHeightForIndexPath:indexPath model:projectInfo keyPath:@"project" cellClass:[PGCProjectInfoCell class] contentViewWidth:SCREEN_WIDTH];
 }
 
@@ -304,12 +322,12 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
                 return _areaDatas.count;
             } else {
                 PGCProvince *province = _areaDatas[leftRow];
-                return province.city.count;
+                return province.cities.count;
             }
         }
             break;
         case 1: return _typeDatas.count; break;
-        default: return _stageDatas.count; break;
+        default: return _progressDatas.count; break;
     }
 }
 
@@ -329,11 +347,11 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
         {
             if (indexPath.leftOrRight == 0) {
                 PGCProvince *province = _areaDatas[indexPath.row];
-                return province ? province.province : _areaDatas[0];
+                return province.province;
                 
             } else {
                 PGCProvince *province = _areaDatas[indexPath.leftRow];
-                PGCCity *city = province.city[indexPath.row];
+                PGCCity *city = province.cities[indexPath.row];
                 return city.city;
             }
         }
@@ -341,13 +359,13 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
         case 1:
         {
             PGCProjectType *type = _typeDatas[indexPath.row];
-            return type ? type.name : _typeDatas[0];
+            return type.name;
         }
             break;
         default:
         {
-            PGCProjectProgress *progress = _stageDatas[indexPath.row];
-            return progress ? progress.name : _stageDatas[0];
+            PGCProjectProgress *progress = _progressDatas[indexPath.row];
+            return progress.name;
         }
             break;
     }
@@ -366,13 +384,13 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
                 _currentProvinceIndex = indexPath.row;
                 PGCProvince *province = _areaDatas[indexPath.row];
                 
-                if (!(province.city.count > 0)) {
+                if (!(province.cities.count > 0)) {
                     [self.parameters setObject:@(province.id) forKey:@"province_id"];
                 }
                 
             } else {
                 PGCProvince *province = _areaDatas[indexPath.leftRow];
-                PGCCity *city = province.city[indexPath.row];
+                PGCCity *city = province.cities[indexPath.row];
                 [self.parameters setObject:@(city.id) forKey:@"city_id"];
             }
         }
@@ -381,35 +399,18 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
         {
             _currentTypeIndex = indexPath.row;
             PGCProjectType *type = _typeDatas[indexPath.row];
-            [self.parameters setObject:@(type.id) forKey:@"type_id"];
+            [self.parameters setObject:@(type.type_id) forKey:@"type_id"];
         }
             break;
         default:
         {
             _currentStageIndex = indexPath.row;
-            PGCProjectProgress *progress = _stageDatas[indexPath.row];
-            [self.parameters setObject:@(progress.id) forKey:@"progress_id"];
+            PGCProjectProgress *progress = _progressDatas[indexPath.row];
+            [self.parameters setObject:@(progress.progress_id) forKey:@"progress_id"];
         }
             break;
     }
-    _page = 1;
-    _pageSize = 10;
-    [self.parameters setObject:@(_page) forKey:@"page"];
-    [self.parameters setObject:@(_pageSize) forKey:@"page_size"];
-    
-    [PGCProjectInfoAPIManager getProjectsRequestWithParameters:self.parameters responds:^(RespondsStatus status, NSString *message, id resultData) {
-        if (status == RespondsStatusSuccess) {
-            [self.dataSource removeAllObjects];
-            
-            for (id value in resultData[@"result"]) {
-                PGCProjectInfo *project = [[PGCProjectInfo alloc] init];
-                [project mj_setKeyValues:value];                
-                [self.dataSource addObject:project];
-            }
-            _page += 10;
-            [self.tableView reloadData];
-        }
-    }];
+    [self loadProjectData];
 }
 
 
@@ -471,5 +472,7 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
     }
     return _parameters;
 }
+
+
 
 @end

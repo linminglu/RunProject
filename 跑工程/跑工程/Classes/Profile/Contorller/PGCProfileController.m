@@ -15,6 +15,7 @@
 #import "PGCShareToFriendController.h"
 #import "PGCProfileAPIManager.h"
 #import "PGCRegisterOrLoginAPIManager.h"
+#import "PGCPhotoBrowser.h"
 #import "PGCHeadImage.h"
 
 @interface PGCProfileController ()
@@ -22,7 +23,7 @@
     BOOL _isLogin;
 }
 
-@property (weak, nonatomic) IBOutlet UIButton *headImageBtn;
+@property (weak, nonatomic) IBOutlet UIImageView *headImageView;
 @property (weak, nonatomic) IBOutlet UIButton *loginAndRegisterBtn;
 
 - (void)initializeUserInterface; /** 初始化用户界面 */
@@ -58,8 +59,8 @@
 
 - (void)initializeUserInterface
 {    
-    self.headImageBtn.layer.masksToBounds = true;
-    self.headImageBtn.layer.cornerRadius = 65 / 2;
+    self.headImageView.layer.masksToBounds = true;
+    self.headImageView.layer.cornerRadius = 65 / 2;
     
     PGCManager *manager = [PGCManager manager];
     [manager readTokenData];
@@ -71,11 +72,13 @@
         // 用户已登录，加载用户头像和名字
         [self.loginAndRegisterBtn setTitle:user.name forState:UIControlStateNormal];
         // 用户头像
+        self.headImageView.userInteractionEnabled = true;
         NSURL *url = [NSURL URLWithString:[kBaseImageURL stringByAppendingString:user.headimage]];
-        [self.headImageBtn sd_setImageWithURL:url forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"头像"]];        
+        [self.headImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"头像"]];
     } else {
         [self.loginAndRegisterBtn setTitle:@"登录/注册" forState:UIControlStateNormal];
-        [self.headImageBtn setImage:[UIImage imageNamed:@"头像"] forState:UIControlStateNormal];
+        self.headImageView.userInteractionEnabled = false;
+        [self.headImageView setImage:[UIImage imageNamed:@"头像"]];
     }
 }
 
@@ -99,7 +102,8 @@
 {
     if ([notifi.userInfo objectForKey:@"Logout"]) {// 收到用户退出登录的通知
         _isLogin = false;
-        [self.headImageBtn setImage:[UIImage imageNamed:@"头像"] forState:UIControlStateNormal];
+        self.headImageView.userInteractionEnabled = false;
+        [self.headImageView setImage:[UIImage imageNamed:@"头像"]];
         [self.loginAndRegisterBtn setTitle:@"登录/注册" forState:UIControlStateNormal];
         return;
     }
@@ -111,9 +115,9 @@
     if ([notifi.userInfo objectForKey:@"Login"]) {// 收到用户登录的通知
         _isLogin = true;
         [self.loginAndRegisterBtn setTitle:user.name forState:UIControlStateNormal];
-        
+        self.headImageView.userInteractionEnabled = true;
         NSURL *url = [NSURL URLWithString:[kBaseImageURL stringByAppendingString:user.headimage]];
-        [self.headImageBtn sd_setImageWithURL:url forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"头像"]];
+        [self.headImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"头像"]];
         return;
     }
     if ([notifi.userInfo objectForKey:@"HeadImage"]) {// 收到用户修改头像的通知
@@ -129,8 +133,8 @@
                 [manager readTokenData];
                 NSString *imageStr = manager.token.user.headimage;
                 NSURL *url = [NSURL URLWithString:[kBaseImageURL stringByAppendingString:imageStr]];
-                NSLog(@"%@", url);
-                [self.headImageBtn sd_setImageWithURL:url forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"头像"]];
+                [self.headImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"头像"]];
+                
             } else {
                 [PGCProgressHUD showMessage:message toView:self.view];
                 
@@ -144,23 +148,33 @@
 }
 
 
-
-#pragma mark - Event
-
+#pragma mark - Gesture
 /**
  头像, 未登录前不能点击
  */
-- (IBAction)iconButtonClick:(UIButton *)sender
+- (IBAction)iconGesture:(UITapGestureRecognizer *)sender
 {
     if (!_isLogin) {
-        PGCLoginController *loginVC = [[PGCLoginController alloc] init];
-        [self.navigationController pushViewController:loginVC animated:true];
+        return;
     } else {
-        PGCUserInfoController *userInfoVC = [[PGCUserInfoController alloc] init];
-        [self.navigationController pushViewController:userInfoVC animated:true];
+        PGCManager *manager = [PGCManager manager];
+        [manager readTokenData];
+        PGCUser *user = manager.token.user;
+        
+        PGCPhoto *photo = [[PGCPhoto alloc] init];
+        photo.url = [kBaseImageURL stringByAppendingString:user.headimage];
+        photo.thumbUrl = [kBaseImageURL stringByAppendingString:user.headimage];
+        photo.scrRect = [self.headImageView convertRect:self.headImageView.bounds toView:nil];
+        
+        PGCPhotoBrowser *brower = [[PGCPhotoBrowser alloc] init];
+        brower.photos = @[photo];
+        brower.selectedIndex = 0;
+        [brower show];
     }
 }
 
+
+#pragma mark - Event
 /**
  登录/注册 block回调登录信息
  */

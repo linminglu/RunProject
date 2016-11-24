@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 @class PGCDemand;
 
-@interface PGCDemandDetailVC : UIViewController
+@interface PGCDemandDetailVC : UITableViewController
 
 @property (strong, nonatomic) PGCDemand *demand;/** 需求模型 */
 

@@ -87,14 +87,14 @@ static NSString * const kSearchViewCell = @"SearchViewCell";
             }
         }
     }
-//    NSArray *descResults = [descSearchs filteredArrayUsingPredicate:predicate];
-//    for (NSString *string in descResults) {
-//        for (PGCProjectInfo *project in self.searchData) {
-//            if ([string isEqualToString:project.desc]) {
-//                [self.searchResults addObject:project];
-//            }
-//        }
-//    }
+    NSArray *descResults = [descSearchs filteredArrayUsingPredicate:predicate];
+    for (NSString *string in descResults) {
+        for (PGCProjectInfo *project in self.searchData) {
+            if ([string isEqualToString:project.desc]) {
+                [self.searchResults addObject:project];
+            }
+        }
+    }
     [self.tableView reloadData];
 }
 

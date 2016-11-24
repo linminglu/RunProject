@@ -56,9 +56,6 @@
 
 /**
  创建btn的子控件
-
- @param btn
- @param index
  */
 - (void)creatBtnSubViewWithBtn:(UIButton *)btn index:(int)index
 {
@@ -66,7 +63,7 @@
     [btn addSubview:imageView];
     imageView.image = [UIImage imageNamed:_shareBtnArray[index]];
     
-    UILabel *btnLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 50, 50, 20)];
+    UILabel *btnLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 40, 50, 20)];
     [btn addSubview:btnLabel];
     btnLabel.text = [NSString stringWithFormat:@"%@", _shareBtnArray[index]];
     btnLabel.font = [UIFont systemFontOfSize:12];
@@ -78,23 +75,29 @@
 #pragma mark - Event
 /**
  分享按钮点击事件
-
- @param sender
  */
 - (void) shareBtnClick:(UIButton *)sender
 {
     switch (sender.tag) {
         case 0:
+        {
             [PGCProgressHUD showMessage:@"QQ好友" toView:self.view];
+        }
             break;
         case 1:
+        {
             [PGCProgressHUD showMessage:@"QQ空间" toView:self.view];
+        }
             break;
         case 2:
+        {
             [PGCProgressHUD showMessage:@"微信好友" toView:self.view];
+        }
             break;
         case 3:
+        {
             [PGCProgressHUD showMessage:@"朋友圈" toView:self.view];
+        }
             break;
         default:
             break;

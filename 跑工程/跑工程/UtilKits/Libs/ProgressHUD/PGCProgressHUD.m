@@ -10,17 +10,6 @@
 
 @implementation PGCProgressHUD
 
-static PGCProgressHUD *instance = nil;
-
-+(instancetype)shareinstance {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        instance = [[PGCProgressHUD alloc] init];
-    });
-    return instance;
-}
-
-
 #pragma mark -
 #pragma mark - UIAlertController
 
@@ -28,7 +17,7 @@ static PGCProgressHUD *instance = nil;
                       title:(NSString *)title {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:title preferredStyle:UIAlertControllerStyleAlert];
     [target presentViewController:alertController animated:true completion:nil];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [alertController dismissViewControllerAnimated:true completion:nil];
     });
 }
@@ -40,7 +29,7 @@ static PGCProgressHUD *instance = nil;
     UIViewController *vc = [UIApplication sharedApplication].keyWindow.rootViewController;
     [vc presentViewController:alert animated:true completion:nil];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [alert dismissViewControllerAnimated:true completion:nil];
         block();
     });
@@ -73,8 +62,18 @@ static PGCProgressHUD *instance = nil;
 #pragma mark -
 #pragma mark - MBProgressHUD
 
+static PGCProgressHUD *instance = nil;
+
++(instancetype)shareinstance {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        instance = [[PGCProgressHUD alloc] init];
+    });
+    return instance;
+}
+
 /**
- 1.5s 后消息的MBProgressHUD
+ 1.0s 后消息的MBProgressHUD
  
  @param title
  */
@@ -84,10 +83,10 @@ static PGCProgressHUD *instance = nil;
     hud.animationType = MBProgressHUDAnimationFade;
     hud.label.text = title;
     
-    [hud hideAnimated:true afterDelay:1.5f];
+    [hud hideAnimated:true afterDelay:1.0f];
 }
 /**
- 1.5s 后消息的MBProgressHUD
+ 1.0s 后消息的MBProgressHUD
  
  @param view
  @param title
@@ -98,7 +97,7 @@ static PGCProgressHUD *instance = nil;
     hud.animationType = MBProgressHUDAnimationFade;
     hud.label.text = title;
     
-    [hud hideAnimated:true afterDelay:1.5f];
+    [hud hideAnimated:true afterDelay:1.0f];
 }
 /**
  1.5s 后消息的MBProgressHUD
@@ -111,7 +110,7 @@ static PGCProgressHUD *instance = nil;
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:true];
     hud.mode = MBProgressHUDModeText;
     hud.label.text = title;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [hud hideAnimated:true];
         block();
     });

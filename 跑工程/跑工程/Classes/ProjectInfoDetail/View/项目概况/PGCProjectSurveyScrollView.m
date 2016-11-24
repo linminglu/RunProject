@@ -137,7 +137,7 @@
     
     PGCAlertView *alert = nil;
     
-    if (user.is_vip == 0) {
+    if (user.is_vip == 1) {
         
     } else {
         if (isRemind) {

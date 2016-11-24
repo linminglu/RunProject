@@ -9,7 +9,7 @@
 #import "IntroduceDemandContactCell.h"
 #import "Contacts.h"
 
-@interface IntroduceDemandContactCell ()
+@interface IntroduceDemandContactCell () <UITextFieldDelegate>
 
 @property (strong, nonatomic) UITextField *nameTextField;/** 姓名输入框 */
 @property (strong, nonatomic) UITextField *phoneTextField;/** 电话输入框 */
@@ -42,11 +42,11 @@
     [self.deleteButton addTarget:self action:@selector(respondsToDeleteBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:self.deleteButton];
     self.deleteButton.sd_layout
-    .topSpaceToView(self.contentView, 10)
-    .rightSpaceToView(self.contentView, 15)
-    .heightIs(image.size.height)
-    .widthIs(image.size.width);
-    
+    .topSpaceToView(self.contentView, 0)
+    .rightSpaceToView(self.contentView, 0)
+    .heightIs(20)
+    .widthIs(40);
+    self.deleteButton.hidden = true;
     
     self.lineCenter = [[UIView alloc] init];
     self.lineCenter.backgroundColor = RGB(240, 240, 240);
@@ -75,11 +75,12 @@
     self.nameTextField.placeholder = @"请输入姓名";
     self.nameTextField.textColor = RGB(102, 102, 102);
     self.nameTextField.font = SetFont(14);
+    self.nameTextField.delegate = self;
     [self.contentView addSubview:self.nameTextField];
     self.nameTextField.sd_layout
     .centerYEqualToView(name)
     .leftSpaceToView(name, 10)
-    .rightSpaceToView(self.deleteButton, 20)
+    .rightSpaceToView(self.contentView, 40)
     .heightIs(30);
     
     // 电话标签
@@ -100,6 +101,7 @@
     self.phoneTextField.placeholder = @"请输入电话";
     self.phoneTextField.textColor = RGB(102, 102, 102);
     self.phoneTextField.font = SetFont(14);
+    self.phoneTextField.delegate = self;
     [self.contentView addSubview:self.phoneTextField];
     self.phoneTextField.sd_layout
     .centerYEqualToView(phone)
@@ -108,7 +110,7 @@
     .heightIs(30);
     
     UIView *bottomLine = [[UIView alloc] init];
-    bottomLine.backgroundColor = RGB(210, 210, 210);
+    bottomLine.backgroundColor = RGB(240, 240, 240);
     [self.contentView addSubview:bottomLine];
     bottomLine.sd_layout
     .bottomSpaceToView(self.contentView, 0)
@@ -117,6 +119,22 @@
     .heightIs(1);
     
     [self setupAutoHeightWithBottomView:self.lineCenter bottomMargin:40];
+}
+
+
+#pragma mark - UITextFieldDelegate
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if (!(textField.text.length > 0)) {
+        return;
+    }
+    if (textField == self.nameTextField) {
+        self.contact.name = textField.text;
+    }
+    if (textField == self.phoneTextField) {
+        self.contact.phone = textField.text;
+    }
 }
 
 
@@ -136,11 +154,13 @@
 {
     _contact = contact;
     
-    if (!contact) {
-        return;
-    }
-    self.nameTextField.text = contact.name;
-    self.phoneTextField.text = contact.phone;
+    self.nameTextField.text = contact.name ? contact.name : @"";
+    self.phoneTextField.text = contact.phone ? contact.phone : @"";
+}
+
+- (void)setButtonHidden:(BOOL)hidden
+{
+    self.deleteButton.hidden = hidden;
 }
 
 

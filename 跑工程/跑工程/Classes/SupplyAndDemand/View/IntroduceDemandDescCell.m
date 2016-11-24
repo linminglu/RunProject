@@ -36,9 +36,12 @@
     self.descTextView.textColor = RGB(102, 102, 102);
     self.descTextView.font = SetFont(14);
     self.descTextView.delegate = self;
+    self.descTextView.layer.cornerRadius = 5.0;
+    self.descTextView.layer.borderColor = PGCBackColor.CGColor;
+    self.descTextView.layer.borderWidth = 0.5;
     [self.contentView addSubview:self.descTextView];
     self.descTextView.sd_layout
-    .topSpaceToView(self.contentView, 0)
+    .topSpaceToView(self.contentView, 5)
     .leftSpaceToView(self.contentView, 5)
     .rightSpaceToView(self.contentView, 5)
     .heightIs(100);
@@ -53,7 +56,7 @@
     .rightSpaceToView(self.descTextView, 8)
     .autoHeightRatio(0);
     
-    [self setupAutoHeightWithBottomView:self.descTextView bottomMargin:0];
+    [self setupAutoHeightWithBottomView:self.descTextView bottomMargin:5];
 }
 
 
@@ -65,6 +68,13 @@
         self.placeholder.text = @"详细介绍...";
     } else {
         self.placeholder.text = @"";
+    }
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    if (textView.text.length == 0) {
+        self.introduceDescs = textView.text;
     }
 }
 

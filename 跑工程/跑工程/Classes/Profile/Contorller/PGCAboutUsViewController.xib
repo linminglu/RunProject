@@ -27,16 +27,22 @@
                         <constraint firstAttribute="width" constant="100" id="q9d-lM-8kS"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="工程宝" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zb3-B3-pOB">
-                    <rect key="frame" x="164.5" y="209" width="46" height="18"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="当前版本 v1.0.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zb3-B3-pOB">
+                    <rect key="frame" x="130.5" y="209" width="114" height="18"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="         工程宝APP立足于互联网+建筑工程产业，是专注为广大建筑、建材行业用户提供全面、准确、及时的建筑工程信息以及招标采购等需求和供应信息服务的移动应用平台!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xYo-vy-Rkj">
-                    <rect key="frame" x="20" y="247" width="335" height="72"/>
+                    <rect key="frame" x="20" y="257" width="335" height="72"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="版权所有" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8u4-QE-3Gm">
+                    <rect key="frame" x="20" y="629" width="335" height="18"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
@@ -46,12 +52,15 @@
                 <constraint firstItem="vw2-uv-Z3d" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="104" id="73H-NF-TqS"/>
                 <constraint firstItem="zb3-B3-pOB" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="9XO-mO-hzW"/>
                 <constraint firstItem="zb3-B3-pOB" firstAttribute="top" secondItem="vw2-uv-Z3d" secondAttribute="bottom" constant="5" id="M21-wB-1Qk"/>
+                <constraint firstAttribute="trailing" secondItem="8u4-QE-3Gm" secondAttribute="trailing" constant="20" id="U1H-99-ibA"/>
                 <constraint firstItem="vw2-uv-Z3d" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="eFW-Om-d5s"/>
                 <constraint firstItem="xYo-vy-Rkj" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="j2c-7Z-b5C"/>
                 <constraint firstItem="xYo-vy-Rkj" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="mMv-Hv-yFv"/>
-                <constraint firstItem="xYo-vy-Rkj" firstAttribute="top" secondItem="zb3-B3-pOB" secondAttribute="bottom" constant="20" id="n2p-ya-HS1"/>
+                <constraint firstItem="xYo-vy-Rkj" firstAttribute="top" secondItem="zb3-B3-pOB" secondAttribute="bottom" constant="30" id="n2p-ya-HS1"/>
+                <constraint firstAttribute="bottom" secondItem="8u4-QE-3Gm" secondAttribute="bottom" constant="20" id="tDo-W0-N2N"/>
+                <constraint firstItem="8u4-QE-3Gm" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="wk5-wb-R2r"/>
             </constraints>
-            <point key="canvasLocation" x="-413" y="79"/>
+            <point key="canvasLocation" x="-705" y="22"/>
         </view>
     </objects>
     <resources>
