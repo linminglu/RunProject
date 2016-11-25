@@ -9,23 +9,51 @@
 #ifndef PGCConfig_h
 #define PGCConfig_h
 
-#define PGCNotificationCenter [NSNotificationCenter defaultCenter]
-#define PGCUserDefault [NSUserDefaults standardUserDefaults]
-#define PGCFileManager [NSFileManager defaultManager]
+//app的版本号
+#define kAppVersion [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
 
+//app build版本号
+#define kAppBuildVersion [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]
+
+//app的显示名称
+#define kAppDisplayName [[NSBundle mainBundle].localizedInfoDictionary objectForKey:@"CFBundleDisplayName"]
+
+//app的identifier
+#define kAppBundleIdentifier [[NSBundle mainBundle] bundleIdentifier]
+
+/****NSLog的Debug模式****/
+#ifdef DEBUG
+#define NSLog(FORMAT, ...) NSLog((@"[File:%s]" "[Func:%s]" "[Line:%d] " FORMAT), [[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
+//    #define NSLog(FORMAT, ...) fprintf(stderr,"[File:%s]:[Line:%d] NSLog:%s\n",[[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __LINE__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String])
+#else
+#define NSLog(...)
+#endif
+
+//尺寸相关
+#define KeyWindow [UIApplication sharedApplication].keyWindow
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds
 #define SCREEN_SIZE [UIScreen mainScreen].bounds.size
 #define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
 #define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
 
-#define KeyWindow [UIApplication sharedApplication].keyWindow
 
-#define SystemVersion [[UIDevice currentDevice].systemVersion floatValue]
+// 当前版本
+#define FSystemVersion [[[UIDevice currentDevice] systemVersion] floatValue]
+#define DSystemVersion [[[UIDevice currentDevice] systemVersion] doubleValue]
+#define SSystemVersion [[UIDevice currentDevice] systemVersion]
 
-#define STATUS_BAR_HEIGHT 20//状态栏 高度
-#define NAVIGATION_BAR_HEIGHT 44//导航栏 高度
-#define STATUS_AND_NAVIGATION_HEIGHT ((STATUS_BAR_HEIGHT)+(NAVIGATION_BAR_HEIGHT))//状态栏 ＋ 导航栏 高度
-#define TAB_BAR_HEIGHT 49+1//标签栏 高度
+
+// UI相关
+
+#define STATUS_BAR_HEIGHT 20 // 状态栏 高度
+#define NAVIGATION_BAR_HEIGHT 44 // 导航栏 高度
+#define STATUS_AND_NAVIGATION_HEIGHT ((STATUS_BAR_HEIGHT)+(NAVIGATION_BAR_HEIGHT)) // 状态＋导航 高度
+#define TAB_BAR_HEIGHT 49+1 // 标签栏 高度
+
+#define SetFont(size) [UIFont systemFontOfSize:size]
+
+#define RGBA(r,g,b,a) [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:a]
+#define RGB(r,g,b) RGBA(r,g,b,1.0f)
 
 #define PGCThemeColor RGB(249, 136, 46)
 #define PGCTintColor RGB(250, 117, 10)//主题色
@@ -33,32 +61,10 @@
 #define PGCBackColor RGB(239, 239, 241)//阴影颜色
 
 
-/****宏定义***/
-#define SetFont(size) [UIFont systemFontOfSize:size]
+#define PGCNotificationCenter [NSNotificationCenter defaultCenter]
+#define PGCUserDefault [NSUserDefaults standardUserDefaults]
+#define PGCFileManager [NSFileManager defaultManager]
 
-#define RGBA(r,g,b,a) [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:a]
-#define RGB(r,g,b) RGBA(r,g,b,1.0f)
-
-
-/****NSLog的Debug模式****/
-#ifdef DEBUG
-    #define NSLog(FORMAT, ...) NSLog((@"[File:%s]" "[Func:%s]" "[Line:%d] " FORMAT), [[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-//    #define NSLog(FORMAT, ...) fprintf(stderr,"[File:%s]:[Line:%d] NSLog:%s\n",[[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __LINE__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String])
-#else
-    #define NSLog(...)
-#endif
-
-
-/*****通知name*****/
-static NSString * const kProfileNotification = @"ProfileNotification";//我 控制器
-
-static NSString * const kReloadProfileInfo = @"ReloadProfileInfo";// 修改个人资料 的通知
-
-static NSString * const kRefreshCollectTable = @"RefreshCollectTable";// 项目收藏 的通知
-
-static NSString * const kContactReloadData = @"ContactReloadData";// 删除联系人 的通知
-
-static NSString * const kRefreshDemandAndSupplyData = @"RefreshDemandAndSupplyData";// 收藏供需 的通知
 
 /*****第三方服务的key*****/
 #define AMapKey @"0eeedd0b0166122dc319ed94dc04cf6a"

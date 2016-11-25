@@ -10,15 +10,18 @@
 
 @implementation UIImage (Image)
 
-+ (UIImage *)imageWithOriginalName:(NSString *)imageName {
++ (UIImage *)imageWithOriginalName:(NSString *)imageName
+{
    UIImage *image = [UIImage imageNamed:imageName];
     
     return [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 }
 
 
-+ (UIImage *)imageWithStretchableName:(NSString *)imageName {
++ (UIImage *)imageWithStretchableName:(NSString *)imageName
+{
     UIImage *image = [UIImage imageNamed:imageName];
+    
     return [image stretchableImageWithLeftCapWidth:image.size.width * 0.5 topCapHeight:image.size.height * 0.5];
 }
 

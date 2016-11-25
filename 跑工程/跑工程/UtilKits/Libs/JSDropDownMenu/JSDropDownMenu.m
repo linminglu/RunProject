@@ -479,7 +479,7 @@ static NSString *const kJSCollectionViewCell = @"JSCollectionViewCell";
         [view.superview addSubview:self];
         
         [UIView animateWithDuration:0.25 animations:^{
-            view.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.7];
+            view.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.4];
         }];
     } else {
         [UIView animateWithDuration:0.25 animations:^{

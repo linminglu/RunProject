@@ -9,11 +9,17 @@
 #import <MBProgressHUD/MBProgressHUD.h>
 
 @interface MBProgressHUD (PGC)
+
 /** 显示成功信息 */
 + (void)showSuccess:(NSString *)success toView:(UIView *)view;
+
 /** 显示失败信息 */
 + (void)showError:(NSString *)error toView:(UIView *)view;
+
 /** 显示加载信息 */
 + (void)showLoading:(NSString *)loading toView:(UIView *)view;
+
+/** 显示失败信息 有回调 */
++ (void)showError:(NSString *)error complete:(void(^)(void))complete;
 
 @end

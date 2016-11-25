@@ -6,8 +6,6 @@
 //  Copyright © 2016年 Mac. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
 
 @interface NSString (Size)
 

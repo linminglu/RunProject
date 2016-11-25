@@ -64,7 +64,7 @@
 
 static PGCProgressHUD *instance = nil;
 
-+(instancetype)shareinstance {
++ (instancetype)shareinstance {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         instance = [[PGCProgressHUD alloc] init];
@@ -72,146 +72,86 @@ static PGCProgressHUD *instance = nil;
     return instance;
 }
 
-/**
- 1.0s 后消息的MBProgressHUD
- 
- @param title
- */
-+ (void)showProgressHUDWithTitle:(NSString *)title {
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KeyWindow animated:true];
-    hud.mode = MBProgressHUDModeText;
-    hud.animationType = MBProgressHUDAnimationFade;
-    hud.label.text = title;
-    
-    [hud hideAnimated:true afterDelay:1.0f];
-}
-/**
- 1.0s 后消息的MBProgressHUD
- 
- @param view
- @param title
- */
-+ (void)showProgressHUDWith:(UIView *)view title:(NSString *)title {
++ (MBProgressHUD *)showProgress:(NSString *)msg toView:(UIView *)view
+{
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:true];
-    hud.mode = MBProgressHUDModeText;
+    hud.mode = MBProgressHUDModeIndeterminate;
     hud.animationType = MBProgressHUDAnimationFade;
-    hud.label.text = title;
+    hud.label.text = msg;
+    hud.label.font = [UIFont boldSystemFontOfSize:16];
+    return hud;
+}
+
++ (void)show:(NSString *)msg toView:(UIView *)view mode:(ProgressMode)myMode customImgView:(UIImageView *)customImgView
+{
+    PGCProgressHUD *instance = [PGCProgressHUD shareinstance];
     
-    [hud hideAnimated:true afterDelay:1.0f];
-}
-/**
- 1.5s 后消息的MBProgressHUD
- 
- @param view
- @param title
- @param block
- */
-+ (void)showProgressHUDWith:(UIView *)view title:(NSString *)title block:(void(^)(void))block {
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:true];
-    hud.mode = MBProgressHUDModeText;
-    hud.label.text = title;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [hud hideAnimated:true];
-        block();
-    });
-}
-
-
-+ (MBProgressHUD *)showProgressHUD:(UIView *)view label:(NSString *)label {
-    MBProgressHUD *progressHUD = [MBProgressHUD showHUDAddedTo:view animated:true];
-    progressHUD.mode = MBProgressHUDModeIndeterminate;
-    progressHUD.animationType = MBProgressHUDAnimationFade;
-    progressHUD.label.text = label;
-    return progressHUD;
-}
-
-
-
-+(void)show:(NSString *)msg toView:(UIView *)view mode:(ProgressMode)myMode{
-    [self show:msg toView:view mode:myMode customImgView:nil];
-}
-
-+(void)show:(NSString *)msg toView:(UIView *)view mode:(ProgressMode)myMode customImgView:(UIImageView *)customImgView{
     //如果已有弹框，先消失
-    if ([PGCProgressHUD shareinstance].hud != nil) {
-        [[PGCProgressHUD shareinstance].hud hideAnimated:true];
-        [PGCProgressHUD shareinstance].hud = nil;
+    if (instance.hud != nil) {
+        [instance.hud hideAnimated:true];
+        instance.hud = nil;
     }
     
-    [PGCProgressHUD shareinstance].hud = [MBProgressHUD showHUDAddedTo:view animated:true];
+    instance.hud = [MBProgressHUD showHUDAddedTo:view animated:true];
+    instance.hud.contentColor = [UIColor darkGrayColor];
+    instance.hud.margin = 10;
+    instance.hud.removeFromSuperViewOnHide = true;
+    instance.hud.detailsLabel.text = msg;
+    instance.hud.detailsLabel.font = [UIFont systemFontOfSize:16];
     
-    [PGCProgressHUD shareinstance].hud.contentColor = [UIColor blackColor];
-    
-    [[PGCProgressHUD shareinstance].hud setMargin:10];
-    [[PGCProgressHUD shareinstance].hud setRemoveFromSuperViewOnHide:true];
-    [PGCProgressHUD shareinstance].hud.detailsLabel.text = msg;
-    
-    [PGCProgressHUD shareinstance].hud.detailsLabel.font = [UIFont systemFontOfSize:14];
     switch (myMode) {
         case ProgressModeOnlyText:
-            [PGCProgressHUD shareinstance].hud.mode = MBProgressHUDModeText;
+            instance.hud.mode = MBProgressHUDModeText;
             break;
             
         case ProgressModeLoading:
-            [PGCProgressHUD shareinstance].hud.mode = MBProgressHUDModeIndeterminate;
+            instance.hud.mode = MBProgressHUDModeIndeterminate;
             break;
         case ProgressModeCircleLoading:
-            [PGCProgressHUD shareinstance].hud.mode = MBProgressHUDModeDeterminate;
-            break;        
-        case ProgressModeSuccess:
-            [PGCProgressHUD shareinstance].hud.mode = MBProgressHUDModeCustomView;
-            [PGCProgressHUD shareinstance].hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"success"]];
+            instance.hud.mode = MBProgressHUDModeDeterminate;
             break;
-            
         default:
             break;
     }
 }
 
-
-+(void)hide{
-    if ([PGCProgressHUD shareinstance].hud != nil) {
-        [[PGCProgressHUD shareinstance].hud hideAnimated:true];
++ (void)hide
+{
+    PGCProgressHUD *instance = [PGCProgressHUD shareinstance];
+    
+    if (instance.hud) {
+        [instance.hud hideAnimated:true];
     }
 }
 
-
-+(void)showMessage:(NSString *)msg toView:(UIView *)view{
-    [self show:msg toView:view mode:ProgressModeOnlyText];
-    [[PGCProgressHUD shareinstance].hud hideAnimated:true afterDelay:1.5];
++ (void)show:(NSString *)msg toView:(UIView *)view mode:(ProgressMode)myMode
+{
+    [self show:msg toView:view mode:myMode customImgView:nil];
 }
 
 
-
-+(void)showMessage:(NSString *)msg toView:(UIView *)view afterDelayTime:(NSInteger)delay{
++ (void)showMessage:(NSString *)msg toView:(UIView *)view
+{
     [self show:msg toView:view mode:ProgressModeOnlyText];
+    
+    [[PGCProgressHUD shareinstance].hud hideAnimated:true afterDelay:1.5];
+}
+
++ (void)showMessage:(NSString *)msg toView:(UIView *)view afterDelayTime:(NSInteger)delay
+{
+    [self show:msg toView:view mode:ProgressModeOnlyText];
+    
     [[PGCProgressHUD shareinstance].hud hideAnimated:true afterDelay:delay];
 }
 
-+(void)showSuccess:(NSString *)msg toView:(UIView *)view{
-    [self show:msg toView:view mode:ProgressModeSuccess];
-    [[PGCProgressHUD shareinstance].hud hideAnimated:true afterDelay:1.5];
-    
-}
-
-
-+(void)showProgress:(NSString *)msg toView:(UIView *)view{
-    [self show:msg toView:view mode:ProgressModeLoading];
-}
-
-+(MBProgressHUD *)showProgressCircle:(NSString *)msg toView:(UIView *)view{
++ (MBProgressHUD *)showProgressCircle:(NSString *)msg toView:(UIView *)view
+{
     if (view == nil) view = (UIView*)[UIApplication sharedApplication].delegate.window;
+    
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:true];
     hud.mode = MBProgressHUDModeAnnularDeterminate;
     hud.label.text = msg;
     return hud;
-}
-
-
-+(void)showMsgWithoutView:(NSString *)msg{
-    UIWindow *view = [[UIApplication sharedApplication].windows lastObject];
-    [self show:msg toView:view mode:ProgressModeOnlyText];
-    [[PGCProgressHUD shareinstance].hud hideAnimated:true afterDelay:1.5];
 }
 
 @end

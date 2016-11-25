@@ -13,8 +13,6 @@ typedef NS_ENUM(NSUInteger, ProgressMode) {
     ProgressModeOnlyText,//文字
     ProgressModeLoading,//加载菊花
     ProgressModeCircleLoading,//加载圆形
-    ProgressModeCustomAnimation,//自定义加载动画（序列帧实现）
-    ProgressModeSuccess,//成功
 };
 
 
@@ -78,42 +76,22 @@ typedef NS_ENUM(NSUInteger, ProgressMode) {
 
 @property (strong, nonatomic) MBProgressHUD *hud;
 
-+ (instancetype)shareinstance;
-
-/**
- 进度(菊花)提示的MBProgressHUD
-
- @param view
- @param label
- @return
- */
-+ (MBProgressHUD *)showProgressHUD:(UIView *)view label:(NSString *)label;
-
-
+//进度(菊花)提示
++ (MBProgressHUD *)showProgress:(NSString *)msg toView:(UIView *)view;
 
 //显示
-+(void)show:(NSString *)msg toView:(UIView *)view mode:(ProgressMode)myMode;
-
-//隐藏
-+(void)hide;
++ (void)show:(NSString *)msg toView:(UIView *)view mode:(ProgressMode)myMode;
 
 //显示提示（1.5秒后消失）
-+(void)showMessage:(NSString *)msg toView:(UIView *)view;
++ (void)showMessage:(NSString *)msg toView:(UIView *)view;
 
 //显示提示（N秒后消失）
-+(void)showMessage:(NSString *)msg toView:(UIView *)view afterDelayTime:(NSInteger)delay;
++ (void)showMessage:(NSString *)msg toView:(UIView *)view afterDelayTime:(NSInteger)delay;
 
 //显示进度(转圈)
-+(MBProgressHUD *)showProgressCircle:(NSString *)msg toView:(UIView *)view;
++ (MBProgressHUD *)showProgressCircle:(NSString *)msg toView:(UIView *)view;
 
-//显示进度(菊花)
-+(void)showProgress:(NSString *)msg toView:(UIView *)view;
-
-//显示成功提示
-+(void)showSuccess:(NSString *)msg toView:(UIView *)view;
-
-//在最上层显示
-+(void)showMsgWithoutView:(NSString *)msg;
-
+//隐藏
++ (void)hide;
 
 @end
