@@ -74,7 +74,7 @@ typedef NS_ENUM(NSUInteger, BarButtonTag) {
     
     _areaDatas = [[PGCAreaManager manager] setAreaData];
     _typeDatas = [[PGCMaterialServiceTypes materialServiceTypes] setMaterialTypes];
-    _timeDatas = @[@"不限", @"一天", @"三天", @"一周", @"一个月", @"三个月", @"半年", @"一年"];
+    _timeDatas = @[@"时间", @"一天", @"三天", @"一周", @"一个月", @"三个月", @"半年", @"一年"];
 }
 
 - (void)initializeUserInterface
