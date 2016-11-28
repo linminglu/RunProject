@@ -51,8 +51,10 @@
 
 - (void)initializeUserInterface
 {
-    self.navigationItem.title = @"添加联系人";
+    self.title = @"添加联系人";
+    self.automaticallyAdjustsScrollViewInsets = false;
     self.view.backgroundColor = [UIColor whiteColor];
+    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleDone target:self action:@selector(respondsToBarItemSave:)];
     
     [self.view addSubview:self.tableView];
@@ -74,7 +76,7 @@
     [params setObject:@(user.user_id) forKey:@"user_id"];
     [params setObject:@"iphone" forKey:@"client_type"];
     [params setObject:manager.token.token forKey:@"token"];
-    NSLog(@"%@", params);
+    
     MBProgressHUD *hud = [PGCProgressHUD showProgress:@"正在添加联系人..." toView:self.view];
     [PGCContactAPIManager addContactRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
         [hud hideAnimated:true];
@@ -248,15 +250,15 @@
 
 - (UILabel *)nameLabel {
     if (!_nameLabel) {
-        UILabel *nameTitle = [[UILabel alloc] initWithFrame:CGRectMake(15, STATUS_AND_NAVIGATION_HEIGHT, 60, 50)];
+        UILabel *nameTitle = [[UILabel alloc] initWithFrame:CGRectMake(15, STATUS_AND_NAVIGATION_HEIGHT, 60, 40)];
         nameTitle.textColor = PGCTextColor;
-        nameTitle.font = SetFont(16);
-        nameTitle.text = @"姓名：";
+        nameTitle.font = SetFont(15);
+        nameTitle.text = @"姓   名：";
         [self.view addSubview:nameTitle];
         
-        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameTitle.right_sd, STATUS_AND_NAVIGATION_HEIGHT, self.view.width_sd - nameTitle.right_sd - 15, 50)];
+        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameTitle.right_sd, STATUS_AND_NAVIGATION_HEIGHT, self.view.width_sd - nameTitle.right_sd - 15, 40)];
         _nameLabel.textColor = RGB(102, 102, 102);
-        _nameLabel.font = SetFont(16);
+        _nameLabel.font = SetFont(15);
         [self.view addSubview:_nameLabel];
     }
     return _nameLabel;

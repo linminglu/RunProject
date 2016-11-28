@@ -27,8 +27,6 @@ typedef NS_ENUM(NSUInteger, BarItemTag) {
     SearchBtnTag,
 };
 
-static NSString * const kProjectInfoCell = @"ProjectInfoCell";
-
 @interface PGCProjectInfoController () <UITableViewDataSource, UITableViewDelegate, JSDropDownMenuDataSource, JSDropDownMenuDelegate>
 {
     NSArray *_areaDatas;/** 地区数据源 */
@@ -101,8 +99,8 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
 
 - (void)initializeUserInterface
 {
-    self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = false;
+    self.view.backgroundColor = [UIColor whiteColor];
 
     UIBarButtonItem *map = [self barButtonItem:CGRectMake(0, 0, 45, 40)
                                            tag:MapBtnTag
@@ -134,63 +132,6 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
     // 添加项目收藏与取消收藏的通知
     [PGCNotificationCenter addObserver:self selector:@selector(loadProjectData) name:kRefreshCollectTable object:nil];
 }
-
-
-
-#pragma mark -
-#pragma mark - Event
-
-- (void)barButtonItemEvent:(UIButton *)sender
-{
-    PGCManager *manager = [PGCManager manager];
-    [manager readTokenData];
-    PGCUser *user = manager.token.user;
-    PGCProjectRootViewController *rootVC = [[PGCProjectRootViewController alloc] init];
-    switch (sender.tag) {
-        case MapBtnTag:
-        {
-            PGCMapTypeViewController *mapVC = [[PGCMapTypeViewController alloc] init];
-            [self.navigationController pushViewController:mapVC animated:true];
-        }
-            break;
-        case RecordBtnTag:
-        {
-            if (!user) {
-                [MBProgressHUD showError:@"请先登录" toView:self.view];
-                return;
-            }
-            rootVC.navigationItem.title = @"浏览记录";
-            rootVC.bottomBtnTitle = @"删除";
-            rootVC.projectType = 1;
-            
-            [self.navigationController pushViewController:rootVC animated:true];
-        }
-            break;
-        case HeartBtnTag:
-        {
-            if (!user) {
-                [MBProgressHUD showError:@"请先登录" toView:self.view];
-                return;
-            }
-            rootVC.navigationItem.title = @"我的收藏";
-            rootVC.bottomBtnTitle = @"取消收藏";
-            rootVC.projectType = 2;
-            
-            [self.navigationController pushViewController:rootVC animated:true];
-        }
-            break;
-        case SearchBtnTag:
-        {
-            PGCSearchViewController *searchVC = [[PGCSearchViewController alloc] init];
-            searchVC.searchData = self.dataSource;
-            [self.navigationController pushViewController:searchVC animated:true];
-        }
-            break;
-        default:
-            break;
-    }
-}
-
 
 
 #pragma mark - 
@@ -253,6 +194,68 @@ static NSString * const kProjectInfoCell = @"ProjectInfoCell";
         }
     }];
 }
+
+
+#pragma mark -
+#pragma mark - Event
+
+- (void)barButtonItemEvent:(UIButton *)sender
+{
+    PGCManager *manager = [PGCManager manager];
+    [manager readTokenData];
+    PGCUser *user = manager.token.user;
+    PGCProjectRootViewController *rootVC = [[PGCProjectRootViewController alloc] init];
+    switch (sender.tag) {
+        case MapBtnTag:
+        {
+            PGCMapTypeViewController *mapVC = [[PGCMapTypeViewController alloc] init];
+            NSMutableArray *array = [NSMutableArray array];
+            for (PGCProjectInfo *model in self.dataSource) {
+                [array addObject:@{@"lat":model.lat, @"lng":model.lng}];
+            }
+            mapVC.coordinates = array;
+            [self.navigationController pushViewController:mapVC animated:true];
+        }
+            break;
+        case RecordBtnTag:
+        {
+            if (!user) {
+                [MBProgressHUD showError:@"请先登录" toView:self.view];
+                return;
+            }
+            rootVC.title = @"浏览记录";
+            rootVC.bottomBtnTitle = @"删除";
+            rootVC.projectType = 1;
+            
+            [self.navigationController pushViewController:rootVC animated:true];
+        }
+            break;
+        case HeartBtnTag:
+        {
+            if (!user) {
+                [MBProgressHUD showError:@"请先登录" toView:self.view];
+                return;
+            }
+            rootVC.title = @"我的收藏";
+            rootVC.bottomBtnTitle = @"取消收藏";
+            rootVC.projectType = 2;
+            
+            [self.navigationController pushViewController:rootVC animated:true];
+        }
+            break;
+        case SearchBtnTag:
+        {
+            PGCSearchViewController *searchVC = [[PGCSearchViewController alloc] init];
+            searchVC.searchData = self.dataSource;
+            [self.navigationController pushViewController:searchVC animated:true];
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+
 
 #pragma mark -
 #pragma mark - UITableViewDataSource

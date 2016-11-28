@@ -58,6 +58,8 @@ UIKIT_EXTERN NSString *const kGetAccessOrCollect;// 获取收藏与浏览记录
 
 UIKIT_EXTERN NSString *const kGetNearProjects;// 地图项目
 
+UIKIT_EXTERN NSString *const kGetContactProjects;// 获取联系人参与过的项目
+
 
 #pragma mark - 供需
 

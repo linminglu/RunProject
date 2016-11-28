@@ -32,7 +32,10 @@
 
 - (void)initializeUserInterface
 {
-    self.navigationItem.title = @"意见反馈";
+    self.title = @"意见反馈";
+    self.automaticallyAdjustsScrollViewInsets = false;
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"提交" style:UIBarButtonItemStylePlain target:self action:@selector(respondsToSendFeedback:)];
     self.automaticallyAdjustsScrollViewInsets = false;
     self.textView.layer.borderColor = [UIColor lightGrayColor].CGColor;
@@ -48,11 +51,11 @@
     [self.view endEditing:true];
     
     if (!(self.textView.text.length > 0)) {
-        [PGCProgressHUD showMessage:@"请输入您的反馈意见" toView:self.view];
+        [MBProgressHUD showError:@"请输入您的反馈意见" toView:self.view];
         return;
     }
     if (!(self.phoneTF.text.length > 0)) {
-        [PGCProgressHUD showMessage:@"请输入您的联系方式" toView:self.view];
+        [MBProgressHUD showError:@"请输入您的联系方式" toView:self.view];
         return;
     }
     self.feedback.content = self.textView.text;

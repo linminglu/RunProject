@@ -134,7 +134,7 @@
     [manager readTokenData];
     PGCUser *user = manager.token.user;
     if (!user) {
-        [PGCProgressHUD showMessage:@"请先登录" toView:KeyWindow];
+        [MBProgressHUD showError:@"请先登录" toView:KeyWindow];
         return;
     }
     BOOL isRemind = [[PGCUserDefault valueForKey:@"isRemind"] boolValue];

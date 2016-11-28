@@ -129,14 +129,6 @@ static PGCProgressHUD *instance = nil;
     [self show:msg toView:view mode:myMode customImgView:nil];
 }
 
-
-+ (void)showMessage:(NSString *)msg toView:(UIView *)view
-{
-    [self show:msg toView:view mode:ProgressModeOnlyText];
-    
-    [[PGCProgressHUD shareinstance].hud hideAnimated:true afterDelay:1.5];
-}
-
 + (void)showMessage:(NSString *)msg toView:(UIView *)view afterDelayTime:(NSInteger)delay
 {
     [self show:msg toView:view mode:ProgressModeOnlyText];

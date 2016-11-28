@@ -10,7 +10,7 @@
 
 @interface PGCProjectRootViewController : UIViewController
 
-@property (copy, nonatomic) NSString *bottomBtnTitle;/** 底部按钮标题 */
 @property (assign, nonatomic) int projectType;/** 收藏与浏览的类型 */
+@property (copy, nonatomic) NSString *bottomBtnTitle;/** 底部按钮标题 */
 
 @end

@@ -8,6 +8,7 @@
 
 #import "PGCContactAPIManager.h"
 #import "PGCContact.h"
+#import "PGCProjectInfo.h"
 
 @implementation PGCContactAPIManager
 
@@ -48,6 +49,35 @@
                 [contactArr addObject:contact];
             }
             respondsBlock(RespondsStatusSuccess, resultMsg, contactArr);
+        }
+        else {
+            respondsBlock(RespondsStatusDataError, resultMsg, nil);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [MBProgressHUD showError:@"网络错误(未连接)" toView:KeyWindow];
+        respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
+    }];
+}
+
+
++ (NSURLSessionDataTask *)getContactProjectsRequestWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, NSMutableArray *))respondsBlock
+{
+    return [self requestPOST:kGetContactProjects parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSInteger resultCode = [responseObject[@"code"] integerValue];
+        NSString *resultMsg = responseObject[@"msg"];
+        NSDictionary *resultData = responseObject[@"data"];
+        
+        if (resultCode == 200) {
+            
+            NSMutableArray *results = [NSMutableArray array];
+            for (id value in resultData) {
+                PGCProjectInfo *project = [[PGCProjectInfo alloc] init];
+                [project mj_setKeyValues:value];
+                // 将模型添加到数组中
+                [results addObject:project];
+            }            
+            respondsBlock(RespondsStatusSuccess, resultMsg, results);
         }
         else {
             respondsBlock(RespondsStatusDataError, resultMsg, nil);

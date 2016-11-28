@@ -11,7 +11,7 @@
 #import "PGCIntroduceSelectView.h"
 #import "PGCSupply.h"
 
-@interface IntroduceSupplyTopCell ()
+@interface IntroduceSupplyTopCell () <UITextFieldDelegate>
 
 @property (strong, nonatomic) PGCIntroducePublicView *title;/** 标题 */
 @property (strong, nonatomic) PGCIntroducePublicView *company;/** 供应商 */
@@ -39,6 +39,8 @@
 - (void)createUI
 {
     self.title = [[PGCIntroducePublicView alloc] initWithTitle:@"标题：" placeholder:@"请输入标题"];
+    self.title.contentTF.delegate = self;
+    self.title.contentTF.tag = SupplyTitleTF;
     [self.contentView addSubview:self.title];
     self.title.sd_layout
     .topSpaceToView(self.contentView, 0)
@@ -58,6 +60,8 @@
     
     
     self.company = [[PGCIntroducePublicView alloc] initWithTitle:@"供应商家：" placeholder:@"请输入供应商家"];
+    self.company.contentTF.delegate = self;
+    self.company.contentTF.tag = SupplyCompanyTF;
     [self.contentView addSubview:self.company];
     self.company.sd_layout
     .topSpaceToView(grayView_1, 0)
@@ -77,6 +81,8 @@
     
     
     self.address = [[PGCIntroducePublicView alloc] initWithTitle:@"地址：" placeholder:@"请输入地址"];
+    self.address.contentTF.delegate = self;
+    self.address.contentTF.tag = SupplyAddressTF;
     [self.contentView addSubview:self.address];
     self.address.sd_layout
     .topSpaceToView(line_1, 0)
@@ -95,7 +101,7 @@
     .heightIs(8);
     
     
-    self.area = [[PGCIntroduceSelectView alloc] initWithTitle:@"地区：" content:@"当前位置"];
+    self.area = [[PGCIntroduceSelectView alloc] initWithTitle:@"地区：" content:@"点击选择"];
     [self.area addTarget:self action:@selector(selectArea:)];
     [self.contentView addSubview:self.area];
     self.area.sd_layout
@@ -115,7 +121,7 @@
     .heightIs(1);
     
     
-    self.type = [[PGCIntroduceSelectView alloc] initWithTitle:@"需求：" content:@"点击选择"];
+    self.type = [[PGCIntroduceSelectView alloc] initWithTitle:@"类别：" content:@"点击选择"];
     [self.type addTarget:self action:@selector(selectDemand:)];
     [self.contentView addSubview:self.type];
     self.type.sd_layout
@@ -128,27 +134,24 @@
 }
 
 
+#pragma mark - UITextFieldDelegate
 
-#pragma mark - Setter
-
-- (void)setTopSupply:(PGCSupply *)topSupply
+- (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    _topSupply = topSupply;
+    NSString *text = textField.text.length > 0 ? textField.text : @"";
     
-    if (!topSupply) {
-        return;
+    switch (textField.tag) {
+        case SupplyTitleTF: self.topSupply.title = text;
+            break;
+        case SupplyCompanyTF: self.topSupply.company = text;
+            break;
+        case SupplyAddressTF: self.topSupply.address = text;
+            break;
+        default:
+            break;
     }
-    NSMutableArray *mutableArray = [NSMutableArray array];
-    for (Types *type in topSupply.types) {
-        [mutableArray addObject:type.name];
-    }
-    self.title.contentTF.text = topSupply.title;
-    self.company.contentTF.text = topSupply.company;
-    self.address.contentTF.text = topSupply.address;
-    
-    [self.area.selectBtn setTitle:[topSupply.province stringByAppendingString:topSupply.city] forState:UIControlStateNormal];
-    [self.type.selectBtn setTitle:[mutableArray componentsJoinedByString:@","] forState:UIControlStateNormal];
 }
+
 
 #pragma mark - Event
 
@@ -161,9 +164,34 @@
 
 - (void)selectDemand:(UIButton *)sender
 {
-    if (self.delegate || [self.delegate respondsToSelector:@selector(introduceSupplyTopCell:slectDemand:)]) {
-        [self.delegate introduceSupplyTopCell:self slectDemand:sender];
+    if (self.delegate || [self.delegate respondsToSelector:@selector(introduceSupplyTopCell:selectDemand:)]) {
+        [self.delegate introduceSupplyTopCell:self selectDemand:sender];
     }
+}
+
+
+#pragma mark - Setter
+
+- (void)setTopSupply:(PGCSupply *)topSupply
+{
+    _topSupply = topSupply;
+    
+    NSMutableArray *mutableArray = [NSMutableArray array];
+    for (Types *type in topSupply.types) {
+        [mutableArray addObject:type.name];
+    }
+    self.title.contentTF.text = topSupply.title ? topSupply.title : @"";
+    self.company.contentTF.text = topSupply.company ? topSupply.company : @"";
+    self.address.contentTF.text = topSupply.address ? topSupply.address : @"";
+    NSString *areaStr = @"点击选择";
+    if (topSupply.city) {
+        areaStr = topSupply.province ? [topSupply.province stringByAppendingString:topSupply.city] : @"点击选择";
+    } else {
+        areaStr = topSupply.province ? topSupply.province : @"点击选择";
+    }
+    [self.area.selectBtn setTitle:areaStr forState:UIControlStateNormal];
+    
+    [self.type.selectBtn setTitle:mutableArray.count > 0 ? [mutableArray componentsJoinedByString:@","] : @"点击选择" forState:UIControlStateNormal];
 }
 
 

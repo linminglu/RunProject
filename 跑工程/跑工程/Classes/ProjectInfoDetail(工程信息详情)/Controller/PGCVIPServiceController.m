@@ -45,9 +45,9 @@
 
 - (void)initializeUserInterface
 {
-    self.navigationItem.title = @"开通服务";
+    self.title = @"开通服务";
     self.automaticallyAdjustsScrollViewInsets = false;
-    self.view.backgroundColor = RGB(244, 244, 244);
+    self.view.backgroundColor = [UIColor whiteColor];
 
     [self.view addSubview:self.tableView];
     
@@ -156,8 +156,8 @@
 
 - (UITableView *)tableView {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, STATUS_AND_NAVIGATION_HEIGHT, self.view.width_sd, self.view.height_sd - STATUS_AND_NAVIGATION_HEIGHT - 60) style:UITableViewStylePlain];
-        _tableView.backgroundColor = RGB(244, 244, 244);
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, STATUS_AND_NAVIGATION_HEIGHT, self.view.width_sd, self.view.height_sd - STATUS_AND_NAVIGATION_HEIGHT - 50) style:UITableViewStylePlain];
+        _tableView.backgroundColor = PGCBackColor;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.dataSource = self;
         _tableView.delegate = self;

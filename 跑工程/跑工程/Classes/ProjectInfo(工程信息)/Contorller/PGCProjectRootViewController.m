@@ -45,8 +45,8 @@ static NSString * const kProjectRootCell = @"ProjectRootCell";
 
 - (void)initializeUserInterface
 {
-    self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = false;
+    self.view.backgroundColor = [UIColor whiteColor];
 
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:[self barButtonItem]];
     
@@ -138,7 +138,7 @@ static NSString * const kProjectRootCell = @"ProjectRootCell";
 - (void)respondsToDelete:(UIButton *)sender
 {
     if (!(self.deleteData.count > 0)) {
-        [PGCProgressHUD showMessage:@"请先选择需要删除的项目！" toView:self.view];
+        [MBProgressHUD showError:@"请先选择需要删除的项目！" toView:self.view];
         return;
     }
     PGCManager *manager = [PGCManager manager];
@@ -149,7 +149,6 @@ static NSString * const kProjectRootCell = @"ProjectRootCell";
     for (PGCProjectInfo *project in self.deleteData) {
         [array addObject:@(project.collect_id)];
     }
-    NSString *ids_json = [PGCBaseAPIManager jsonToString:array];
     NSString *string = [NSString stringWithFormat:@"是否确定%@?", _bottomBtnTitle];
     
     __weak __typeof(self) weakSelf = self;
@@ -159,7 +158,7 @@ static NSString * const kProjectRootCell = @"ProjectRootCell";
         NSDictionary *params = @{@"user_id":@(user.user_id),
                                  @"client_type":@"iphone",
                                  @"token":manager.token.token,
-                                 @"ids_json":ids_json};
+                                 @"ids_json":[array mj_JSONString]};
         [PGCProjectInfoAPIManager deleteAccessOrCollectRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
             [hud hideAnimated:true];
             if (status == RespondsStatusSuccess) {

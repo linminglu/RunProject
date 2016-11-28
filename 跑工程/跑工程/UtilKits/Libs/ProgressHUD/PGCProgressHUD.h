@@ -82,9 +82,6 @@ typedef NS_ENUM(NSUInteger, ProgressMode) {
 //显示
 + (void)show:(NSString *)msg toView:(UIView *)view mode:(ProgressMode)myMode;
 
-//显示提示（1.5秒后消失）
-+ (void)showMessage:(NSString *)msg toView:(UIView *)view;
-
 //显示提示（N秒后消失）
 + (void)showMessage:(NSString *)msg toView:(UIView *)view afterDelayTime:(NSInteger)delay;
 

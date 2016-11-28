@@ -68,8 +68,9 @@
 
 - (void)initializeUserInterface
 {
-    self.navigationItem.title = @"项目详情";
-    self.view.backgroundColor = RGB(244, 244, 244);
+    self.title = @"项目详情";
+    self.automaticallyAdjustsScrollViewInsets = false;
+    self.view.backgroundColor = PGCBackColor;
     
     // 项目详情的三个选择按钮
     CGFloat buttonWidth = (SCREEN_WIDTH - 2) / 3;
@@ -97,11 +98,11 @@
     .topSpaceToView(self.view, STATUS_AND_NAVIGATION_HEIGHT + 40)
     .leftSpaceToView(self.view, 0)
     .rightSpaceToView(self.view, 0)
-    .heightIs(50);
+    .heightIs(40);
     
     // 项目名称
     UILabel *nameLabel = [[UILabel alloc] init];
-    nameLabel.font = SetFont(16);
+    nameLabel.font = [UIFont boldSystemFontOfSize:16];
     nameLabel.textColor = PGCTextColor;
     nameLabel.text = self.projectInfoDetail.name;
     [projectTitleView addSubview:nameLabel];

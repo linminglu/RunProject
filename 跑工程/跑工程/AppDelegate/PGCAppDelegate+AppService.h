@@ -15,6 +15,10 @@
  */
 - (void)checkAppUpDataWithshowOption:(BOOL)showOption;
 /**
+ 注册三方分享
+ */
+- (void)registerShare;
+/**
  *  注册高德地图
  */
 - (void)registerAMap;

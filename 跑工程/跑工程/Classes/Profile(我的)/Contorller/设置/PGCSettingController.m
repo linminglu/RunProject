@@ -16,12 +16,22 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *logoutBtn;/** 退出账号按钮 */
 
+- (void)initializeUserInterface; /** 初始化用户界面 */
+
 @end
 
 @implementation PGCSettingController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self initializeUserInterface];
+}
+
+- (void)initializeUserInterface
+{
+    self.automaticallyAdjustsScrollViewInsets = false;
+    self.view.backgroundColor = PGCBackColor;
     
     self.logoutBtn.layer.masksToBounds = true;
     self.logoutBtn.layer.cornerRadius = 10.0;
@@ -51,7 +61,7 @@
     [manager readTokenData];
     PGCUser *user = manager.token.user;    
     if (!user) {
-        [PGCProgressHUD showMessage:@"请先登录" toView:self.view];
+        [MBProgressHUD showError:@"请先登录" toView:self.view];
         return;
     }
     NSDictionary *params = @{@"user_id":@(user.user_id),
@@ -72,12 +82,14 @@
                 [PGCProgressHUD showAlertWithTarget:self title:@"退出登录失败：" message:message actionWithTitle:@"我知道了" handler:^(UIAlertAction *action) {
                     if (status == RespondsStatusDataError) {
                         PGCLoginController *loginVC = [[PGCLoginController alloc] init];
+                        loginVC.vc = self;
                         [self.navigationController pushViewController:loginVC animated:true];
                     }
                 }];
             }
         }];
     } otherHandler:^(UIAlertAction *action) {
+        
     }];
 }
 

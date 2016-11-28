@@ -10,4 +10,6 @@
 
 @interface PGCMapTypeViewController : UIViewController
 
+@property (copy, nonatomic) NSArray *coordinates;/** 项目坐标数组 */
+
 @end

@@ -8,7 +8,7 @@
 
 #import "PGCSupplyInfoViewController.h"
 #import "PGCSearchView.h"
-#import "JSDropDownMenu.h"
+#import "DOPDropDownMenu.h"
 #import "PGCProcurementCell.h"
 
 #import "PGCSupplyDetailVC.h"
@@ -26,15 +26,11 @@ typedef NS_ENUM(NSUInteger, BarButtonTag) {
     IntroduceBarTag,
 };
 
-@interface PGCSupplyInfoViewController () <UITableViewDelegate, UITableViewDataSource, JSDropDownMenuDataSource, JSDropDownMenuDelegate, PGCSearchViewDelegate>
+@interface PGCSupplyInfoViewController () <UITableViewDelegate, UITableViewDataSource, DOPDropDownMenuDataSource, DOPDropDownMenuDelegate, PGCSearchViewDelegate>
 {
     NSArray *_areaDatas;
     NSArray *_typeDatas;
     NSArray *_timeDatas;
-    
-    NSInteger _areaCurrentIndex;
-    NSInteger _typeCurrentIndex;
-    NSInteger _timeCurrentIndex;
     
     NSInteger _page;/** 查询第一页 */
     NSInteger _pageSize;/** 查询页数 */
@@ -42,10 +38,10 @@ typedef NS_ENUM(NSUInteger, BarButtonTag) {
     BOOL _isSearching; /** 记录当前搜索状态 */
 }
 
+@property (strong, nonatomic) PGCSearchView *searchView;/** 搜索框 */
+@property (strong, nonatomic) DOPDropDownMenu *menu;/** 下拉菜单 */
 @property (strong, nonatomic) UIButton *collectBtn;/** 我的收藏按钮 */
 @property (strong, nonatomic) UIButton *introduceBtn;/** 我的发布按钮 */
-@property (strong, nonatomic) PGCSearchView *searchView;/** 搜索框 */
-@property (strong, nonatomic) JSDropDownMenu *menu;/** 下拉菜单 */
 @property (strong, nonatomic) UITableView *tableView;/** 表格视图 */
 @property (strong, nonatomic) NSMutableDictionary *parameters;/** 参数 */
 @property (strong, nonatomic) NSMutableArray *dataSource;/** 数据源 */
@@ -60,7 +56,7 @@ typedef NS_ENUM(NSUInteger, BarButtonTag) {
 @implementation PGCSupplyInfoViewController
 
 - (void)dealloc {
-    [PGCNotificationCenter removeObserver:self name:kRefreshDemandAndSupplyData object:nil];
+    [PGCNotificationCenter removeObserver:self name:kSupplyInfoData object:nil];
 }
 
 
@@ -83,9 +79,9 @@ typedef NS_ENUM(NSUInteger, BarButtonTag) {
 
 - (void)initializeUserInterface
 {
-    self.navigationItem.title = @"供应信息";
-    self.view.backgroundColor = PGCBackColor;
+    self.title = @"供应信息";
     self.automaticallyAdjustsScrollViewInsets = false;
+    self.view.backgroundColor = [UIColor whiteColor];
     
     self.navigationItem.leftBarButtonItem = [self barButtonItem:CGRectMake(0, 0, 60, 40) tag:HeartBarTag title:@"我的收藏" imageName:@"我的收藏"];
     self.navigationItem.rightBarButtonItem= [self barButtonItem:CGRectMake(0, 0, 60, 40) tag:IntroduceBarTag title:@"我的发布" imageName:@"发布加号"];
@@ -98,7 +94,7 @@ typedef NS_ENUM(NSUInteger, BarButtonTag) {
 }
 
 - (void)registerNotification {
-    [PGCNotificationCenter addObserver:self selector:@selector(loadSupplyInfoData) name:kRefreshDemandAndSupplyData object:nil];
+    [PGCNotificationCenter addObserver:self selector:@selector(loadSupplyInfoData) name:kSupplyInfoData object:nil];
 }
 
 
@@ -174,8 +170,7 @@ typedef NS_ENUM(NSUInteger, BarButtonTag) {
 
 - (void)searchView:(PGCSearchView *)searchView didSelectedSearchButton:(UIButton *)sender
 {
-    [searchView resignFirstResponder];
-    
+    [self.view endEditing:true];
     
 }
 
@@ -291,101 +286,38 @@ typedef NS_ENUM(NSUInteger, BarButtonTag) {
 }
 
 
+#pragma mark - DOPDropDownMenuDataSource
 
-#pragma mark - PGCDropMenuDaJSDropDownMenuDataSource
-
-- (NSInteger)numberOfColumnsInMenu:(JSDropDownMenu *)menu {
-    
+- (NSInteger)numberOfColumnsInMenu:(DOPDropDownMenu *)menu
+{
     return 3;
 }
 
-- (BOOL)haveRightTableViewInColumn:(NSInteger)column
-{
-    return column < 2 ? true : false;
-}
-
-- (CGFloat)widthRatioOfLeftColumn:(NSInteger)column
-{
-    return column < 2 ? 0.5 : 1;
-}
-
-- (NSInteger)currentLeftSelectedRow:(NSInteger)column
+- (NSInteger)menu:(DOPDropDownMenu *)menu numberOfRowsInColumn:(NSInteger)column
 {
     switch (column) {
-        case 0: return _areaCurrentIndex; break;
-        case 1: return _typeCurrentIndex; break;
-        default: return _timeCurrentIndex; break;
-    }
-}
-
-- (NSInteger)menu:(JSDropDownMenu *)menu numberOfRowsInColumn:(NSInteger)column leftOrRight:(NSInteger)leftOrRight leftRow:(NSInteger)leftRow
-{
-    switch (column) {
-        case 0:
-        {
-            if (leftOrRight == 0) {
-                
-                return _areaDatas.count;
-            }
-            else {
-                PGCProvince *province = _areaDatas[leftRow];
-                return province.cities.count;
-            }
-        }
+        case 0: return _areaDatas.count;
             break;
-        case 1:
-        {
-            if (leftOrRight == 0) {
-                return _typeDatas.count;
-                
-            }
-            else {
-                PGCMaterialServiceTypes *type = _typeDatas[leftRow];
-                return type.secondArray.count;
-            }
-        }
+        case 1: return _typeDatas.count;
             break;
         default: return _timeDatas.count;
             break;
     }
 }
 
-- (NSString *)menu:(JSDropDownMenu *)menu titleForColumn:(NSInteger)column
-{
-    switch (column) {
-        case 0: return @"地区"; break;
-        case 1: return @"类型"; break;
-        default: return @"时间"; break;
-    }
-}
-
-- (NSString *)menu:(JSDropDownMenu *)menu titleForRowAtIndexPath:(JSIndexPath *)indexPath
+- (NSString *)menu:(DOPDropDownMenu *)menu titleForRowAtIndexPath:(DOPIndexPath *)indexPath
 {
     switch (indexPath.column) {
         case 0:
         {
-            if (indexPath.leftOrRight==0) {
-                PGCProvince *province = _areaDatas[indexPath.row];
-                return province.province;
-            }
-            else {
-                PGCProvince *province = _areaDatas[indexPath.leftRow];
-                PGCCity *city = province.cities[indexPath.row];
-                return city.city;
-            }
+            PGCProvince *province = _areaDatas[indexPath.row];
+            return province.province;
         }
             break;
         case 1:
         {
-            if (indexPath.leftOrRight == 0) {
-                PGCMaterialServiceTypes *type = _typeDatas[indexPath.row];
-                return type.name;
-            }
-            else{
-                PGCMaterialServiceTypes *type = _typeDatas[indexPath.leftRow];
-                PGCMaterialServiceTypes *secondType = type.secondArray[indexPath.row];
-                return secondType.name;
-            }
+            PGCMaterialServiceTypes *type = _typeDatas[indexPath.row];
+            return type.name;
         }
             break;
         default: return _timeDatas[indexPath.row];
@@ -393,53 +325,90 @@ typedef NS_ENUM(NSUInteger, BarButtonTag) {
     }
 }
 
+// new datasource
 
+- (NSInteger)menu:(DOPDropDownMenu *)menu numberOfItemsInRow:(NSInteger)row column:(NSInteger)column
+{
+    switch (column) {
+        case 0:
+        {
+            PGCProvince *province = _areaDatas[row];
+            return province.cities.count;
+        }
+            break;
+        case 1:
+        {
+            PGCMaterialServiceTypes *types = _typeDatas[row];
+            return types.secondArray.count;
+        }
+            break;
+        default: return 0;
+            break;
+    }
+}
 
-#pragma mark - JSDropDownMenuDelegatetaSource
-
-- (void)menu:(JSDropDownMenu *)menu didSelectRowAtIndexPath:(JSIndexPath *)indexPath
+- (NSString *)menu:(DOPDropDownMenu *)menu titleForItemsInRowAtIndexPath:(DOPIndexPath *)indexPath
 {
     switch (indexPath.column) {
         case 0:
         {
-            if (indexPath.leftOrRight == 0) {
-                _areaCurrentIndex = indexPath.row;
+            PGCProvince *province = _areaDatas[indexPath.row];
+            PGCCity *city = province.cities[indexPath.item];
+            return city.city;
+        }
+            break;
+        case 1:
+        {
+            PGCMaterialServiceTypes *types = _typeDatas[indexPath.row];
+            PGCMaterialServiceTypes *secondType = types.secondArray[indexPath.item];
+            return secondType.name;
+        }
+            break;
+        default: return nil;
+            break;
+    }
+}
+
+
+#pragma mark - DOPDropDownMenuDelegate
+
+- (void)menu:(DOPDropDownMenu *)menu didSelectRowAtIndexPath:(DOPIndexPath *)indexPath
+{
+    switch (indexPath.column) {
+        case 0:
+        {
+            if (indexPath.item > 0) {
                 PGCProvince *province = _areaDatas[indexPath.row];
-                
-                if (!(province.cities.count > 0)) {
-                    [self.parameters setObject:@(province.id) forKey:@"province_id"];
-                }
-            } else {
-                PGCProvince *province = _areaDatas[indexPath.leftRow];
-                PGCCity *city = province.cities[indexPath.row];
+                PGCCity *city = province.cities[indexPath.item];
                 [self.parameters setObject:@(city.id) forKey:@"city_id"];
+                
+            } else {
+                PGCProvince *province = _areaDatas[indexPath.row];
+                [self.parameters setObject:@(province.id) forKey:@"province_id"];
             }
         }
             break;
         case 1:
         {
-            if (indexPath.leftOrRight == 0) {
-                _typeCurrentIndex = indexPath.row;
+            if (indexPath.item > 0) {
                 PGCMaterialServiceTypes *type = _typeDatas[indexPath.row];
+                PGCMaterialServiceTypes *secondType = type.secondArray[indexPath.item];
+                [self.parameters setObject:@(secondType.id) forKey:@"type_id"];
                 
-                if (!(type.secondArray.count > 0)) {
-                    [self.parameters setObject:@(type.id) forKey:@"type_id"];
-                }
             } else {
-                PGCMaterialServiceTypes *type = _typeDatas[indexPath.leftRow];
-                PGCMaterialServiceTypes *secondType = type.secondArray[indexPath.row];
-                [self.parameters setObject:@(secondType.id) forKey:@"city_id"];
+                PGCMaterialServiceTypes *type = _typeDatas[indexPath.row];                
+                [self.parameters setObject:@(type.id) forKey:@"type_id"];
             }
         }
             break;
         default:
         {
-            _timeCurrentIndex = indexPath.row;
             NSArray *array = @[@0, @1, @3, @7 ,@30, @90, @180, @365];
             [self.parameters setObject:array[indexPath.row] forKey:@"days"];
         }
             break;
     }
+    [self loadSupplyInfoData];
 }
 
 
@@ -466,16 +435,15 @@ typedef NS_ENUM(NSUInteger, BarButtonTag) {
 
 - (PGCSearchView *)searchView {
     if (!_searchView) {
-        _searchView = [[PGCSearchView alloc] initWithFrame:CGRectMake(0, STATUS_AND_NAVIGATION_HEIGHT + 5, SCREEN_WIDTH, 40)];
-        _searchView.backgroundColor = PGCBackColor;
+        _searchView = [[PGCSearchView alloc] initWithFrame:CGRectMake(0, STATUS_AND_NAVIGATION_HEIGHT + 5, SCREEN_WIDTH, 36)];
         _searchView.delegate = self;
     }
     return _searchView;
 }
 
-- (JSDropDownMenu *)menu {
+- (DOPDropDownMenu *)menu {
     if (!_menu) {
-        _menu = [[JSDropDownMenu alloc] initWithOrigin:CGPointMake(0, self.searchView.bottom_sd + 5) andHeight:40];
+        _menu = [[DOPDropDownMenu alloc] initWithOrigin:CGPointMake(0, self.searchView.bottom_sd) andHeight:40];
         _menu.backgroundColor = [UIColor whiteColor];
         _menu.dataSource = self;
         _menu.delegate = self;
@@ -528,7 +496,5 @@ typedef NS_ENUM(NSUInteger, BarButtonTag) {
     }
     return _searchResults;
 }
-
-
 
 @end

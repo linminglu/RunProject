@@ -44,9 +44,7 @@
 }
 
 + (void)showError:(NSString *)error complete:(void (^)(void))complete
-{
-    UIView *view = [[UIApplication sharedApplication].windows lastObject];
-    
+{    
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KeyWindow animated:true];
     hud.label.text = error;
     

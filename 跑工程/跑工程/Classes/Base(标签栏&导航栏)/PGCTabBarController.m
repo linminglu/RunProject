@@ -38,21 +38,21 @@
 {
     // 工程信息
     PGCProjectInfoController *projectInfoVC = [[PGCProjectInfoController alloc] init];
-    // 招标采购
+    // 招采信息
     PGCProcurementViewController *procurementVC = [[PGCProcurementViewController alloc] init];
     // 供应信息
     PGCSupplyInfoViewController *supplyInfoVC = [[PGCSupplyInfoViewController alloc] init];
     // 我的
     PGCProfileController *profileVC = [[PGCProfileController alloc] init];
     
-    NSArray *titles = @[@"工程信息", @"招标采购", @"供应信息", @"我"];
-    NSArray *images = @[[UIImage imageNamed:@"项目nor"],
-                        [UIImage imageNamed:@"找供需nor"],
-                        [UIImage imageNamed:@"找供需nor"],
+    NSArray *titles = @[@"工程信息", @"招采信息", @"供应信息", @"我"];
+    NSArray *images = @[[UIImage imageNamed:@"工程信息nor"],
+                        [UIImage imageNamed:@"招采信息nor"],
+                        [UIImage imageNamed:@"供应信息nor"],
                         [UIImage imageNamed:@"我nor"]];
-    NSArray *selectedImages = @[[UIImage imageWithOriginalName:@"项目down"],
-                                [UIImage imageWithOriginalName:@"找供需down"],
-                                [UIImage imageWithOriginalName:@"找供需down"] ,
+    NSArray *selectedImages = @[[UIImage imageWithOriginalName:@"工程信息down"],
+                                [UIImage imageWithOriginalName:@"招采信息down"],
+                                [UIImage imageWithOriginalName:@"供应信息down"] ,
                                 [UIImage imageWithOriginalName:@"我down"]];
     NSArray *vcArray = @[projectInfoVC, procurementVC, supplyInfoVC, profileVC];
     NSMutableArray *navArray = [NSMutableArray array];

@@ -60,7 +60,8 @@ NSString *const kDeleteAccessOrCollect = @"/mobile/api/access/deleteAccessOrColl
 NSString *const kGetAccessOrCollect = @"/mobile/api/access/getAccessOrCollect.htm";
 // 地图项目
 NSString *const kGetNearProjects = @"/mobile/api/open/getNearProjects.htm";
-
+// 获取联系人参与过的项目
+NSString *const kGetContactProjects = @"/mobile/api/access/getContactProjects.htm";
 
 #pragma mark - 供需
 // 类别

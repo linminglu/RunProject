@@ -52,15 +52,6 @@ typedef void (^HttpProgress)(NSProgress *progress);;
  */
 + (NSInteger)getAllCacheSize;
 
-/**
- json转字符串
-
- @param data
- @return
- */
-+ (NSString *)jsonToString:(id)data;
-
-
 #pragma mark -
 #pragma mark - GET
 

@@ -13,8 +13,9 @@
 
 @interface PGCMapTypeViewController () <MAMapViewDelegate, AMapLocationManagerDelegate>
 
-@property (strong, nonatomic) MAMapView *mapView;
-@property (strong, nonatomic) AMapLocationManager *locationManager;
+@property (strong, nonatomic) MAMapView *mapView;/** 地图视图 */
+@property (strong, nonatomic) AMapLocationManager *locationManager;/** 定位管理 */
+@property (strong, nonatomic) MAPointAnnotation *pointAnn;/** 标注点 */
 
 - (void)initializeUserInterface; /** 初始化用户界面 */
 
@@ -32,19 +33,9 @@
 {
     self.view.backgroundColor = [UIColor whiteColor];
     
-    ///初始化地图
-    self.mapView = [[MAMapView alloc] initWithFrame:self.view.bounds];
-    self.mapView.mapType = MAMapTypeStandard;
-    self.mapView.userTrackingMode = MAUserTrackingModeFollowWithHeading;
-    
     ///把地图添加至view
     [self.view addSubview:self.mapView];
     
-    // 长按手势添加大头针
-    UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(respondsToAddAnnotation:)];    
-    [self.mapView addGestureRecognizer:longPressGesture];
-    
-    [self configLocationManager];
     [self startSerialLocation];
     
     // 带逆地理（返回坐标和地址信息）。将下面代码中的 YES 改成 NO ，则不会返回地址信息。
@@ -57,7 +48,6 @@
                 return;
             }
         }
-        NSLog(@"location:%@", location);
         
         if (regeocode) {
             NSLog(@"reGeocode:%@", regeocode);
@@ -89,23 +79,6 @@
 }
 
 
-- (void)configLocationManager
-{
-    self.locationManager = [[AMapLocationManager alloc] init];
-    
-    self.locationManager.delegate = self;
-    
-    self.locationManager.pausesLocationUpdatesAutomatically = false;
-    
-    // 带逆地理信息的一次定位（返回坐标和地址信息）
-    [self.locationManager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
-    // 定位超时时间，最低2s，此处设置为2s
-    self.locationManager.locationTimeout = 2;
-    // 逆地理请求超时时间，最低2s，此处设置为2s
-    self.locationManager.reGeocodeTimeout = 2;
-}
-
-
 #pragma mark - MAMapViewDelegate
 
 - (void)mapView:(MAMapView *)mapView didFailToLocateUserWithError:(NSError *)error
@@ -116,36 +89,30 @@
 - (MAAnnotationView *)mapView:(MAMapView *)mapView viewForAnnotation:(id<MAAnnotation>)annotation
 {
     
-    if ([annotation isKindOfClass:[MAUserLocation class]]) {
-        return nil;
+    if ([annotation isKindOfClass:[MAPointAnnotation class]]) {
+        static NSString *pointReuseIdentifier = @"pointReuseIdentifier";
+
+        MAPinAnnotationView *annotationView = (MAPinAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:pointReuseIdentifier];
+
+        if (!annotationView) {
+            annotationView = [[MAPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:pointReuseIdentifier];
+            annotationView.canShowCallout = true;// 设置是否显示弹出视图
+            annotationView.animatesDrop = true;// 设置凋零效果
+            annotationView.draggable = false;// 设置支持拖动
+            annotationView.pinColor = MAPinAnnotationColorRed;// 设置大头针颜色
+            annotationView.calloutOffset = CGPointMake(0, -10);// 调整弹框偏移
+
+            // 添加导航按钮
+//            UIButton *navigationButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//            navigationButton.bounds = CGRectMake(0, 0, 100, 60);
+//            navigationButton.backgroundColor = [UIColor grayColor];
+//            [navigationButton setTitle:@"导航" forState:UIControlStateNormal];
+//
+//            annotationView.rightCalloutAccessoryView = navigationButton;
+        }
+        return annotationView;
     }
-    
-    MAPinAnnotationView *pinAnnotationView = (MAPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"AnnotationView"];
-    
-    if (!pinAnnotationView) {
-        pinAnnotationView = [[MAPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"AnnotationView"];
-    }
-    
-    // 更新标注数据源，重用机制有可能导致标注数据源是从缓存池里面获取的
-    pinAnnotationView.annotation = annotation;
-    // 设置大头针颜色
-    pinAnnotationView.pinColor = MAPinAnnotationColorGreen;
-    // 设置凋零效果
-    pinAnnotationView.animatesDrop = true;
-    // 设置是否显示弹出视图
-    pinAnnotationView.canShowCallout = true;
-    // 调整弹框偏移
-    pinAnnotationView.calloutOffset = CGPointMake(0, -10);
-    
-    // 添加导航按钮
-    UIButton *navigationButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    navigationButton.bounds = CGRectMake(0, 0, 100, 60);
-    navigationButton.backgroundColor = [UIColor grayColor];
-    [navigationButton setTitle:@"导航" forState:UIControlStateNormal];
-    
-    pinAnnotationView.rightCalloutAccessoryView = navigationButton;
-    
-    return pinAnnotationView;
+    return nil;
 }
 
 - (void)mapView:(MAMapView *)mapView annotationView:(MAAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
@@ -182,13 +149,23 @@
 - (void)amapLocationManager:(AMapLocationManager *)manager didFailWithError:(NSError *)error
 {
     //定位错误
-    NSLog(@"%s, amapLocationManager = %@, error = %@", __func__, [manager class], error);
+    NSLog(@"%s, amapLocationManager = %@", __func__, [manager class]);
+    
+    [MBProgressHUD showError:error.localizedDescription toView:self.view];
 }
 
 - (void)amapLocationManager:(AMapLocationManager *)manager didUpdateLocation:(CLLocation *)location
 {
     //定位结果
     NSLog(@"location:{lat:%f; lon:%f; accuracy:%f}", location.coordinate.latitude, location.coordinate.longitude, location.horizontalAccuracy);
+    
+    CLLocationDegrees longitude = location.coordinate.longitude;// 经度
+    CLLocationDegrees latitude = location.coordinate.latitude;// 维度
+    NSLog(@"location:{lat:%f; lon:%f}", latitude, longitude);
+    
+    self.pointAnn.coordinate = location.coordinate;
+    [self.mapView addAnnotation:self.pointAnn];
+    [self.mapView showAnnotations:@[self.pointAnn] animated:true];
     
     [self stopSerialLocation];
 }
@@ -208,5 +185,40 @@
 }
 
 
+#pragma mark - Getter
+
+- (MAMapView *)mapView {
+    if (!_mapView) {
+        // 初始化地图
+        _mapView = [[MAMapView alloc] initWithFrame:self.view.bounds];
+        _mapView.mapType = MAMapTypeStandard;
+        _mapView.userTrackingMode = MAUserTrackingModeFollowWithHeading;
+    }
+    return _mapView;
+}
+
+- (AMapLocationManager *)locationManager {
+    if (!_locationManager) {
+        _locationManager = [[AMapLocationManager alloc] init];
+        _locationManager.delegate = self;
+        _locationManager.pausesLocationUpdatesAutomatically = false;
+        // 带逆地理信息的一次定位（返回坐标和地址信息）
+        [_locationManager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
+        // 定位超时时间，最低2s，此处设置为2s
+        _locationManager.locationTimeout = 2;
+        // 逆地理请求超时时间，最低2s，此处设置为2s
+        _locationManager.reGeocodeTimeout = 2;
+    }
+    return _locationManager;
+}
+
+- (MAPointAnnotation *)pointAnn {
+    if (!_pointAnn) {
+        _pointAnn = [[MAPointAnnotation alloc] init];
+        _pointAnn.lockedToScreen = true;
+        _pointAnn.lockedScreenPoint = self.view.center;
+    }
+    return _pointAnn;
+}
 
 @end

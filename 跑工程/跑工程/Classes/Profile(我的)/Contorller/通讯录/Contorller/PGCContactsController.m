@@ -7,18 +7,18 @@
 //
 
 #import "PGCContactsController.h"
+#import "PGCSearchView.h"
 #import "PGCContactsCell.h"
 #import "PGCContactInfoController.h"
 #import "PGCContactAPIManager.h"
 #import "BMChineseSort.h"
 #import "PGCContact.h"
 
-@interface PGCContactsController () <UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating>
+@interface PGCContactsController () <UITableViewDelegate, UITableViewDataSource, PGCSearchViewDelegate>
 {
     BOOL _isSearching; /** 记录当前搜索状态 */
 }
-
-@property (strong, nonatomic) UISearchController *searchController;/** 搜索框 */
+@property (strong, nonatomic) PGCSearchView *searchView;/** 搜索视图 */
 @property (strong, nonatomic) UITableView *tableView;/** 联系人表格视图 */
 @property (strong, nonatomic) NSMutableArray<PGCContact *> *dataSource;/** 初始数据源 */
 @property (strong, nonatomic) NSMutableArray *indexArray;/** 排序后的出现过的拼音首字母数组 */
@@ -50,12 +50,12 @@
 
 - (void)initializeUserInterface
 {
-    self.navigationItem.title = @"通讯录";
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.title = @"通讯录";
     self.automaticallyAdjustsScrollViewInsets = false;
+    self.view.backgroundColor = [UIColor whiteColor];
     
+    [self.view addSubview:self.searchView];
     [self.view addSubview:self.tableView];
-    self.tableView.tableHeaderView = self.searchController.searchBar;
     [self.tableView.mj_header beginRefreshing];
 }
 
@@ -106,18 +106,23 @@
 }
 
 
-#pragma mark - UISearchResultsUpdating
-// 只要搜索框在活跃状态，此方法就会被触发
-- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
+#pragma mark - PGCSearchViewDelegate
+
+- (void)searchView:(PGCSearchView *)searchView didSelectedSearchButton:(UIButton *)sender
 {
-    if (!searchController.active) {
+    
+}
+
+- (void)searchView:(PGCSearchView *)searchView textFieldDidChange:(UITextField *)textField
+{
+    if (!(textField.text.length > 0)) {
         _isSearching = false;
         [self.tableView reloadData];
         return;
     }
     _isSearching = true;
     // 获取搜索框上的文本
-    NSString *text = searchController.searchBar.text;
+    NSString *text = textField.text;
     // 谓词判断，创建搜索条件
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[cd] %@", text];
     // 获取搜索源
@@ -129,7 +134,7 @@
     }
     // 根据谓词在搜索源中查找符合条件的对象并且赋值给searchResults;
     [self.searchDataSource removeAllObjects];
-
+    
     NSArray *nameResults = [nameSearchs filteredArrayUsingPredicate:predicate];
     for (NSString *string in nameResults) {
         for (NSArray *array in self.letterArray) {
@@ -141,7 +146,9 @@
         }
     }
     [self.tableView reloadData];
+
 }
+
 
 
 #pragma mark - UITableViewDataSource
@@ -200,41 +207,23 @@
 {
     PGCContactInfoController *contactInfoVC = [[PGCContactInfoController alloc] init];
     contactInfoVC.contactInfo = _isSearching ? self.searchDataSource[indexPath.row] : self.letterArray[indexPath.section][indexPath.row];
-    self.searchController.active = false;
     [self.navigationController pushViewController:contactInfoVC animated:true];
 }
 
 
 #pragma mark - Getter
 
-- (UISearchController *)searchController {
-    if (!_searchController) {
-        _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-        // 设置搜索状态下是否隐藏导航栏
-        _searchController.hidesNavigationBarDuringPresentation = true;
-        // 设置搜索状态下是否半透明
-        _searchController.dimsBackgroundDuringPresentation = true;
-        // 设置搜索状态下背景是否模糊
-        _searchController.obscuresBackgroundDuringPresentation = false;
-        _searchController.searchResultsUpdater = self;
-        // 设置searchBar
-        _searchController.searchBar.frame = CGRectMake(0, 0, SCREEN_WIDTH, NAVIGATION_BAR_HEIGHT);
-        _searchController.searchBar.returnKeyType = UIReturnKeySearch;
-        _searchController.searchBar.placeholder = @"在联系人中搜索";
-        _searchController.searchBar.barStyle = UIBarStyleDefault;
-        _searchController.searchBar.translucent = true;
-        _searchController.searchBar.tintColor = PGCTintColor;
-        _searchController.searchBar.layer.cornerRadius = 0;
-        _searchController.searchBar.layer.borderColor = PGCBackColor.CGColor;
-        _searchController.searchBar.layer.borderWidth = 1.0;
-        [_searchController.searchBar setBackgroundImage:[UIImage imageWithColor:PGCBackColor] forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
+- (PGCSearchView *)searchView {
+    if (!_searchView) {
+        _searchView = [[PGCSearchView alloc] initWithFrame:CGRectMake(0, STATUS_AND_NAVIGATION_HEIGHT + 5, SCREEN_WIDTH, 40)];
+        _searchView.delegate = self;
     }
-    return _searchController;
+    return _searchView;
 }
 
 - (UITableView *)tableView {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, STATUS_AND_NAVIGATION_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - STATUS_AND_NAVIGATION_HEIGHT) style:UITableViewStylePlain];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.searchView.bottom_sd + 5, SCREEN_WIDTH, SCREEN_HEIGHT - STATUS_AND_NAVIGATION_HEIGHT) style:UITableViewStylePlain];
         _tableView.backgroundColor = PGCBackColor;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.dataSource = self;

@@ -19,12 +19,11 @@
 #import "PGCPhotoBrowser.h"
 #import "PGCHeadImage.h"
 
-@interface PGCProfileController ()
+@interface PGCProfileController () <UINavigationControllerDelegate>
 {
     BOOL _isLogin;
 }
 
-@property (nonatomic, weak) UIImageView *lineView;/** 导航栏下的黑线 */
 @property (strong, nonatomic) UIView *backView;/** 背景视图 */
 @property (strong, nonatomic) UIImageView *headImageView;/** 头像 */
 @property (strong, nonatomic) UIButton *loginAndRegisterBtn;/** 登录按钮 */
@@ -43,24 +42,11 @@
 
 @implementation PGCProfileController
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
-    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    
-    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
-    [self.navigationController.navigationBar setShadowImage:nil];
-}
-
 - (void)dealloc {
     [PGCNotificationCenter removeObserver:self name:kProfileNotification object:nil];
     [PGCNotificationCenter removeObserver:self name:kReloadProfileInfo object:nil];
 }
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -71,11 +57,10 @@
 
 - (void)initializeUserInterface
 {
-    self.automaticallyAdjustsScrollViewInsets = false;
-    
+    self.automaticallyAdjustsScrollViewInsets = false;    
     self.view.backgroundColor = [UIColor whiteColor];
     
-    _lineView = [self getLineViewInNavigationBar:self.navigationController.navigationBar];
+    self.navigationController.delegate = (id)self;
     
     [self.view addSubview:self.backView];
     [self.view addSubview:self.scrollView];
@@ -105,20 +90,19 @@
     [PGCNotificationCenter addObserver:self selector:@selector(reloadProfileInfo:) name:kReloadProfileInfo object:nil];
 }
 
-//找到导航栏最下面黑线视图
-- (UIImageView *)getLineViewInNavigationBar:(UIView *)view
+
+#pragma mark - UINavigationControllerDelegate
+
+// 将要显示控制器
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    if ([view isKindOfClass:UIImageView.class] && view.bounds.size.height <= 1.0) {
-        return (UIImageView *)view;
-    }
-    for (UIView *subview in view.subviews) {
-        UIImageView *imageView = [self getLineViewInNavigationBar:subview];
-        if (imageView) {
-            return imageView;
-        }
-    }
-    return nil;
+    // 判断要显示的控制器是否是自己
+    BOOL isShowHomePage = [viewController isKindOfClass:[self class]];
+    
+    [self.navigationController setNavigationBarHidden:isShowHomePage animated:true];
 }
+
+
 
 #pragma mark - NSNotificationCenter
 
@@ -154,28 +138,9 @@
     }
     if ([notifi.userInfo objectForKey:@"HeadImage"]) {// 收到用户修改头像的通知
         
-        PGCHeadImage *headImage = [notifi.userInfo objectForKey:@"HeadImage"];
-        NSDictionary *params = @{@"user_id":@(user.user_id),
-                                 @"token":manager.token.token,
-                                 @"client_type":@"iphone",
-                                 @"headimage":headImage.path};
-        [PGCProfileAPIManager completeInfoRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
-            
-            if (status == RespondsStatusSuccess) {
-                [manager readTokenData];
-                NSString *imageStr = manager.token.user.headimage;
-                NSURL *url = [NSURL URLWithString:[kBaseImageURL stringByAppendingString:imageStr]];
-                [self.headImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"头像"]];
-                
-            } else {
-                [PGCProgressHUD showMessage:message toView:self.view];
-                
-                if (status == RespondsStatusDataError) {
-                    PGCLoginController *loginVC = [[PGCLoginController alloc] init];
-                    [self.navigationController pushViewController:loginVC animated:true];
-                }
-            }
-        }];
+        NSString *imageStr = manager.token.user.headimage;
+        NSURL *url = [NSURL URLWithString:[kBaseImageURL stringByAppendingString:imageStr]];
+        [self.headImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"头像"]];
     }
 }
 
@@ -281,7 +246,7 @@
 - (void)updataPassWordButtonClick:(UIButton *)sender
 {
     PGCResetPasswordController *resetPassVC = [[PGCResetPasswordController alloc] init];
-    resetPassVC.navigationItem.title = @"修改密码";
+    resetPassVC.title = @"修改密码";
     [self.navigationController pushViewController:resetPassVC animated:true];
 }
 

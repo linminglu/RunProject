@@ -7,7 +7,7 @@
 //
 
 #import "PGCProjectCell.h"
-#import "PGCContact.h"
+#import "PGCProjectInfo.h"
 
 @interface PGCProjectCell ()
 
@@ -20,13 +20,11 @@
 
 #pragma mark - Setter
 
-- (void)setContactRight:(PGCContact *)contactRight
+- (void)setProjectInfo:(PGCProjectInfo *)projectInfo
 {
-    _contactRight = contactRight;
-    if (!contactRight) {
-        return;
-    }
-    self.contentLabel.text = @"参与项目";
+    _projectInfo = projectInfo;
+    
+    self.contentLabel.text = projectInfo.name;
 }
 
 - (void)awakeFromNib {

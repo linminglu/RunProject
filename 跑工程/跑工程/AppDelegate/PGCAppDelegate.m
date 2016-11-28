@@ -19,15 +19,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    // 初始化window
-    [self setAppWindow];
-    // 设置根视图控制器
-    [self setRootViewController];
-    // 注册高德地图
-    [self registerAMap];
-    // 注册个推
-    [self registerGeTui];
-    // 设置主窗口并显示在屏幕上
+    [self setAppWindow];// 初始化window
+    
+    [self setRootViewController];// 设置根视图控制器
+    
+    [self registerShare];// 注册三方分享
+    
+    [self registerAMap];// 注册高德地图
+    
+    [self registerGeTui];// 注册个推
+    
     [self.window makeKeyAndVisible];
     
     return YES;

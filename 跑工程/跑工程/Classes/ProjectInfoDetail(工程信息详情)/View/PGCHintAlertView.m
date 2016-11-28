@@ -179,7 +179,7 @@
         [KeyWindow addSubview:self.backView];
         [KeyWindow addSubview:self];
         
-        self.backView.alpha = 0.7;
+        self.backView.alpha = 0.3;
     } completion:^(BOOL finished) {
         
     }];

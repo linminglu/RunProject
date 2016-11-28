@@ -30,6 +30,10 @@
 
 - (void)initializeUserInterface
 {
+    self.title = @"修改职位";
+    self.automaticallyAdjustsScrollViewInsets = false;
+    self.view.backgroundColor = PGCBackColor;
+    
     UIBarButtonItem *saveItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleDone target:self action:@selector(saveInfo:)];
     
     self.navigationItem.rightBarButtonItem = saveItem;
@@ -71,6 +75,7 @@
             [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示：" message:message actionWithTitle:@"我知道了" handler:^(UIAlertAction *action) {
                 if (status == RespondsStatusDataError) {
                     PGCLoginController *loginVC = [[PGCLoginController alloc] init];
+                    loginVC.vc = self;
                     [self.navigationController pushViewController:loginVC animated:true];
                 }
             }];

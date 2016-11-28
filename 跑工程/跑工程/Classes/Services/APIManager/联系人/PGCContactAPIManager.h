@@ -16,6 +16,9 @@
 // 获取联系人
 + (NSURLSessionDataTask *)getContactsListRequestWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, NSMutableArray *resultData))respondsBlock;
 
+// 获取联系人参与过的项目
++ (NSURLSessionDataTask *)getContactProjectsRequestWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, NSMutableArray *resultData))respondsBlock;
+
 // 删除联系人
 + (NSURLSessionDataTask *)deleteContactRequestWithParameters:(NSDictionary *)parameters responds:(void(^)(RespondsStatus status, NSString *message, id resultData))respondsBlock;
 

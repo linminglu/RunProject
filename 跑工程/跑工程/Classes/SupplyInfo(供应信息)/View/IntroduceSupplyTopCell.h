@@ -9,11 +9,17 @@
 #import <UIKit/UIKit.h>
 @class PGCSupply, IntroduceSupplyTopCell;
 
+typedef NS_ENUM(NSUInteger, SupplyTextFieldTag) {
+    SupplyTitleTF,
+    SupplyCompanyTF,
+    SupplyAddressTF,
+};
+
 @protocol IntroduceSupplyTopCellDelegate <NSObject>
 
 @optional
 - (void)introduceSupplyTopCell:(IntroduceSupplyTopCell *)topView selectArea:(UIButton *)sender;
-- (void)introduceSupplyTopCell:(IntroduceSupplyTopCell *)topView slectDemand:(UIButton *)demand;
+- (void)introduceSupplyTopCell:(IntroduceSupplyTopCell *)topView selectDemand:(UIButton *)demand;
 
 @end
 

@@ -12,6 +12,7 @@
 #import "PGCContacInfoHeaderView.h"
 #import "PGCContactAPIManager.h"
 #import "PGCContact.h"
+#import "PGCManager.h"
 
 @interface PGCContactInfoController () <UITableViewDataSource, UITableViewDelegate, PGCContacInfoHeaderViewDelegate, PGCContactInfoCellDelegate>
 {
@@ -20,7 +21,9 @@
 
 @property (strong, nonatomic) PGCContacInfoHeaderView *headerView;/** 上半部视图 */
 @property (strong, nonatomic) UITableView *tableView;/** 表格视图 */
+@property (strong, nonatomic) NSMutableArray *contactProjects;/** 参与的项目 */
 
+- (void)initializeDataSource; /** 初始化数据源 */
 - (void)initializeUserInterface; /** 初始化用户界面 */
 
 @end
@@ -31,15 +34,37 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self initializeDataSource];
     [self initializeUserInterface];
 }
 
+- (void)initializeDataSource
+{
+    PGCManager *manager = [PGCManager manager];
+    [manager readTokenData];
+    PGCUser *user = manager.token.user;
+    NSDictionary *params = @{@"user_id":@(user.user_id),
+                             @"client_type":@"iphone",
+                             @"token":manager.token.token,
+                             @"name":self.contactInfo.name,
+                             @"phone":self.contactInfo.phone};
+    MBProgressHUD *hud = [PGCProgressHUD showProgress:nil toView:self.view];
+    [PGCContactAPIManager getContactProjectsRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, NSMutableArray *resultData) {
+        [hud hideAnimated:true];
+        
+        if (status == RespondsStatusSuccess) {
+            [self.contactProjects addObjectsFromArray:resultData];
+            
+            [self.tableView reloadData];
+        }
+    }];
+}
 
 - (void)initializeUserInterface
 {
-    self.navigationItem.title = @"个人资料";
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.title = @"个人资料";
     self.automaticallyAdjustsScrollViewInsets = false;
+    self.view.backgroundColor = [UIColor whiteColor];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"删除联系人" style:UIBarButtonItemStyleDone target:self action:@selector(respondsToDeleteContact:)];
     
@@ -62,11 +87,10 @@
     for (PGCContact *contact in @[self.contactInfo]) {
         [array addObject:@(contact.id)];
     }
-    NSString *ids_json = [PGCBaseAPIManager jsonToString:array];
     NSDictionary *params = @{@"user_id":@(user.user_id),
                              @"client_type":@"iphone",
                              @"token":manager.token.token,
-                             @"ids_json":ids_json};
+                             @"ids_json":[array mj_JSONString]};
     
     [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示：" message:@"是否删除该联系人？" actionTitle:@"确定" otherActionTitle:@"取消" handler:^(UIAlertAction *action) {
         
@@ -92,7 +116,7 @@
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _isLeft ? 1 : 4;
+    return _isLeft ? 1 : self.contactProjects.count;
 }
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -105,7 +129,7 @@
         
     } else {
         PGCProjectCell *cell = [tableView dequeueReusableCellWithIdentifier:kPGCProjectCell];
-        cell.contactRight = self.contactInfo;
+        cell.projectInfo = self.contactProjects[indexPath.row];
         return cell;
     }
 }
@@ -176,6 +200,13 @@
         [_tableView registerNib:[UINib nibWithNibName:NSStringFromClass([PGCProjectCell class]) bundle:nil] forCellReuseIdentifier:kPGCProjectCell];
     }
     return _tableView;
+}
+
+- (NSMutableArray *)contactProjects {
+    if (!_contactProjects) {
+        _contactProjects = [NSMutableArray array];
+    }
+    return _contactProjects;
 }
 
 @end

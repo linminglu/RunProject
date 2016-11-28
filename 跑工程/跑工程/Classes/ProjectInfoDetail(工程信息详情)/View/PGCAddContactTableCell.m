@@ -51,7 +51,7 @@
     
     self.addContactTF.sd_layout
     .centerYEqualToView(self.contentView)
-    .leftSpaceToView(self.addContactTitle, 10)
+    .leftSpaceToView(self.addContactTitle, 0)
     .rightSpaceToView(self.contentView, 15)
     .heightIs(30);
     

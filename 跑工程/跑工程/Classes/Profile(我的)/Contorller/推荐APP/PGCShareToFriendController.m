@@ -11,6 +11,7 @@
 @interface PGCShareToFriendController ()
 
 @property (copy, nonatomic) NSArray *shareBtnArray;/** 分享按钮名字数组 */
+@property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
 
 - (void)initializeUserInterface; /** 初始化用户界面 */
 
@@ -26,7 +27,10 @@
 
 - (void)initializeUserInterface
 {
-    self.navigationItem.title = @"推荐APP";
+    self.title = @"推荐APP";
+    self.automaticallyAdjustsScrollViewInsets = false;
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     // 分享按钮图片数组
     _shareBtnArray = @[@"QQ好友", @"QQ空间", @"微信好友", @"朋友圈"];
     //创建四个分享按钮
@@ -35,11 +39,6 @@
         button.frame = CGRectMake(30 + (i * (50 + (SCREEN_WIDTH - 260) / 3)) , SCREEN_HEIGHT - 80, 50, 70);
         button.tag = i;
         
-//        if (SCREEN_WIDTH > 320.00) {// iPhone 6 & 6p 及以上的屏幕
-//            button.frame = CGRectMake(30 + (i * (50 + (SCREEN_WIDTH - 260) / 3)) , SCREEN_HEIGHT - 80, 50, 80);
-//        }
-//        else {
-//        }
         [button addTarget:self action:@selector(shareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:button];
         

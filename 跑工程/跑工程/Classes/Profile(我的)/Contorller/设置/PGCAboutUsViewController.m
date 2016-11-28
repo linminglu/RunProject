@@ -26,7 +26,9 @@
 
 - (void)initializeUserInterface
 {
-    self.navigationItem.title = @"关于我们";
+    self.title = @"关于我们";
+    self.automaticallyAdjustsScrollViewInsets = false;
+    self.view.backgroundColor = [UIColor whiteColor];
     
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     [paragraphStyle setLineSpacing:10];

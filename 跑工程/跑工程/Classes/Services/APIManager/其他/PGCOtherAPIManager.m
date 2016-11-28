@@ -7,6 +7,7 @@
 //
 
 #import "PGCOtherAPIManager.h"
+#import "PGCHeadImage.h"
 
 @implementation PGCOtherAPIManager
 
@@ -74,7 +75,7 @@
 {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KeyWindow animated:true];
     hud.mode = MBProgressHUDModeAnnularDeterminate;
-    hud.label.text = @"正在上传...";
+    hud.label.text = @"正在上传图片...";
     
     return [self uploadRequest:kSignleImageUpload parameters:parameters images:images name:@"file" fileName:nil mimeType:@"jpg" progress:^(NSProgress *progress) {
         // 显示上传进度
@@ -87,7 +88,10 @@
         NSDictionary *resultData = responseObject[@"data"];
         
         if (resultCode == 200) {
-            respondsBlock(RespondsStatusSuccess, resultMsg, resultData);
+            PGCHeadImage *headImage = [[PGCHeadImage alloc] init];
+            [headImage mj_setKeyValues:resultData];
+            
+            respondsBlock(RespondsStatusSuccess, resultMsg, headImage);
         }
         else {
             respondsBlock(RespondsStatusDataError, resultMsg, nil);
