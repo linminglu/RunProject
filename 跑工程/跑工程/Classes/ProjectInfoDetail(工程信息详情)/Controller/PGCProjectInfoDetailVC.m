@@ -17,6 +17,9 @@
 #define SegmentBtnTag 100
 
 @interface PGCProjectInfoDetailVC () <UICollectionViewDataSource>
+{
+    UILabel *_titleLabel;/** 收藏按钮文字标签 */
+}
 
 @property (strong, nonatomic) UICollectionView *collectionView;/** 集合视图 */
 @property (strong, nonatomic) UIButton *previousBtn;/** 当前选中按钮 */
@@ -162,8 +165,8 @@
         [PGCProjectInfoAPIManager addAccessOrCollectRequestWithParameters:self.accessOrCollectParams responds:^(RespondsStatus status, NSString *message, id resultData) {
             if (status == RespondsStatusSuccess) {
                 [MBProgressHUD showSuccess:@"收藏成功" toView:KeyWindow];
-                [sender setTitle:@"取消收藏" forState:UIControlStateNormal];
-                [sender layoutButtonWithEdgeInsetsStyle:ButtonEdgeInsetsStyleRight imageTitleSpace:0];
+                _titleLabel.text = @"取消收藏";
+//                [sender setTitle:@"取消收藏" forState:UIControlStateNormal];
                 [PGCNotificationCenter postNotificationName:kRefreshCollectTable object:nil userInfo:nil];
             } else {
                 [PGCProgressHUD showMessage:message toView:self.view afterDelayTime:1.5];
@@ -178,8 +181,8 @@
         [PGCProjectInfoAPIManager deleteAccessOrCollectRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
             if (status == RespondsStatusSuccess) {
                 [MBProgressHUD showSuccess:@"已取消收藏" toView:KeyWindow];
-                [sender setTitle:@"收藏此项目" forState:UIControlStateNormal];
-                [sender layoutButtonWithEdgeInsetsStyle:ButtonEdgeInsetsStyleRight imageTitleSpace:0];
+                _titleLabel.text = @"收藏此项目";
+//                [sender setTitle:@"收藏此项目" forState:UIControlStateNormal];
                 [PGCNotificationCenter postNotificationName:kRefreshCollectTable object:nil userInfo:nil];
             } else {
                 [PGCProgressHUD showMessage:message toView:self.view afterDelayTime:1.5];
@@ -259,16 +262,30 @@
     return _collectionView;
 }
 
+
 - (UIBarButtonItem *)navButton:(NSString *)title
 {
+    CGFloat titleWidth = [@"收藏此项目" sizeWithFont:SetFont(14) constrainedToSize:CGSizeMake(MAXFLOAT, 0)].width;
+    UIImage *image = [UIImage imageNamed:@"heart"];
+    
     UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
-    button.bounds = CGRectMake(0, 0, 90, 40);
-    [button setImage:[UIImage imageNamed:@"heart"] forState:UIControlStateNormal];
-    [button.titleLabel setFont:SetFont(14)];
-    [button setTitle:title forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    button.bounds = CGRectMake(0, 0, titleWidth + image.size.width + 5, 40);
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+    imageView.center = CGPointMake(button.width_sd - image.size.width / 2, button.height_sd / 2);
+    [button addSubview:imageView];
+    
+    UILabel *label = [[UILabel alloc] init];
+    label.bounds = CGRectMake(0, 0, titleWidth, 40);
+    label.center = CGPointMake(titleWidth / 2, button.height_sd / 2);
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor whiteColor];
+    label.font = SetFont(14);
+    label.text = title;
+    [button addSubview:label];
+    _titleLabel = label;
     [button addTarget:self action:@selector(respondsToCollect:) forControlEvents:UIControlEventTouchUpInside];
-    [button layoutButtonWithEdgeInsetsStyle:ButtonEdgeInsetsStyleRight imageTitleSpace:0];
+    
     return [[UIBarButtonItem alloc] initWithCustomView:button];
 }
 

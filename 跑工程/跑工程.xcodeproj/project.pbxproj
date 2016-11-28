@@ -1397,10 +1397,10 @@
 		84175B381DEC324500086E7B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				84175B391DEC324500086E7B /* PGCProjectAddContactController.h */,
-				84175B3A1DEC324500086E7B /* PGCProjectAddContactController.m */,
 				84175B3B1DEC324500086E7B /* PGCProjectInfoDetailVC.h */,
 				84175B3C1DEC324500086E7B /* PGCProjectInfoDetailVC.m */,
+				84175B391DEC324500086E7B /* PGCProjectAddContactController.h */,
+				84175B3A1DEC324500086E7B /* PGCProjectAddContactController.m */,
 				84175B3D1DEC324500086E7B /* PGCVIPServiceController.h */,
 				84175B3E1DEC324500086E7B /* PGCVIPServiceController.m */,
 			);

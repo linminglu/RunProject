@@ -90,34 +90,6 @@
     }];
 }
 
-- (void)loadMoreSupplyIntroduce
-{
-    [self.params setObject:@(_page) forKey:@"page"];
-    [self.params setObject:@(1) forKey:@"page_size"];
-    
-    [PGCSupplyAPIManager mySuppliesWithParameters:self.params responds:^(RespondsStatus status, NSString *message, id resultData) {
-        if (status == RespondsStatusSuccess) {
-            NSArray *resultArray = resultData[@"result"];
-            if (resultArray.count > 0) {
-                for (id value in resultArray) {
-                    PGCSupply *model = [[PGCSupply alloc] init];
-                    [model mj_setKeyValues:value];
-                    [self.dataSource addObject:model];
-                }
-                [self.tableView.mj_footer endRefreshing];
-                _page++;
-                
-            } else {
-                [self.tableView.mj_footer endRefreshingWithNoMoreData];
-            }
-            [self.tableView reloadData];
-            
-        } else {
-            [self.tableView.mj_footer endRefreshing];
-        }
-    }];
-}
-
 
 #pragma mark - Events
 
@@ -159,11 +131,9 @@
             [hud hideAnimated:true];
             
             if (status == RespondsStatusSuccess) {
-                [self.dataSource removeObjectsInArray:self.deleteData];
-                [self.tableView deleteRowsAtIndexPaths:self.tableView.indexPathsForSelectedRows withRowAnimation:UITableViewRowAnimationLeft];
-                [self.deleteData removeAllObjects];
-                [self.tableView reloadData];
                 
+                [self.tableView.mj_header beginRefreshing];
+                [PGCNotificationCenter postNotificationName:kSupplyInfoData object:nil userInfo:nil];
                 [weakSelf respondsToCancel:nil];
             }
         }];
@@ -271,10 +241,6 @@
         header.automaticallyChangeAlpha = true;
         header.lastUpdatedTimeLabel.hidden = true;
         _tableView.mj_header = header;
-        
-        MJRefreshBackNormalFooter *footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreSupplyIntroduce)];
-        footer.ignoredScrollViewContentInsetBottom = 0;
-        _tableView.mj_footer = footer;
     }
     return _tableView;
 }
