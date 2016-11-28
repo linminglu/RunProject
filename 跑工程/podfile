@@ -10,6 +10,6 @@ target '跑工程' do
     pod 'IQKeyboardManager', '~> 4.0.7'
     pod 'YYCache', '~> 1.0.4'
     pod 'SDWebImage', '~> 3.8.2'
-    pod 'AMap2DMap', '~> 4.4.0'
     pod 'AMapLocation', '~> 2.2.0'
+    pod 'AMapNavi', '~> 2.3.0'
 end
