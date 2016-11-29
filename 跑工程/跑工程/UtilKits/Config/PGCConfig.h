@@ -69,6 +69,9 @@
 /*****第三方服务的key*****/
 #define AMapKey @"0eeedd0b0166122dc319ed94dc04cf6a"// 高德地图 app key
 
+#define SHARE_APPKEY @"196fd48f2a09c"// shareSDK appKey
+#define SHARE_SECRET @"5bfef51128e3fd5f50b7f12b20434ff0"// shareSDK app secret
+
 #define WeChat_APPID @"wx3ce8d64947abe952"// 微信 appID
 
 #define QQ_APPID @"1105771161"// QQ appID
@@ -77,8 +80,6 @@
 #define GETUI_APPID @"xQANwMGyAN6MoCa8DyLrN6"// 个推appID
 #define GETUI_APPKEY @"AOB4Kx7nyv65sqZHapchY7"// 个推appKey
 
-#define SHARE_APPKEY @"196fd48f2a09c"// shareSDK appKey
-#define SHARE_SECRET @"5bfef51128e3fd5f50b7f12b20434ff0"// shareSDK app secret
 
 
 #endif /* PGCConfig_h */

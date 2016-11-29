@@ -20,6 +20,8 @@
 #import "PGCProjectAddContactController.h"
 #import "PGCProjectContact.h"
 #import "PGCDemand.h"
+#import <ShareSDK/ShareSDK.h>
+#import <ShareSDKUI/ShareSDK+SSUI.h>
 
 typedef NS_ENUM(NSUInteger, ButtonTag) {
     ShareBtnTag,
@@ -119,6 +121,15 @@ typedef NS_ENUM(NSUInteger, ButtonTag) {
     }
 }
 
+- (void)showAlert:(NSString *)title message:(NSString *)message actionTitle:(NSString *)actionTitle
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:actionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+    }]];
+    [self presentViewController:alert animated:true completion:nil];
+}
+
 - (void)checkMoreContact:(UIButton *)sender
 {
     NSMutableArray *array = (NSMutableArray *)self.dataSource[1];
@@ -176,25 +187,138 @@ typedef NS_ENUM(NSUInteger, ButtonTag) {
 
 
 #pragma mark - PGCSupplyAndDemandShareViewDelegate
-
+/***
+ SSDKPlatformSubTypeQQFriend        QQ好友
+ SSDKPlatformSubTypeQZone           QQ空间
+ SSDKPlatformSubTypeWechatSession   微信好友
+ SSDKPlatformSubTypeWechatTimeline  微信朋友圈
+ ***/
 - (void)shareView:(PGCSupplyAndDemandShareView *)shareView qqFriend:(UIButton *)qqFriend
 {
-    
+    __weak typeof(self) weakSelf = self;
+    //1、创建分享参数
+    NSArray* imageArray = @[[UIImage imageNamed:@"120"]];
+    if (imageArray) {
+        NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+        [shareParams SSDKSetupShareParamsByText:@"工程宝在手，找信息不愁。"
+                                         images:imageArray
+                                            url:[NSURL URLWithString:@"http://mob.com"]
+                                          title:@"工程宝"
+                                           type:SSDKContentTypeAuto];
+        //2、分享（可以弹出我们的分享菜单和编辑界面）
+        [ShareSDK share:SSDKPlatformSubTypeQQFriend parameters:shareParams onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
+            switch (state) {
+                case SSDKResponseStateSuccess:
+                {
+                    [weakSelf showAlert:@"分享成功" message:nil actionTitle:@"好的"];
+                    break;
+                }
+                case SSDKResponseStateFail:
+                {
+                    [weakSelf showAlert:@"分享失败" message:error.localizedDescription actionTitle:@"我知道了"];
+                    break;
+                }
+                default:
+                    break;
+            }
+        }];
+    }
 }
 
 - (void)shareView:(PGCSupplyAndDemandShareView *)shareView qqZone:(UIButton *)qqZone
 {
-    
+    __weak typeof(self) weakSelf = self;
+    //1、创建分享参数
+    NSArray* imageArray = @[[UIImage imageNamed:@"120"]];
+    if (imageArray) {
+        NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+        [shareParams SSDKSetupShareParamsByText:@"工程宝在手，找信息不愁。"
+                                         images:imageArray
+                                            url:[NSURL URLWithString:@"http://mob.com"]
+                                          title:@"工程宝"
+                                           type:SSDKContentTypeAuto];
+        //2、分享（可以弹出我们的分享菜单和编辑界面）
+        [ShareSDK share:SSDKPlatformSubTypeQZone parameters:shareParams onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
+            switch (state) {
+                case SSDKResponseStateSuccess:
+                {
+                    [weakSelf showAlert:@"分享成功" message:nil actionTitle:@"好的"];
+                    break;
+                }
+                case SSDKResponseStateFail:
+                {
+                    [weakSelf showAlert:@"分享失败" message:error.localizedDescription actionTitle:@"我知道了"];
+                    break;
+                }
+                default:
+                    break;
+            }
+        }];
+    }
 }
 
 - (void)shareView:(PGCSupplyAndDemandShareView *)shareView weChat:(UIButton *)weChat
 {
-    
+    __weak typeof(self) weakSelf = self;
+    //1、创建分享参数
+    NSArray* imageArray = @[[UIImage imageNamed:@"120"]];
+    if (imageArray) {
+        NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+        [shareParams SSDKSetupShareParamsByText:@"工程宝在手，找信息不愁。"
+                                         images:imageArray
+                                            url:[NSURL URLWithString:@"http://mob.com"]
+                                          title:@"工程宝"
+                                           type:SSDKContentTypeAuto];
+        //2、分享（可以弹出我们的分享菜单和编辑界面）
+        [ShareSDK share:SSDKPlatformSubTypeWechatSession parameters:shareParams onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
+            switch (state) {
+                case SSDKResponseStateSuccess:
+                {
+                    [weakSelf showAlert:@"分享成功" message:nil actionTitle:@"好的"];
+                    break;
+                }
+                case SSDKResponseStateFail:
+                {
+                    [weakSelf showAlert:@"分享失败" message:error.localizedDescription actionTitle:@"我知道了"];
+                    break;
+                }
+                default:
+                    break;
+            }
+        }];
+    }
 }
 
 - (void)shareView:(PGCSupplyAndDemandShareView *)shareView weChatFriends:(UIButton *)friends
 {
-    
+    __weak typeof(self) weakSelf = self;
+    //1、创建分享参数
+    NSArray* imageArray = @[[UIImage imageNamed:@"120"]];
+    if (imageArray) {
+        NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+        [shareParams SSDKSetupShareParamsByText:@"工程宝在手，找信息不愁。"
+                                         images:imageArray
+                                            url:[NSURL URLWithString:@"http://mob.com"]
+                                          title:@"工程宝"
+                                           type:SSDKContentTypeAuto];
+        //2、分享（可以弹出我们的分享菜单和编辑界面）
+        [ShareSDK share:SSDKPlatformSubTypeWechatTimeline parameters:shareParams onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
+            switch (state) {
+                case SSDKResponseStateSuccess:
+                {
+                    [weakSelf showAlert:@"分享成功" message:nil actionTitle:@"好的"];
+                    break;
+                }
+                case SSDKResponseStateFail:
+                {
+                    [weakSelf showAlert:@"分享失败" message:error.localizedDescription actionTitle:@"我知道了"];
+                    break;
+                }
+                default:
+                    break;
+            }
+        }];
+    }
 }
 
 

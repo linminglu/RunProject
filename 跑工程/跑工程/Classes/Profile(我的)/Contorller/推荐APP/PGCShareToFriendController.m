@@ -7,6 +7,8 @@
 //
 
 #import "PGCShareToFriendController.h"
+#import <ShareSDK/ShareSDK.h>
+#import <ShareSDKUI/ShareSDK+SSUI.h>
 
 @interface PGCShareToFriendController ()
 
@@ -72,30 +74,108 @@
  */
 - (void) shareBtnClick:(UIButton *)sender
 {
+    __weak typeof(self) weakSelf = self;
+    //1、创建分享参数
+    NSArray* imageArray = @[[UIImage imageNamed:@"120"]];
+    NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+    [shareParams SSDKSetupShareParamsByText:@"工程宝在手，找信息不愁。"
+                                     images:imageArray
+                                        url:[NSURL URLWithString:@"http://mob.com"]
+                                      title:@"工程宝"
+                                       type:SSDKContentTypeAuto];
     switch (sender.tag) {
         case 0://QQ好友
         {
-            
+            [ShareSDK share:SSDKPlatformSubTypeQQFriend parameters:shareParams onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
+                switch (state) {
+                    case SSDKResponseStateSuccess:
+                    {
+                        [weakSelf showAlert:@"分享成功" message:nil actionTitle:@"好的"];
+                        break;
+                    }
+                    case SSDKResponseStateFail:
+                    {
+                        [weakSelf showAlert:@"分享失败" message:error.localizedDescription actionTitle:@"我知道了"];
+                        break;
+                    }
+                    default:
+                        break;
+                }
+            }];
         }
             break;
         case 1://QQ空间
         {
-            
+            [ShareSDK share:SSDKPlatformSubTypeQZone parameters:shareParams onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
+                switch (state) {
+                    case SSDKResponseStateSuccess:
+                    {
+                        [weakSelf showAlert:@"分享成功" message:nil actionTitle:@"好的"];
+                        break;
+                    }
+                    case SSDKResponseStateFail:
+                    {
+                        [weakSelf showAlert:@"分享失败" message:error.localizedDescription actionTitle:@"我知道了"];
+                        break;
+                    }
+                    default:
+                        break;
+                }
+            }];
         }
             break;
         case 2://微信好友
         {
-            
+            [ShareSDK share:SSDKPlatformSubTypeWechatSession parameters:shareParams onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
+                switch (state) {
+                    case SSDKResponseStateSuccess:
+                    {
+                        [weakSelf showAlert:@"分享成功" message:nil actionTitle:@"好的"];
+                        break;
+                    }
+                    case SSDKResponseStateFail:
+                    {
+                        [weakSelf showAlert:@"分享失败" message:error.localizedDescription actionTitle:@"我知道了"];
+                        break;
+                    }
+                    default:
+                        break;
+                }
+            }];
         }
             break;
         case 3://朋友圈
         {
-            
+            [ShareSDK share:SSDKPlatformSubTypeWechatTimeline parameters:shareParams onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
+                switch (state) {
+                    case SSDKResponseStateSuccess:
+                    {
+                        [weakSelf showAlert:@"分享成功" message:nil actionTitle:@"好的"];
+                        break;
+                    }
+                    case SSDKResponseStateFail:
+                    {
+                        [weakSelf showAlert:@"分享失败" message:error.localizedDescription actionTitle:@"我知道了"];
+                        break;
+                    }
+                    default:
+                        break;
+                }
+            }];
         }
             break;
         default:
             break;
     }
+}
+
+- (void)showAlert:(NSString *)title message:(NSString *)message actionTitle:(NSString *)actionTitle
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:actionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+    }]];
+    [self presentViewController:alert animated:true completion:nil];
 }
 
 @end
