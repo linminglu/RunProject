@@ -19,7 +19,7 @@
 
 - (void)registerAMap
 {
-    [AMapServices sharedServices].apiKey = (NSString *)AMapKey;
+    [AMapServices sharedServices].apiKey = AMapKey;
 }
 
 - (void)registerGeTui

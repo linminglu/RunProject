@@ -23,6 +23,19 @@
 }
 
 
+/* 时间字符串格式转换 */
++ (NSString *)dateString:(NSString *)oldStr
+{
+    NSDateFormatter *formatter_1 = [[NSDateFormatter alloc] init];
+    [formatter_1 setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *date = [formatter_1 dateFromString:oldStr];
+    
+    NSDateFormatter *formatter_2 = [[NSDateFormatter alloc] init];
+    [formatter_2 setDateFormat:@"yyyy年MM月dd日"];
+    
+    return [formatter_2 stringFromDate:date];
+}
+
 - (CGSize)sizeWithFont:(UIFont *)font constrainedToSize:(CGSize)size
 {
     CGSize textSize;

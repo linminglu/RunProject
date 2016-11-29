@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-@class PGCProjectInfo;
+@class PGCProject;
 
 static NSString * const kProjectInfoCell = @"ProjectInfoCell";
 
 @interface PGCProjectInfoCell : UITableViewCell
 
-@property (strong, nonatomic) PGCProjectInfo *project;/** 项目模型 */
+@property (strong, nonatomic) PGCProject *project;/** 项目模型 */
 
 @end

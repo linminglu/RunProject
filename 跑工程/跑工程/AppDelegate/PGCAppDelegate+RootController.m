@@ -60,13 +60,9 @@
     [XHLaunchAd showWithAdFrame:self.window.bounds setAdImage:^(XHLaunchAd *launchAd) {
         launchAd.noDataDuration = 1;
         
-        [PGCOtherAPIManager getLatestAppSplashImageRequestWithParameters:@{} responds:^(RespondsStatus status, NSString *message, id resultData) {
-            if (status == RespondsStatusSuccess) {
-                
-                LunchImage *model = [[LunchImage alloc] init];
-                [model mj_setKeyValues:resultData];
-                
-                NSString *imageUrl = [kBaseImageURL stringByAppendingString:model.image];
+        [PGCOtherAPIManager getLatestAppSplashImageRequestWithParameters:@{} responds:^(RespondsStatus status, NSString *message, LunchImage *resultData) {
+            if (status == RespondsStatusSuccess) {                
+                NSString *imageUrl = [kBaseImageURL stringByAppendingString:resultData.image];
                 //定义一个weakLaunchAd
                 __weak __typeof(launchAd) weakLaunchAd = launchAd;
                 [launchAd setImageUrl:imageUrl duration:3 skipType:SkipTypeTimeText options:XHWebImageRefreshCached completed:^(UIImage *image, NSURL *url) {

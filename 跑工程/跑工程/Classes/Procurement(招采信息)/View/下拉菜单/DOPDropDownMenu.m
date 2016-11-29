@@ -46,7 +46,7 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     //画一条底部线
     
-    CGContextSetRGBStrokeColor(context, 219.0/255, 224.0/255, 228.0/255, 1);//线条颜色
+    CGContextSetRGBStrokeColor(context, 219.0/255.0, 219.0/255.0, 229.0/255.0, 1.0);//线条颜色
     CGContextMoveToPoint(context, 0, 0);
     CGContextAddLineToPoint(context, rect.size.width,0);
     CGContextMoveToPoint(context, 0, rect.size.height);
@@ -106,7 +106,7 @@
 
 #define kTextColor [UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1]
 #define kDetailTextColor [UIColor colorWithRed:136/255.0 green:136/255.0 blue:136/255.0 alpha:1]
-#define kSeparatorColor [UIColor colorWithRed:219/255.0 green:219/255.0 blue:219/255.0 alpha:1]
+#define kSeparatorColor [UIColor colorWithRed:229/255.0 green:229/255.0 blue:239/255.0 alpha:1]
 #define kCellBgColor [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1]
 #define kTextSelectColor [UIColor colorWithRed:250/255.0 green:117/255.0 blue:10/255.0 alpha:1]
 
@@ -121,7 +121,7 @@
     if (self) {
         _origin = origin;
         _currentSelectedMenudIndex = -1;
-        _show = NO;
+        _show = false;
         _fontSize = 14;
         _cellStyle = UITableViewCellStyleValue1;
         _separatorColor = kSeparatorColor;
@@ -131,7 +131,7 @@
         _detailTextColor = kDetailTextColor;
         _indicatorColor = kTextColor;
         _tableViewHeight = kTableViewHeight;
-        _isClickHaveItemValid = YES;
+        _isClickHaveItemValid = true;
         
         //lefttableView init
         _leftTableView = [[UITableView alloc] initWithFrame:CGRectMake(origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width/2, 0) style:UITableViewStylePlain];
@@ -159,14 +159,19 @@
         //background init and tapped
         _backGroundView = [[UIView alloc] initWithFrame:CGRectMake(origin.x, origin.y, screenSize.width, screenSize.height)];
         _backGroundView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.0];
-        _backGroundView.opaque = NO;
+        _backGroundView.opaque = false;
         UIGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundTapped:)];
         [_backGroundView addGestureRecognizer:gesture];
+        
+        //add top shadow
+        UIView *topShadow = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenSize.width, 0.5)];
+        topShadow.backgroundColor = kSeparatorColor;
+        [self addSubview:topShadow];
         
         //add bottom shadow
         UIView *bottomShadow = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height-0.5, screenSize.width, 0.5)];
         bottomShadow.backgroundColor = kSeparatorColor;
-        bottomShadow.hidden = YES;
+        bottomShadow.hidden = true;
         [self addSubview:bottomShadow];
         _bottomShadow = bottomShadow;
     }
@@ -266,8 +271,8 @@
     
     for (int i = 0; i < _numOfMenu; i++) {
         if (i != tapIndex) {
-            [self animateIndicator:_indicators[i] Forward:NO complete:^{
-                [self animateTitle:_titles[i] show:NO complete:^{
+            [self animateIndicator:_indicators[i] Forward:false complete:^{
+                [self animateTitle:_titles[i] show:false complete:^{
                     
                 }];
             }];
@@ -275,9 +280,9 @@
     }
     
     if (tapIndex == _currentSelectedMenudIndex && _show) {
-        [self animateIdicator:_indicators[_currentSelectedMenudIndex] background:_backGroundView tableView:_leftTableView title:_titles[_currentSelectedMenudIndex] forward:NO complecte:^{
+        [self animateIdicator:_indicators[_currentSelectedMenudIndex] background:_backGroundView tableView:_leftTableView title:_titles[_currentSelectedMenudIndex] forward:false complecte:^{
             _currentSelectedMenudIndex = tapIndex;
-            _show = NO;
+            _show = false;
         }];
     } else {
         _currentSelectedMenudIndex = tapIndex;
@@ -286,16 +291,16 @@
             [_rightTableView reloadData];
         }
         
-        [self animateIdicator:_indicators[tapIndex] background:_backGroundView tableView:_leftTableView title:_titles[tapIndex] forward:YES complecte:^{
-            _show = YES;
+        [self animateIdicator:_indicators[tapIndex] background:_backGroundView tableView:_leftTableView title:_titles[tapIndex] forward:true complecte:^{
+            _show = true;
         }];
     }
 }
 
 - (void)backgroundTapped:(UITapGestureRecognizer *)paramSender
 {
-    [self animateIdicator:_indicators[_currentSelectedMenudIndex] background:_backGroundView tableView:_leftTableView title:_titles[_currentSelectedMenudIndex] forward:NO complecte:^{
-        _show = NO;
+    [self animateIdicator:_indicators[_currentSelectedMenudIndex] background:_backGroundView tableView:_leftTableView title:_titles[_currentSelectedMenudIndex] forward:false complecte:^{
+        _show = false;
     }];
 }
 
@@ -349,7 +354,7 @@
 
 - (void)animateTableView:(UITableView *)tableView show:(BOOL)show complete:(void(^)())complete {
     
-    BOOL haveItems = NO;
+    BOOL haveItems = false;
     
     if (_dataSource) {
         NSInteger num = [_leftTableView numberOfRowsInSection:0];
@@ -357,7 +362,7 @@
         for (NSInteger i = 0; i<num;++i) {
             if (_dataSourceFlags.numberOfItemsInRow
                 && [_dataSource menu:self numberOfItemsInRow:i column:_currentSelectedMenudIndex] > 0) {
-                haveItems = YES;
+                haveItems = true;
                 break;
             }
         }
@@ -440,9 +445,9 @@
 }
 
 - (void)reloadData {
-    [self animateBackGroundView:_backGroundView show:NO complete:^{
-        [self animateTableView:nil show:NO complete:^{
-            _show = NO;
+    [self animateBackGroundView:_backGroundView show:false complete:^{
+        [self animateTableView:nil show:false complete:^{
+            _show = false;
             id VC = self.dataSource;
             self.dataSource = nil;
             self.dataSource = VC;
@@ -502,7 +507,7 @@
 }
 
 - (void)selectIndexPath:(DOPIndexPath *)indexPath {
-    [self selectIndexPath:indexPath triggerDelegate:YES];
+    [self selectIndexPath:indexPath triggerDelegate:true];
 }
 
 
@@ -578,11 +583,11 @@
         NSInteger currentSelectedMenudRow = [_currentSelectRowArray[_currentSelectedMenudIndex] integerValue];
         if (indexPath.row == currentSelectedMenudRow)
         {
-            [tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+            [tableView selectRowAtIndexPath:indexPath animated:true scrollPosition:UITableViewScrollPositionNone];
         }
         
         if (_dataSourceFlags.numberOfItemsInRow && [_dataSource menu:self numberOfItemsInRow:indexPath.row column:_currentSelectedMenudIndex]> 0){
-            cell.accessoryView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"icon_chose_arrow_nor"] highlightedImage:[UIImage imageNamed:@"icon_chose_arrow_sel"]];
+            cell.accessoryView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"icon_chose_arrow_falser"] highlightedImage:[UIImage imageNamed:@"icon_chose_arrow_sel"]];
         } else {
             cell.accessoryView = nil;
         }
@@ -618,8 +623,8 @@
         }
         if ([cell.textLabel.text isEqualToString:[(CATextLayer *)[_titles objectAtIndex:_currentSelectedMenudIndex] string]]) {
             NSInteger currentSelectedMenudRow = [_currentSelectRowArray[_currentSelectedMenudIndex] integerValue];
-            [_leftTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:currentSelectedMenudRow inSection:0] animated:YES scrollPosition:UITableViewScrollPositionMiddle];
-            [_rightTableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+            [_leftTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:currentSelectedMenudRow inSection:0] animated:true scrollPosition:UITableViewScrollPositionMiddle];
+            [_rightTableView selectRowAtIndexPath:indexPath animated:true scrollPosition:UITableViewScrollPositionMiddle];
         }
         cell.backgroundColor = [UIColor whiteColor];
         cell.accessoryView = nil;
@@ -645,7 +650,7 @@
     
     if (_leftTableView == tableView) {
         BOOL haveItem = [self confiMenuWithSelectRow:indexPath.row];
-        BOOL isClickHaveItemValid = self.isClickHaveItemValid ? YES : haveItem;
+        BOOL isClickHaveItemValid = self.isClickHaveItemValid ? true : haveItem;
         
         if (isClickHaveItemValid && _delegate && [_delegate respondsToSelector:@selector(menu:didSelectRowAtIndexPath:)]) {
             [self.delegate menu:self didSelectRowAtIndexPath:[DOPIndexPath indexPathWithCol:_currentSelectedMenudIndex row:indexPath.row]];
@@ -676,22 +681,22 @@
         // 有双列表 有item数据
         if (self.isClickHaveItemValid) {
             title.string = [_dataSource menu:self titleForRowAtIndexPath:[DOPIndexPath indexPathWithCol:_currentSelectedMenudIndex row:row]];
-            [self animateTitle:title show:YES complete:^{
+            [self animateTitle:title show:true complete:^{
                 [_rightTableView reloadData];
             }];
         } else {
             [_rightTableView reloadData];
         }
-        return NO;
+        return false;
         
     } else {
         
         title.string = [_dataSource menu:self titleForRowAtIndexPath:
                         [DOPIndexPath indexPathWithCol:_currentSelectedMenudIndex row:self.isRemainMenuTitle ? 0 : row]];
-        [self animateIdicator:_indicators[_currentSelectedMenudIndex] background:_backGroundView tableView:_leftTableView title:_titles[_currentSelectedMenudIndex] forward:NO complecte:^{
-            _show = NO;
+        [self animateIdicator:_indicators[_currentSelectedMenudIndex] background:_backGroundView tableView:_leftTableView title:_titles[_currentSelectedMenudIndex] forward:false complecte:^{
+            _show = false;
         }];
-        return YES;
+        return true;
     }
 }
 
@@ -700,8 +705,8 @@
     CATextLayer *title = (CATextLayer *)_titles[_currentSelectedMenudIndex];
     NSInteger currentSelectedMenudRow = [_currentSelectRowArray[_currentSelectedMenudIndex] integerValue];
     title.string = [_dataSource menu:self titleForItemsInRowAtIndexPath:[DOPIndexPath indexPathWithCol:_currentSelectedMenudIndex row:currentSelectedMenudRow item:item]];
-    [self animateIdicator:_indicators[_currentSelectedMenudIndex] background:_backGroundView tableView:_leftTableView title:_titles[_currentSelectedMenudIndex] forward:NO complecte:^{
-        _show = NO;
+    [self animateIdicator:_indicators[_currentSelectedMenudIndex] background:_backGroundView tableView:_leftTableView title:_titles[_currentSelectedMenudIndex] forward:false complecte:^{
+        _show = false;
     }];
     
 }
@@ -737,7 +742,7 @@
     _dataSourceFlags.detailTextForRowAtIndexPath = [_dataSource respondsToSelector:@selector(menu:detailTextForRowAtIndexPath:)];
     _dataSourceFlags.detailTextForItemsInRowAtIndexPath = [_dataSource respondsToSelector:@selector(menu:detailTextForItemsInRowAtIndexPath:)];
     
-    _bottomShadow.hidden = NO;
+    _bottomShadow.hidden = false;
     CGFloat textLayerInterval = self.frame.size.width / ( _numOfMenu * 2);
     CGFloat separatorLineInterval = self.frame.size.width / _numOfMenu;
     CGFloat bgLayerInterval = self.frame.size.width / _numOfMenu;

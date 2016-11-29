@@ -7,7 +7,7 @@
 //
 
 #import "PGCProjectCell.h"
-#import "PGCProjectInfo.h"
+#import "PGCProject.h"
 
 @interface PGCProjectCell ()
 
@@ -20,7 +20,7 @@
 
 #pragma mark - Setter
 
-- (void)setProjectInfo:(PGCProjectInfo *)projectInfo
+- (void)setProjectInfo:(PGCProject *)projectInfo
 {
     _projectInfo = projectInfo;
     

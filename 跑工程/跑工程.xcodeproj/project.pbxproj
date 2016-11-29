@@ -104,7 +104,7 @@
 		84175B351DEC31E400086E7B /* PGCProjectRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84175B311DEC31E400086E7B /* PGCProjectRootViewController.m */; };
 		84175B361DEC31E400086E7B /* PGCSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84175B331DEC31E400086E7B /* PGCSearchViewController.m */; };
 		84175B5B1DEC324500086E7B /* PGCProjectAddContactController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84175B3A1DEC324500086E7B /* PGCProjectAddContactController.m */; };
-		84175B5C1DEC324500086E7B /* PGCProjectInfoDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 84175B3C1DEC324500086E7B /* PGCProjectInfoDetailVC.m */; };
+		84175B5C1DEC324500086E7B /* PGCProjectDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84175B3C1DEC324500086E7B /* PGCProjectDetailViewController.m */; };
 		84175B5D1DEC324500086E7B /* PGCVIPServiceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84175B3E1DEC324500086E7B /* PGCVIPServiceController.m */; };
 		84175B5E1DEC324500086E7B /* PGCProjectContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 84175B411DEC324500086E7B /* PGCProjectContact.m */; };
 		84175B5F1DEC324500086E7B /* PGCAddContactRemarkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84175B441DEC324500086E7B /* PGCAddContactRemarkCell.m */; };
@@ -120,7 +120,7 @@
 		84175B691DEC324500086E7B /* PGCProjectSurveySubview.m in Sources */ = {isa = PBXBuildFile; fileRef = 84175B5A1DEC324500086E7B /* PGCProjectSurveySubview.m */; };
 		84175B7E1DEC32AC00086E7B /* PGCAreaManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84175B6C1DEC32AC00086E7B /* PGCAreaManager.m */; };
 		84175B7F1DEC32AC00086E7B /* PGCCity.m in Sources */ = {isa = PBXBuildFile; fileRef = 84175B6E1DEC32AC00086E7B /* PGCCity.m */; };
-		84175B801DEC32AC00086E7B /* PGCProjectInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 84175B701DEC32AC00086E7B /* PGCProjectInfo.m */; };
+		84175B801DEC32AC00086E7B /* PGCProject.m in Sources */ = {isa = PBXBuildFile; fileRef = 84175B701DEC32AC00086E7B /* PGCProject.m */; };
 		84175B811DEC32AC00086E7B /* PGCProjectManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84175B721DEC32AC00086E7B /* PGCProjectManager.m */; };
 		84175B821DEC32AC00086E7B /* PGCProjectProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 84175B741DEC32AC00086E7B /* PGCProjectProgress.m */; };
 		84175B831DEC32AC00086E7B /* PGCProjectType.m in Sources */ = {isa = PBXBuildFile; fileRef = 84175B761DEC32AC00086E7B /* PGCProjectType.m */; };
@@ -137,6 +137,7 @@
 		84175BA71DEC46AB00086E7B /* PGCSupplyIntroduceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 84175BA01DEC46AB00086E7B /* PGCSupplyIntroduceVC.m */; };
 		84175BA81DEC46AB00086E7B /* PGCSupplyCollectVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 84175BA31DEC46AB00086E7B /* PGCSupplyCollectVC.m */; };
 		84175BA91DEC46AB00086E7B /* PGCSupplyDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 84175BA51DEC46AB00086E7B /* PGCSupplyDetailVC.m */; };
+		84175BB11DED883700086E7B /* PGCSupplyInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84175BB01DED883700086E7B /* PGCSupplyInfoCell.m */; };
 		846C0B3D1DE2E3F800EF2D53 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 846C0B3C1DE2E3F800EF2D53 /* libc++.tbd */; };
 		846C0B3F1DE2E40500EF2D53 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 846C0B3E1DE2E40500EF2D53 /* libz.tbd */; };
 		846C0B411DE2E41100EF2D53 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 846C0B401DE2E41100EF2D53 /* libsqlite3.tbd */; };
@@ -410,8 +411,8 @@
 		84175AC01DEC308100086E7B /* PGCDropRightCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCDropRightCell.m; sourceTree = "<group>"; };
 		84175AC21DEC308100086E7B /* PGCDetailTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCDetailTitleView.h; sourceTree = "<group>"; };
 		84175AC31DEC308100086E7B /* PGCDetailTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCDetailTitleView.m; sourceTree = "<group>"; };
-		84175AC41DEC308100086E7B /* PGCProcurementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCProcurementCell.h; sourceTree = "<group>"; };
-		84175AC51DEC308100086E7B /* PGCProcurementCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCProcurementCell.m; sourceTree = "<group>"; };
+		84175AC41DEC308100086E7B /* PGCProcurementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PGCProcurementCell.h; path = "详情/PGCProcurementCell.h"; sourceTree = "<group>"; };
+		84175AC51DEC308100086E7B /* PGCProcurementCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PGCProcurementCell.m; path = "详情/PGCProcurementCell.m"; sourceTree = "<group>"; };
 		84175AC61DEC308100086E7B /* PGCSupplyAndDemandShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCSupplyAndDemandShareView.h; sourceTree = "<group>"; };
 		84175AC71DEC308100086E7B /* PGCSupplyAndDemandShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCSupplyAndDemandShareView.m; sourceTree = "<group>"; };
 		84175AC91DEC308100086E7B /* DemandDetailContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemandDetailContactCell.h; sourceTree = "<group>"; };
@@ -462,8 +463,8 @@
 		84175B331DEC31E400086E7B /* PGCSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCSearchViewController.m; sourceTree = "<group>"; };
 		84175B391DEC324500086E7B /* PGCProjectAddContactController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCProjectAddContactController.h; sourceTree = "<group>"; };
 		84175B3A1DEC324500086E7B /* PGCProjectAddContactController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCProjectAddContactController.m; sourceTree = "<group>"; };
-		84175B3B1DEC324500086E7B /* PGCProjectInfoDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCProjectInfoDetailVC.h; sourceTree = "<group>"; };
-		84175B3C1DEC324500086E7B /* PGCProjectInfoDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCProjectInfoDetailVC.m; sourceTree = "<group>"; };
+		84175B3B1DEC324500086E7B /* PGCProjectDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCProjectDetailViewController.h; sourceTree = "<group>"; };
+		84175B3C1DEC324500086E7B /* PGCProjectDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCProjectDetailViewController.m; sourceTree = "<group>"; };
 		84175B3D1DEC324500086E7B /* PGCVIPServiceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCVIPServiceController.h; sourceTree = "<group>"; };
 		84175B3E1DEC324500086E7B /* PGCVIPServiceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCVIPServiceController.m; sourceTree = "<group>"; };
 		84175B401DEC324500086E7B /* PGCProjectContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCProjectContact.h; sourceTree = "<group>"; };
@@ -494,8 +495,8 @@
 		84175B6C1DEC32AC00086E7B /* PGCAreaManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCAreaManager.m; sourceTree = "<group>"; };
 		84175B6D1DEC32AC00086E7B /* PGCCity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCCity.h; sourceTree = "<group>"; };
 		84175B6E1DEC32AC00086E7B /* PGCCity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCCity.m; sourceTree = "<group>"; };
-		84175B6F1DEC32AC00086E7B /* PGCProjectInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCProjectInfo.h; sourceTree = "<group>"; };
-		84175B701DEC32AC00086E7B /* PGCProjectInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCProjectInfo.m; sourceTree = "<group>"; };
+		84175B6F1DEC32AC00086E7B /* PGCProject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCProject.h; sourceTree = "<group>"; };
+		84175B701DEC32AC00086E7B /* PGCProject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCProject.m; sourceTree = "<group>"; };
 		84175B711DEC32AC00086E7B /* PGCProjectManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCProjectManager.h; sourceTree = "<group>"; };
 		84175B721DEC32AC00086E7B /* PGCProjectManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCProjectManager.m; sourceTree = "<group>"; };
 		84175B731DEC32AC00086E7B /* PGCProjectProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCProjectProgress.h; sourceTree = "<group>"; };
@@ -528,6 +529,8 @@
 		84175BA31DEC46AB00086E7B /* PGCSupplyCollectVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCSupplyCollectVC.m; sourceTree = "<group>"; };
 		84175BA41DEC46AB00086E7B /* PGCSupplyDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCSupplyDetailVC.h; sourceTree = "<group>"; };
 		84175BA51DEC46AB00086E7B /* PGCSupplyDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCSupplyDetailVC.m; sourceTree = "<group>"; };
+		84175BAF1DED883700086E7B /* PGCSupplyInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCSupplyInfoCell.h; sourceTree = "<group>"; };
+		84175BB01DED883700086E7B /* PGCSupplyInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCSupplyInfoCell.m; sourceTree = "<group>"; };
 		845938801DBF48320086DD53 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		846C0B3C1DE2E3F800EF2D53 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		846C0B3E1DE2E40500EF2D53 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -1090,10 +1093,10 @@
 		84175A741DEC305C00086E7B /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				84175A751DEC305C00086E7B /* PGCSupply.h */,
-				84175A761DEC305C00086E7B /* PGCSupply.m */,
 				84175A771DEC305C00086E7B /* Types.h */,
 				84175A781DEC305C00086E7B /* Types.m */,
+				84175A751DEC305C00086E7B /* PGCSupply.h */,
+				84175A761DEC305C00086E7B /* PGCSupply.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1105,6 +1108,8 @@
 				84175A7B1DEC305C00086E7B /* IntroduceSupplyTopCell.m */,
 				84175A7C1DEC305C00086E7B /* SupplyDetailTopCell.h */,
 				84175A7D1DEC305C00086E7B /* SupplyDetailTopCell.m */,
+				84175BAF1DED883700086E7B /* PGCSupplyInfoCell.h */,
+				84175BB01DED883700086E7B /* PGCSupplyInfoCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1135,12 +1140,7 @@
 		84175A951DEC308100086E7B /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				84175A961DEC308100086E7B /* Contacts.h */,
-				84175A971DEC308100086E7B /* Contacts.m */,
-				84175A981DEC308100086E7B /* Files.h */,
-				84175A991DEC308100086E7B /* Files.m */,
-				84175A9A1DEC308100086E7B /* Images.h */,
-				84175A9B1DEC308100086E7B /* Images.m */,
+				84175BAA1DED578800086E7B /* 供需子模型 */,
 				84175A9C1DEC308100086E7B /* PGCDemand.h */,
 				84175A9D1DEC308100086E7B /* PGCDemand.m */,
 				84175A9E1DEC308100086E7B /* PGCMaterialServiceTypes.h */,
@@ -1152,13 +1152,15 @@
 		84175AA01DEC308100086E7B /* View */ = {
 			isa = PBXGroup;
 			children = (
-				84175AA11DEC308100086E7B /* 下拉菜单 */,
-				84175AA51DEC308100086E7B /* 发布 */,
-				84175AAA1DEC308100086E7B /* 发布需求cell */,
-				84175AB31DEC308100086E7B /* 图片浏览器 */,
+				84175AC41DEC308100086E7B /* PGCProcurementCell.h */,
+				84175AC51DEC308100086E7B /* PGCProcurementCell.m */,
 				84175ABC1DEC308100086E7B /* 地区&类型cell */,
+				84175AA51DEC308100086E7B /* 发布 */,
 				84175AC11DEC308100086E7B /* 详情 */,
+				84175AAA1DEC308100086E7B /* 发布需求cell */,
 				84175AC81DEC308100086E7B /* 需求详情cell */,
+				84175AA11DEC308100086E7B /* 下拉菜单 */,
+				84175AB31DEC308100086E7B /* 图片浏览器 */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1230,8 +1232,6 @@
 			children = (
 				84175AC21DEC308100086E7B /* PGCDetailTitleView.h */,
 				84175AC31DEC308100086E7B /* PGCDetailTitleView.m */,
-				84175AC41DEC308100086E7B /* PGCProcurementCell.h */,
-				84175AC51DEC308100086E7B /* PGCProcurementCell.m */,
 				84175AC61DEC308100086E7B /* PGCSupplyAndDemandShareView.h */,
 				84175AC71DEC308100086E7B /* PGCSupplyAndDemandShareView.m */,
 			);
@@ -1241,6 +1241,8 @@
 		84175AC81DEC308100086E7B /* 需求详情cell */ = {
 			isa = PBXGroup;
 			children = (
+				84175AD11DEC308100086E7B /* DemandDetailTopCell.h */,
+				84175AD21DEC308100086E7B /* DemandDetailTopCell.m */,
 				84175AC91DEC308100086E7B /* DemandDetailContactCell.h */,
 				84175ACA1DEC308100086E7B /* DemandDetailContactCell.m */,
 				84175ACB1DEC308100086E7B /* DemandDetailDescCell.h */,
@@ -1249,8 +1251,6 @@
 				84175ACE1DEC308100086E7B /* DemandDetailFilesCell.m */,
 				84175ACF1DEC308100086E7B /* DemandDetailImagesCell.h */,
 				84175AD01DEC308100086E7B /* DemandDetailImagesCell.m */,
-				84175AD11DEC308100086E7B /* DemandDetailTopCell.h */,
-				84175AD21DEC308100086E7B /* DemandDetailTopCell.m */,
 			);
 			path = "需求详情cell";
 			sourceTree = "<group>";
@@ -1397,8 +1397,8 @@
 		84175B381DEC324500086E7B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				84175B3B1DEC324500086E7B /* PGCProjectInfoDetailVC.h */,
-				84175B3C1DEC324500086E7B /* PGCProjectInfoDetailVC.m */,
+				84175B3B1DEC324500086E7B /* PGCProjectDetailViewController.h */,
+				84175B3C1DEC324500086E7B /* PGCProjectDetailViewController.m */,
 				84175B391DEC324500086E7B /* PGCProjectAddContactController.h */,
 				84175B3A1DEC324500086E7B /* PGCProjectAddContactController.m */,
 				84175B3D1DEC324500086E7B /* PGCVIPServiceController.h */,
@@ -1419,22 +1419,14 @@
 		84175B421DEC324500086E7B /* View */ = {
 			isa = PBXGroup;
 			children = (
-				84175B431DEC324500086E7B /* PGCAddContactRemarkCell.h */,
-				84175B441DEC324500086E7B /* PGCAddContactRemarkCell.m */,
-				84175B451DEC324500086E7B /* PGCAddContactTableCell.h */,
-				84175B461DEC324500086E7B /* PGCAddContactTableCell.m */,
-				84175B471DEC324500086E7B /* PGCAlertView.h */,
-				84175B481DEC324500086E7B /* PGCAlertView.m */,
-				84175B491DEC324500086E7B /* PGCHintAlertView.h */,
-				84175B4A1DEC324500086E7B /* PGCHintAlertView.m */,
-				84175B4B1DEC324500086E7B /* PGCPayView.h */,
-				84175B4C1DEC324500086E7B /* PGCPayView.m */,
+				84175B561DEC324500086E7B /* 项目概况 */,
+				84175B511DEC324500086E7B /* 联系人 */,
+				84175BAD1DED61D000086E7B /* 自定义弹出框 */,
+				84175BAE1DED61E200086E7B /* 添加联系人cell */,
 				84175B4D1DEC324500086E7B /* PGCProjectDetailTagView.h */,
 				84175B4E1DEC324500086E7B /* PGCProjectDetailTagView.m */,
 				84175B4F1DEC324500086E7B /* PGCVIPServiceCell.h */,
 				84175B501DEC324500086E7B /* PGCVIPServiceCell.m */,
-				84175B511DEC324500086E7B /* 联系人 */,
-				84175B561DEC324500086E7B /* 项目概况 */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1464,20 +1456,10 @@
 		84175B6A1DEC32AC00086E7B /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				84175B6B1DEC32AC00086E7B /* PGCAreaManager.h */,
-				84175B6C1DEC32AC00086E7B /* PGCAreaManager.m */,
-				84175B6D1DEC32AC00086E7B /* PGCCity.h */,
-				84175B6E1DEC32AC00086E7B /* PGCCity.m */,
-				84175B6F1DEC32AC00086E7B /* PGCProjectInfo.h */,
-				84175B701DEC32AC00086E7B /* PGCProjectInfo.m */,
-				84175B711DEC32AC00086E7B /* PGCProjectManager.h */,
-				84175B721DEC32AC00086E7B /* PGCProjectManager.m */,
-				84175B731DEC32AC00086E7B /* PGCProjectProgress.h */,
-				84175B741DEC32AC00086E7B /* PGCProjectProgress.m */,
-				84175B751DEC32AC00086E7B /* PGCProjectType.h */,
-				84175B761DEC32AC00086E7B /* PGCProjectType.m */,
-				84175B771DEC32AC00086E7B /* PGCProvince.h */,
-				84175B781DEC32AC00086E7B /* PGCProvince.m */,
+				84175BAB1DED58A000086E7B /* 项目子模型 */,
+				84175BAC1DED58B200086E7B /* 地区模型 */,
+				84175B6F1DEC32AC00086E7B /* PGCProject.h */,
+				84175B701DEC32AC00086E7B /* PGCProject.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1546,6 +1528,69 @@
 				84175BA51DEC46AB00086E7B /* PGCSupplyDetailVC.m */,
 			);
 			path = "我的收藏";
+			sourceTree = "<group>";
+		};
+		84175BAA1DED578800086E7B /* 供需子模型 */ = {
+			isa = PBXGroup;
+			children = (
+				84175A961DEC308100086E7B /* Contacts.h */,
+				84175A971DEC308100086E7B /* Contacts.m */,
+				84175A981DEC308100086E7B /* Files.h */,
+				84175A991DEC308100086E7B /* Files.m */,
+				84175A9A1DEC308100086E7B /* Images.h */,
+				84175A9B1DEC308100086E7B /* Images.m */,
+			);
+			name = "供需子模型";
+			sourceTree = "<group>";
+		};
+		84175BAB1DED58A000086E7B /* 项目子模型 */ = {
+			isa = PBXGroup;
+			children = (
+				84175B711DEC32AC00086E7B /* PGCProjectManager.h */,
+				84175B721DEC32AC00086E7B /* PGCProjectManager.m */,
+				84175B731DEC32AC00086E7B /* PGCProjectProgress.h */,
+				84175B741DEC32AC00086E7B /* PGCProjectProgress.m */,
+				84175B751DEC32AC00086E7B /* PGCProjectType.h */,
+				84175B761DEC32AC00086E7B /* PGCProjectType.m */,
+			);
+			name = "项目子模型";
+			sourceTree = "<group>";
+		};
+		84175BAC1DED58B200086E7B /* 地区模型 */ = {
+			isa = PBXGroup;
+			children = (
+				84175B6B1DEC32AC00086E7B /* PGCAreaManager.h */,
+				84175B6C1DEC32AC00086E7B /* PGCAreaManager.m */,
+				84175B6D1DEC32AC00086E7B /* PGCCity.h */,
+				84175B6E1DEC32AC00086E7B /* PGCCity.m */,
+				84175B771DEC32AC00086E7B /* PGCProvince.h */,
+				84175B781DEC32AC00086E7B /* PGCProvince.m */,
+			);
+			name = "地区模型";
+			sourceTree = "<group>";
+		};
+		84175BAD1DED61D000086E7B /* 自定义弹出框 */ = {
+			isa = PBXGroup;
+			children = (
+				84175B471DEC324500086E7B /* PGCAlertView.h */,
+				84175B481DEC324500086E7B /* PGCAlertView.m */,
+				84175B491DEC324500086E7B /* PGCHintAlertView.h */,
+				84175B4A1DEC324500086E7B /* PGCHintAlertView.m */,
+				84175B4B1DEC324500086E7B /* PGCPayView.h */,
+				84175B4C1DEC324500086E7B /* PGCPayView.m */,
+			);
+			name = "自定义弹出框";
+			sourceTree = "<group>";
+		};
+		84175BAE1DED61E200086E7B /* 添加联系人cell */ = {
+			isa = PBXGroup;
+			children = (
+				84175B431DEC324500086E7B /* PGCAddContactRemarkCell.h */,
+				84175B441DEC324500086E7B /* PGCAddContactRemarkCell.m */,
+				84175B451DEC324500086E7B /* PGCAddContactTableCell.h */,
+				84175B461DEC324500086E7B /* PGCAddContactTableCell.m */,
+			);
+			name = "添加联系人cell";
 			sourceTree = "<group>";
 		};
 		8459387F1DBF48310086DD53 /* Frameworks */ = {
@@ -2131,6 +2176,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				849C13A01DE70E5E002EF937 /* PGCWebViewController.m in Sources */,
+				84175BB11DED883700086E7B /* PGCSupplyInfoCell.m in Sources */,
 				84175A3B1DEC2FFD00086E7B /* PGCContactInfoCell.m in Sources */,
 				849C12E01DE70C99002EF937 /* RACEmptySignal.m in Sources */,
 				84175A421DEC2FFD00086E7B /* PGCProduct.m in Sources */,
@@ -2272,7 +2318,7 @@
 				849C12E41DE70C99002EF937 /* RACImmediateScheduler.m in Sources */,
 				849C12BC1DE70C99002EF937 /* MKAnnotationView+RACSignalSupport.m in Sources */,
 				84175AEA1DEC308100086E7B /* PGCDropLeftCell.m in Sources */,
-				84175B5C1DEC324500086E7B /* PGCProjectInfoDetailVC.m in Sources */,
+				84175B5C1DEC324500086E7B /* PGCProjectDetailViewController.m in Sources */,
 				84175AE71DEC308100086E7B /* PGCPhotoBrowser.m in Sources */,
 				849C12BD1DE70C99002EF937 /* NSArray+RACSequenceAdditions.m in Sources */,
 				84175A431DEC2FFD00086E7B /* PGCDataCache.m in Sources */,
@@ -2345,7 +2391,7 @@
 				849C12C21DE70C99002EF937 /* NSIndexSet+RACSequenceAdditions.m in Sources */,
 				84175ADB1DEC308100086E7B /* Images.m in Sources */,
 				84175B5B1DEC324500086E7B /* PGCProjectAddContactController.m in Sources */,
-				84175B801DEC32AC00086E7B /* PGCProjectInfo.m in Sources */,
+				84175B801DEC32AC00086E7B /* PGCProject.m in Sources */,
 				84175AE91DEC308100086E7B /* PhotoProgressView.m in Sources */,
 				849C130C1DE70C99002EF937 /* UIGestureRecognizer+RACSignalSupport.m in Sources */,
 				84175B641DEC324500086E7B /* PGCProjectDetailTagView.m in Sources */,

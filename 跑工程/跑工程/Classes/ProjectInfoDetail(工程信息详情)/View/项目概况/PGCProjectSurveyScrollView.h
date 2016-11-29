@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-@class PGCProjectInfo;
+@class PGCProject;
 
 static NSString *const kProjectSurveyScrollView = @"PGCProjectSurveyScrollView";
 
 @interface PGCProjectSurveyScrollView : UICollectionViewCell
 
-@property (strong, nonatomic) PGCProjectInfo *project;
+@property (strong, nonatomic) PGCProject *project;
 
 @end

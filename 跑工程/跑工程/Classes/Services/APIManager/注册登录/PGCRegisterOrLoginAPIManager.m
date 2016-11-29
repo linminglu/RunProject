@@ -26,7 +26,8 @@
             respondsBlock(RespondsStatusDataError, resultMsg, nil);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        [MBProgressHUD showError:@"网络错误(未连接)" toView:KeyWindow];
+        [MBProgressHUD showError:error.localizedDescription toView:KeyWindow];
+        
         respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
     }];
 }

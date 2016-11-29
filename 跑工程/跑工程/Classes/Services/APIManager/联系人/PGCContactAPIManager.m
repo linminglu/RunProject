@@ -8,7 +8,7 @@
 
 #import "PGCContactAPIManager.h"
 #import "PGCContact.h"
-#import "PGCProjectInfo.h"
+#import "PGCProject.h"
 
 @implementation PGCContactAPIManager
 
@@ -54,7 +54,8 @@
             respondsBlock(RespondsStatusDataError, resultMsg, nil);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        [MBProgressHUD showError:@"网络错误(未连接)" toView:KeyWindow];
+        [MBProgressHUD showError:error.localizedDescription toView:KeyWindow];
+        
         respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
     }];
 }
@@ -72,7 +73,7 @@
             
             NSMutableArray *results = [NSMutableArray array];
             for (id value in resultData) {
-                PGCProjectInfo *project = [[PGCProjectInfo alloc] init];
+                PGCProject *project = [[PGCProject alloc] init];
                 [project mj_setKeyValues:value];
                 // 将模型添加到数组中
                 [results addObject:project];
@@ -83,7 +84,8 @@
             respondsBlock(RespondsStatusDataError, resultMsg, nil);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        [MBProgressHUD showError:@"网络错误(未连接)" toView:KeyWindow];
+        [MBProgressHUD showError:error.localizedDescription toView:KeyWindow];
+        
         respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
     }];
 }

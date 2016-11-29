@@ -69,11 +69,11 @@ NSString *const kGetMaterialServiceTypes = @"/mobile/api/open/getMaterialService
 // 添加/修改 需求
 NSString *const kAddOrMidifyDemand = @"/mobile/api/access/addOrMidifyDemand.htm";
 // 需求列表
-NSString *const kGetDemand = @"/mobile/api/access/getDemand.htm";
+NSString *const kGetDemand = @"/mobile/api/open/getDemand.htm";
 // 添加/修改 供应
 NSString *const kAddOrMidifySupply = @"/mobile/api/access/addOrMidifySupply.htm";
 // 供应列表
-NSString *const kGetSupply = @"/mobile/api/access/getSupply.htm";
+NSString *const kGetSupply = @"/mobile/api/open/getSupply.htm";
 // 添加收藏
 NSString *const kAddSupplyDemandCollect = @"/mobile/api/access/addSupplyDemandCollect.htm";
 // 删除收藏
@@ -100,10 +100,10 @@ NSString *const kDeleteContact = @"/mobile/api/access/deleteContact.htm";
 
 
 #pragma mark - 会员
-// 购买会员
-NSString *const kBuyVip = @"/mobile/api/access/buyVip.htm";
 // 获取产品列表
 NSString *const kGetVipProductList = @"/mobile/api/open/getVipProductList.htm";
+// 购买会员
+NSString *const kBuyVip = @"/mobile/api/access/buyVip.htm";
 
 
 #pragma mark - 其他

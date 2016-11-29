@@ -7,7 +7,7 @@
 //
 
 #import "PGCSupplyIntroduceVC.h"
-#import "PGCProcurementCell.h"
+#import "PGCSupplyInfoCell.h"
 #import "PGCSupplyIntroduceInfoVC.h"
 #import "PGCSupplyAPIManager.h"
 #import "PGCSupply.h"
@@ -110,7 +110,7 @@
 - (void)respondsToDelete:(UIButton *)sender
 {
     if (!(self.deleteData.count > 0)) {
-        [MBProgressHUD showError:@"请先选择需要删除的项目！" toView:self.view];
+        [MBProgressHUD showError:@"请先选择需要关闭的项目！" toView:self.view];
         return;
     }
     PGCManager *manager = [PGCManager manager];
@@ -131,8 +131,6 @@
             [hud hideAnimated:true];
             
             if (status == RespondsStatusSuccess) {
-                
-                [self.tableView.mj_header beginRefreshing];
                 [PGCNotificationCenter postNotificationName:kSupplyInfoData object:nil userInfo:nil];
                 [weakSelf respondsToCancel:nil];
             }
@@ -161,7 +159,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    PGCProcurementCell *cell = [tableView dequeueReusableCellWithIdentifier:kProcurementCell];
+    PGCSupplyInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:kSupplyInfoCell];
     cell.supply = self.dataSource[indexPath.row];
     return cell;
 }
@@ -172,7 +170,7 @@
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     PGCSupply *supply = self.dataSource[indexPath.row];
-    return [tableView cellHeightForIndexPath:indexPath model:supply keyPath:@"supply" cellClass:[PGCProcurementCell class] contentViewWidth:SCREEN_WIDTH];
+    return [tableView cellHeightForIndexPath:indexPath model:supply keyPath:@"supply" cellClass:[PGCSupplyInfoCell class] contentViewWidth:SCREEN_WIDTH];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -235,7 +233,7 @@
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.dataSource = self;
         _tableView.delegate = self;
-        [_tableView registerClass:[PGCProcurementCell class] forCellReuseIdentifier:kProcurementCell];
+        [_tableView registerClass:[PGCSupplyInfoCell class] forCellReuseIdentifier:kSupplyInfoCell];
         // 设置表格视图下拉刷新
         MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadSupplyIntroduce)];
         header.automaticallyChangeAlpha = true;

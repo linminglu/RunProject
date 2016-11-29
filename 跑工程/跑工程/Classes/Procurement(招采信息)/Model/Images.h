@@ -15,6 +15,8 @@
 @property (assign, nonatomic) int type;/** 类型 */
 @property (copy, nonatomic) NSString *image;/** 图片路径 */
 @property (copy, nonatomic) NSString *imageDec;/** 图片介绍 */
+@property (copy, nonatomic) NSString *create_time;/** 创建时间 */
+@property (copy, nonatomic) NSString *update_time;/** 更新时间 */
 @property (assign, nonatomic) BOOL isPublish;/** 是否发布 */
 
 @end

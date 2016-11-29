@@ -175,6 +175,7 @@
     
     NSMutableArray *images = [NSMutableArray array];
     for (Images *image in self.demandDetail.images) {
+        NSLog(@"%d, %@", image.id, image.image);
         [images addObject:@{@"id":@(image.id),
                             @"path":image.image,
                             @"description":image.imageDec}];

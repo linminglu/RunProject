@@ -12,5 +12,8 @@
 
 @property (assign, nonatomic) int image_id;/** 图片id */
 @property (copy, nonatomic) NSString *image;/** 图片 */
+@property (assign, nonatomic) int status;/** 状态 */
+@property (copy, nonatomic) NSString *create_time;
+@property (copy, nonatomic) NSString *update_time;
 
 @end

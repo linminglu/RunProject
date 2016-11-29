@@ -16,5 +16,8 @@
 @property (copy, nonatomic) NSString *name;/** 姓名 */
 @property (copy, nonatomic) NSString *phone;/** 电话 */
 @property (assign, nonatomic) int sequence;/** sequence */
+@property (assign, nonatomic) int status;/** 状态  */
+@property (copy, nonatomic) NSString *create_time;/** 创建时间 */
+@property (copy, nonatomic) NSString *update_time;/** 更新时间 */
 
 @end

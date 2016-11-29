@@ -19,6 +19,11 @@
 @property (assign, nonatomic) double lat;//维度
 @property (assign, nonatomic) double lng;//经度
 @property (copy, nonatomic) NSString *short_name;//简称
-@property (copy, nonatomic) NSArray *cities;/** 城市数组 */
+@property (copy, nonatomic) NSArray<PGCCity *> *cities;/** 城市数组 */
+
+@property (assign, nonatomic) int sequence;/** 序号 */
+@property (copy, nonatomic) NSString *status;/** 状态 */
+@property (copy, nonatomic) NSString *create_time;/** 创建时间 */
+@property (copy, nonatomic) NSString *update_time;/** 更新时间 */
 
 @end

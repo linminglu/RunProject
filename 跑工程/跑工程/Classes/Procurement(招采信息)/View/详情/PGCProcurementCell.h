@@ -7,13 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-@class PGCDemand, PGCSupply;
+@class PGCDemand;
 
 static NSString * const kProcurementCell = @"PGCProcurementCell";
 
 @interface PGCProcurementCell : UITableViewCell
 
 @property (strong, nonatomic) PGCDemand *demand;/** 需求模型 */
-@property (strong, nonatomic) PGCSupply *supply;/** 供应模型 */
 
 @end

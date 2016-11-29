@@ -23,7 +23,7 @@
 @property (strong, nonatomic) NSMutableArray<PGCContact *> *dataSource;/** 初始数据源 */
 @property (strong, nonatomic) NSMutableArray *indexArray;/** 排序后的出现过的拼音首字母数组 */
 @property (strong, nonatomic) NSMutableArray *letterArray;/** 排序好的结果数组 */
-@property (strong, nonatomic) NSMutableArray *searchDataSource;/** 搜索条数据源 */
+@property (strong, nonatomic) NSMutableArray *searchDataSource;/** 搜索数据源 */
 
 - (void)initializeUserInterface; /** 初始化用户界面 */
 - (void)registerNotification; /** 注册通知 */
@@ -215,7 +215,7 @@
 
 - (PGCSearchView *)searchView {
     if (!_searchView) {
-        _searchView = [[PGCSearchView alloc] initWithFrame:CGRectMake(0, STATUS_AND_NAVIGATION_HEIGHT + 5, SCREEN_WIDTH, 40)];
+        _searchView = [[PGCSearchView alloc] initWithFrame:CGRectMake(0, STATUS_AND_NAVIGATION_HEIGHT + 5, SCREEN_WIDTH, 35)];
         _searchView.delegate = self;
     }
     return _searchView;

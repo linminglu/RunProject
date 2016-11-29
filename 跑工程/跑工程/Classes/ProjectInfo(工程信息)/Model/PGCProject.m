@@ -6,9 +6,9 @@
 //  Copyright © 2016年 Mac. All rights reserved.
 //
 
-#import "PGCProjectInfo.h"
+#import "PGCProject.h"
 
-@implementation PGCProjectInfo
+@implementation PGCProject
 
 MJExtensionCodingImplementation
 

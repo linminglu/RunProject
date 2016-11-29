@@ -17,4 +17,7 @@
 @property (copy, nonatomic) NSString *path;/** 文件路径 */
 @property (copy, nonatomic) NSString *desc;/** 文件介绍 */
 
+@property (copy, nonatomic) NSString *create_time;/** 创建时间 */
+@property (copy, nonatomic) NSString *update_time;/** 更新时间 */
+
 @end

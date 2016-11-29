@@ -1,15 +1,15 @@
 //
-//  PGCSupplyAndDemandCell.m
+//  PGCSupplyInfoCell.m
 //  跑工程
 //
-//  Created by leco on 2016/11/2.
+//  Created by leco on 2016/11/29.
 //  Copyright © 2016年 Mac. All rights reserved.
 //
 
-#import "PGCProcurementCell.h"
-#import "PGCDemand.h"
+#import "PGCSupplyInfoCell.h"
+#import "PGCSupply.h"
 
-@interface PGCProcurementCell ()
+@interface PGCSupplyInfoCell ()
 
 @property (strong, nonatomic) UILabel *nameLabel;/** 标题 */
 @property (strong, nonatomic) UILabel *contentLabel;/** 内容 */
@@ -17,10 +17,11 @@
 @property (strong, nonatomic) UILabel *categoryLabel;/** 项目类别 */
 @property (strong, nonatomic) UILabel *timeLabel;/** 时间 */
 @property (strong, nonatomic) UIView *line;/** 底部分割线 */
+@property (strong, nonatomic) UILabel *closeLabel;/** 关闭标签 */
 
 @end
 
-@implementation PGCProcurementCell
+@implementation PGCSupplyInfoCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -69,17 +70,34 @@
     self.timeLabel.textColor = RGB(187, 187, 187);
     self.timeLabel.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:self.timeLabel];
+    
+    // 关闭标签
+    self.closeLabel = [[UILabel alloc] init];
+    self.closeLabel.text = @"已关闭";
+    self.closeLabel.font = [UIFont systemFontOfSize:12];
+    self.closeLabel.textColor = RGB(102, 102, 102);
+    self.closeLabel.textAlignment = NSTextAlignmentCenter;
+    self.closeLabel.layer.cornerRadius = 10.0;
+    self.closeLabel.layer.borderColor = PGCTintColor.CGColor;
+    self.closeLabel.layer.borderWidth = 0.5;
 }
 
 #pragma mark - 在这里用三方自动布局进行约束
 
 - (void)setupSubviewsAutoLayout
 {
+    // 关闭标签
+    self.closeLabel.sd_layout
+    .topSpaceToView(self.contentView, 10)
+    .rightSpaceToView(self.contentView, 5)
+    .widthIs(45)
+    .heightIs(25);
+    
     // 标题
     self.nameLabel.sd_layout
     .topSpaceToView(self.contentView, 10)
     .leftSpaceToView(self.contentView, 15)
-    .rightSpaceToView(self.contentView, 15)
+    .rightSpaceToView(self.contentView, 50)
     .autoHeightRatio(0);
     
     // 内容
@@ -124,18 +142,44 @@
 }
 
 
+- (void)setCloseLabelHidden:(BOOL)hidden
+{
+    if (hidden) {
+        [self.closeLabel removeFromSuperview];
+    } else {
+        [self.contentView addSubview:self.closeLabel];
+        self.closeLabel.sd_layout
+        .topSpaceToView(self.contentView, 10)
+        .rightSpaceToView(self.contentView, 5)
+        .widthIs(45)
+        .heightIs(25);
+    }
+}
+
+
 #pragma mark - Setter
 
-- (void)setDemand:(PGCDemand *)demand
+- (void)setSupply:(PGCSupply *)supply
 {
-    _demand = demand;
+    _supply = supply;
     
-    self.nameLabel.text = demand.title;
-    self.contentLabel.text = demand.desc;
-    self.areaLabel.text = demand.address;
-    self.categoryLabel.text = demand.type_name;
-    self.areaLabel.text = demand.city;
-    self.timeLabel.text = [NSString dateString:demand.update_time];
+    if (supply.status == 1) {
+        [self setCloseLabelHidden:false];
+    } else {
+        [self setCloseLabelHidden:true];
+    }
+    
+    self.nameLabel.text = supply.title;
+    self.contentLabel.text = supply.desc;
+    self.areaLabel.text = supply.address;
+    NSMutableArray *mutableArray = [NSMutableArray array];
+    for (Types *type in supply.types) {
+        [mutableArray addObject:type.name];
+    }
+    self.categoryLabel.text = [mutableArray componentsJoinedByString:@","];
+    self.areaLabel.text = supply.city;
+    NSString *start_time = [NSString dateString:supply.update_time];
+    self.timeLabel.text = start_time;
     
     [self setupAutoHeightWithBottomView:self.line bottomMargin:0];
 }

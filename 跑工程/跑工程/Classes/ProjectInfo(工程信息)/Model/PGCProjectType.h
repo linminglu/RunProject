@@ -15,7 +15,10 @@
 @property (copy, nonatomic) NSString *name;/** 类型名称 */
 @property (copy, nonatomic) NSString *image;/** 图片 */
 @property (copy, nonatomic) NSString *descType;/** 描述 */
+
 @property (assign, nonatomic) int sequence;/** 序号 */
 @property (copy, nonatomic) NSString *status;/** 状态 */
+@property (copy, nonatomic) NSString *create_time;/** 创建时间 */
+@property (copy, nonatomic) NSString *update_time;/** 更新时间 */
 
 @end

@@ -39,6 +39,7 @@
     [super viewDidLoad];
     
     [self initializeUserInterface];
+    [self registerNotification];
 }
 
 - (void)initializeUserInterface
@@ -161,7 +162,7 @@
                 [self.dataSource removeObjectsInArray:self.deleteData];
                 [self.tableView deleteRowsAtIndexPaths:self.tableView.indexPathsForSelectedRows withRowAnimation:UITableViewRowAnimationLeft];
                 [self.deleteData removeAllObjects];
-                [self.tableView.mj_header beginRefreshing];
+                
                 [PGCNotificationCenter postNotificationName:kProcurementInfoData object:nil userInfo:nil];
                 [weakSelf respondsToCancel:nil];
             }

@@ -8,9 +8,9 @@
 
 #import "PGCProjectRootViewController.h"
 #import "PGCProjectInfoCell.h"
-#import "PGCProjectInfoDetailVC.h"
+#import "PGCProjectDetailViewController.h"
 #import "PGCProjectInfoAPIManager.h"
-#import "PGCProjectInfo.h"
+#import "PGCProject.h"
 
 static NSString * const kProjectRootCell = @"ProjectRootCell";
 
@@ -22,8 +22,8 @@ static NSString * const kProjectRootCell = @"ProjectRootCell";
 @property (strong, nonatomic) UIView *bottomView;/** 底部是否删除的选择视图 */
 @property (strong, nonatomic) NSMutableDictionary *params;/** 查询参数 */
 @property (strong, nonatomic) UITableView *tableView;/** 表格视图 */
-@property (strong, nonatomic) NSMutableArray<PGCProjectInfo *> *dataSources;/** 数据源 */
-@property (strong, nonatomic) NSMutableArray<PGCProjectInfo *> *deleteData;/** 需要删除的数据源 */
+@property (strong, nonatomic) NSMutableArray<PGCProject *> *dataSources;/** 数据源 */
+@property (strong, nonatomic) NSMutableArray<PGCProject *> *deleteData;/** 需要删除的数据源 */
 
 - (void)initializeUserInterface; /** 初始化用户界面 */
 - (void)registerNotification; /** 注册通知 */
@@ -77,7 +77,7 @@ static NSString * const kProjectRootCell = @"ProjectRootCell";
             [self.dataSources removeAllObjects];
             
             for (id value in resultData[@"result"]) {
-                PGCProjectInfo *model = [[PGCProjectInfo alloc] init];
+                PGCProject *model = [[PGCProject alloc] init];
                 [model mj_setKeyValues:value];
                 [self.dataSources addObject:model];
             }
@@ -98,7 +98,7 @@ static NSString * const kProjectRootCell = @"ProjectRootCell";
             NSArray *resultArray = resultData[@"result"];
             if (resultArray.count > 0) {
                 for (id value in resultArray) {
-                    PGCProjectInfo *model = [[PGCProjectInfo alloc] init];
+                    PGCProject *model = [[PGCProject alloc] init];
                     [model mj_setKeyValues:value];
                     [self.dataSources addObject:model];
                 }
@@ -146,7 +146,7 @@ static NSString * const kProjectRootCell = @"ProjectRootCell";
     PGCUser *user = manager.token.user;
     
     NSMutableArray *array = [NSMutableArray array];
-    for (PGCProjectInfo *project in self.deleteData) {
+    for (PGCProject *project in self.deleteData) {
         [array addObject:@(project.collect_id)];
     }
     NSString *string = [NSString stringWithFormat:@"是否确定%@?", _bottomBtnTitle];
@@ -197,7 +197,7 @@ static NSString * const kProjectRootCell = @"ProjectRootCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    PGCProjectInfo *projectInfo = self.dataSources[indexPath.row];
+    PGCProject *projectInfo = self.dataSources[indexPath.row];
     return [tableView cellHeightForIndexPath:indexPath model:projectInfo keyPath:@"project" cellClass:[PGCProjectInfoCell class] contentViewWidth:SCREEN_WIDTH];
 }
 
@@ -207,9 +207,9 @@ static NSString * const kProjectRootCell = @"ProjectRootCell";
         [self.deleteData addObject:self.dataSources[indexPath.row]];
         return;
     }
-    PGCProjectInfo *projectInfo = self.dataSources[indexPath.row];
-    PGCProjectInfoDetailVC *detailVC = [[PGCProjectInfoDetailVC alloc] init];
-    detailVC.projectInfoDetail = projectInfo;
+    PGCProject *projectInfo = self.dataSources[indexPath.row];
+    PGCProjectDetailViewController *detailVC = [[PGCProjectDetailViewController alloc] init];
+    detailVC.projectDetail = projectInfo;
     [self.navigationController pushViewController:detailVC animated:true];
 }
 
@@ -326,14 +326,14 @@ static NSString * const kProjectRootCell = @"ProjectRootCell";
     return _tableView;
 }
 
-- (NSMutableArray<PGCProjectInfo *> *)dataSources {
+- (NSMutableArray<PGCProject *> *)dataSources {
     if (!_dataSources) {
         _dataSources = [NSMutableArray array];
     }
     return _dataSources;
 }
 
-- (NSMutableArray<PGCProjectInfo *> *)deleteData {
+- (NSMutableArray<PGCProject *> *)deleteData {
     if (!_deleteData) {
         _deleteData = [NSMutableArray array];
     }

@@ -153,7 +153,7 @@
         [KeyWindow addSubview:self.backView];
         [KeyWindow addSubview:self];
         
-        self.backView.alpha = 0.7;
+        self.backView.alpha = 0.3;
         self.frame = CGRectMake(0, SCREEN_HEIGHT - SCREEN_WIDTH / 2, SCREEN_WIDTH, SCREEN_WIDTH / 2);
     }];
 }

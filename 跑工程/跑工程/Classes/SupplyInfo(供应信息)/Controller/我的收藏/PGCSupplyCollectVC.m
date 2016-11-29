@@ -8,7 +8,7 @@
 
 #import "PGCSupplyCollectVC.h"
 #import "PGCSupplyDetailVC.h"
-#import "PGCProcurementCell.h"
+#import "PGCSupplyInfoCell.h"
 #import "PGCSupplyAndDemandAPIManager.h"
 #import "PGCSupply.h"
 
@@ -189,7 +189,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    PGCProcurementCell *cell = [tableView dequeueReusableCellWithIdentifier:kProcurementCell];
+    PGCSupplyInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:kSupplyInfoCell];
     cell.supply = self.dataSource[indexPath.row];
     return cell;
 }
@@ -199,7 +199,7 @@
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     PGCSupply *supply = self.dataSource[indexPath.row];
-    return [tableView cellHeightForIndexPath:indexPath model:supply keyPath:@"supply" cellClass:[PGCProcurementCell class] contentViewWidth:SCREEN_WIDTH];
+    return [tableView cellHeightForIndexPath:indexPath model:supply keyPath:@"supply" cellClass:[PGCSupplyInfoCell class] contentViewWidth:SCREEN_WIDTH];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -287,7 +287,7 @@
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.dataSource = self;
         _tableView.delegate = self;
-        [_tableView registerClass:[PGCProcurementCell class] forCellReuseIdentifier:kProcurementCell];
+        [_tableView registerClass:[PGCSupplyInfoCell class] forCellReuseIdentifier:kSupplyInfoCell];
         // 设置表格视图下拉刷新和上拉加载
         MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadSupplyCollect)];
         header.automaticallyChangeAlpha = true;

@@ -7,6 +7,7 @@
 //
 
 #import "PGCProvince.h"
+#import "PGCCity.h"
 
 @implementation PGCProvince
 

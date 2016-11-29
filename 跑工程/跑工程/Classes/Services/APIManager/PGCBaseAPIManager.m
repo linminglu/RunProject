@@ -184,7 +184,7 @@ static NSString * const PGCHttpCache = @"HttpYYCache";
                 success ? success(task, responseObject) : nil;
                 
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                NSLog(@"%@", error.userInfo);
+                NSLog(@"%@", error.localizedDescription);
                 failure ? failure(task, error) : nil;
                 // 解析失败隐藏系统风火轮(可以打印error.userInfo查看错误信息)
                 [UIApplication sharedApplication].networkActivityIndicatorVisible = false;
@@ -202,7 +202,7 @@ static NSString * const PGCHttpCache = @"HttpYYCache";
                 success ? success(task, responseObject) : nil;
                 
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                NSLog(@"%@", error.userInfo);
+                NSLog(@"%@", error.localizedDescription);
                 failure ? failure(task, error) : nil;
                 // 解析失败隐藏系统风火轮(可以打印error.userInfo查看错误信息)
                 [UIApplication sharedApplication].networkActivityIndicatorVisible = false;
@@ -228,17 +228,6 @@ static NSString * const PGCHttpCache = @"HttpYYCache";
     return [[YYCache cacheWithName:PGCHttpCache].diskCache totalCost];
 }
 
-/**
- *  json转字符串
- */
-+ (NSString *)jsonToString:(id)data
-{
-    if (!data) {
-        return nil;
-    }
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:NSJSONWritingPrettyPrinted error:nil];
-    return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-}
 
 
 #pragma mark -

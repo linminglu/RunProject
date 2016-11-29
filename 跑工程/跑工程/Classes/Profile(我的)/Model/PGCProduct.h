@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+// 会员产品模型
 @interface PGCProduct : NSObject
 
 @property (assign, nonatomic) int id;/** 产品id */
@@ -16,5 +17,10 @@
 @property (assign, nonatomic) int type;/** 类型 1：年费产品  2：季度产品，3月产品 */
 @property (assign, nonatomic) int price;/** 价格 */
 @property (copy, nonatomic) NSString *remark;/** 备注，产品说明 */
+
+@property (assign, nonatomic) int sequence;/** 序号 */
+@property (copy, nonatomic) NSString *status;/** 状态 */
+@property (copy, nonatomic) NSString *create_time;/** 创建时间 */
+@property (copy, nonatomic) NSString *update_time;/** 更新时间 */
 
 @end

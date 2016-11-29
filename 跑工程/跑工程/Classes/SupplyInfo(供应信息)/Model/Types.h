@@ -13,6 +13,10 @@
 @property (assign, nonatomic) int id;/** id */
 @property (assign, nonatomic) int parent_id;/** parent_id */
 @property (copy, nonatomic) NSString *name;/** 名称 */
+
 @property (assign, nonatomic) int sequence;/** sequence */
+@property (assign, nonatomic) int status;/** 状态  */
+@property (copy, nonatomic) NSString *create_time;/** 创建时间 */
+@property (copy, nonatomic) NSString *update_time;/** 更新时间 */
 
 @end

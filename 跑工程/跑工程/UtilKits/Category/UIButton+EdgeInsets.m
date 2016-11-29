@@ -46,28 +46,24 @@
         {
             imageEdgeInsets = UIEdgeInsetsMake(-labelHeight-space/2.0, 0, 0, -labelWidth);
             labelEdgeInsets = UIEdgeInsetsMake(0, -imageWith, -imageHeight-space/2.0, 0);
-            self.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         }
             break;
         case ButtonEdgeInsetsStyleLeft:
         {
             imageEdgeInsets = UIEdgeInsetsMake(0, -space/2.0, 0, space/2.0);
             labelEdgeInsets = UIEdgeInsetsMake(0, space/2.0, 0, -space/2.0);
-            self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
         }
             break;
         case ButtonEdgeInsetsStyleBottom:
         {
             imageEdgeInsets = UIEdgeInsetsMake(0, 0, -labelHeight-space/2.0, -labelWidth);
             labelEdgeInsets = UIEdgeInsetsMake(-imageHeight-space/2.0, -imageWith, 0, 0);
-            self.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         }
             break;
         case ButtonEdgeInsetsStyleRight:
         {
             imageEdgeInsets = UIEdgeInsetsMake(0, labelWidth+space/2.0, 0, -labelWidth-space/2.0);
             labelEdgeInsets = UIEdgeInsetsMake(0, -imageWith-space/2.0, 0, imageWith+space/2.0);
-            self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
         }
             break;
         default:

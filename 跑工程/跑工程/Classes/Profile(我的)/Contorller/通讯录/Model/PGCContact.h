@@ -24,4 +24,8 @@
 @property (copy, nonatomic) NSString *address;/** 地址 */
 @property (copy, nonatomic) NSString *remark;/** 备注 */
 
+@property (copy, nonatomic) NSString *status;/** 状态 */
+@property (copy, nonatomic) NSString *create_time;/** 创建时间 */
+@property (copy, nonatomic) NSString *update_time;/** 更新时间 */
+
 @end

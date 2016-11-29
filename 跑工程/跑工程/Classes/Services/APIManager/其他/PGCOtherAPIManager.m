@@ -8,6 +8,7 @@
 
 #import "PGCOtherAPIManager.h"
 #import "PGCHeadImage.h"
+#import "LunchImage.h"
 
 @implementation PGCOtherAPIManager
 
@@ -105,14 +106,18 @@
 
 + (NSURLSessionDataTask *)getLatestAppSplashImageRequestWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, id))respondsBlock
 {
-    return [self requestPOST:kGetLatestAppSplashImage parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [self requestPOST:kGetLatestAppSplashImage parameters:parameters cachePolicy:RequestReturnCacheDataElseLoad success:^(NSURLSessionDataTask *task, id responseObject) {
         
         NSInteger resultCode = [responseObject[@"code"] integerValue];
         NSString *resultMsg = responseObject[@"msg"];
         NSDictionary *resultData = responseObject[@"data"];
         
         if (resultCode == 200) {
-            respondsBlock(RespondsStatusSuccess, resultMsg, resultData);
+            
+            LunchImage *model = [[LunchImage alloc] init];
+            [model mj_setKeyValues:resultData];
+            
+            respondsBlock(RespondsStatusSuccess, resultMsg, model);
         }
         else {
             respondsBlock(RespondsStatusDataError, resultMsg, nil);

@@ -8,7 +8,7 @@
 
 #import "PGCProjectInfoAPIManager.h"
 #import "PGCProjectManager.h"
-#import "PGCProjectInfo.h"
+#import "PGCProject.h"
 #import "PGCProjectContact.h"
 
 @implementation PGCProjectInfoAPIManager
@@ -73,7 +73,7 @@
 
 + (NSURLSessionDataTask *)getProjectsRequestWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, id))respondsBlock
 {
-    return [self requestPOST:kGetProjects parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [self requestPOST:kGetProjects parameters:parameters cachePolicy:RequestReloadIngnoringLocalCacheData success:^(NSURLSessionDataTask *task, id responseObject) {
         // code = 200   请求成功返回，数据查询正常，但data不一定有数据
         // code = -200  请求不成功，服务器由于一些原因执行中无法返回数据
         // code = -201  用户不存在或被禁用，手机端退出用户登陆
@@ -84,7 +84,7 @@
         if (resultCode == 200) {
             NSMutableArray *results = [NSMutableArray array];
             for (id value in resultData[@"result"]) {
-                PGCProjectInfo *project = [[PGCProjectInfo alloc] init];
+                PGCProject *project = [[PGCProject alloc] init];
                 [project mj_setKeyValues:value];
                 // 将模型添加到数组中
                 [results addObject:project];
@@ -95,7 +95,8 @@
             respondsBlock(RespondsStatusDataError, resultMsg, nil);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        [MBProgressHUD showError:@"网络错误(未连接)" toView:KeyWindow];
+        [MBProgressHUD showError:error.localizedDescription toView:KeyWindow];
+        
         respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
     }];
 }
@@ -103,7 +104,7 @@
 
 + (NSURLSessionDataTask *)getProjectContactsRequestWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, NSMutableArray *))respondsBlock
 {
-    return [self requestPOST:kGetProjectContacts parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [self requestPOST:kGetProjectContacts parameters:parameters cachePolicy:RequestReloadIngnoringLocalCacheData success:^(NSURLSessionDataTask *task, id responseObject) {
         
         NSInteger resultCode = [responseObject[@"code"] integerValue];
         NSString *resultMsg = responseObject[@"msg"];
@@ -123,7 +124,8 @@
             respondsBlock(RespondsStatusDataError, resultMsg, nil);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        [MBProgressHUD showError:@"网络错误(未连接)" toView:KeyWindow];
+        [MBProgressHUD showError:error.localizedDescription toView:KeyWindow];
+        
         respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
     }];
 }

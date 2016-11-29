@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-@class PGCProjectInfo;
+@class PGCProject;
 
-@interface PGCProjectInfoDetailVC : UIViewController
+@interface PGCProjectDetailViewController : UIViewController
 
-@property (strong, nonatomic) PGCProjectInfo *projectInfoDetail;
+@property (strong, nonatomic) PGCProject *projectDetail;
 
 @end

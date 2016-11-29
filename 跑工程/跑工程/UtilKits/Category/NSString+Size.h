@@ -15,11 +15,12 @@
 - (BOOL)isPhoneNumber;
 
 /**
- 获取文字的size
+ 时间格式转换
+ */
++ (NSString *)dateString:(NSString *)oldStr;
 
- @param font
- @param size
- @return
+/**
+ 获取文字的size
  */
 - (CGSize)sizeWithFont:(UIFont *)font constrainedToSize:(CGSize)size;
 

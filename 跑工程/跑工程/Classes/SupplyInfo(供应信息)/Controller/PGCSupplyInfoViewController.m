@@ -9,7 +9,7 @@
 #import "PGCSupplyInfoViewController.h"
 #import "PGCSearchView.h"
 #import "DOPDropDownMenu.h"
-#import "PGCProcurementCell.h"
+#import "PGCSupplyInfoCell.h"
 
 #import "PGCSupplyDetailVC.h"
 #import "PGCSupplyCollectVC.h"
@@ -39,6 +39,7 @@ typedef NS_ENUM(NSUInteger, BarButtonTag) {
 }
 
 @property (strong, nonatomic) PGCSearchView *searchView;/** 搜索框 */
+@property (strong, nonatomic) UIButton *cancelButton;/** 搜索框取消按钮 */
 @property (strong, nonatomic) DOPDropDownMenu *menu;/** 下拉菜单 */
 @property (strong, nonatomic) UIButton *collectBtn;/** 我的收藏按钮 */
 @property (strong, nonatomic) UIButton *introduceBtn;/** 我的发布按钮 */
@@ -107,17 +108,13 @@ typedef NS_ENUM(NSUInteger, BarButtonTag) {
     PGCUser *user = manager.token.user;
     if (user) {
         [self.parameters setObject:@(user.user_id) forKey:@"user_id"];
-        [self.parameters setObject:@"iphone" forKey:@"client_type"];
-        [self.parameters setObject:manager.token.token forKey:@"token"];
-    } else {
-        [MBProgressHUD showError:@"请先登录" toView:self.view];
-        [self.tableView.mj_header endRefreshing];
-        return;
     }
+    
     _page = 1;
     _pageSize = 10;
     [self.parameters setObject:@(_page) forKey:@"page"];
     [self.parameters setObject:@(_pageSize) forKey:@"page_size"];
+    [self.parameters setObject:@"" forKey:@"key_word"];
     
     // 供应信息列表
     [PGCSupplyAPIManager getSupplyWithParameters:self.parameters responds:^(RespondsStatus status, NSString *message, id resultData) {
@@ -166,58 +163,6 @@ typedef NS_ENUM(NSUInteger, BarButtonTag) {
 }
 
 
-#pragma mark - PGCSearchViewDelegate
-
-- (void)searchView:(PGCSearchView *)searchView didSelectedSearchButton:(UIButton *)sender
-{
-    [self.view endEditing:true];
-    
-}
-
-- (void)searchView:(PGCSearchView *)searchView textFieldDidChange:(UITextField *)textField
-{
-    if (!(textField.text.length > 0)) {
-        _isSearching = false;
-        [self.tableView reloadData];
-        return;
-    }
-    _isSearching = true;
-    
-    // 获取搜索框上的文本
-    NSString *text = textField.text;
-    // 谓词判断，创建搜索条件
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[cd] %@", text];
-    // 获取搜索源
-    NSMutableArray *nameSearchs = [NSMutableArray array];
-    NSMutableArray *descSearchs = [NSMutableArray array];
-    for (PGCSupply *supply in self.dataSource) {
-        [nameSearchs addObject:supply.title];
-        [descSearchs addObject:supply.desc];
-    }
-    // 根据谓词在搜索源中查找符合条件的对象并且赋值给searchResults;
-    [self.searchResults removeAllObjects];
-    
-    NSArray *nameResults = [nameSearchs filteredArrayUsingPredicate:predicate];
-    for (NSString *string in nameResults) {
-        for (PGCSupply *supply in self.dataSource) {
-            if ([string isEqualToString:supply.title]) {
-                [self.searchResults addObject:supply];
-            }
-        }
-    }
-    NSArray *descResults = [descSearchs filteredArrayUsingPredicate:predicate];
-    for (NSString *string in descResults) {
-        for (PGCSupply *supply in self.dataSource) {
-            if ([string isEqualToString:supply.desc]) {
-                [self.searchResults addObject:supply];
-            }
-        }
-    }
-    [self.tableView reloadData];
-}
-
-
-
 #pragma mark - Event
 
 - (void)barButtonItemEvent:(UIButton *)sender
@@ -248,7 +193,67 @@ typedef NS_ENUM(NSUInteger, BarButtonTag) {
             break;
         default:
             break;
-    }    
+    }
+}
+
+
+- (void)cancelSearchSupply:(UIButton *)sender
+{
+    [self.view endEditing:true];
+    
+    if (self.cancelButton.isSelected) {
+        _isSearching = false;
+        self.searchView.searchTextField.text = @"";
+        [self changeStyleSearch];
+        
+        if (self.dataSource.count > 0) {
+            [self.tableView reloadData];
+        } else {
+            [self loadSupplyInfoData];
+        }
+        return;
+    }
+    if (self.searchView.searchTextField.text.length > 0) {
+        
+        _page = 1;
+        _pageSize = 10;
+        NSString *key_word = self.searchView.searchTextField.text;
+        [self.parameters setObject:@(_page) forKey:@"page"];
+        [self.parameters setObject:@(_pageSize) forKey:@"page_size"];
+        [self.parameters setObject:key_word forKey:@"key_word"];
+        
+        MBProgressHUD *hud = [PGCProgressHUD showProgress:@"搜索中..." toView:self.view];
+        __weak typeof(self) weakSelf = self;
+        [PGCSupplyAPIManager getSupplyWithParameters:self.parameters responds:^(RespondsStatus status, NSString *message, id resultData) {
+            [hud hideAnimated:true];
+            
+            if (status == RespondsStatusSuccess) {
+                // 清空之前的数据
+                [self.searchResults removeAllObjects];
+                // 添加新数据
+                for (id value in resultData[@"result"]) {
+                    PGCSupply *supply = [[PGCSupply alloc] init];
+                    [supply mj_setKeyValues:value];
+                    
+                    [self.searchResults addObject:supply];
+                }
+                _page += 10;
+                _isSearching = true;
+                [weakSelf changeStyleSearch];
+                [self.tableView reloadData];
+            }
+        }];
+    } else {
+        [MBProgressHUD showError:@"请先输入关键字" toView:self.view];
+    }
+}
+
+
+#pragma mark - PGCSearchViewDelegate
+
+- (void)searchView:(PGCSearchView *)searchView textFieldDidReturn:(UITextField *)textField
+{    
+    [self cancelSearchSupply:nil];
 }
 
 
@@ -262,7 +267,7 @@ typedef NS_ENUM(NSUInteger, BarButtonTag) {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    PGCProcurementCell *cell = [tableView dequeueReusableCellWithIdentifier:kProcurementCell];
+    PGCSupplyInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:kSupplyInfoCell];
     cell.supply = _isSearching ? self.searchResults[indexPath.row] : self.dataSource[indexPath.row];
     return cell;
 }
@@ -273,15 +278,20 @@ typedef NS_ENUM(NSUInteger, BarButtonTag) {
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     PGCSupply *supply = _isSearching ? self.searchResults[indexPath.row] : self.dataSource[indexPath.row];
-    return [tableView cellHeightForIndexPath:indexPath model:supply keyPath:@"supply" cellClass:[PGCProcurementCell class] contentViewWidth:SCREEN_WIDTH];
+    return [tableView cellHeightForIndexPath:indexPath model:supply keyPath:@"supply" cellClass:[PGCSupplyInfoCell class] contentViewWidth:SCREEN_WIDTH];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    PGCManager *manager = [PGCManager manager];
+    [manager readTokenData];
+    PGCUser *user = manager.token.user;
+    if (!user) {
+        [MBProgressHUD showError:@"请先登录" toView:self.view];
+        return;
+    }
     PGCSupplyDetailVC *supplyVC = [[PGCSupplyDetailVC alloc] init];
-    
-    supplyVC.supply = _isSearching ? self.searchResults[indexPath.row] : self.dataSource[indexPath.row];
-    
+    supplyVC.supply = _isSearching ? self.searchResults[indexPath.row] : self.dataSource[indexPath.row];    
     [self.navigationController pushViewController:supplyVC animated:true];
 }
 
@@ -412,6 +422,22 @@ typedef NS_ENUM(NSUInteger, BarButtonTag) {
 }
 
 
+- (void)changeStyleSearch
+{
+    if (_isSearching) {
+        self.cancelButton.selected = true;
+        [self.cancelButton setTitle:nil forState:UIControlStateNormal];
+        [self.cancelButton setImage:[UIImage imageNamed:@"delete_y"] forState:UIControlStateNormal];
+    } else {
+        self.cancelButton.selected = false;
+        self.cancelButton.titleLabel.font = SetFont(16);
+        [self.cancelButton setTitle:@"搜索" forState:UIControlStateNormal];
+        [self.cancelButton setTitleColor:RGB(102, 102, 102) forState:UIControlStateNormal];
+        [self.cancelButton setImage:nil forState:UIControlStateNormal];
+    }
+}
+
+
 #pragma mark - Getter
 
 - (UIBarButtonItem *)barButtonItem:(CGRect)bounds
@@ -435,15 +461,28 @@ typedef NS_ENUM(NSUInteger, BarButtonTag) {
 
 - (PGCSearchView *)searchView {
     if (!_searchView) {
-        _searchView = [[PGCSearchView alloc] initWithFrame:CGRectMake(0, STATUS_AND_NAVIGATION_HEIGHT + 5, SCREEN_WIDTH, 36)];
+        _searchView = [[PGCSearchView alloc] initWithFrame:CGRectMake(0, STATUS_AND_NAVIGATION_HEIGHT + 5, SCREEN_WIDTH, 35)];
+        _searchView.showSearchBtn = false;
         _searchView.delegate = self;
+        [_searchView addSubview:self.cancelButton];
+        [self changeStyleSearch];
     }
     return _searchView;
 }
 
+- (UIButton *)cancelButton {
+    if (!_cancelButton) {
+        _cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _cancelButton.frame = CGRectMake(self.searchView.right_sd - 60, 0, 60, self.searchView.height_sd);
+        [_cancelButton addTarget:self action:@selector(cancelSearchSupply:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _cancelButton;
+}
+
+
 - (DOPDropDownMenu *)menu {
     if (!_menu) {
-        _menu = [[DOPDropDownMenu alloc] initWithOrigin:CGPointMake(0, self.searchView.bottom_sd) andHeight:40];
+        _menu = [[DOPDropDownMenu alloc] initWithOrigin:CGPointMake(0, self.searchView.bottom_sd + 5) andHeight:40];
         _menu.backgroundColor = [UIColor whiteColor];
         _menu.dataSource = self;
         _menu.delegate = self;
@@ -459,7 +498,7 @@ typedef NS_ENUM(NSUInteger, BarButtonTag) {
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        [_tableView registerClass:[PGCProcurementCell class] forCellReuseIdentifier:kProcurementCell];
+        [_tableView registerClass:[PGCSupplyInfoCell class] forCellReuseIdentifier:kSupplyInfoCell];
         // 设置表格视图下拉刷新和上拉加载
         MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadSupplyInfoData)];
         header.automaticallyChangeAlpha = true;

@@ -11,14 +11,13 @@
 #import "PGCMapTypeViewController.h"
 #import "PGCProjectRootViewController.h"
 #import "PGCSearchViewController.h"
-#import "PGCProjectInfoDetailVC.h"
+#import "PGCProjectDetailViewController.h"
 #import "JSDropDownMenu.h"
-#import "PGCProjectInfo.h"
+#import "PGCProjectInfoAPIManager.h"
+#import "PGCProject.h"
 #import "PGCAreaManager.h"
 #import "PGCProjectManager.h"
 #import "PGCAreaAPIManager.h"
-#import "PGCProjectInfoAPIManager.h"
-#import "PGCProjectInfoAPIManager.h"
 
 typedef NS_ENUM(NSUInteger, BarItemTag) {
     MapBtnTag,
@@ -39,12 +38,16 @@ typedef NS_ENUM(NSUInteger, BarItemTag) {
     
     NSInteger _page;/** 查询第一页 */
     NSInteger _pageSize;/** 查询页数 */
+    
+    BOOL _isSearch;/** 是否是搜索的数据源 */
 }
 
+@property (weak, nonatomic) UIView *searchTitleView;/** 搜索标题视图 */
 @property (strong, nonatomic) JSDropDownMenu *menu;/** 下拉菜单视图 */
 @property (strong, nonatomic) UITableView *tableView;/** 表格视图 */
 @property (strong, nonatomic) NSMutableDictionary *parameters;/** 参数 */
 @property (strong, nonatomic) NSMutableArray *dataSource;/** 表格数据源 */
+@property (strong, nonatomic) NSMutableArray *searchDataSource;/** 搜索数据源 */
 
 - (void)initializeDataSource; /** 初始化数据源 */
 - (void)initializeUserInterface; /** 初始化用户界面 */
@@ -56,6 +59,7 @@ typedef NS_ENUM(NSUInteger, BarItemTag) {
 
 - (void)dealloc {
     [PGCNotificationCenter removeObserver:self name:kRefreshCollectTable object:nil];
+    [PGCNotificationCenter removeObserver:self name:kSearchProjectData object:nil];
 }
 
 
@@ -121,6 +125,8 @@ typedef NS_ENUM(NSUInteger, BarItemTag) {
                                         imageName:@"查看记录"];
     self.navigationItem.rightBarButtonItems = @[search, heart, record];
     
+    _isSearch = false;
+    
     [self.view addSubview:self.menu];
     [self.view addSubview:self.tableView];
     
@@ -131,6 +137,47 @@ typedef NS_ENUM(NSUInteger, BarItemTag) {
 - (void)registerNotification {
     // 添加项目收藏与取消收藏的通知
     [PGCNotificationCenter addObserver:self selector:@selector(loadProjectData) name:kRefreshCollectTable object:nil];
+    // 添加搜索项目的通知
+    [PGCNotificationCenter addObserver:self selector:@selector(searchProjectData:) name:kSearchProjectData object:nil];
+}
+
+
+#pragma mark - 
+#pragma mark - NSNotificationCenter
+
+- (void)searchProjectData:(NSNotification *)notifi
+{
+    NSString *key = @"key_word";
+    if ([notifi.userInfo objectForKey:key]) {
+        _isSearch = true;
+        _page = 1;
+        _pageSize = 10;
+        NSString *key_word = [notifi.userInfo objectForKey:key];
+        [self.parameters setObject:@(_page) forKey:@"page"];
+        [self.parameters setObject:@(_pageSize) forKey:@"page_size"];
+        [self.parameters setObject:key_word forKey:@"key_word"];
+        
+        MBProgressHUD *hud = [PGCProgressHUD showProgress:@"搜索中..." toView:self.view];
+        
+        __weak typeof(self) weakSelf = self;
+        [PGCProjectInfoAPIManager getProjectsRequestWithParameters:self.parameters responds:^(RespondsStatus status, NSString *message, id resultData) {
+            [hud hideAnimated:true];
+            
+            if (status == RespondsStatusSuccess) {
+                // 清空之前的数据
+                [self.searchDataSource removeAllObjects];
+                // 添加新数据
+                for (id value in resultData[@"result"]) {
+                    PGCProject *project = [[PGCProject alloc] init];
+                    [project mj_setKeyValues:value];
+                    [self.searchDataSource addObject:project];
+                }
+                _page += 10;
+                [self.tableView reloadData];
+                [weakSelf animationWithTitle:key_word forward:true];
+            }
+        }];
+    }
 }
 
 
@@ -145,10 +192,12 @@ typedef NS_ENUM(NSUInteger, BarItemTag) {
     if (user) {
         [self.parameters setObject:@(user.user_id) forKey:@"user_id"];
     }
+    
     _page = 1;
     _pageSize = 10;
     [self.parameters setObject:@(_page) forKey:@"page"];
     [self.parameters setObject:@(_pageSize) forKey:@"page_size"];
+    [self.parameters setObject:@"" forKey:@"key_word"];
     
     [PGCProjectInfoAPIManager getProjectsRequestWithParameters:self.parameters responds:^(RespondsStatus status, NSString *message, id resultData) {
         [self.tableView.mj_header endRefreshing];
@@ -158,7 +207,7 @@ typedef NS_ENUM(NSUInteger, BarItemTag) {
             [self.dataSource removeAllObjects];
             // 添加新数据
             for (id value in resultData[@"result"]) {
-                PGCProjectInfo *project = [[PGCProjectInfo alloc] init];
+                PGCProject *project = [[PGCProject alloc] init];
                 [project mj_setKeyValues:value];
                 [self.dataSource addObject:project];
             }
@@ -177,10 +226,18 @@ typedef NS_ENUM(NSUInteger, BarItemTag) {
         if (status == RespondsStatusSuccess) {
             NSArray *resultArray = resultData[@"result"];
             if (resultArray.count > 0) {
-                for (id value in resultData[@"result"]) {
-                    PGCProjectInfo *project = [[PGCProjectInfo alloc] init];
-                    [project mj_setKeyValues:value];
-                    [self.dataSource addObject:project];
+                if (_isSearch) {
+                    for (id value in resultData[@"result"]) {
+                        PGCProject *project = [[PGCProject alloc] init];
+                        [project mj_setKeyValues:value];
+                        [self.searchDataSource addObject:project];
+                    }
+                } else {
+                    for (id value in resultData[@"result"]) {
+                        PGCProject *project = [[PGCProject alloc] init];
+                        [project mj_setKeyValues:value];
+                        [self.dataSource addObject:project];
+                    }
                 }
                 [self.tableView.mj_footer endRefreshing];
                 _page++;
@@ -210,7 +267,7 @@ typedef NS_ENUM(NSUInteger, BarItemTag) {
         {
             PGCMapTypeViewController *mapVC = [[PGCMapTypeViewController alloc] init];
             NSMutableArray *array = [NSMutableArray array];
-            for (PGCProjectInfo *model in self.dataSource) {
+            for (PGCProject *model in self.dataSource) {
                 [array addObject:@{@"lat":model.lat, @"lng":model.lng}];
             }
             mapVC.coordinates = array;
@@ -255,6 +312,11 @@ typedef NS_ENUM(NSUInteger, BarItemTag) {
     }
 }
 
+- (void)deleteSearchTitleView:(UIButton *)sender
+{
+    [self animationWithTitle:nil forward:false];
+}
+
 
 
 #pragma mark -
@@ -262,13 +324,13 @@ typedef NS_ENUM(NSUInteger, BarItemTag) {
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.dataSource.count;
+    return _isSearch ? self.searchDataSource.count : self.dataSource.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     PGCProjectInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:kProjectInfoCell];
-    cell.project = self.dataSource[indexPath.row];
+    cell.project = _isSearch ? self.searchDataSource[indexPath.row] : self.dataSource[indexPath.row];
     return cell;
 }
 
@@ -278,16 +340,16 @@ typedef NS_ENUM(NSUInteger, BarItemTag) {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    PGCProjectInfo *projectInfo = self.dataSource[indexPath.row];
+    PGCProject *projectInfo = _isSearch ? self.searchDataSource[indexPath.row] : self.dataSource[indexPath.row];
     // SDAutoLayout 的cell高度自适应
     return [tableView cellHeightForIndexPath:indexPath model:projectInfo keyPath:@"project" cellClass:[PGCProjectInfoCell class] contentViewWidth:SCREEN_WIDTH];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    PGCProjectInfo *projectInfo = self.dataSource[indexPath.row];
-    PGCProjectInfoDetailVC *detailVC = [[PGCProjectInfoDetailVC alloc] init];
-    detailVC.projectInfoDetail = projectInfo;
+    PGCProject *projectInfo = _isSearch ? self.searchDataSource[indexPath.row] : self.dataSource[indexPath.row];
+    PGCProjectDetailViewController *detailVC = [[PGCProjectDetailViewController alloc] init];
+    detailVC.projectDetail = projectInfo;
     [self.navigationController pushViewController:detailVC animated:true];
 }
 
@@ -426,6 +488,35 @@ typedef NS_ENUM(NSUInteger, BarItemTag) {
 }
 
 
+#pragma mark -
+#pragma mark - Animation
+
+- (void)animationWithTitle:(NSString *)title forward:(BOOL)forward
+{
+    if (forward) {
+        UIView *view = [self searchTitleView:title];
+        
+        [UIView animateWithDuration:0.25 animations:^{
+            self.tableView.frame = CGRectMake(0, view.bottom_sd, SCREEN_WIDTH, SCREEN_HEIGHT - TAB_BAR_HEIGHT - view.bottom_sd);
+        }];
+    } else {
+        CGRect frame = CGRectMake(0, self.menu.bottom_sd, SCREEN_WIDTH, SCREEN_HEIGHT - TAB_BAR_HEIGHT - self.menu.bottom_sd);
+        _searchTitleView.frame = frame;
+        self.tableView.frame = frame;
+        
+        [_searchTitleView removeFromSuperview];
+        
+        _isSearch = false;
+        
+        if (self.dataSource.count > 0) {
+            [self.tableView reloadData];
+        } else {
+            [self loadProjectData];
+        }
+    }
+}
+
+
 #pragma mark -
 #pragma mark - Getter
 
@@ -481,7 +572,6 @@ typedef NS_ENUM(NSUInteger, BarItemTag) {
     return _tableView;
 }
 
-
 - (NSMutableArray *)dataSource {
     if (!_dataSource) {
         _dataSource = [NSMutableArray array];
@@ -489,6 +579,12 @@ typedef NS_ENUM(NSUInteger, BarItemTag) {
     return _dataSource;
 }
 
+- (NSMutableArray *)searchDataSource {
+    if (!_searchDataSource) {
+        _searchDataSource = [NSMutableArray array];
+    }
+    return _searchDataSource;
+}
 
 - (NSMutableDictionary *)parameters {
     if (!_parameters) {
@@ -497,6 +593,43 @@ typedef NS_ENUM(NSUInteger, BarItemTag) {
     return _parameters;
 }
 
-
+- (UIView *)searchTitleView:(NSString *)title
+{
+    if (!_searchTitleView) {
+        UIView *view = [[UIView alloc] init];
+        view.frame = CGRectMake(0, self.menu.bottom_sd, SCREEN_WIDTH, 40);
+        view.backgroundColor = [UIColor whiteColor];
+        [self.view addSubview:view];
+        _searchTitleView = view;
+        
+        CGFloat width = [title sizeWithFont:SetFont(14) constrainedToSize:CGSizeMake(MAXFLOAT, 0)].width;
+        width += 40;
+        UILabel *titleLabel = [[UILabel alloc] init];
+        titleLabel.bounds = CGRectMake(0, 0, width, 30);
+        titleLabel.center = CGPointMake(width / 2 + 15, view.height_sd / 2);
+        titleLabel.layer.borderWidth = 0.5;
+        titleLabel.layer.borderColor = PGCTintColor.CGColor;
+        titleLabel.layer.cornerRadius = titleLabel.height_sd / 2;
+        titleLabel.font = SetFont(14);
+        titleLabel.textColor = [UIColor lightGrayColor];
+        titleLabel.textAlignment = NSTextAlignmentCenter;
+        titleLabel.text = title;
+        [view addSubview:titleLabel];
+        
+        UIButton *deleteBtn = [[UIButton alloc] init];
+        deleteBtn.bounds = CGRectMake(0, 0, 30, 30);
+        deleteBtn.center = CGPointMake(view.width_sd - deleteBtn.width_sd / 2 - 20, view.height_sd / 2);
+        deleteBtn.titleLabel.font = SetFont(14);
+        [deleteBtn setImage:[UIImage imageNamed:@"delete_y"] forState:UIControlStateNormal];
+        [deleteBtn addTarget:self action:@selector(deleteSearchTitleView:) forControlEvents:UIControlEventTouchUpInside];
+        [view addSubview:deleteBtn];
+        
+        UIView *line = [[UIView alloc] init];
+        line.backgroundColor = PGCBackColor;
+        line.frame = CGRectMake(0, view.height_sd - 1, view.width_sd, 1);
+        [view addSubview:line];
+    }
+    return _searchTitleView;
+}
 
 @end

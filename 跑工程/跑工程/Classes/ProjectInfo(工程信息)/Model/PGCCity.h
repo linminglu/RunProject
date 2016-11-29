@@ -20,4 +20,9 @@
 @property (assign, nonatomic) double lng;//经度
 @property (copy, nonatomic) NSString *short_name;//简称
 
+@property (assign, nonatomic) int sequence;/** 序号 */
+@property (copy, nonatomic) NSString *status;/** 状态 */
+@property (copy, nonatomic) NSString *create_time;/** 创建时间 */
+@property (copy, nonatomic) NSString *update_time;/** 更新时间 */
+
 @end

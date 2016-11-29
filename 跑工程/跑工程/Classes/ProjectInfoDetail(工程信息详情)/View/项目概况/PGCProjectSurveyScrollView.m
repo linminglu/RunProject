@@ -9,7 +9,7 @@
 #import "PGCProjectSurveyScrollView.h"
 #import "PGCProjectDetailTagView.h"
 #import "PGCProjectSurveySubview.h"
-#import "PGCProjectInfo.h"
+#import "PGCProject.h"
 #import "PGCAlertView.h"
 #import "PGCHintAlertView.h"
 #import "PGCVIPServiceController.h"
@@ -207,7 +207,7 @@
 
 #pragma mark - Setter
 
-- (void)setProject:(PGCProjectInfo *)project
+- (void)setProject:(PGCProject *)project
 {
     _project = project;
     if (!project) {

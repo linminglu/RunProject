@@ -7,7 +7,7 @@
 //
 
 #import "PGCProjectSurveySubview.h"
-#import "PGCProjectInfo.h"
+#import "PGCProject.h"
 
 @interface PGCProjectSurveySubview ()
 {
@@ -143,7 +143,7 @@
 
 #pragma mark - Setter
 
-- (void)setProjectInfo:(PGCProjectInfo *)projectInfo
+- (void)setProjectInfo:(PGCProject *)projectInfo
 {
     _projectInfo = projectInfo;
     if (!projectInfo) {

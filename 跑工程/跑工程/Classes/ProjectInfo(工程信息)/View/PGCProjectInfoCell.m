@@ -7,7 +7,7 @@
 //
 
 #import "PGCProjectInfoCell.h"
-#import "PGCProjectInfo.h"
+#import "PGCProject.h"
 
 @interface PGCProjectInfoCell ()
 
@@ -54,27 +54,27 @@
     
     // 项目类别
     self.categoryLabel = [[UILabel alloc] init];
-    self.categoryLabel.font = [UIFont systemFontOfSize:12];
+    self.categoryLabel.font = [UIFont systemFontOfSize:11];
     self.categoryLabel.textColor = RGB(187, 187, 187);
     [self.contentView addSubview:self.categoryLabel];
     
     // 项目阶段
     self.stageLabel = [[UILabel alloc] init];
-    self.stageLabel.font = [UIFont systemFontOfSize:12];
+    self.stageLabel.font = [UIFont systemFontOfSize:11];
     self.stageLabel.textColor = RGB(187, 187, 187);
     [self.contentView addSubview:self.stageLabel];
     
     // 地区
     self.areaLabel = [[UILabel alloc] init];
-    self.areaLabel.font = [UIFont systemFontOfSize:12];
+    self.areaLabel.font = [UIFont systemFontOfSize:11];
     self.areaLabel.textColor = RGB(187, 187, 187);
     [self.contentView addSubview:self.areaLabel];
     
     // 时间标签
     self.timeLabel = [[UILabel alloc] init];
-    self.timeLabel.font = [UIFont systemFontOfSize:10];
+    self.timeLabel.font = [UIFont systemFontOfSize:9];
     self.timeLabel.textColor = RGB(187, 187, 187);
-    self.timeLabel.textAlignment = NSTextAlignmentRight;
+    self.timeLabel.textAlignment = NSTextAlignmentCenter;
     [self.contentView addSubview:self.timeLabel];
 }
 
@@ -104,11 +104,12 @@
     .widthIs(60)
     .heightIs(20);
     
+    CGFloat width = [@"yyyy年MM月dd日" sizeWithFont:SetFont(9) constrainedToSize:CGSizeMake(MAXFLOAT, 0)].width;
     // 时间标签
     self.timeLabel.sd_layout
     .bottomEqualToView(self.categoryLabel)
-    .rightSpaceToView(self.contentView, 15)
-    .widthIs(60)
+    .rightSpaceToView(self.contentView, 10)
+    .widthIs(width)
     .heightIs(20);
     
     // 项目阶段
@@ -130,14 +131,16 @@
     self.line.backgroundColor = PGCBackColor;
     [self.contentView addSubview:self.line];
     self.line.sd_layout
-    .topSpaceToView(self.categoryLabel, 10)
+    .topSpaceToView(self.categoryLabel, 5)
     .leftSpaceToView(self.contentView, 0)
     .rightSpaceToView(self.contentView, 0)
     .heightIs(1);
 }
 
 
-- (void)setProject:(PGCProjectInfo *)project
+#pragma mark - Setter
+
+- (void)setProject:(PGCProject *)project
 {
     _project = project;
     
@@ -145,12 +148,12 @@
     self.contentLabel.text = project.desc;
     self.categoryLabel.text = project.type_name;
     self.stageLabel.text = project.progress_name;
-    self.areaLabel.text = [project.province stringByAppendingString:project.city];
-    NSString *start_time = [project.start_time substringToIndex:10];
-    self.timeLabel.text = start_time;
+    self.areaLabel.text = project.city;
+    self.timeLabel.text = [NSString dateString:project.update_time];
     
     [self setupAutoHeightWithBottomView:self.line bottomMargin:0];
 }
+
 
 - (void)awakeFromNib {
     [super awakeFromNib];

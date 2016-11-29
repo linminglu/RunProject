@@ -14,7 +14,12 @@
 @property (assign, nonatomic) int id;
 @property (assign, nonatomic) int parent_id;//父级
 @property (copy, nonatomic) NSString *name;//名称
-@property (assign, nonatomic) int sequence;//序号
+
+@property (assign, nonatomic) int sequence;/** 序号 */
+@property (copy, nonatomic) NSString *status;/** 状态 */
+@property (copy, nonatomic) NSString *create_time;/** 创建时间 */
+@property (copy, nonatomic) NSString *update_time;/** 更新时间 */
+
 @property (strong, nonatomic) NSMutableArray<PGCMaterialServiceTypes *> *secondArray;//二级类别数组
 @property (copy, nonatomic) NSArray *typeArray;//类别数组
 
