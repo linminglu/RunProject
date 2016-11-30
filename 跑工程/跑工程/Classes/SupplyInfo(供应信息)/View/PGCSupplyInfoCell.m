@@ -80,6 +80,7 @@
     self.closeLabel.layer.cornerRadius = 10.0;
     self.closeLabel.layer.borderColor = PGCTintColor.CGColor;
     self.closeLabel.layer.borderWidth = 0.5;
+    [self.contentView addSubview:self.closeLabel];
 }
 
 #pragma mark - 在这里用三方自动布局进行约束
@@ -142,21 +143,6 @@
 }
 
 
-- (void)setCloseLabelHidden:(BOOL)hidden
-{
-    if (hidden) {
-        [self.closeLabel removeFromSuperview];
-    } else {
-        [self.contentView addSubview:self.closeLabel];
-        self.closeLabel.sd_layout
-        .topSpaceToView(self.contentView, 10)
-        .rightSpaceToView(self.contentView, 5)
-        .widthIs(45)
-        .heightIs(25);
-    }
-}
-
-
 #pragma mark - Setter
 
 - (void)setSupply:(PGCSupply *)supply
@@ -164,9 +150,9 @@
     _supply = supply;
     
     if (supply.status == 1) {
-        [self setCloseLabelHidden:false];
+        self.closeLabel.hidden = false;
     } else {
-        [self setCloseLabelHidden:true];
+        self.closeLabel.hidden = true;
     }
     
     self.nameLabel.text = supply.title;

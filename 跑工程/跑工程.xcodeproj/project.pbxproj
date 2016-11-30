@@ -63,8 +63,6 @@
 		84175ADB1DEC308100086E7B /* Images.m in Sources */ = {isa = PBXBuildFile; fileRef = 84175A9B1DEC308100086E7B /* Images.m */; };
 		84175ADC1DEC308100086E7B /* PGCDemand.m in Sources */ = {isa = PBXBuildFile; fileRef = 84175A9D1DEC308100086E7B /* PGCDemand.m */; };
 		84175ADD1DEC308100086E7B /* PGCMaterialServiceTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 84175A9F1DEC308100086E7B /* PGCMaterialServiceTypes.m */; };
-		84175ADE1DEC308100086E7B /* DOPDropDownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 84175AA31DEC308100086E7B /* DOPDropDownMenu.m */; };
-		84175ADF1DEC308100086E7B /* DropDownMenu.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84175AA41DEC308100086E7B /* DropDownMenu.xcassets */; };
 		84175AE01DEC308100086E7B /* PGCIntroducePublicView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84175AA71DEC308100086E7B /* PGCIntroducePublicView.m */; };
 		84175AE11DEC308100086E7B /* PGCIntroduceSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84175AA91DEC308100086E7B /* PGCIntroduceSelectView.m */; };
 		84175AE21DEC308100086E7B /* IntroduceDemandContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84175AAC1DEC308100086E7B /* IntroduceDemandContactCell.m */; };
@@ -171,7 +169,6 @@
 		849C12B61DE70C99002EF937 /* NSString+Size.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C11D21DE70C98002EF937 /* NSString+Size.m */; };
 		849C12B71DE70C99002EF937 /* UIImage+Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C11D41DE70C98002EF937 /* UIImage+Image.m */; };
 		849C12B81DE70C99002EF937 /* BMChineseSort.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C11DC1DE70C98002EF937 /* BMChineseSort.m */; };
-		849C12B91DE70C99002EF937 /* JSDropDownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C11DF1DE70C98002EF937 /* JSDropDownMenu.m */; };
 		849C12BB1DE70C99002EF937 /* EXTRuntimeExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C11E81DE70C98002EF937 /* EXTRuntimeExtensions.m */; };
 		849C12BC1DE70C99002EF937 /* MKAnnotationView+RACSignalSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C11EC1DE70C98002EF937 /* MKAnnotationView+RACSignalSupport.m */; };
 		849C12BD1DE70C99002EF937 /* NSArray+RACSequenceAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C11EE1DE70C98002EF937 /* NSArray+RACSequenceAdditions.m */; };
@@ -278,6 +275,7 @@
 		849C13A11DE70E5E002EF937 /* PGCWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849C139F1DE70E5E002EF937 /* PGCWebViewController.xib */; };
 		849C13B11DE7DB05002EF937 /* PGCIdentifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C13B01DE7DB05002EF937 /* PGCIdentifier.m */; };
 		849C13B41DE7FA24002EF937 /* UIButton+EdgeInsets.m in Sources */ = {isa = PBXBuildFile; fileRef = 849C13B31DE7FA24002EF937 /* UIButton+EdgeInsets.m */; };
+		84D845011DEE692C000B5F24 /* DropDownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D845001DEE692C000B5F24 /* DropDownMenu.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -400,9 +398,6 @@
 		84175A9D1DEC308100086E7B /* PGCDemand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCDemand.m; sourceTree = "<group>"; };
 		84175A9E1DEC308100086E7B /* PGCMaterialServiceTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCMaterialServiceTypes.h; sourceTree = "<group>"; };
 		84175A9F1DEC308100086E7B /* PGCMaterialServiceTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCMaterialServiceTypes.m; sourceTree = "<group>"; };
-		84175AA21DEC308100086E7B /* DOPDropDownMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DOPDropDownMenu.h; sourceTree = "<group>"; };
-		84175AA31DEC308100086E7B /* DOPDropDownMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DOPDropDownMenu.m; sourceTree = "<group>"; };
-		84175AA41DEC308100086E7B /* DropDownMenu.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = DropDownMenu.xcassets; sourceTree = "<group>"; };
 		84175AA61DEC308100086E7B /* PGCIntroducePublicView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCIntroducePublicView.h; sourceTree = "<group>"; };
 		84175AA71DEC308100086E7B /* PGCIntroducePublicView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCIntroducePublicView.m; sourceTree = "<group>"; };
 		84175AA81DEC308100086E7B /* PGCIntroduceSelectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCIntroduceSelectView.h; sourceTree = "<group>"; };
@@ -594,8 +589,6 @@
 		849C11D81DE70C98002EF937 /* PGCUtilKits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCUtilKits.h; sourceTree = "<group>"; };
 		849C11DB1DE70C98002EF937 /* BMChineseSort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMChineseSort.h; sourceTree = "<group>"; };
 		849C11DC1DE70C98002EF937 /* BMChineseSort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMChineseSort.m; sourceTree = "<group>"; };
-		849C11DE1DE70C98002EF937 /* JSDropDownMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSDropDownMenu.h; sourceTree = "<group>"; };
-		849C11DF1DE70C98002EF937 /* JSDropDownMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSDropDownMenu.m; sourceTree = "<group>"; };
 		849C11E61DE70C98002EF937 /* EXTKeyPathCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTKeyPathCoding.h; sourceTree = "<group>"; };
 		849C11E71DE70C98002EF937 /* EXTRuntimeExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTRuntimeExtensions.h; sourceTree = "<group>"; };
 		849C11E81DE70C98002EF937 /* EXTRuntimeExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EXTRuntimeExtensions.m; sourceTree = "<group>"; };
@@ -816,6 +809,8 @@
 		849C13B01DE7DB05002EF937 /* PGCIdentifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCIdentifier.m; sourceTree = "<group>"; };
 		849C13B21DE7FA24002EF937 /* UIButton+EdgeInsets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+EdgeInsets.h"; sourceTree = "<group>"; };
 		849C13B31DE7FA24002EF937 /* UIButton+EdgeInsets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+EdgeInsets.m"; sourceTree = "<group>"; };
+		84D844FF1DEE692C000B5F24 /* DropDownMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropDownMenu.h; sourceTree = "<group>"; };
+		84D845001DEE692C000B5F24 /* DropDownMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropDownMenu.m; sourceTree = "<group>"; };
 		84ECF1CB1DD1674B00697207 /* PGCPrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCPrefixHeader.pch; sourceTree = "<group>"; };
 		BEA06E02B51C4C6B6E6C8727 /* Pods____.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods____.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -1155,12 +1150,12 @@
 		84175A791DEC305C00086E7B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				84175BAF1DED883700086E7B /* PGCSupplyInfoCell.h */,
+				84175BB01DED883700086E7B /* PGCSupplyInfoCell.m */,
 				84175A7A1DEC305C00086E7B /* IntroduceSupplyTopCell.h */,
 				84175A7B1DEC305C00086E7B /* IntroduceSupplyTopCell.m */,
 				84175A7C1DEC305C00086E7B /* SupplyDetailTopCell.h */,
 				84175A7D1DEC305C00086E7B /* SupplyDetailTopCell.m */,
-				84175BAF1DED883700086E7B /* PGCSupplyInfoCell.h */,
-				84175BB01DED883700086E7B /* PGCSupplyInfoCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1210,20 +1205,9 @@
 				84175AC11DEC308100086E7B /* 详情 */,
 				84175AAA1DEC308100086E7B /* 发布需求cell */,
 				84175AC81DEC308100086E7B /* 需求详情cell */,
-				84175AA11DEC308100086E7B /* 下拉菜单 */,
 				84175AB31DEC308100086E7B /* 图片浏览器 */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		84175AA11DEC308100086E7B /* 下拉菜单 */ = {
-			isa = PBXGroup;
-			children = (
-				84175AA21DEC308100086E7B /* DOPDropDownMenu.h */,
-				84175AA31DEC308100086E7B /* DOPDropDownMenu.m */,
-				84175AA41DEC308100086E7B /* DropDownMenu.xcassets */,
-			);
-			path = "下拉菜单";
 			sourceTree = "<group>";
 		};
 		84175AA51DEC308100086E7B /* 发布 */ = {
@@ -1522,6 +1506,8 @@
 				84175B7B1DEC32AC00086E7B /* PGCProjectInfoCell.m */,
 				84175B7C1DEC32AC00086E7B /* PGCSearchView.h */,
 				84175B7D1DEC32AC00086E7B /* PGCSearchView.m */,
+				84D844FF1DEE692C000B5F24 /* DropDownMenu.h */,
+				84D845001DEE692C000B5F24 /* DropDownMenu.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1830,7 +1816,6 @@
 				84175BB21DED971900086E7B /* ShareSDK */,
 				84175B271DEC310600086E7B /* ProgressHUD */,
 				84175B231DEC30D900086E7B /* MZTimerLabel */,
-				849C11DD1DE70C98002EF937 /* JSDropDownMenu */,
 				849C11DA1DE70C98002EF937 /* BMChineseStringSort */,
 				849C12A71DE70C99002EF937 /* XHLaunchAd */,
 				849C11E31DE70C98002EF937 /* ReactiveCocoa */,
@@ -1845,15 +1830,6 @@
 				849C11DC1DE70C98002EF937 /* BMChineseSort.m */,
 			);
 			path = BMChineseStringSort;
-			sourceTree = "<group>";
-		};
-		849C11DD1DE70C98002EF937 /* JSDropDownMenu */ = {
-			isa = PBXGroup;
-			children = (
-				849C11DE1DE70C98002EF937 /* JSDropDownMenu.h */,
-				849C11DF1DE70C98002EF937 /* JSDropDownMenu.m */,
-			);
-			path = JSDropDownMenu;
 			sourceTree = "<group>";
 		};
 		849C11E31DE70C98002EF937 /* ReactiveCocoa */ = {
@@ -2228,7 +2204,6 @@
 				84175A2A1DEC2FFD00086E7B /* PGCShareToFriendController.xib in Resources */,
 				849C12B51DE70C99002EF937 /* MBProgressHUD.bundle in Resources */,
 				84175BDB1DED971A00086E7B /* ShareSDK.bundle in Resources */,
-				84175ADF1DEC308100086E7B /* DropDownMenu.xcassets in Resources */,
 				849C13A11DE70E5E002EF937 /* PGCWebViewController.xib in Resources */,
 				0483E2E21DAF33D200EF89F0 /* LaunchScreen.storyboard in Resources */,
 				84175A321DEC2FFD00086E7B /* PGCAboutUsViewController.xib in Resources */,
@@ -2333,7 +2308,6 @@
 				84175B2A1DEC310600086E7B /* PGCProgressHUD.m in Sources */,
 				84175AE51DEC308100086E7B /* IntroduceDemandTopCell.m in Sources */,
 				849C13111DE70C99002EF937 /* UIStepper+RACSignalSupport.m in Sources */,
-				849C12B91DE70C99002EF937 /* JSDropDownMenu.m in Sources */,
 				84175B991DEC469D00086E7B /* PGCDemandIntroduceVC.m in Sources */,
 				849C12E91DE70C99002EF937 /* RACMulticastConnection.m in Sources */,
 				84175AEC1DEC308100086E7B /* PGCDetailTitleView.m in Sources */,
@@ -2365,7 +2339,6 @@
 				84175B1A1DEC30B800086E7B /* PGCSupplyAndDemandAPIManager.m in Sources */,
 				849C12E61DE70C99002EF937 /* RACKVOChannel.m in Sources */,
 				84175B5D1DEC324500086E7B /* PGCVIPServiceController.m in Sources */,
-				84175ADE1DEC308100086E7B /* DOPDropDownMenu.m in Sources */,
 				84175B171DEC30B800086E7B /* PGCBaseAPIManager.m in Sources */,
 				84175B1D1DEC30B800086E7B /* PGCAreaAPIManager.m in Sources */,
 				84175B811DEC32AC00086E7B /* PGCProjectManager.m in Sources */,
@@ -2447,6 +2420,7 @@
 				84175B221DEC30B800086E7B /* PGCInterfaceConfig.m in Sources */,
 				849C12C61DE70C99002EF937 /* NSObject+RACDescription.m in Sources */,
 				84175A401DEC2FFD00086E7B /* PGCFeedback.m in Sources */,
+				84D845011DEE692C000B5F24 /* DropDownMenu.m in Sources */,
 				84175B621DEC324500086E7B /* PGCHintAlertView.m in Sources */,
 				849C13101DE70C99002EF937 /* UISlider+RACSignalSupport.m in Sources */,
 				84175A2D1DEC2FFD00086E7B /* PGCRegisterController.m in Sources */,

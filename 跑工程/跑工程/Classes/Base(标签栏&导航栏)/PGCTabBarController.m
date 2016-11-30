@@ -46,10 +46,10 @@
     PGCProfileController *profileVC = [[PGCProfileController alloc] init];
     
     NSArray *titles = @[@"工程信息", @"招采信息", @"供应信息", @"我"];
-    NSArray *images = @[[UIImage imageNamed:@"工程信息nor"],
-                        [UIImage imageNamed:@"招采信息nor"],
-                        [UIImage imageNamed:@"供应信息nor"],
-                        [UIImage imageNamed:@"我nor"]];
+    NSArray *images = @[[UIImage imageWithOriginalName:@"工程信息nor"],
+                        [UIImage imageWithOriginalName:@"招采信息nor"],
+                        [UIImage imageWithOriginalName:@"供应信息nor"],
+                        [UIImage imageWithOriginalName:@"我nor"]];
     NSArray *selectedImages = @[[UIImage imageWithOriginalName:@"工程信息down"],
                                 [UIImage imageWithOriginalName:@"招采信息down"],
                                 [UIImage imageWithOriginalName:@"供应信息down"] ,

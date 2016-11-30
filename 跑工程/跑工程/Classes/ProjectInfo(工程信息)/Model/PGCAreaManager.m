@@ -46,10 +46,7 @@
     PGCProvince *tempProvince = [[PGCProvince alloc] init];
     tempProvince.id = -1;
     tempProvince.province = @"地区";
-    PGCCity *city = [[PGCCity alloc] init];
-    city.id = -1;
-    city.city = @"地区";
-    tempProvince.cities = @[city];
+    
     [results insertObject:tempProvince atIndex:0];
     
     return results;

@@ -8,7 +8,7 @@
 
 #import "PGCSupplyInfoViewController.h"
 #import "PGCSearchView.h"
-#import "DOPDropDownMenu.h"
+#import "DropDownMenu.h"
 #import "PGCSupplyInfoCell.h"
 
 #import "PGCSupplyDetailVC.h"
@@ -26,7 +26,7 @@ typedef NS_ENUM(NSUInteger, BarButtonTag) {
     IntroduceBarTag,
 };
 
-@interface PGCSupplyInfoViewController () <UITableViewDelegate, UITableViewDataSource, DOPDropDownMenuDataSource, DOPDropDownMenuDelegate, PGCSearchViewDelegate>
+@interface PGCSupplyInfoViewController () <UITableViewDelegate, UITableViewDataSource, DropDownMenuDataSource, DropDownMenuDelegate, PGCSearchViewDelegate>
 {
     NSArray *_areaDatas;
     NSArray *_typeDatas;
@@ -40,7 +40,7 @@ typedef NS_ENUM(NSUInteger, BarButtonTag) {
 
 @property (strong, nonatomic) PGCSearchView *searchView;/** 搜索框 */
 @property (strong, nonatomic) UIButton *cancelButton;/** 搜索框取消按钮 */
-@property (strong, nonatomic) DOPDropDownMenu *menu;/** 下拉菜单 */
+@property (strong, nonatomic) DropDownMenu *menu;/** 下拉菜单 */
 @property (strong, nonatomic) UIButton *collectBtn;/** 我的收藏按钮 */
 @property (strong, nonatomic) UIButton *introduceBtn;/** 我的发布按钮 */
 @property (strong, nonatomic) UITableView *tableView;/** 表格视图 */
@@ -89,6 +89,7 @@ typedef NS_ENUM(NSUInteger, BarButtonTag) {
     
     [self.view addSubview:self.searchView];
     [self.view addSubview:self.menu];
+    [self.menu selectDefalutIndexPath];
     [self.view addSubview:self.tableView];
     
     [self.tableView.mj_header beginRefreshing];
@@ -296,14 +297,14 @@ typedef NS_ENUM(NSUInteger, BarButtonTag) {
 }
 
 
-#pragma mark - DOPDropDownMenuDataSource
+#pragma mark - DropDownMenuDataSource
 
-- (NSInteger)numberOfColumnsInMenu:(DOPDropDownMenu *)menu
+- (NSInteger)numberOfColumnsInMenu:(DropDownMenu *)menu
 {
     return 3;
 }
 
-- (NSInteger)menu:(DOPDropDownMenu *)menu numberOfRowsInColumn:(NSInteger)column
+- (NSInteger)menu:(DropDownMenu *)menu numberOfRowsInColumn:(NSInteger)column
 {
     switch (column) {
         case 0: return _areaDatas.count;
@@ -315,7 +316,7 @@ typedef NS_ENUM(NSUInteger, BarButtonTag) {
     }
 }
 
-- (NSString *)menu:(DOPDropDownMenu *)menu titleForRowAtIndexPath:(DOPIndexPath *)indexPath
+- (NSString *)menu:(DropDownMenu *)menu titleForRowAtIndexPath:(IndexPath *)indexPath
 {
     switch (indexPath.column) {
         case 0:
@@ -337,7 +338,7 @@ typedef NS_ENUM(NSUInteger, BarButtonTag) {
 
 // new datasource
 
-- (NSInteger)menu:(DOPDropDownMenu *)menu numberOfItemsInRow:(NSInteger)row column:(NSInteger)column
+- (NSInteger)menu:(DropDownMenu *)menu numberOfItemsInRow:(NSInteger)row column:(NSInteger)column
 {
     switch (column) {
         case 0:
@@ -357,7 +358,7 @@ typedef NS_ENUM(NSUInteger, BarButtonTag) {
     }
 }
 
-- (NSString *)menu:(DOPDropDownMenu *)menu titleForItemsInRowAtIndexPath:(DOPIndexPath *)indexPath
+- (NSString *)menu:(DropDownMenu *)menu titleForItemsInRowAtIndexPath:(IndexPath *)indexPath
 {
     switch (indexPath.column) {
         case 0:
@@ -380,9 +381,9 @@ typedef NS_ENUM(NSUInteger, BarButtonTag) {
 }
 
 
-#pragma mark - DOPDropDownMenuDelegate
+#pragma mark - DropDownMenuDelegate
 
-- (void)menu:(DOPDropDownMenu *)menu didSelectRowAtIndexPath:(DOPIndexPath *)indexPath
+- (void)menu:(DropDownMenu *)menu didSelectRowAtIndexPath:(IndexPath *)indexPath
 {
     switch (indexPath.column) {
         case 0:
@@ -480,9 +481,9 @@ typedef NS_ENUM(NSUInteger, BarButtonTag) {
 }
 
 
-- (DOPDropDownMenu *)menu {
+- (DropDownMenu *)menu {
     if (!_menu) {
-        _menu = [[DOPDropDownMenu alloc] initWithOrigin:CGPointMake(0, self.searchView.bottom_sd + 5) andHeight:40];
+        _menu = [[DropDownMenu alloc] initWithOrigin:CGPointMake(0, self.searchView.bottom_sd + 5) andHeight:40];
         _menu.backgroundColor = [UIColor whiteColor];
         _menu.dataSource = self;
         _menu.delegate = self;

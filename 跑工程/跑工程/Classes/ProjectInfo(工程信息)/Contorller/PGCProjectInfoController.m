@@ -12,7 +12,8 @@
 #import "PGCProjectRootViewController.h"
 #import "PGCSearchViewController.h"
 #import "PGCProjectDetailViewController.h"
-#import "JSDropDownMenu.h"
+//#import "JSDropDownMenu.h"
+#import "DropDownMenu.h"
 #import "PGCProjectInfoAPIManager.h"
 #import "PGCProject.h"
 #import "PGCAreaManager.h"
@@ -26,7 +27,7 @@ typedef NS_ENUM(NSUInteger, BarItemTag) {
     SearchBtnTag,
 };
 
-@interface PGCProjectInfoController () <UITableViewDataSource, UITableViewDelegate, JSDropDownMenuDataSource, JSDropDownMenuDelegate>
+@interface PGCProjectInfoController () <UITableViewDataSource, UITableViewDelegate, DropDownMenuDataSource, DropDownMenuDelegate>
 {
     NSArray *_areaDatas;/** 地区数据源 */
     NSArray *_typeDatas;/** 项目类型数据源 */
@@ -43,7 +44,7 @@ typedef NS_ENUM(NSUInteger, BarItemTag) {
 }
 
 @property (weak, nonatomic) UIView *searchTitleView;/** 搜索标题视图 */
-@property (strong, nonatomic) JSDropDownMenu *menu;/** 下拉菜单视图 */
+@property (strong, nonatomic) DropDownMenu *menu;/** 下拉菜单视图 */
 @property (strong, nonatomic) UITableView *tableView;/** 表格视图 */
 @property (strong, nonatomic) NSMutableDictionary *parameters;/** 参数 */
 @property (strong, nonatomic) NSMutableArray *dataSource;/** 表格数据源 */
@@ -128,6 +129,7 @@ typedef NS_ENUM(NSUInteger, BarItemTag) {
     _isSearch = false;
     
     [self.view addSubview:self.menu];
+    [self.menu selectDefalutIndexPath];
     [self.view addSubview:self.tableView];
     
     [self.tableView.mj_header beginRefreshing];
@@ -356,78 +358,32 @@ typedef NS_ENUM(NSUInteger, BarItemTag) {
 
 
 #pragma mark -
-#pragma mark - PGCDropMenuDaJSDropDownMenuDataSource
+#pragma mark - DropDownMenuDataSource
 
-- (NSInteger)numberOfColumnsInMenu:(JSDropDownMenu *)menu
+- (NSInteger)numberOfColumnsInMenu:(DropDownMenu *)menu
 {
     return 3;
 }
 
-- (BOOL)displayByCollectionViewInColumn:(NSInteger)column
-{
-    return column == 2 ? true : false;
-}
-
-- (BOOL)haveRightTableViewInColumn:(NSInteger)column
-{
-    return column == 0 ? true : false;
-}
-
-- (CGFloat)widthRatioOfLeftColumn:(NSInteger)column
-{
-    return column == 0 ? 0.5 : 1;
-}
-
-- (NSInteger)currentLeftSelectedRow:(NSInteger)column
+- (NSInteger)menu:(DropDownMenu *)menu numberOfRowsInColumn:(NSInteger)column
 {
     switch (column) {
-        case 0: return _currentProvinceIndex; break;
-        case 1: return _currentTypeIndex; break;
-        default: return 0;  break;
-    }
-}
-
-- (NSInteger)menu:(JSDropDownMenu *)menu numberOfRowsInColumn:(NSInteger)column leftOrRight:(NSInteger)leftOrRight leftRow:(NSInteger)leftRow
-{
-    switch (column) {
-        case 0:
-        {
-            if (leftOrRight == 0) {
-                return _areaDatas.count;
-            } else {
-                PGCProvince *province = _areaDatas[leftRow];
-                return province.cities.count;
-            }
-        }
+        case 0: return _areaDatas.count;
             break;
-        case 1: return _typeDatas.count; break;
-        default: return _progressDatas.count; break;
+        case 1: return _typeDatas.count;
+            break;
+        default: return _progressDatas.count;
+            break;
     }
 }
 
-- (NSString *)menu:(JSDropDownMenu *)menu titleForColumn:(NSInteger)column
-{
-    switch (column) {
-        case 0: return @"地区"; break;
-        case 1: return @"类别"; break;
-        default: return @"阶段"; break;
-    }
-}
-
-- (NSString *)menu:(JSDropDownMenu *)menu titleForRowAtIndexPath:(JSIndexPath *)indexPath
+- (NSString *)menu:(DropDownMenu *)menu titleForRowAtIndexPath:(IndexPath *)indexPath
 {
     switch (indexPath.column) {
         case 0:
         {
-            if (indexPath.leftOrRight == 0) {
-                PGCProvince *province = _areaDatas[indexPath.row];
-                return province.province;
-                
-            } else {
-                PGCProvince *province = _areaDatas[indexPath.leftRow];
-                PGCCity *city = province.cities[indexPath.row];
-                return city.city;
-            }
+            PGCProvince *province = _areaDatas[indexPath.row];
+            return province.province;
         }
             break;
         case 1:
@@ -445,28 +401,157 @@ typedef NS_ENUM(NSUInteger, BarItemTag) {
     }
 }
 
+- (NSInteger)menu:(DropDownMenu *)menu numberOfItemsInRow:(NSInteger)row column:(NSInteger)column
+{
+    switch (column) {
+        case 0:
+        {
+            PGCProvince *province = _areaDatas[row];
+            return province.cities.count;
+        }
+            break;
+        case 1: return 0;
+            break;
+        default: return _progressDatas.count;
+            break;
+    }
+}
 
-#pragma mark -
-#pragma mark - JSDropDownMenuDelegatetaSource
-
-- (void)menu:(JSDropDownMenu *)menu didSelectRowAtIndexPath:(JSIndexPath *)indexPath
+- (NSString *)menu:(DropDownMenu *)menu titleForItemsInRowAtIndexPath:(IndexPath *)indexPath
 {
     switch (indexPath.column) {
         case 0:
         {
-            if (indexPath.leftOrRight == 0) {
-                _currentProvinceIndex = indexPath.row;
+            PGCProvince *province = _areaDatas[indexPath.row];
+            PGCCity *city = province.cities[indexPath.item];
+            return city.city;
+        }
+            break;
+        case 1: return nil;
+            break;
+        default:
+        {
+            PGCProjectProgress *progress = _progressDatas[indexPath.row];
+            return progress.name;
+        }
+            break;
+    }
+}
+
+- (BOOL)displayByCollectionViewInColumn:(NSInteger)column
+{
+    return column == 2 ? true : false;
+}
+
+//- (BOOL)haveRightTableViewInColumn:(NSInteger)column
+//{
+//    return column == 0 ? true : false;
+//}
+//
+//- (CGFloat)widthRatioOfLeftColumn:(NSInteger)column
+//{
+//    return column == 0 ? 0.5 : 1;
+//}
+//
+//- (NSInteger)currentLeftSelectedRow:(NSInteger)column
+//{
+//    switch (column) {
+//        case 0: return _currentProvinceIndex; break;
+//        case 1: return _currentTypeIndex; break;
+//        default: return 0;  break;
+//    }
+//}
+//
+//- (NSInteger)menu:(JSDropDownMenu *)menu numberOfRowsInColumn:(NSInteger)column leftOrRight:(NSInteger)leftOrRight leftRow:(NSInteger)leftRow
+//{
+//    switch (column) {
+//        case 0:
+//        {
+//            if (leftOrRight == 0) {
+//                return _areaDatas.count;
+//            } else {
+//                PGCProvince *province = _areaDatas[leftRow];
+//                return province.cities.count;
+//            }
+//        }
+//            break;
+//        case 1: return _typeDatas.count; break;
+//        default: return _progressDatas.count; break;
+//    }
+//}
+//
+//- (NSString *)menu:(DropDownMenu *)menu titleForColumn:(NSInteger)column
+//{
+//    switch (column) {
+//        case 0: return @"地区"; break;
+//        case 1: return @"类别"; break;
+//        default: return @"阶段"; break;
+//    }
+//}
+//
+//- (NSString *)menu:(JSDropDownMenu *)menu titleForRowAtIndexPath:(IndexPath *)indexPath
+//{
+//    switch (indexPath.column) {
+//        case 0:
+//        {
+//            if (indexPath.leftOrRight == 0) {
+//                PGCProvince *province = _areaDatas[indexPath.row];
+//                return province.province;
+//                
+//            } else {
+//                PGCProvince *province = _areaDatas[indexPath.leftRow];
+//                PGCCity *city = province.cities[indexPath.row];
+//                return city.city;
+//            }
+//        }
+//            break;
+//        case 1:
+//        {
+//            PGCProjectType *type = _typeDatas[indexPath.row];
+//            return type.name;
+//        }
+//            break;
+//        default:
+//        {
+//            PGCProjectProgress *progress = _progressDatas[indexPath.row];
+//            return progress.name;
+//        }
+//            break;
+//    }
+//}
+
+
+#pragma mark -
+#pragma mark - DropDownMenuDelegate
+
+- (void)menu:(DropDownMenu *)menu didSelectRowAtIndexPath:(IndexPath *)indexPath
+{
+    switch (indexPath.column) {
+        case 0:
+        {
+            if (indexPath.item > 0) {
                 PGCProvince *province = _areaDatas[indexPath.row];
-                
-                if (!(province.cities.count > 0)) {
-                    [self.parameters setObject:@(province.id) forKey:@"province_id"];
-                }
+                PGCCity *city = province.cities[indexPath.item];
+                [self.parameters setObject:@(city.id) forKey:@"city_id"];
                 
             } else {
-                PGCProvince *province = _areaDatas[indexPath.leftRow];
-                PGCCity *city = province.cities[indexPath.row];
-                [self.parameters setObject:@(city.id) forKey:@"city_id"];
+                PGCProvince *province = _areaDatas[indexPath.row];
+                [self.parameters setObject:@(province.id) forKey:@"province_id"];
             }
+            
+//            if (indexPath.leftOrRight == 0) {
+//                _currentProvinceIndex = indexPath.row;
+//                PGCProvince *province = _areaDatas[indexPath.row];
+//                
+//                if (!(province.cities.count > 0)) {
+//                    [self.parameters setObject:@(province.id) forKey:@"province_id"];
+//                }
+//                
+//            } else {
+//                PGCProvince *province = _areaDatas[indexPath.leftRow];
+//                PGCCity *city = province.cities[indexPath.row];
+//                [self.parameters setObject:@(city.id) forKey:@"city_id"];
+//            }
         }
             break;
         case 1:
@@ -540,9 +625,9 @@ typedef NS_ENUM(NSUInteger, BarItemTag) {
 }
 
 
-- (JSDropDownMenu *)menu {
+- (DropDownMenu *)menu {
     if (!_menu) {
-        _menu = [[JSDropDownMenu alloc] initWithOrigin:CGPointMake(0, STATUS_AND_NAVIGATION_HEIGHT) andHeight:40];
+        _menu = [[DropDownMenu alloc] initWithOrigin:CGPointMake(0, STATUS_AND_NAVIGATION_HEIGHT) andHeight:40];
         _menu.backgroundColor = [UIColor whiteColor];
         _menu.dataSource = self;
         _menu.delegate = self;

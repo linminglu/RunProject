@@ -109,6 +109,7 @@ static NSString * const kSearchCell = @"SearchCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kSearchCell];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kSearchCell];
+        cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"delete_y24"]];
         cell.textLabel.textColor = RGB(102, 102, 102);
         cell.textLabel.text = self.searchResults[indexPath.row];
         UIView *line = [[UIView alloc] init];

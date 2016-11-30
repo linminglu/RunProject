@@ -30,20 +30,21 @@
 #endif
 
 //尺寸相关
-#define KeyWindow [UIApplication sharedApplication].keyWindow
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds
 #define SCREEN_SIZE [UIScreen mainScreen].bounds.size
 #define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
 #define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
 
+#define SCREEN_MAX_LENGTH (MAX(SCREEN_WIDTH, SCREEN_HEIGHT))
+#define SCREEN_MIN_LENGTH (MIN(SCREEN_WIDTH, SCREEN_HEIGHT))
 
 // 当前版本
 #define FSystemVersion [[[UIDevice currentDevice] systemVersion] floatValue]
 #define DSystemVersion [[[UIDevice currentDevice] systemVersion] doubleValue]
 #define SSystemVersion [[UIDevice currentDevice] systemVersion]
 
-
 // UI相关
+#define KeyWindow [UIApplication sharedApplication].keyWindow
 
 #define STATUS_BAR_HEIGHT 20 // 状态栏 高度
 #define NAVIGATION_BAR_HEIGHT 44 // 导航栏 高度

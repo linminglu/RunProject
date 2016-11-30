@@ -215,7 +215,7 @@
 - (MAPointAnnotation *)pointAnn {
     if (!_pointAnn) {
         _pointAnn = [[MAPointAnnotation alloc] init];
-        _pointAnn.lockedToScreen = true;
+        _pointAnn.lockedToScreen = false;
         _pointAnn.lockedScreenPoint = self.view.center;
     }
     return _pointAnn;

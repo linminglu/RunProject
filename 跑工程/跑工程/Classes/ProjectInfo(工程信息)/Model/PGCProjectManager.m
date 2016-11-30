@@ -25,7 +25,7 @@
     
     PGCProjectType *tempType = [[PGCProjectType alloc] init];
     tempType.type_id = -1;
-    tempType.name = @"不限";
+    tempType.name = @"类别";
     [results insertObject:tempType atIndex:0];
     [results addObjectsFromArray:[PGCProjectManager manager].projectTypes];
     
@@ -38,7 +38,7 @@
     
     PGCProjectProgress *tempProgress = [[PGCProjectProgress alloc] init];
     tempProgress.progress_id = -1;
-    tempProgress.name = @"不限";
+    tempProgress.name = @"阶段";
     [results insertObject:tempProgress atIndex:0];
     [results addObjectsFromArray:[PGCProjectManager manager].projectProgresses];
     
