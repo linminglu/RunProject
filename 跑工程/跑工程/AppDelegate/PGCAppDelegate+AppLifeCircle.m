@@ -7,10 +7,75 @@
 //
 
 #import "PGCAppDelegate+AppLifeCircle.h"
+#import <AlipaySDK/AlipaySDK.h>
+#import "WXApiManager.h"
 
 @implementation PGCAppDelegate (AppLifeCircle)
 
+//9.0前的方法，为了适配低版本 保留
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    return [WXApi handleOpenURL:url delegate:[WXApiManager sharedManager]];
+}
 
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    
+    if ([url.host isEqualToString:@"safepay"]) {
+        // 支付跳转支付宝钱包进行支付，处理支付结果
+        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+            NSLog(@"result = %@", resultDic);
+        }];
+        
+        // 授权跳转支付宝钱包进行支付，处理支付结果
+        [[AlipaySDK defaultService] processAuth_V2Result:url standbyCallback:^(NSDictionary *resultDic) {
+            NSLog(@"result = %@", resultDic);
+            // 解析 auth code
+            NSString *result = resultDic[@"result"];
+            NSString *authCode = nil;
+            if (result.length > 0) {
+                NSArray *resultArr = [result componentsSeparatedByString:@"&"];
+                for (NSString *subResult in resultArr) {
+                    if (subResult.length > 10 && [subResult hasPrefix:@"auth_code="]) {
+                        authCode = [subResult substringFromIndex:10];
+                        break;
+                    }
+                }
+            }
+            NSLog(@"授权结果 authCode = %@", authCode ? : @"");
+        }];
+    }
+    return [WXApi handleOpenURL:url delegate:[WXApiManager sharedManager]];
+}
+
+//9.0后的方法
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options
+{
+    if ([url.host isEqualToString:@"safepay"]) {
+        // 支付跳转支付宝钱包进行支付，处理支付结果
+        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+            NSLog(@"result = %@",resultDic);
+        }];        
+        // 授权跳转支付宝钱包进行支付，处理支付结果
+        [[AlipaySDK defaultService] processAuth_V2Result:url standbyCallback:^(NSDictionary *resultDic) {
+            NSLog(@"result = %@",resultDic);
+            // 解析 auth code
+            NSString *result = resultDic[@"result"];
+            NSString *authCode = nil;
+            if (result.length>0) {
+                NSArray *resultArr = [result componentsSeparatedByString:@"&"];
+                for (NSString *subResult in resultArr) {
+                    if (subResult.length > 10 && [subResult hasPrefix:@"auth_code="]) {
+                        authCode = [subResult substringFromIndex:10];
+                        break;
+                    }
+                }
+            }
+            NSLog(@"授权结果 authCode = %@", authCode?:@"");
+        }];
+    }
+    return [WXApi handleOpenURL:url delegate:[WXApiManager sharedManager]];
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -27,6 +92,7 @@
     [formatter setTimeZone:sourceTimeZone];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     self.lastTimeEnterBackGroundStr = [formatter stringFromDate:[NSDate date]];//当前时间
+    NSLog(@"%@", self.lastTimeEnterBackGroundStr);
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -41,6 +107,7 @@
     if (intervalTime > (2 * 60 * 60)) {
         
     }
+    NSLog(@"%@", self.lastTimeEnterBackGroundStr);
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {

@@ -11,6 +11,6 @@
 
 @interface PGCProjectDetailViewController : UIViewController
 
-@property (strong, nonatomic) PGCProject *projectDetail;
+@property (strong, nonatomic) PGCProject *projectDetail;/** 项目详情 */
 
 @end

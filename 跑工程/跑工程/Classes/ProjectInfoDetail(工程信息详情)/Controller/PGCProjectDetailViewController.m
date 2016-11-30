@@ -9,7 +9,8 @@
 #import "PGCProjectDetailViewController.h"
 #import "PGCProjectSurveyScrollView.h"
 #import "PGCProjectContactScrollView.h"
-#import "PGCMapTypeViewController.h"
+#import <MAMapKit/MAMapKit.h>
+#import "PGCMapViewController.h"
 #import "PGCProject.h"
 #import "PGCProjectInfoAPIManager.h"
 #import "PGCProjectContact.h"
@@ -140,7 +141,9 @@
         if (selected && index < 2) {
             self.collectionView.contentOffset = CGPointMake(index * self.collectionView.width_sd, 0);
         } else {
-            [self.navigationController pushViewController:[PGCMapTypeViewController new] animated:true];
+            PGCMapViewController *mapVC = [[PGCMapViewController alloc] init];
+            mapVC.projectInfo = self.projectDetail;
+            [self.navigationController pushViewController:mapVC animated:true];
         }
     }];
 }

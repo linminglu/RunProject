@@ -268,11 +268,7 @@ typedef NS_ENUM(NSUInteger, BarItemTag) {
         case MapBtnTag:
         {
             PGCMapTypeViewController *mapVC = [[PGCMapTypeViewController alloc] init];
-            NSMutableArray *array = [NSMutableArray array];
-            for (PGCProject *model in self.dataSource) {
-                [array addObject:@{@"lat":model.lat, @"lng":model.lng}];
-            }
-            mapVC.coordinates = array;
+            mapVC.projectsMap = self.dataSource;
             [self.navigationController pushViewController:mapVC animated:true];
         }
             break;

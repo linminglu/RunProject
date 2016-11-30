@@ -22,6 +22,11 @@
 
 @implementation PGCAppDelegate (AppService)
 
+- (void)registerWeChatPay
+{
+    [WXApi registerApp:WeChat_APPID withDescription:@"zbapp"];
+}
+
 - (void)registerShare
 {
     [ShareSDK registerApp:SHARE_APPKEY activePlatforms:@[@(SSDKPlatformTypeWechat), @(SSDKPlatformTypeQQ)] onImport:^(SSDKPlatformType platformType) {

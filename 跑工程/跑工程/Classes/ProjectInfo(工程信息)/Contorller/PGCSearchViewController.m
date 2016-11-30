@@ -96,7 +96,6 @@ static NSString * const kSearchCell = @"SearchCell";
 }
 
 
-
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -109,11 +108,10 @@ static NSString * const kSearchCell = @"SearchCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kSearchCell];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kSearchCell];
-        cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"delete_y24"]];
         cell.textLabel.textColor = RGB(102, 102, 102);
         cell.textLabel.text = self.searchResults[indexPath.row];
         UIView *line = [[UIView alloc] init];
-        line.frame = CGRectMake(0, cell.contentView.height_sd - 1, SCREEN_WIDTH, 1);
+        line.frame = CGRectMake(0, tableView.rowHeight - 1, SCREEN_WIDTH, 1);
         line.backgroundColor = PGCBackColor;
         [cell.contentView addSubview:line];
     }
@@ -132,6 +130,27 @@ static NSString * const kSearchCell = @"SearchCell";
     [PGCNotificationCenter postNotificationName:kSearchProjectData object:nil userInfo:@{@"key_word":key_word}];
     
     [self.navigationController popViewControllerAnimated:true];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return true;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewCellEditingStyleDelete;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [self.searchResults removeObjectAtIndex:indexPath.row];
+        
+        [self saveKeywordSearchRecord];
+        
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+    }
 }
 
 
@@ -211,6 +230,7 @@ static NSString * const kSearchCell = @"SearchCell";
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.headerView.bottom_sd, SCREEN_WIDTH, SCREEN_HEIGHT - self.searchView.bottom_sd) style:UITableViewStylePlain];
         _tableView.backgroundColor = PGCBackColor;
+        _tableView.rowHeight = 50;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.delegate = self;
         _tableView.dataSource = self;
