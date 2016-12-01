@@ -19,12 +19,14 @@
     
     // 快速显示一个提示信息
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:true];
+    
+    hud.margin = 10.0f;
+    
     // 设置提示文字
     hud.label.text = text;
     
-    UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"MBProgressHUD.bundle/%@", icon]];
     // 设置图片
-    hud.customView = [[UIImageView alloc] initWithImage:image];
+    hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"MBProgressHUD.bundle/%@", icon]]];
     // 再设置模式
     hud.mode = MBProgressHUDModeCustomView;
     
@@ -45,7 +47,7 @@
 
 + (void)showError:(NSString *)error complete:(void (^)(void))complete
 {    
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KeyWindow animated:true];
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[[UIApplication sharedApplication].windows lastObject] animated:true];
     hud.label.text = error;
     
     UIImage *image = [UIImage imageNamed:@"MBProgressHUD.bundle/error.png"];

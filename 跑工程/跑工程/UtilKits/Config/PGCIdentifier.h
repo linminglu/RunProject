@@ -14,6 +14,8 @@ extern NSString * const kReloadProfileInfo;// 修改个人资料 的通知
 extern NSString * const kRefreshCollectTable;// 项目收藏 的通知
 extern NSString * const kSearchProjectData;// 搜索项目的通知
 
+extern NSString * const kReloadProjectsContact;// 刷新项目联系人 的通知
+
 extern NSString * const kContactReloadData;// 删除联系人 的通知
 
 extern NSString * const kProcurementInfoData;//收藏招标信息的通知

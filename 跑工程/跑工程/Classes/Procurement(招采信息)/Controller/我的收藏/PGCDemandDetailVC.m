@@ -90,10 +90,10 @@ typedef NS_ENUM(NSUInteger, ButtonTag) {
                     self.demand.collect_id = [resultData intValue];
                     [MBProgressHUD showSuccess:@"收藏成功" toView:KeyWindow];
                     [sender setTitle:@"取消收藏" forState:UIControlStateNormal];
-                    [sender layoutButtonWithEdgeInsetsStyle:ButtonEdgeInsetsStyleTop imageTitleSpace:5];
                     [PGCNotificationCenter postNotificationName:kProcurementInfoData object:self.demand userInfo:nil];
+                    
                 } else {
-                    [PGCProgressHUD showMessage:message toView:KeyWindow afterDelayTime:1.5];
+                    [MBProgressHUD showError:message toView:self.view];
                 }
             }];
         } else {
@@ -107,10 +107,9 @@ typedef NS_ENUM(NSUInteger, ButtonTag) {
                     self.demand.collect_id = 0;
                     [MBProgressHUD showSuccess:@"已取消收藏" toView:KeyWindow];
                     [sender setTitle:@"收藏" forState:UIControlStateNormal];
-                    [sender layoutButtonWithEdgeInsetsStyle:ButtonEdgeInsetsStyleTop imageTitleSpace:5];
                     [PGCNotificationCenter postNotificationName:kProcurementInfoData object:self.demand userInfo:nil];
                 } else {
-                    [PGCProgressHUD showMessage:message toView:KeyWindow afterDelayTime:1.5];
+                    [MBProgressHUD showError:message toView:self.view];
                 }
             }];
         }
@@ -458,11 +457,10 @@ typedef NS_ENUM(NSUInteger, ButtonTag) {
                                                                tag:ShareBtnTag
                                                              title:@"分享"
                                                          imageName:@"share"],
-                                                [self setBarButton:CGRectMake(0, 0, 50, 40)
+                                                [self setBarButton:CGRectMake(0, 0, 45, 40)
                                                                tag:HeartBtnTag
                                                              title:collectBtnTitle
-                                                         imageName:@"heart"]];
-    
+                                                         imageName:@"我的收藏"]];
     [self.dataSource insertObject:@[demand] atIndex:0];
     [self.dataSource insertObject:[@[demand.contacts.firstObject] mutableCopy] atIndex:1];
     [self.dataSource insertObject:@[demand] atIndex:2];

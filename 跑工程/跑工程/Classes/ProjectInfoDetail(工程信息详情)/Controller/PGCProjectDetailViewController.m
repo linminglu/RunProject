@@ -19,7 +19,7 @@
 
 @interface PGCProjectDetailViewController () <UICollectionViewDataSource>
 {
-    UILabel *_titleLabel;/** 收藏按钮文字标签 */
+    BOOL _isCollect;
 }
 
 @property (strong, nonatomic) UICollectionView *collectionView;/** 集合视图 */
@@ -27,22 +27,26 @@
 @property (strong, nonatomic) NSMutableArray *segmentBtns;/** 存放按钮的数组 */
 @property (strong, nonatomic) UIView *projectTitleView;/** 项目名称背景视图 */
 @property (copy, nonatomic) NSArray *contactData;/** 联系人数据源 */
-@property (strong, nonatomic) NSMutableDictionary *accessOrCollectParams;/** 添加收藏或浏览记录的参数 */
 
 - (void)initializeDataSource; /** 初始化数据源 */
 - (void)initializeUserInterface;/** 初始化用户界面 */
+- (void)registerNotification; /** 注册通知 */
 
 @end
 
 @implementation PGCProjectDetailViewController
+
+- (void)dealloc {
+    [PGCNotificationCenter removeObserver:self name:kReloadProjectsContact object:nil];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self initializeDataSource];
     [self initializeUserInterface];
+    [self registerNotification];
 }
-
 
 - (void)initializeDataSource
 {
@@ -52,20 +56,14 @@
     if (!user) {
         return;
     }
-    self.accessOrCollectParams = [@{@"user_id":@(user.user_id),
-                                    @"client_type":@"iphone",
-                                    @"token":manager.token.token,
-                                    @"project_id":@(self.projectDetail.id),
-                                    @"type":@(1)} mutableCopy];
-    [PGCProjectInfoAPIManager addAccessOrCollectRequestWithParameters:self.accessOrCollectParams responds:^(RespondsStatus status, NSString *message, id resultData) {
+    NSDictionary *parameters = [@{@"user_id":@(user.user_id),
+                                  @"client_type":@"iphone",
+                                  @"token":manager.token.token,
+                                  @"project_id":@(self.projectDetail.id),
+                                  @"type":@(1)} mutableCopy];
+    // 添加浏览记录
+    [PGCProjectInfoAPIManager addAccessOrCollectRequestWithParameters:parameters responds:^(RespondsStatus status, NSString *message, id resultData) {
         
-    }];
-    NSDictionary *params = @{@"project_id":@(self.projectDetail.id),
-                             @"user_id":@(user.user_id)};
-    [PGCProjectInfoAPIManager getProjectContactsRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, NSMutableArray *resultData) {
-        if (status == RespondsStatusSuccess) {
-            self.contactData = resultData;
-        }
     }];
 }
 
@@ -118,6 +116,18 @@
 }
 
 
+- (void)registerNotification {
+    [PGCNotificationCenter addObserver:self selector:@selector(reloadProjectsContact) name:kReloadProjectsContact object:nil];
+}
+
+- (void)reloadProjectsContact
+{
+    [self.collectionView reloadData];
+    
+    [self updateSegmentButton:self.segmentBtns[1] isSelected:true];
+}
+
+
 #pragma mark - Events
 
 - (void)respondsToSegmentButton:(UIButton *)sender
@@ -153,7 +163,7 @@
 
  @param sender
  */
-- (void)respondsToCollect:(UIButton *)sender
+- (void)collectItemEvent:(UIButton *)sender
 {
     PGCManager *manager = [PGCManager manager];
     [manager readTokenData];
@@ -164,15 +174,20 @@
     }
     if (self.projectDetail.collect_id == 0) {
         
-        [self.accessOrCollectParams setObject:@(2) forKey:@"type"];
-        
-        [PGCProjectInfoAPIManager addAccessOrCollectRequestWithParameters:self.accessOrCollectParams responds:^(RespondsStatus status, NSString *message, id resultData) {
+        NSDictionary *params = @{@"user_id":@(user.user_id),
+                                 @"client_type":@"iphone",
+                                 @"token":manager.token.token,
+                                 @"project_id":@(self.projectDetail.id),
+                                 @"type":@(2)};
+        // 添加收藏
+        [PGCProjectInfoAPIManager addAccessOrCollectRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
             if (status == RespondsStatusSuccess) {
+                self.projectDetail.collect_id = [resultData intValue];
                 [MBProgressHUD showSuccess:@"收藏成功" toView:KeyWindow];
-                _titleLabel.text = @"取消收藏";
+                [sender setTitle:@"取消收藏" forState:UIControlStateNormal];
                 [PGCNotificationCenter postNotificationName:kRefreshCollectTable object:nil userInfo:nil];
             } else {
-                [PGCProgressHUD showMessage:message toView:self.view afterDelayTime:1.5];
+                [MBProgressHUD showError:message toView:self.view];
             }
         }];
     } else {
@@ -181,13 +196,15 @@
                                  @"client_type":@"iphone",
                                  @"token":manager.token.token,
                                  @"ids_json":[ids mj_JSONString]};
+        // 取消收藏
         [PGCProjectInfoAPIManager deleteAccessOrCollectRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
             if (status == RespondsStatusSuccess) {
+                self.projectDetail.collect_id = 0;
                 [MBProgressHUD showSuccess:@"已取消收藏" toView:KeyWindow];
-                _titleLabel.text = @"收藏此项目";
-                [PGCNotificationCenter postNotificationName:kRefreshCollectTable object:nil userInfo:nil];
+                [sender setTitle:@"收藏此项目" forState:UIControlStateNormal];
+                [PGCNotificationCenter postNotificationName:kRefreshCollectTable object:nil userInfo:nil];                
             } else {
-                [PGCProgressHUD showMessage:message toView:self.view afterDelayTime:1.5];
+                [MBProgressHUD showError:message toView:self.view];
             }
         }];
     }
@@ -217,6 +234,9 @@
             cell = [[PGCProjectContactScrollView alloc] initWithFrame:collectionView.frame];
         }
         cell.contactDataSource = self.contactData;
+        cell.projectId = self.projectDetail.id;
+        [cell loadContactData];
+        
         return cell;
     }
 }
@@ -228,13 +248,27 @@
 {
     _projectDetail = projectDetail;
     
-    NSString *collectBtnTitle = projectDetail.collect_id > 0 ? @"取消收藏" : @"收藏此项目";
+    NSString *heartTitle = projectDetail.collect_id > 0 ? @"取消收藏" : @"收藏此项目";
     
-    self.navigationItem.rightBarButtonItem = [self navButton:collectBtnTitle];
+    self.navigationItem.rightBarButtonItem = [self heartItem:heartTitle];
 }
 
 
 #pragma mark - Getter
+
+- (UIBarButtonItem *)heartItem:(NSString *)title
+{
+    NSString *text = @"收藏此项目";
+    CGSize size = [text sizeWithFont:SetFont(15) constrainedToSize:CGSizeMake(MAXFLOAT, 0)];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.bounds = CGRectMake(0, 0, size.width, 40);
+    button.titleLabel.font = SetFont(15);
+    [button setTitle:title forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(collectItemEvent:) forControlEvents:UIControlEventTouchUpInside];
+    
+    return [[UIBarButtonItem alloc] initWithCustomView:button];
+}
 
 - (NSMutableArray *)segmentBtns {
     if (!_segmentBtns) {
@@ -263,34 +297,6 @@
     }
     return _collectionView;
 }
-
-
-- (UIBarButtonItem *)navButton:(NSString *)title
-{
-    CGFloat titleWidth = [@"收藏此项目" sizeWithFont:SetFont(14) constrainedToSize:CGSizeMake(MAXFLOAT, 0)].width;
-    UIImage *image = [UIImage imageNamed:@"heart"];
-    
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.bounds = CGRectMake(0, 0, titleWidth + image.size.width + 5, 40);
-    [button addTarget:self action:@selector(respondsToCollect:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-    imageView.center = CGPointMake(button.width_sd - image.size.width / 2, button.height_sd / 2);
-    [button addSubview:imageView];
-    
-    UILabel *label = [[UILabel alloc] init];
-    label.bounds = CGRectMake(0, 0, titleWidth, 40);
-    label.center = CGPointMake(titleWidth / 2, button.height_sd / 2);
-    label.textAlignment = NSTextAlignmentCenter;
-    label.textColor = [UIColor whiteColor];
-    label.font = SetFont(14);
-    label.text = title;
-    [button addSubview:label];
-    _titleLabel = label;
-    
-    return [[UIBarButtonItem alloc] initWithCustomView:button];
-}
-
 
 
 @end

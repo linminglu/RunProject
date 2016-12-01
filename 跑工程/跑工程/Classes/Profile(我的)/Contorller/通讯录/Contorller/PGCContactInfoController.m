@@ -66,7 +66,7 @@
     self.automaticallyAdjustsScrollViewInsets = false;
     self.view.backgroundColor = [UIColor whiteColor];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"删除联系人" style:UIBarButtonItemStyleDone target:self action:@selector(respondsToDeleteContact:)];
+    self.navigationItem.rightBarButtonItem = [self barButtonItem];
     
     _isLeft = true;
     
@@ -75,9 +75,24 @@
 }
 
 
+- (UIBarButtonItem *)barButtonItem
+{
+    UIButton *button = [[UIButton alloc] init];
+    button.bounds = CGRectMake(0, 0, 60, 40);
+    [button.titleLabel setFont:SetFont(11)];
+    [button setTitle:@"删除联系人" forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [button setImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
+    [button setImage:[UIImage imageNamed:@"delete"] forState:UIControlStateHighlighted];
+    [button addTarget:self action:@selector(deleteContactEvent:) forControlEvents:UIControlEventTouchUpInside];
+    [button layoutButtonWithEdgeInsetsStyle:ButtonEdgeInsetsStyleTop imageTitleSpace:5];
+    
+    return [[UIBarButtonItem alloc] initWithCustomView:button];
+}
+
 #pragma mark - Evetns
 
-- (void)respondsToDeleteContact:(UIBarButtonItem *)sender
+- (void)deleteContactEvent:(UIBarButtonItem *)sender
 {
     PGCManager *manager = [PGCManager manager];
     [manager readTokenData];

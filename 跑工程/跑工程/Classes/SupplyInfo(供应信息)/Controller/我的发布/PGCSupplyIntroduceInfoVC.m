@@ -172,6 +172,7 @@
     
     NSMutableArray *images = [NSMutableArray array];
     for (Images *image in self.supplyDetail.images) {
+        
         [images addObject:@{@"id":@(image.id),
                             @"path":image.image,
                             @"description":image.imageDec}];
@@ -257,6 +258,7 @@
 {
     PGCAreaAndTypeRootVC *areaVC = [[PGCAreaAndTypeRootVC alloc] init];
     areaVC.navigationItem.title = @"选择地区";
+    areaVC.isSupply = false;
     areaVC.dataSource = [[PGCAreaManager manager] setAreaData];
     [areaVC.dataSource removeObjectAtIndex:0];
     
@@ -278,6 +280,7 @@
 {
     PGCAreaAndTypeRootVC *supplyVC = [[PGCAreaAndTypeRootVC alloc] init];
     supplyVC.navigationItem.title = @"选择供应类别";
+    supplyVC.isSupply = true;
     supplyVC.dataSource = [[PGCMaterialServiceTypes materialServiceTypes] setMaterialTypes];
     [supplyVC.dataSource removeObjectAtIndex:0];
     

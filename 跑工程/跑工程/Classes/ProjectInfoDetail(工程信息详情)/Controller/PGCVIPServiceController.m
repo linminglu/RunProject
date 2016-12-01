@@ -9,6 +9,7 @@
 #import "PGCVIPServiceController.h"
 #import "PGCVIPServiceCell.h"
 #import "PGCVIPServiceAPIManager.h"
+#import "PGCRegisterOrLoginAPIManager.h"
 #import "PGCProduct.h"
 #import "PGCPayView.h"
 #import <AlipaySDK/AlipaySDK.h>
@@ -43,8 +44,7 @@
 
 - (void)initializeDataSource
 {
-    MBProgressHUD *hud = [PGCProgressHUD showProgress:nil toView:self.view];
-    
+    MBProgressHUD *hud = [PGCProgressHUD showProgress:nil toView:KeyWindow];
     [PGCVIPServiceAPIManager getVipProductListRequestWithParameters:@{} responds:^(RespondsStatus status, NSString *message, NSMutableArray *resultData) {
         [hud hideAnimated:true];
         
@@ -99,6 +99,23 @@
     .autoHeightRatio(0);
 }
 
+- (void)updateSession
+{
+    PGCManager *manager = [PGCManager manager];
+    [manager readTokenData];
+    PGCUser *user = manager.token.user;
+    NSDictionary *params = @{@"user_id":@(user.user_id),
+                             @"client_type":@"iphone",
+                             @"token":manager.token.token};
+    // 更新用户session
+    [PGCRegisterOrLoginAPIManager updateSessionRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
+        if (status == RespondsStatusSuccess) {
+            
+        }
+    }];
+}
+
+
 - (void)registerNotification {
     [PGCNotificationCenter addObserver:self selector:@selector(weChatPay:) name:kVIP_WeChatPay object:nil];
     [PGCNotificationCenter addObserver:self selector:@selector(aliPay:) name:kVIP_Alipay object:nil];
@@ -114,8 +131,9 @@
         
         if (resultStatus == 1) {//支付成功
             PGCPayView *succeedView = [[PGCPayView alloc] initWithSuccessPay];
-            
             [succeedView showPayViewWithGCD];
+            [self updateSession];
+            [PGCNotificationCenter postNotificationName:kReloadProjectsContact object:nil userInfo:nil];
         }
         else if (resultStatus == 0) {//用户取消了支付
             [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示：" message:result[@"message"] actionWithTitle:@"我知道了" handler:^(UIAlertAction *action) {
@@ -139,9 +157,10 @@
         NSInteger resultStatus = [result[@"resultStatus"] integerValue];
         
         if (resultStatus == 9000) {
-            PGCPayView *succeedView = [[PGCPayView alloc] initWithSuccessPay];
-            
+            PGCPayView *succeedView = [[PGCPayView alloc] initWithSuccessPay];            
             [succeedView showPayViewWithGCD];
+            [self updateSession];
+            [PGCNotificationCenter postNotificationName:kReloadProjectsContact object:nil userInfo:nil];
         }
         else if (resultStatus == 4000) {
             [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示：" message:@"系统异常" actionWithTitle:@"我知道了" handler:^(UIAlertAction *action) {

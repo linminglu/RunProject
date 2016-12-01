@@ -47,7 +47,7 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     //画一条底部线
     
-    CGContextSetRGBStrokeColor(context, 219.0/255.0, 219.0/255.0, 229.0/255.0, 1.0);//线条颜色
+    CGContextSetRGBStrokeColor(context, 229.0/255.0, 229.0/255.0, 229.0/255.0, 1.0);//线条颜色
     CGContextMoveToPoint(context, 0, 0);
     CGContextAddLineToPoint(context, rect.size.width,0);
     CGContextMoveToPoint(context, 0, rect.size.height);
@@ -859,6 +859,7 @@ static NSString *const kCollectionViewCell = @"CollectionViewCell";
         if (_dataSourceFlags.titleForItemsInRowAtIndexPath) {
             NSInteger currentSelectedMenudRow = [_currentSelectRowArray[_currentSelectedMenudIndex] integerValue];
             cell.textLabel.text = [_dataSource menu:self titleForItemsInRowAtIndexPath:[IndexPath indexPathWithCol:_currentSelectedMenudIndex row:currentSelectedMenudRow item:indexPath.row]];
+            cell.accessoryView = [[UIImageView alloc] initWithImage:nil highlightedImage:[UIImage imageNamed:@"选中-对号"]];
             
             if (_dataSourceFlags.imageNameForItemsInRowAtIndexPath) {
                 NSString *imageName = [_dataSource menu:self imageNameForItemsInRowAtIndexPath:[IndexPath indexPathWithCol:_currentSelectedMenudIndex row:currentSelectedMenudRow item:indexPath.row]];
@@ -887,9 +888,7 @@ static NSString *const kCollectionViewCell = @"CollectionViewCell";
             [_rightTableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
         }
         cell.backgroundColor = [UIColor whiteColor];
-        cell.accessoryView = nil;
     }
-    
     return cell;
 }
 
@@ -915,15 +914,20 @@ static NSString *const kCollectionViewCell = @"CollectionViewCell";
         BOOL isClickHaveItemValid = self.isClickHaveItemValid ? YES : haveItem;
         
         if (isClickHaveItemValid && _delegate && [_delegate respondsToSelector:@selector(menu:didSelectRowAtIndexPath:)]) {
+            
             [self.delegate menu:self didSelectRowAtIndexPath:[IndexPath indexPathWithCol:_currentSelectedMenudIndex row:indexPath.row]];
+            
         } else {
             //TODO: delegate is nil
         }
     } else {
         [self confiMenuWithSelectItem:indexPath.item];
+        
         if (self.delegate && [_delegate respondsToSelector:@selector(menu:didSelectRowAtIndexPath:)]) {
+            
             NSInteger currentSelectedMenudRow = [_currentSelectRowArray[_currentSelectedMenudIndex] integerValue];
-            [self.delegate menu:self didSelectRowAtIndexPath:[IndexPath indexPathWithCol:_currentSelectedMenudIndex row:currentSelectedMenudRow item:indexPath.row]];
+            
+            [self.delegate menu:self didSelectRowAtIndexPath:[IndexPath indexPathWithCol:_currentSelectedMenudIndex row:currentSelectedMenudRow item:indexPath.row]];            
         } else {
             //TODO: delegate is nil
         }

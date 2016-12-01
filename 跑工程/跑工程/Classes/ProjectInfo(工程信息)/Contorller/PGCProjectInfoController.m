@@ -115,7 +115,7 @@ typedef NS_ENUM(NSUInteger, BarItemTag) {
     UIBarButtonItem *search = [self barButtonItem:CGRectMake(0, 0, 30, 40)
                                               tag:SearchBtnTag
                                             title:@"搜索"
-                                        imageName:@"工程搜索"];
+                                        imageName:@"我的搜索"];
     UIBarButtonItem *heart = [self barButtonItem:CGRectMake(0, 0, 45, 40)
                                              tag:HeartBtnTag
                                            title:@"我的收藏"
@@ -439,82 +439,6 @@ typedef NS_ENUM(NSUInteger, BarItemTag) {
     return column == 2 ? true : false;
 }
 
-//- (BOOL)haveRightTableViewInColumn:(NSInteger)column
-//{
-//    return column == 0 ? true : false;
-//}
-//
-//- (CGFloat)widthRatioOfLeftColumn:(NSInteger)column
-//{
-//    return column == 0 ? 0.5 : 1;
-//}
-//
-//- (NSInteger)currentLeftSelectedRow:(NSInteger)column
-//{
-//    switch (column) {
-//        case 0: return _currentProvinceIndex; break;
-//        case 1: return _currentTypeIndex; break;
-//        default: return 0;  break;
-//    }
-//}
-//
-//- (NSInteger)menu:(JSDropDownMenu *)menu numberOfRowsInColumn:(NSInteger)column leftOrRight:(NSInteger)leftOrRight leftRow:(NSInteger)leftRow
-//{
-//    switch (column) {
-//        case 0:
-//        {
-//            if (leftOrRight == 0) {
-//                return _areaDatas.count;
-//            } else {
-//                PGCProvince *province = _areaDatas[leftRow];
-//                return province.cities.count;
-//            }
-//        }
-//            break;
-//        case 1: return _typeDatas.count; break;
-//        default: return _progressDatas.count; break;
-//    }
-//}
-//
-//- (NSString *)menu:(DropDownMenu *)menu titleForColumn:(NSInteger)column
-//{
-//    switch (column) {
-//        case 0: return @"地区"; break;
-//        case 1: return @"类别"; break;
-//        default: return @"阶段"; break;
-//    }
-//}
-//
-//- (NSString *)menu:(JSDropDownMenu *)menu titleForRowAtIndexPath:(IndexPath *)indexPath
-//{
-//    switch (indexPath.column) {
-//        case 0:
-//        {
-//            if (indexPath.leftOrRight == 0) {
-//                PGCProvince *province = _areaDatas[indexPath.row];
-//                return province.province;
-//                
-//            } else {
-//                PGCProvince *province = _areaDatas[indexPath.leftRow];
-//                PGCCity *city = province.cities[indexPath.row];
-//                return city.city;
-//            }
-//        }
-//            break;
-//        case 1:
-//        {
-//            PGCProjectType *type = _typeDatas[indexPath.row];
-//            return type.name;
-//        }
-//            break;
-//        default:
-//        {
-//            PGCProjectProgress *progress = _progressDatas[indexPath.row];
-//            return progress.name;
-//        }
-//            break;
-//    }
-//}
 
 
 #pragma mark -
@@ -534,20 +458,6 @@ typedef NS_ENUM(NSUInteger, BarItemTag) {
                 PGCProvince *province = _areaDatas[indexPath.row];
                 [self.parameters setObject:@(province.id) forKey:@"province_id"];
             }
-            
-//            if (indexPath.leftOrRight == 0) {
-//                _currentProvinceIndex = indexPath.row;
-//                PGCProvince *province = _areaDatas[indexPath.row];
-//                
-//                if (!(province.cities.count > 0)) {
-//                    [self.parameters setObject:@(province.id) forKey:@"province_id"];
-//                }
-//                
-//            } else {
-//                PGCProvince *province = _areaDatas[indexPath.leftRow];
-//                PGCCity *city = province.cities[indexPath.row];
-//                [self.parameters setObject:@(city.id) forKey:@"city_id"];
-//            }
         }
             break;
         case 1:

@@ -74,12 +74,12 @@
     // 关闭标签
     self.closeLabel = [[UILabel alloc] init];
     self.closeLabel.text = @"已关闭";
-    self.closeLabel.font = [UIFont systemFontOfSize:12];
-    self.closeLabel.textColor = RGB(102, 102, 102);
+    self.closeLabel.font = [UIFont systemFontOfSize:10];
+    self.closeLabel.textColor = RGB(150, 150, 150);
     self.closeLabel.textAlignment = NSTextAlignmentCenter;
-    self.closeLabel.layer.cornerRadius = 10.0;
-    self.closeLabel.layer.borderColor = PGCTintColor.CGColor;
+    self.closeLabel.layer.cornerRadius = 5.0;
     self.closeLabel.layer.borderWidth = 0.5;
+    self.closeLabel.layer.borderColor = PGCTintColor.CGColor;
     [self.contentView addSubview:self.closeLabel];
 }
 
@@ -90,9 +90,9 @@
     // 关闭标签
     self.closeLabel.sd_layout
     .topSpaceToView(self.contentView, 10)
-    .rightSpaceToView(self.contentView, 5)
-    .widthIs(45)
-    .heightIs(25);
+    .rightSpaceToView(self.contentView, 10)
+    .widthIs(35)
+    .heightIs(15);
     
     // 标题
     self.nameLabel.sd_layout

@@ -77,7 +77,7 @@
             // 发送登录成功的通知给 我的 控制器
             [PGCNotificationCenter postNotificationName:kReloadProfileInfo object:nil userInfo:@{@"Login":@"登录成功"}];
             // 控制器的跳转
-            if ([self.vc isKindOfClass:[PGCUserInfoController class]]) {
+            if ([self.vc isKindOfClass:[UIViewController class]]) {
                 // 跳到 个人中心 控制器
                 [self.navigationController pushViewController:self.vc animated:true];
                 [self.navigationController popToRootViewControllerAnimated:false];

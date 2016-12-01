@@ -72,6 +72,7 @@ static PGCProgressHUD *instance = nil;
     return instance;
 }
 
+// 显示进度(菊花)
 + (MBProgressHUD *)showProgress:(NSString *)msg toView:(UIView *)view
 {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:true];
@@ -82,7 +83,7 @@ static PGCProgressHUD *instance = nil;
     return hud;
 }
 
-+ (void)show:(NSString *)msg toView:(UIView *)view mode:(ProgressMode)myMode customImgView:(UIImageView *)customImgView
++ (void)show:(NSString *)message toView:(UIView *)view mode:(MBProgressHUDMode)myMode customImgView:(UIImageView *)customImgView
 {
     PGCProgressHUD *instance = [PGCProgressHUD shareinstance];
     
@@ -96,19 +97,27 @@ static PGCProgressHUD *instance = nil;
     instance.hud.contentColor = [UIColor darkGrayColor];
     instance.hud.margin = 10;
     instance.hud.removeFromSuperViewOnHide = true;
-    instance.hud.detailsLabel.text = msg;
+    instance.hud.detailsLabel.text = message;
     instance.hud.detailsLabel.font = [UIFont systemFontOfSize:16];
     
     switch (myMode) {
-        case ProgressModeOnlyText:
+        case MBProgressHUDModeText:
             instance.hud.mode = MBProgressHUDModeText;
             break;
-            
-        case ProgressModeLoading:
+        case MBProgressHUDModeIndeterminate:
             instance.hud.mode = MBProgressHUDModeIndeterminate;
             break;
-        case ProgressModeCircleLoading:
+        case MBProgressHUDModeDeterminate:
             instance.hud.mode = MBProgressHUDModeDeterminate;
+            break;
+        case MBProgressHUDModeDeterminateHorizontalBar:
+            instance.hud.mode = MBProgressHUDModeDeterminateHorizontalBar;
+            break;
+        case MBProgressHUDModeAnnularDeterminate:
+            instance.hud.mode = MBProgressHUDModeAnnularDeterminate;
+            break;
+        case MBProgressHUDModeCustomView:
+            
             break;
         default:
             break;
@@ -124,22 +133,12 @@ static PGCProgressHUD *instance = nil;
     }
 }
 
-+ (void)show:(NSString *)msg toView:(UIView *)view mode:(ProgressMode)myMode
-{
-    [self show:msg toView:view mode:myMode customImgView:nil];
-}
-
-+ (void)showMessage:(NSString *)msg toView:(UIView *)view afterDelayTime:(NSInteger)delay
-{
-    [self show:msg toView:view mode:ProgressModeOnlyText];
-    
-    [[PGCProgressHUD shareinstance].hud hideAnimated:true afterDelay:delay];
-}
-
+// 显示进度(转圈)
 + (MBProgressHUD *)showProgressCircle:(NSString *)msg toView:(UIView *)view
 {
-    if (view == nil) view = (UIView*)[UIApplication sharedApplication].delegate.window;
-    
+    if (!view) {
+        view = [[UIApplication sharedApplication].windows lastObject];
+    }
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:true];
     hud.mode = MBProgressHUDModeAnnularDeterminate;
     hud.label.text = msg;

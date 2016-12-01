@@ -155,6 +155,7 @@
                                  @"client_type":@"iphone",
                                  @"token":manager.token.token,
                                  @"ids_json":[array mj_JSONString]};
+        // 删除 我的收藏 招采信息
         [PGCSupplyAndDemandAPIManager deleteSupplyDemandCollectWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
             [hud hideAnimated:true];
             

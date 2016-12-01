@@ -9,7 +9,6 @@
 #import "PGCUserInfoController.h"
 #import "PGCChooseJobController.h"
 #import "PGCLoginController.h"
-#import "PGCRegisterOrLoginAPIManager.h"
 #import <SDWebImage/UIButton+WebCache.h>
 #import "PGCProfileAPIManager.h"
 #import "PGCHeadImage.h"
@@ -75,29 +74,6 @@
 }
 
 
-- (void)updateSession
-{
-    PGCManager *manager = [PGCManager manager];
-    [manager readTokenData];
-    PGCUser *user = manager.token.user;
-    NSDictionary *params = @{@"user_id":@(user.user_id),
-                             @"client_type":@"iphone",
-                             @"token":manager.token.token};
-    // 更新用户session
-    [PGCRegisterOrLoginAPIManager updateSessionRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {        
-        if (status != RespondsStatusSuccess) {
-            [PGCProgressHUD showAlertWithTarget:self title:message];
-            
-            if (status == RespondsStatusDataError) {
-                PGCLoginController *loginVC = [[PGCLoginController alloc] init];
-                
-                [self.navigationController pushViewController:loginVC animated:true];
-            }
-        }
-    }];
-}
-
-
 #pragma mark - Events
 // 选择头像
 - (IBAction)iconBtnClick:(UIButton *)sender
@@ -160,8 +136,7 @@
             } else {
                 [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示：" message:message actionWithTitle:@"我知道了" handler:^(UIAlertAction *action) {
                     if (status == RespondsStatusDataError) {
-                        PGCLoginController *loginVC = [[PGCLoginController alloc] init];
-                        
+                        PGCLoginController *loginVC = [[PGCLoginController alloc] init];                      
                         [self.navigationController pushViewController:loginVC animated:true];
                     }
                 }];
@@ -238,12 +213,12 @@
             }];
         }
     }];
-    [self dismissViewControllerAnimated:true completion:nil];
+    [picker dismissViewControllerAnimated:true completion:nil];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
-    [self.presentedViewController dismissViewControllerAnimated:true completion:nil];
+    [picker dismissViewControllerAnimated:true completion:nil];
 }
 
 #pragma mark - UIAlertControllerStyleActionSheet

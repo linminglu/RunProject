@@ -20,6 +20,7 @@ static NSString * const kSearchCell = @"SearchCell";
 @property (strong, nonatomic) PGCSearchView *searchView;/** 搜索框 */
 @property (strong, nonatomic) UIView *headerView;/** 历史记录视图 */
 @property (strong, nonatomic) UITableView *tableView;/** 搜索结果表格视图 */
+@property (strong, nonatomic) UIImageView *backImageView;/** 背景图片 */
 @property (strong, nonatomic) NSMutableArray *searchResults;/** 搜索结果 */
 
 - (void)initializeUserInterface; /** 初始化用户界面 */
@@ -60,6 +61,8 @@ static NSString * const kSearchCell = @"SearchCell";
     [self saveKeywordSearchRecord];
     
     [self.tableView reloadData];
+    
+    [self.view addSubview:self.backImageView];
 }
 
 
@@ -150,6 +153,10 @@ static NSString * const kSearchCell = @"SearchCell";
         [self saveKeywordSearchRecord];
         
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+        
+        if (self.searchResults.count == 0) {
+            [self.view addSubview:self.backImageView];
+        }
     }
 }
 
@@ -182,6 +189,8 @@ static NSString * const kSearchCell = @"SearchCell";
         [self.searchResults addObjectsFromArray:readArr];
         
         [self.tableView reloadData];
+    } else {
+        [self.view addSubview:self.backImageView];
     }
 }
 
@@ -247,5 +256,15 @@ static NSString * const kSearchCell = @"SearchCell";
     return _searchResults;
 }
 
+- (UIImageView *)backImageView {
+    if (!_backImageView) {
+        _backImageView = [[UIImageView alloc] init];
+        UIImage *image = [UIImage imageNamed:@"search-bg300"];
+        _backImageView.bounds = CGRectMake(0, 0, image.size.width, image.size.height);
+        _backImageView.center = self.view.center;
+        _backImageView.image = image;
+    }
+    return _backImageView;
+}
 
 @end

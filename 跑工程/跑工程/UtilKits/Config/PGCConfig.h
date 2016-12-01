@@ -41,8 +41,8 @@
 #define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
 #define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
 
-#define SCREEN_MAX_LENGTH (MAX(SCREEN_WIDTH, SCREEN_HEIGHT))
-#define SCREEN_MIN_LENGTH (MIN(SCREEN_WIDTH, SCREEN_HEIGHT))
+#define SCREEN_MAX_LENGTH MAX(SCREEN_WIDTH, SCREEN_HEIGHT)
+#define SCREEN_MIN_LENGTH MIN(SCREEN_WIDTH, SCREEN_HEIGHT)
 
 
 // 当前版本
@@ -52,7 +52,9 @@
 
 
 // UI相关
-#define KeyWindow [UIApplication sharedApplication].keyWindow
+#define KeyWindow [[UIApplication sharedApplication].windows lastObject]
+#define MyWindow [[UIApplication sharedApplication].delegate window]
+#define PGCkeyWindow [UIApplication sharedApplication].keyWindow
 
 #define STATUS_BAR_HEIGHT 20 // 状态栏 高度
 #define NAVIGATION_BAR_HEIGHT 44 // 导航栏 高度

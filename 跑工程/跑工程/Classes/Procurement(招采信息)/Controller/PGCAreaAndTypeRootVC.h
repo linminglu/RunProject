@@ -15,7 +15,7 @@ typedef void(^TypeBlock)(NSMutableArray<PGCMaterialServiceTypes *> *types);
 @interface PGCAreaAndTypeRootVC : UIViewController
 
 @property (strong, nonatomic) NSMutableArray *dataSource;/** 数据源 */
-
+@property (assign, nonatomic) BOOL isSupply;/** 是否发布供应信息 */
 @property (copy, nonatomic) AreaBlock areaBlock;/** 地区回调block */
 @property (copy, nonatomic) TypeBlock typeBlock;/** 类型回调block */
 

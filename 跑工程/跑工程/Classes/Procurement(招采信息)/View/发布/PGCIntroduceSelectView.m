@@ -32,7 +32,7 @@
     // 标题标签
     self.titleLabel = [[UILabel alloc] init];
     self.titleLabel.text = title;
-    self.titleLabel.textColor = RGB(102, 102, 102);
+    self.titleLabel.textColor = RGB(51, 51, 51);
     self.titleLabel.font = SetFont(15);
     [self addSubview:self.titleLabel];
     self.titleLabel.sd_layout
@@ -45,7 +45,7 @@
     self.selectBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     self.selectBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [self.selectBtn setTitle:content forState:UIControlStateNormal];
-    [self.selectBtn setTitleColor:RGB(182, 182, 182) forState:UIControlStateNormal];
+    [self.selectBtn setTitleColor:RGB(102, 102, 102) forState:UIControlStateNormal];
     self.selectBtn.titleLabel.font = SetFont(14);
     [self addSubview:self.selectBtn];
     self.selectBtn.sd_layout

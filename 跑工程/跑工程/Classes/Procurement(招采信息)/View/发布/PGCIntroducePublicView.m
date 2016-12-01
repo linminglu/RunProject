@@ -45,7 +45,7 @@
     self.contentTF = [[UITextField alloc] init];
     self.contentTF.borderStyle = UITextBorderStyleNone;
     self.contentTF.placeholder = placeholder;
-    self.contentTF.textColor = RGB(51, 51, 51);
+    self.contentTF.textColor = RGB(102, 102, 102);
     self.contentTF.font = SetFont(14);
     [self addSubview:self.contentTF];
     self.contentTF.sd_layout

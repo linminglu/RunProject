@@ -140,7 +140,7 @@
             if (status == RespondsStatusSuccess) {
                 //倒计时
                 [self timeCount];
-                [PGCProgressHUD showMessage:@"验证码发送成功，请查看您的手机短信！" toView:self.view afterDelayTime:2.0];
+                [MBProgressHUD showSuccess:@"验证码发送成功，请查看您的手机短信！" toView:self.view];
             }
         }];
     } else {

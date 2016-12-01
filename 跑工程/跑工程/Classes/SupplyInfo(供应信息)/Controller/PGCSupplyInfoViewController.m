@@ -84,8 +84,15 @@ typedef NS_ENUM(NSUInteger, BarButtonTag) {
     self.automaticallyAdjustsScrollViewInsets = false;
     self.view.backgroundColor = [UIColor whiteColor];
     
-    self.navigationItem.leftBarButtonItem = [self barButtonItem:CGRectMake(0, 0, 60, 40) tag:HeartBarTag title:@"我的收藏" imageName:@"我的收藏"];
-    self.navigationItem.rightBarButtonItem= [self barButtonItem:CGRectMake(0, 0, 60, 40) tag:IntroduceBarTag title:@"我的发布" imageName:@"发布加号"];
+    UIBarButtonItem *heart = [self barButtonItem:CGRectMake(0, 0, 45, 40)
+                                             tag:HeartBarTag
+                                           title:@"我的收藏"
+                                       imageName:@"我的收藏"];
+    UIBarButtonItem *add = [self barButtonItem:CGRectMake(0, 0, 45, 40)
+                                           tag:IntroduceBarTag
+                                         title:@"我的发布"
+                                     imageName:@"发布加号"];
+    self.navigationItem.rightBarButtonItems = @[add, heart];
     
     [self.view addSubview:self.searchView];
     [self.view addSubview:self.menu];

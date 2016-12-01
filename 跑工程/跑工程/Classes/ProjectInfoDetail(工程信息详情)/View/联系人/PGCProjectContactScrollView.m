@@ -16,6 +16,7 @@
 #import "PGCMapTypeViewController.h"
 #import "PGCProjectContact.h"
 #import "PGCContact.h"
+#import "PGCProjectInfoAPIManager.h"
 
 @interface PGCProjectContactScrollView () <UITableViewDataSource, UITableViewDelegate, PGCProjectContactCellDelegate, PGCAlertViewDelegate, PGCHintAlertViewDelegate>
 
@@ -60,6 +61,10 @@
     contactTableView.dataSource = self;
     contactTableView.delegate = self;
     [contactTableView registerClass:[PGCProjectContactCell class] forCellReuseIdentifier:kProjectContactCell];
+    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadContactData)];
+    header.automaticallyChangeAlpha = true;
+    header.lastUpdatedTimeLabel.hidden = true;
+    contactTableView.mj_header = header;
     [self.contentView addSubview:contactTableView];
     self.contactTableView = contactTableView;
     // 开始自动布局
@@ -86,6 +91,32 @@
     button.imageEdgeInsets = UIEdgeInsetsMake(0, -imageInset, 0, 0);
     
     return button;
+}
+
+
+- (void)loadContactData
+{
+    PGCManager *manager = [PGCManager manager];
+    [manager readTokenData];
+    PGCUser *user = manager.token.user;
+    if (!user) {
+        [MBProgressHUD showError:@"请先登录" toView:KeyWindow];
+        return;
+    }
+    NSDictionary *params = @{@"project_id":@(self.projectId),
+                             @"user_id":@(user.user_id)};
+    MBProgressHUD *hud = [PGCProgressHUD showProgress:nil toView:self];
+    [PGCProjectInfoAPIManager getProjectContactsRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, NSMutableArray *resultData) {
+        [hud hideAnimated:true];
+        
+        [self.contactTableView.mj_header endRefreshing];
+        
+        if (status == RespondsStatusSuccess) {
+            self.contactDataSource = resultData;
+            
+            [self.contactTableView reloadData];
+        }
+    }];
 }
 
 

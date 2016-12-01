@@ -39,5 +39,6 @@
 @property (copy, nonatomic) NSString *type_desciption;  /** 类型描述 */
 @property (copy, nonatomic) NSString *progress_name;    /** 进度名 */
 @property (assign, nonatomic) int collect_id;           /** 收藏id */
+@property (assign, nonatomic) int r_id;                 /** 浏览记录id */
 
 @end

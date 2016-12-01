@@ -147,7 +147,11 @@ static NSString * const kProjectRootCell = @"ProjectRootCell";
     
     NSMutableArray *array = [NSMutableArray array];
     for (PGCProject *project in self.deleteData) {
-        [array addObject:@(project.collect_id)];
+        if (self.projectType == 2) {
+            [array addObject:@(project.collect_id)];
+        } else {
+            [array addObject:@(project.r_id)];
+        }
     }
     NSString *string = [NSString stringWithFormat:@"是否确定%@?", _bottomBtnTitle];
     
@@ -159,6 +163,7 @@ static NSString * const kProjectRootCell = @"ProjectRootCell";
                                  @"client_type":@"iphone",
                                  @"token":manager.token.token,
                                  @"ids_json":[array mj_JSONString]};
+        // 删除收藏或浏览记录
         [PGCProjectInfoAPIManager deleteAccessOrCollectRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
             [hud hideAnimated:true];
             if (status == RespondsStatusSuccess) {

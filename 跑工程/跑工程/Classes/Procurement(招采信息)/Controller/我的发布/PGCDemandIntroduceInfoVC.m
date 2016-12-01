@@ -175,7 +175,7 @@
     
     NSMutableArray *images = [NSMutableArray array];
     for (Images *image in self.demandDetail.images) {
-        NSLog(@"%d, %@", image.id, image.image);
+        
         [images addObject:@{@"id":@(image.id),
                             @"path":image.image,
                             @"description":image.imageDec}];
@@ -262,6 +262,7 @@
 {
     PGCAreaAndTypeRootVC *areaVC = [[PGCAreaAndTypeRootVC alloc] init];
     areaVC.title = @"选择地区";
+    areaVC.isSupply = false;
     areaVC.dataSource = [[PGCAreaManager manager] setAreaData];
     [areaVC.dataSource removeObjectAtIndex:0];
     
@@ -283,6 +284,7 @@
 {
     PGCAreaAndTypeRootVC *demandVC = [[PGCAreaAndTypeRootVC alloc] init];
     demandVC.title = @"选择需求类别";
+    demandVC.isSupply = false;
     demandVC.dataSource = [[PGCMaterialServiceTypes materialServiceTypes] setMaterialTypes];
     [demandVC.dataSource removeObjectAtIndex:0];
     

@@ -14,8 +14,11 @@
 #import "PGCResetPasswordController.h"
 #import "PGCSettingController.h"
 #import "PGCUserInfoController.h"
+#import "PGCMyHeartViewController.h"
+#import "PGCMyIntroduceViewController.h"
 #import "PGCShareToFriendController.h"
 #import "PGCProfileAPIManager.h"
+#import "PGCRegisterOrLoginAPIManager.h"
 #import "PGCPhotoBrowser.h"
 #import "PGCHeadImage.h"
 
@@ -29,6 +32,8 @@
 @property (strong, nonatomic) UIButton *loginAndRegisterBtn;/** 登录按钮 */
 @property (strong, nonatomic) UIScrollView *scrollView;/** 背景滚动视图 */
 @property (strong, nonatomic) PGCProfileCell *profile;/** 个人中心 */
+@property (strong, nonatomic) PGCProfileCell *heart;/** 我的收藏 */
+@property (strong, nonatomic) PGCProfileCell *introduce;/** 我的发布 */
 @property (strong, nonatomic) PGCProfileCell *contact;/** 通讯录 */
 @property (strong, nonatomic) PGCProfileCell *setting;/** 设置 */
 @property (strong, nonatomic) PGCProfileCell *shareApp;/** 推荐app */
@@ -91,6 +96,23 @@
 }
 
 
+- (void)updateSession
+{
+    PGCManager *manager = [PGCManager manager];
+    [manager readTokenData];
+    PGCUser *user = manager.token.user;
+    NSDictionary *params = @{@"user_id":@(user.user_id),
+                             @"client_type":@"iphone",
+                             @"token":manager.token.token};
+    // 更新用户session
+    [PGCRegisterOrLoginAPIManager updateSessionRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
+        if (status == RespondsStatusSuccess) {
+            
+        }
+    }];
+}
+
+
 #pragma mark - UINavigationControllerDelegate
 
 // 将要显示控制器
@@ -108,7 +130,7 @@
 
 - (void)profileNotification:(NSNotification *)notifi
 {
-    if (notifi.object) {
+    if ([notifi.object isKindOfClass:[UIViewController class]]) {
         [self.navigationController pushViewController:notifi.object animated:false];
     }
 }
@@ -123,6 +145,7 @@
         [self.loginAndRegisterBtn setTitle:@"登录/注册" forState:UIControlStateNormal];
         return;
     }
+    [self updateSession];
     
     PGCManager *manager = [PGCManager manager];
     [manager readTokenData];
@@ -199,6 +222,40 @@
         [MBProgressHUD showError:@"请先登录" complete:^{
             PGCLoginController *loginVC = [[PGCLoginController alloc] init];
             loginVC.vc = userInfoVC;
+            [self.navigationController pushViewController:loginVC animated:true];
+        }];
+    }
+}
+
+/**
+ 我的收藏
+ */
+- (void)heartButtonClick:(UIButton *)sender
+{
+    PGCMyHeartViewController *heartVC = [[PGCMyHeartViewController alloc] init];
+    if (_isLogin) {
+        [self.navigationController pushViewController:heartVC animated:true];
+    } else {
+        [MBProgressHUD showError:@"请先登录" complete:^{
+            PGCLoginController *loginVC = [[PGCLoginController alloc] init];
+            loginVC.vc = heartVC;
+            [self.navigationController pushViewController:loginVC animated:true];
+        }];
+    }
+}
+
+/**
+ 我的发布
+ */
+- (void)introduceButtonClick:(UIButton *)sender
+{
+    PGCMyIntroduceViewController *introduceVC = [[PGCMyIntroduceViewController alloc] init];
+    if (_isLogin) {
+        [self.navigationController pushViewController:introduceVC animated:true];
+    } else {
+        [MBProgressHUD showError:@"请先登录" complete:^{
+            PGCLoginController *loginVC = [[PGCLoginController alloc] init];
+            loginVC.vc = introduceVC;
             [self.navigationController pushViewController:loginVC animated:true];
         }];
     }
@@ -314,6 +371,8 @@
         _scrollView.showsVerticalScrollIndicator = false;
         _scrollView.showsHorizontalScrollIndicator = false;
         [_scrollView addSubview:self.profile];
+        [_scrollView addSubview:self.heart];
+        [_scrollView addSubview:self.introduce];
         [_scrollView addSubview:self.contact];
         [_scrollView addSubview:self.setting];
         [_scrollView addSubview:self.shareApp];
@@ -335,9 +394,31 @@
     return _profile;
 }
 
+- (PGCProfileCell *)heart {
+    if (!_heart) {
+        _heart = [[PGCProfileCell alloc] initWithFrame:CGRectMake(0, self.profile.bottom_sd + 15, SCREEN_WIDTH, 45)];
+        _heart.titleImageName = @"heart黄";
+        _heart.title = @"我的收藏";
+        _heart.isShow = false;
+        [_heart addTarget:self event:@selector(heartButtonClick:)];
+    }
+    return _heart;
+}
+
+- (PGCProfileCell *)introduce {
+    if (!_introduce) {
+        _introduce = [[PGCProfileCell alloc] initWithFrame:CGRectMake(0, self.heart.bottom_sd + 15, SCREEN_WIDTH, 45)];
+        _introduce.titleImageName = @"发布加号黄";
+        _introduce.title = @"我的发布";
+        _introduce.isShow = false;
+        [_introduce addTarget:self event:@selector(introduceButtonClick:)];
+    }
+    return _introduce;
+}
+
 - (PGCProfileCell *)contact {
     if (!_contact) {
-        _contact = [[PGCProfileCell alloc] initWithFrame:CGRectMake(0, self.profile.bottom_sd + 15, SCREEN_WIDTH, 45)];
+        _contact = [[PGCProfileCell alloc] initWithFrame:CGRectMake(0, self.introduce.bottom_sd + 15, SCREEN_WIDTH, 45)];
         _contact.titleImageName = @"通讯录";
         _contact.title = @"通讯录";
         _contact.isShow = false;
@@ -357,7 +438,6 @@
     }
     return _setting;
 }
-
 
 
 - (PGCProfileCell *)shareApp {

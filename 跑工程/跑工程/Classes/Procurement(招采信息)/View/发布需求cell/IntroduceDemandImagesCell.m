@@ -115,7 +115,7 @@
         [weakSelf takingPictures];
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
-    [KeyWindow.rootViewController presentViewController:alert animated:true completion:nil];
+    [PGCkeyWindow.rootViewController presentViewController:alert animated:true completion:nil];
 }
 
 
@@ -135,7 +135,7 @@
     }
     self.introduceImage = image;
     
-    [KeyWindow.rootViewController dismissViewControllerAnimated:true completion:nil];
+    [picker dismissViewControllerAnimated:true completion:nil];
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(introduceDemandImagesCell:imageView:)]) {
         [self.delegate introduceDemandImagesCell:self imageView:self.publishImageView];
@@ -145,7 +145,7 @@
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
-    [KeyWindow.rootViewController.presentedViewController dismissViewControllerAnimated:true completion:nil];
+    [picker dismissViewControllerAnimated:true completion:nil];
 }
 
 
@@ -158,7 +158,7 @@
         self.imagePickerController.mediaTypes = @[mediaTypes[0]];
         self.imagePickerController.allowsEditing = true;
         
-        [KeyWindow.rootViewController presentViewController:self.imagePickerController animated:true completion:nil];
+        [PGCkeyWindow.rootViewController presentViewController:self.imagePickerController animated:true completion:nil];
     }
 }
 
@@ -172,7 +172,7 @@
         self.imagePickerController.cameraDevice = UIImagePickerControllerCameraDeviceRear;
         self.imagePickerController.cameraFlashMode = UIImagePickerControllerCameraFlashModeAuto;
         
-        [KeyWindow.rootViewController presentViewController:self.imagePickerController animated:true completion:nil];
+        [PGCkeyWindow.rootViewController presentViewController:self.imagePickerController animated:true completion:nil];
     } else {
         [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示：" message:@"当前设备不支持拍照！" actionWithTitle:@"我知道了" handler:^(UIAlertAction *action) {
         }];

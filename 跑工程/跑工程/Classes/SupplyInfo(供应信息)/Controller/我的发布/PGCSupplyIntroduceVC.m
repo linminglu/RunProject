@@ -80,7 +80,7 @@
                 [self.dataSource addObject:model];
             }
             if (self.dataSource.count < 1) {
-                self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:[self barButtonItem]];
+                self.navigationItem.rightBarButtonItem = [self barButtonItem];
             } else {
                 self.navigationItem.rightBarButtonItem = nil;
             }
@@ -209,19 +209,26 @@
 
 #pragma mark - Getter
 
-- (UIButton *)barButtonItem
+- (UIBarButtonItem *)barButtonItem
 {
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
-    button.bounds = CGRectMake(0, 0, 80, 40);
-    [button setImage:[UIImage imageNamed:@"发布信息"] forState:UIControlStateNormal];
-    [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
-    [button setTitle:@"发布供应" forState:UIControlStateNormal];
+    UIImage *image = [UIImage imageNamed:@"发布加号"];
+    NSString *title = @"发布信息";
+    
+    CGSize titleSize = [title sizeWithFont:SetFont(15) constrainedToSize:CGSizeMake(MAXFLOAT, 0)];
+    CGFloat width = image.size.width + titleSize.width + 10;
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.bounds = CGRectMake(0, 0, width, 40);
+    [button setImage:image forState:UIControlStateNormal];
+    [button setImage:image forState:UIControlStateHighlighted];
+    [button.titleLabel setFont:SetFont(15)];
+    [button setTitle:title forState:UIControlStateNormal];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(introduceSupplyInfo:) forControlEvents:UIControlEventTouchUpInside];
+    button.imageEdgeInsets = UIEdgeInsetsMake(0, -5, 0, 0);
+    button.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -5);
     
-    button.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 20);
-    
-    return button;
+    return [[UIBarButtonItem alloc] initWithCustomView:button];
 }
 
 

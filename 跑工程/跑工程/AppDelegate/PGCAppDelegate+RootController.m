@@ -96,19 +96,19 @@
     NSArray *images;
     
     if (SCREEN_WIDTH == 320) {
-        images = @[@"工程信息640x1136",
-                   @"供需信息640x1136",
-                   @"项目足迹640x1136"];
+        images = @[@"1-640x1336",
+                   @"2-640x1336",
+                   @"3-640x1336"];
     }
     if (SCREEN_WIDTH == 375) {
-        images = @[@"工程信息750x1334",
-                   @"供需信息750x1334",
-                   @"项目足迹750x1334"];
+        images = @[@"1-750x1334",
+                   @"2-750x1334",
+                   @"3-750x1334"];
     }
     if (SCREEN_WIDTH == 414) {
-        images = @[@"工程信息1242x2208",
-                   @"供需信息1242x2208",
-                   @"项目足迹1242x2208"];
+        images = @[@"1-1242x2208",
+                   @"2-1242x2208",
+                   @"3-1242x2208"];
     }
     for (NSInteger i = 0; i < images.count; i++) {
         UIImageView *img = [[UIImageView alloc] init];
