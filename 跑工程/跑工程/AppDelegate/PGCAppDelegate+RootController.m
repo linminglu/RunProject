@@ -14,40 +14,42 @@
 #import "XHLaunchAd.h"
 #import "PGCWebViewController.h"
 
+#define IsSetup @"isSetup"
+
 @interface PGCAppDelegate () <UIScrollViewDelegate>
 
 @end
 
 @implementation PGCAppDelegate (RootController)
 
-
-- (void)setRootViewController
+// 初始化 window
+- (void)setAppWindow
 {
-    if ([PGCUserDefault objectForKey:@"isOne"]) {//不是第一次安装
-        // 设置广告页
-        [self createAdvertiseView];
-        
-    } else {
-        self.window.rootViewController = [[UIViewController alloc] init];
-        // 设置引导页
-        [self createLoadingScrollView];
-    }
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.backgroundColor = [UIColor whiteColor];
 }
 
 // 设置根控制器
+- (void)setRootViewController
+{
+    BOOL isSetup = [[NSUserDefaults standardUserDefaults] boolForKey:IsSetup];
+    
+    if (!isSetup) {//第一次安装
+        self.window.rootViewController = [[UIViewController alloc] init];
+        // 设置引导页
+        [self createLoadingScrollView];
+    } else {
+        // 设置广告页
+        [self createAdvertiseView];
+    }
+}
+
 - (void)setRoot
 {
     [[UIApplication sharedApplication] setStatusBarHidden:false];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     self.window.rootViewController = [[PGCTabBarController alloc] init];
-}
-
-// 初始化 window
-- (void)setAppWindow
-{
-    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    self.window.backgroundColor = [UIColor whiteColor];
 }
 
 
@@ -66,13 +68,10 @@
                 //定义一个weakLaunchAd
                 __weak __typeof(launchAd) weakLaunchAd = launchAd;
                 [launchAd setImageUrl:imageUrl duration:3 skipType:SkipTypeTimeText options:XHWebImageRefreshCached completed:^(UIImage *image, NSURL *url) {
-                    weakLaunchAd.adFrame = self.window.bounds;
                     
+                    weakLaunchAd.adFrame = self.window.bounds;
                 } click:^{
-                    // 广告点击事件
-//                    PGCWebViewController *webVC = [[PGCWebViewController alloc] init];
-//                    webVC.urlString = imageUrl;
-//                    [weakLaunchAd presentViewController:webVC animated:true completion:nil];
+                    
                 }];
             }
         }];
@@ -133,8 +132,8 @@
 
 - (void)goToMain
 {
-    [PGCUserDefault setObject:@"isOne" forKey:@"isOne"];
-    [PGCUserDefault synchronize];
+    [[NSUserDefaults standardUserDefaults] setBool:true forKey:IsSetup];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     [self setRoot];
 }
 

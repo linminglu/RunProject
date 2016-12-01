@@ -19,8 +19,8 @@ extern NSString * const kContactReloadData;// 删除联系人 的通知
 extern NSString * const kProcurementInfoData;//收藏招标信息的通知
 extern NSString * const kSupplyInfoData;//收藏供应信息的通知
 
-
-
+extern NSString * const kVIP_Alipay;// 支付宝支付回调的通知
+extern NSString * const kVIP_WeChatPay;// 微信支付回调的通知
 
 
 @interface PGCIdentifier : NSObject

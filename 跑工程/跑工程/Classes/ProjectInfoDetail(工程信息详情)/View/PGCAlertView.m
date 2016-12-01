@@ -244,8 +244,8 @@
 - (void)respondsToImageButton:(UIButton *)sender {
     sender.selected = !sender.selected;
     
-    [PGCUserDefault setObject:@(sender.selected) forKey:@"isRemind"];
-    [PGCUserDefault synchronize];
+    [[NSUserDefaults standardUserDefaults] setBool:sender.selected forKey:@"isRemind"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 

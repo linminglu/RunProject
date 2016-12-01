@@ -289,7 +289,6 @@
 		84D845301DEEE02F000B5F24 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D8452F1DEEE02F000B5F24 /* CoreGraphics.framework */; };
 		84D845361DEEE047000B5F24 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D845351DEEE047000B5F24 /* CFNetwork.framework */; };
 		84D845381DEEE050000B5F24 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D845371DEEE050000B5F24 /* CoreMotion.framework */; };
-		84D845431DEEF05E000B5F24 /* WXApiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D8453E1DEEF05E000B5F24 /* WXApiManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -846,8 +845,6 @@
 		84D845331DEEE040000B5F24 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		84D845351DEEE047000B5F24 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		84D845371DEEE050000B5F24 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
-		84D8453D1DEEF05E000B5F24 /* WXApiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiManager.h; sourceTree = "<group>"; };
-		84D8453E1DEEF05E000B5F24 /* WXApiManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXApiManager.m; sourceTree = "<group>"; };
 		84ECF1CB1DD1674B00697207 /* PGCPrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCPrefixHeader.pch; sourceTree = "<group>"; };
 		BEA06E02B51C4C6B6E6C8727 /* Pods____.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods____.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -1347,9 +1344,9 @@
 			children = (
 				84175AF61DEC30B800086E7B /* PGCBaseAPIManager.h */,
 				84175AF71DEC30B800086E7B /* PGCBaseAPIManager.m */,
+				84175B021DEC30B800086E7B /* 其他 */,
 				84175AF81DEC30B800086E7B /* 会员 */,
 				84175AFB1DEC30B800086E7B /* 供需 */,
-				84175B021DEC30B800086E7B /* 其他 */,
 				84175B051DEC30B800086E7B /* 地区-省市 */,
 				84175B081DEC30B800086E7B /* 注册登录 */,
 				84175B0B1DEC30B800086E7B /* 用户信息 */,
@@ -1371,10 +1368,10 @@
 		84175AFB1DEC30B800086E7B /* 供需 */ = {
 			isa = PBXGroup;
 			children = (
-				84175AFC1DEC30B800086E7B /* PGCDemandAPIManager.h */,
-				84175AFD1DEC30B800086E7B /* PGCDemandAPIManager.m */,
 				84175AFE1DEC30B800086E7B /* PGCSupplyAndDemandAPIManager.h */,
 				84175AFF1DEC30B800086E7B /* PGCSupplyAndDemandAPIManager.m */,
+				84175AFC1DEC30B800086E7B /* PGCDemandAPIManager.h */,
+				84175AFD1DEC30B800086E7B /* PGCDemandAPIManager.m */,
 				84175B001DEC30B800086E7B /* PGCSupplyAPIManager.h */,
 				84175B011DEC30B800086E7B /* PGCSupplyAPIManager.m */,
 			);
@@ -1867,7 +1864,6 @@
 		849C11D91DE70C98002EF937 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
-				84D8453C1DEEF05E000B5F24 /* Control */,
 				84D845261DEEDFF4000B5F24 /* AlipaySDK */,
 				84175BB21DED971900086E7B /* ShareSDK */,
 				84175B271DEC310600086E7B /* ProgressHUD */,
@@ -2187,15 +2183,6 @@
 			path = AlipaySDK;
 			sourceTree = "<group>";
 		};
-		84D8453C1DEEF05E000B5F24 /* Control */ = {
-			isa = PBXGroup;
-			children = (
-				84D8453D1DEEF05E000B5F24 /* WXApiManager.h */,
-				84D8453E1DEEF05E000B5F24 /* WXApiManager.m */,
-			);
-			path = Control;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2440,7 +2427,6 @@
 				841759051DE863DA00086E7B /* LunchImage.m in Sources */,
 				849C13B41DE7FA24002EF937 /* UIButton+EdgeInsets.m in Sources */,
 				849C12EF1DE70C99002EF937 /* RACScheduler.m in Sources */,
-				84D845431DEEF05E000B5F24 /* WXApiManager.m in Sources */,
 				849C131B1DE70C99002EF937 /* XHSkipButton.m in Sources */,
 				849C13021DE70C99002EF937 /* RACUnit.m in Sources */,
 				84175AE41DEC308100086E7B /* IntroduceDemandImagesCell.m in Sources */,

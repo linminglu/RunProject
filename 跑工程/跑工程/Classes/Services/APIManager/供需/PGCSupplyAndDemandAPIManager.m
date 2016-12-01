@@ -28,6 +28,8 @@
             respondsBlock(RespondsStatusDataError, resultMsg, nil);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"%@", error.localizedDescription);
+        
         respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
     }];
 }
@@ -48,6 +50,7 @@
             respondsBlock(RespondsStatusDataError, resultMsg, nil);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
         respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
     }];
 }
@@ -68,13 +71,14 @@
             respondsBlock(RespondsStatusDataError, resultMsg, nil);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
         respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
     }];
 }
 
 + (NSURLSessionDataTask *)getSupplyDemandCollectWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, id))respondsBlock
 {
-    return [self requestPOST:kGetSupplyDemandCollect parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [self requestPOST:kGetSupplyDemandCollect parameters:parameters cachePolicy:RequestReloadIngnoringLocalCacheData success:^(NSURLSessionDataTask *task, id responseObject) {
         
         NSInteger resultCode = [responseObject[@"code"] integerValue];
         NSString *resultMsg = responseObject[@"msg"];

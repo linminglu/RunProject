@@ -10,4 +10,6 @@
 
 @interface PGCAppDelegate (AppLifeCircle)
 
+@property (copy, nonatomic) NSString *lastTime;
+
 @end

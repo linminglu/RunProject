@@ -168,7 +168,6 @@ static NSString * const PGCHttpCache = @"HttpYYCache";
     manager.requestSerializer.timeoutInterval = 20.0f;
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript", @"text/html", nil];
     
-    // 启动系统风火轮
     [UIApplication sharedApplication].networkActivityIndicatorVisible = true;
     
     switch (requestType) {
@@ -184,10 +183,10 @@ static NSString * const PGCHttpCache = @"HttpYYCache";
                 success ? success(task, responseObject) : nil;
                 
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                NSLog(@"%@", error.localizedDescription);
-                failure ? failure(task, error) : nil;
-                // 解析失败隐藏系统风火轮(可以打印error.userInfo查看错误信息)
+                
                 [UIApplication sharedApplication].networkActivityIndicatorVisible = false;
+                
+                failure ? failure(task, error) : nil;
             }];
             break;
         case RequestType_POST:
@@ -202,10 +201,10 @@ static NSString * const PGCHttpCache = @"HttpYYCache";
                 success ? success(task, responseObject) : nil;
                 
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                NSLog(@"%@", error.localizedDescription);
-                failure ? failure(task, error) : nil;
-                // 解析失败隐藏系统风火轮(可以打印error.userInfo查看错误信息)
+                
                 [UIApplication sharedApplication].networkActivityIndicatorVisible = false;
+                
+                failure ? failure(task, error) : nil;
             }];
         default:
             return nil;
@@ -218,7 +217,8 @@ static NSString * const PGCHttpCache = @"HttpYYCache";
 #pragma mark -
 #pragma mark - Public
 
-+ (void)removeAllCache {
++ (void)removeAllCache
+{
     [[YYCache cacheWithName:PGCHttpCache].diskCache removeAllObjects];
 }
 

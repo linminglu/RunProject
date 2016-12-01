@@ -17,47 +17,26 @@
 #import <TencentOpenAPI/TencentOAuth.h>
 #import <TencentOpenAPI/QQApiInterface.h>
 
-//微信SDK头文件
-#import "WXApi.h"
-
 @implementation PGCAppDelegate (AppService)
-
-- (void)registerWeChatPay
-{
-    [WXApi registerApp:WeChat_APPID withDescription:@"zbapp"];
-}
 
 - (void)registerShare
 {
     [ShareSDK registerApp:SHARE_APPKEY activePlatforms:@[@(SSDKPlatformTypeWechat), @(SSDKPlatformTypeQQ)] onImport:^(SSDKPlatformType platformType) {
+        
         switch (platformType) {
-            case SSDKPlatformTypeWechat:
-            {
-                [ShareSDKConnector connectWeChat:[WXApi class]];
-            }
+            case SSDKPlatformTypeWechat: [ShareSDKConnector connectWeChat:[WXApi class]];
                 break;
-            case SSDKPlatformTypeQQ:
-            {
-                [ShareSDKConnector connectQQ:[QQApiInterface class] tencentOAuthClass:[TencentOAuth class]];
-            }
+            case SSDKPlatformTypeQQ: [ShareSDKConnector connectQQ:[QQApiInterface class] tencentOAuthClass:[TencentOAuth class]];
                 break;
             default:
                 break;
         }
     } onConfiguration:^(SSDKPlatformType platformType, NSMutableDictionary *appInfo) {
+        
         switch (platformType) {
-            case SSDKPlatformTypeWechat:
-            {
-                [appInfo SSDKSetupWeChatByAppId:WeChat_APPID
-                                      appSecret:SHARE_SECRET];
-            }
+            case SSDKPlatformTypeWechat: [appInfo SSDKSetupWeChatByAppId:WeChat_APPID appSecret:SHARE_SECRET];
                 break;
-            case SSDKPlatformTypeQQ:
-            {
-                [appInfo SSDKSetupQQByAppId:QQ_APPID
-                                     appKey:QQ_APPKEY
-                                   authType:SSDKAuthTypeBoth];
-            }
+            case SSDKPlatformTypeQQ: [appInfo SSDKSetupQQByAppId:QQ_APPID appKey:QQ_APPKEY authType:SSDKAuthTypeBoth];
                 break;
             default:
                 break;
@@ -79,7 +58,7 @@
 {
     [PGCOtherAPIManager getNewVersionRequestWithParameters:@{@"type":@2} responds:^(RespondsStatus status, NSString *message, id resultData) {
         if (status == RespondsStatusSuccess) {
-            
+            NSLog(@"%@", resultData);
         }
     }];
 }

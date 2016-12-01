@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+// 微信SDK头文件
+#import "WXApi.h"
 
-@interface PGCAppDelegate : UIResponder <UIApplicationDelegate>
+@interface PGCAppDelegate : UIResponder <UIApplicationDelegate, WXApiDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-
-@property (copy, nonatomic) NSString *lastTimeEnterBackGroundStr;
 
 @end

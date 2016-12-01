@@ -11,7 +11,8 @@
 #import "PGCVIPServiceAPIManager.h"
 #import "PGCProduct.h"
 #import "PGCPayView.h"
-#import "WXApiManager.h"
+#import <AlipaySDK/AlipaySDK.h>
+#import "WXApi.h"
 
 @interface PGCVIPServiceController () <UITableViewDataSource, UITableViewDelegate, PGCPayViewDelegate, PGCVIPServiceCellDelegate>
 
@@ -21,24 +22,35 @@
 
 - (void)initializeDataSource;/* 初始化数据源 */
 - (void)initializeUserInterface;/* 初始化用户界面 */
+- (void)registerNotification; /** 注册通知 */
 
 @end
 
 @implementation PGCVIPServiceController
+
+- (void)dealloc {
+    [PGCNotificationCenter removeObserver:self name:kVIP_WeChatPay object:nil];
+    [PGCNotificationCenter removeObserver:self name:kVIP_Alipay object:nil];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self initializeDataSource];
     [self initializeUserInterface];
+    [self registerNotification];
 }
 
 - (void)initializeDataSource
 {
+    MBProgressHUD *hud = [PGCProgressHUD showProgress:nil toView:self.view];
+    
     [PGCVIPServiceAPIManager getVipProductListRequestWithParameters:@{} responds:^(RespondsStatus status, NSString *message, NSMutableArray *resultData) {
+        [hud hideAnimated:true];
+        
         if (status == RespondsStatusSuccess) {
+            self.dataSource = resultData;
             
-            _dataSource = resultData;
             [self.tableView reloadData];
         }
     }];
@@ -87,6 +99,68 @@
     .autoHeightRatio(0);
 }
 
+- (void)registerNotification {
+    [PGCNotificationCenter addObserver:self selector:@selector(weChatPay:) name:kVIP_WeChatPay object:nil];
+    [PGCNotificationCenter addObserver:self selector:@selector(aliPay:) name:kVIP_Alipay object:nil];
+}
+
+
+- (void)weChatPay:(NSNotification *)notifi
+{
+    NSString *key = @"WeChatPay";
+    if ([notifi.userInfo objectForKey:key]) {
+        NSDictionary *result = [notifi.userInfo objectForKey:key];
+        NSInteger resultStatus = [result[@"result"] integerValue];
+        
+        if (resultStatus == 1) {//支付成功
+            PGCPayView *succeedView = [[PGCPayView alloc] initWithSuccessPay];
+            
+            [succeedView showPayViewWithGCD];
+        }
+        else if (resultStatus == 0) {//用户取消了支付
+            [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示：" message:result[@"message"] actionWithTitle:@"我知道了" handler:^(UIAlertAction *action) {
+            }];
+        }
+        else if (resultStatus == -1) {//支付失败
+            [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示：" message:result[@"message"] actionWithTitle:@"我知道了" handler:^(UIAlertAction *action) {
+            }];
+        }
+    } else {
+        [PGCProgressHUD showAlertWithTarget:self title:@"支付失败：" message:@"发生了未知错误" actionWithTitle:@"我知道了" handler:^(UIAlertAction *action) {
+        }];
+    }
+}
+
+- (void)aliPay:(NSNotification *)notifi
+{
+    NSString *key = @"AliPay";
+    if ([notifi.userInfo objectForKey:key]) {
+        NSDictionary *result = [notifi.userInfo objectForKey:key];
+        NSInteger resultStatus = [result[@"resultStatus"] integerValue];
+        
+        if (resultStatus == 9000) {
+            PGCPayView *succeedView = [[PGCPayView alloc] initWithSuccessPay];
+            
+            [succeedView showPayViewWithGCD];
+        }
+        else if (resultStatus == 4000) {
+            [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示：" message:@"系统异常" actionWithTitle:@"我知道了" handler:^(UIAlertAction *action) {
+            }];
+        }
+        else if (resultStatus == 6001) {
+            [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示：" message:@"用户中途取消" actionWithTitle:@"我知道了" handler:^(UIAlertAction *action) {
+            }];
+        }
+        else if (resultStatus == 6002) {
+            [PGCProgressHUD showAlertWithTarget:self title:@"温馨提示：" message:@"网络连接出错" actionWithTitle:@"我知道了" handler:^(UIAlertAction *action) {
+            }];
+        }
+    } else {
+        [PGCProgressHUD showAlertWithTarget:self title:@"支付失败：" message:@"发生了未知错误" actionWithTitle:@"我知道了" handler:^(UIAlertAction *action) {
+        }];
+    }
+}
+
 
 #pragma mark - PGCVIPServiceCellDelegate
 
@@ -99,6 +173,13 @@
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     PGCProduct *product = _dataSource[indexPath.row];
     
+    PGCManager *manager = [PGCManager manager];
+    [manager readTokenData];
+    PGCUser *user = manager.token.user;
+    
+    [self.params setObject:@(user.user_id) forKey:@"user_id"];
+    [self.params setObject:@"iphone" forKey:@"client_type"];
+    [self.params setObject:manager.token.token forKey:@"token"];
     [self.params setObject:@(product.id) forKey:@"product_id"];
 }
 
@@ -107,54 +188,43 @@
 
 - (void)payView:(PGCPayView *)payView weChat:(UIButton *)weChat
 {
-    //需要创建这个支付对象
-    PayReq *req   = [[PayReq alloc] init];
-    //由用户微信号和AppID组成的唯一标识，用于校验微信用户
-    req.openID = @"";
-    
-    // 商家id，在注册的时候给的
-    req.partnerId = @"";
-    
-    // 预支付订单这个是后台跟微信服务器交互后，微信服务器传给你们服务器的，你们服务器再传给你
-    req.prepayId = @"";
-    
-    // 根据财付通文档填写的数据和签名
-    //这个比较特殊，是固定的，只能是即req.package = Sign=WXPay
-    req.package = @"";
-    
-    // 随机编码，为了防止重复的，在后台生成
-    req.nonceStr = @"";
-    
-    // 这个是时间戳，也是在后台生成的，为了验证支付的
-    NSString *stamp = @"";
-    req.timeStamp = [stamp intValue];
-    
-    // 这个签名也是后台做的
-    req.sign = @"";
-    
-    //发送请求到微信，等待微信返回onResp
-    [WXApi sendReq:req];
-    
-    
-    
     [self.params setObject:@"weixinApp" forKey:@"pay_way"];
-    [PGCVIPServiceAPIManager buyVipRequestWithParameters:self.params responds:^(RespondsStatus status, NSString *message, id resultData) {
-        
-    }];
     
-    PGCPayView *succeedView = [[PGCPayView alloc] initWithSuccessPay];
-    [succeedView showPayViewWithGCD];
+    MBProgressHUD *hud = [PGCProgressHUD showProgress:nil toView:self.view];
+    
+    [PGCVIPServiceAPIManager buyVipRequestWithParameters:self.params responds:^(RespondsStatus status, NSString *message, NSDictionary *resultData) {
+        [hud hideAnimated:true];
+        if (status == RespondsStatusSuccess) {
+            //注册微信支付
+            [WXApi registerApp:WeChat_APPID withDescription:@"com.leco.gcb.project.user"];
+            //调起微信支付
+            PayReq *req     = [[PayReq alloc] init];
+            req.partnerId   = [resultData objectForKey:@"partnerId"];
+            req.prepayId    = [resultData objectForKey:@"prepayId"];
+            req.nonceStr    = [resultData objectForKey:@"nonceStr"];
+            req.timeStamp   = [[resultData objectForKey:@"timeStamp"] intValue];
+            req.package     = [resultData objectForKey:@"packageValue"];
+            req.sign        = [resultData objectForKey:@"sign"];
+            //发送请求到微信，等待微信返回onResp
+            [WXApi sendReq:req];
+        }
+    }];
 }
 
 - (void)payView:(PGCPayView *)payView alipay:(UIButton *)alipay
 {
-    [self.params setObject:@"alipay" forKey:@"pay_way"];    
-    [PGCVIPServiceAPIManager buyVipRequestWithParameters:self.params responds:^(RespondsStatus status, NSString *message, id resultData) {
-        
-    }];
+    [self.params setObject:@"alipay" forKey:@"pay_way"];
     
-    PGCPayView *succeedView = [[PGCPayView alloc] initWithSuccessPay];
-    [succeedView showPayViewWithGCD];
+    MBProgressHUD *hud = [PGCProgressHUD showProgress:nil toView:self.view];
+    
+    [PGCVIPServiceAPIManager buyVipRequestWithParameters:self.params responds:^(RespondsStatus status, NSString *message, id resultData) {
+        [hud hideAnimated:true];
+        if (status == RespondsStatusSuccess) {
+            [[AlipaySDK defaultService] payOrder:resultData fromScheme:@"alisdkzbapp" callback:^(NSDictionary *resultDic) {
+                //TODO: NSLog(@"%@", resultDic);
+            }];
+        }
+    }];
 }
 
 
@@ -162,13 +232,13 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _dataSource.count;
+    return self.dataSource.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     PGCVIPServiceCell *cell = [tableView dequeueReusableCellWithIdentifier:kVIPServiceCell];
-    cell.product = _dataSource[indexPath.row];
+    cell.product = self.dataSource[indexPath.row];
     cell.delegate = self;
     return cell;
 }
@@ -178,7 +248,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    PGCProduct *product = _dataSource[indexPath.row];
+    PGCProduct *product = self.dataSource[indexPath.row];
     return [tableView cellHeightForIndexPath:indexPath model:product keyPath:@"product" cellClass:[PGCVIPServiceCell class] contentViewWidth:SCREEN_WIDTH];
 }
 
@@ -200,15 +270,8 @@
 - (NSMutableDictionary *)params {
     if (!_params) {
         _params = [NSMutableDictionary dictionary];
-        
-        PGCManager *manager = [PGCManager manager];
-        [manager readTokenData];
-        PGCUser *user = manager.token.user;
-        
-        [_params setObject:@(user.user_id) forKey:@"user_id"];
-        [_params setObject:@"iphone" forKey:@"client_type"];
-        [_params setObject:manager.token.token forKey:@"token"];
     }
     return _params;
 }
+
 @end

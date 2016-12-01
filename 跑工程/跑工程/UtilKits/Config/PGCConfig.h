@@ -9,25 +9,31 @@
 #ifndef PGCConfig_h
 #define PGCConfig_h
 
+
 //app的版本号
 #define kAppVersion [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
+
 
 //app build版本号
 #define kAppBuildVersion [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]
 
+
 //app的显示名称
 #define kAppDisplayName [[NSBundle mainBundle].localizedInfoDictionary objectForKey:@"CFBundleDisplayName"]
+
 
 //app的identifier
 #define kAppBundleIdentifier [[NSBundle mainBundle] bundleIdentifier]
 
-/****NSLog的Debug模式****/
+
+//NSLog的Debug模式
 #ifdef DEBUG
 #define NSLog(FORMAT, ...) NSLog((@"[File:%s]" "[Func:%s]" "[Line:%d] " FORMAT), [[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 //    #define NSLog(FORMAT, ...) fprintf(stderr,"[File:%s]:[Line:%d] NSLog:%s\n",[[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __LINE__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String])
 #else
 #define NSLog(...)
 #endif
+
 
 //尺寸相关
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds
@@ -38,10 +44,12 @@
 #define SCREEN_MAX_LENGTH (MAX(SCREEN_WIDTH, SCREEN_HEIGHT))
 #define SCREEN_MIN_LENGTH (MIN(SCREEN_WIDTH, SCREEN_HEIGHT))
 
+
 // 当前版本
 #define FSystemVersion [[[UIDevice currentDevice] systemVersion] floatValue]
 #define DSystemVersion [[[UIDevice currentDevice] systemVersion] doubleValue]
 #define SSystemVersion [[UIDevice currentDevice] systemVersion]
+
 
 // UI相关
 #define KeyWindow [UIApplication sharedApplication].keyWindow
@@ -63,7 +71,6 @@
 
 
 #define PGCNotificationCenter [NSNotificationCenter defaultCenter]
-#define PGCUserDefault [NSUserDefaults standardUserDefaults]
 #define PGCFileManager [NSFileManager defaultManager]
 
 
@@ -75,12 +82,12 @@
 
 #define WeChat_APPID @"wx3ce8d64947abe952"// 微信 appID
 
-#define QQ_APPID @"1105771161"// QQ appID
-#define QQ_APPKEY @"y7gmJXDT5FzG4aSm"// QQ appKey
+#define QQ_APPID    @"1105771161"// QQ appID
+#define QQ_APPKEY   @"y7gmJXDT5FzG4aSm"// QQ appKey
 
-#define GETUI_APPID @"xQANwMGyAN6MoCa8DyLrN6"// 个推appID
-#define GETUI_APPKEY @"AOB4Kx7nyv65sqZHapchY7"// 个推appKey
-
+#define GETUI_APPID     @"xQANwMGyAN6MoCa8DyLrN6"// 个推appID
+#define GETUI_APPKEY    @"AOB4Kx7nyv65sqZHapchY7"// 个推appKey
+#define GETUI_APPSECRET @"dZp8NQ9DrG8uU65yIVs3I4"// 个推appSecret
 
 
 #endif /* PGCConfig_h */

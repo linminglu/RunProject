@@ -15,10 +15,6 @@
  */
 - (void)checkAppUpDataWithshowOption:(BOOL)showOption;
 /**
- 注册微信支付
- */
-- (void)registerWeChatPay;
-/**
  注册三方分享
  */
 - (void)registerShare;

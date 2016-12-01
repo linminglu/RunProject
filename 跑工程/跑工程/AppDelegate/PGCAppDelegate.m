@@ -22,9 +22,7 @@
     [self setAppWindow];// 初始化window
     
     [self setRootViewController];// 设置根视图控制器
-    
-    [self registerWeChatPay];// 注册微信支付
-    
+        
     [self registerShare];// 注册三方分享
     
     [self registerAMap];// 注册高德地图

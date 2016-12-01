@@ -133,7 +133,7 @@
         return;
     }
     
-    BOOL isRemind = [[PGCUserDefault valueForKey:@"isRemind"] boolValue];
+    BOOL isRemind = [[NSUserDefaults standardUserDefaults] boolForKey:@"isRemind"];
     
     PGCAlertView *alert = nil;
     

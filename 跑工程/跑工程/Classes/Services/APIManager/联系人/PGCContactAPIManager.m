@@ -14,7 +14,7 @@
 
 + (NSURLSessionDataTask *)addContactRequestWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, id))respondsBlock
 {
-    return [self requestPOST:kAddContact parameters:parameters cachePolicy:RequestReloadIngnoringLocalCacheData success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [self requestPOST:kAddContact parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
         
         NSInteger resultCode = [responseObject[@"code"] integerValue];
         NSString *resultMsg = responseObject[@"msg"];
@@ -27,6 +27,7 @@
             respondsBlock(RespondsStatusDataError, resultMsg, nil);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
         respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
     }];
 }
@@ -63,7 +64,7 @@
 
 + (NSURLSessionDataTask *)getContactProjectsRequestWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, NSMutableArray *))respondsBlock
 {
-    return [self requestPOST:kGetContactProjects parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [self requestPOST:kGetContactProjects parameters:parameters cachePolicy:RequestReloadIngnoringLocalCacheData success:^(NSURLSessionDataTask *task, id responseObject) {
         
         NSInteger resultCode = [responseObject[@"code"] integerValue];
         NSString *resultMsg = responseObject[@"msg"];
@@ -106,6 +107,7 @@
             respondsBlock(RespondsStatusDataError, resultMsg, nil);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
         respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
     }];
 }

@@ -48,6 +48,7 @@
             respondsBlock(RespondsStatusDataError, resultMsg, nil);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
         respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
     }];
 }
@@ -76,6 +77,7 @@
             respondsBlock(RespondsStatusDataError, resultMsg, nil);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
         respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
     }];
 }
@@ -116,6 +118,7 @@
             respondsBlock(RespondsStatusDataError, resultMsg, nil);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
         respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
     }];
 }
@@ -136,6 +139,7 @@
             respondsBlock(RespondsStatusDataError, resultMsg, nil);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
         respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
     }];
 }
@@ -164,6 +168,7 @@
             respondsBlock(RespondsStatusDataError, resultMsg, nil);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
         respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
     }];
 }

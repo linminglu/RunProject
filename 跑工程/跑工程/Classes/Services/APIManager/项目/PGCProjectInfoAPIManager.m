@@ -37,6 +37,8 @@
             respondsBlock(RespondsStatusDataError, resultMsg, nil);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"%@", error.localizedDescription);
+        
         respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
     }];
 }
@@ -66,6 +68,8 @@
             respondsBlock(RespondsStatusDataError, resultMsg, nil);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"%@", error.localizedDescription);
+        
         respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
     }];
 }
@@ -146,6 +150,7 @@
             respondsBlock(RespondsStatusDataError, resultMsg, nil);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
         respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
     }];
 }
@@ -166,6 +171,7 @@
             respondsBlock(RespondsStatusDataError, resultMsg, nil);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
         respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
     }];
 }
@@ -173,7 +179,7 @@
 
 + (NSURLSessionDataTask *)getAccessOrCollectRequestWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, id))respondsBlock
 {
-    return [self requestPOST:kGetAccessOrCollect parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [self requestPOST:kGetAccessOrCollect parameters:parameters cachePolicy:RequestReloadIngnoringLocalCacheData success:^(NSURLSessionDataTask *task, id responseObject) {
         
         NSInteger resultCode = [responseObject[@"code"] integerValue];
         NSString *resultMsg = responseObject[@"msg"];
@@ -186,7 +192,8 @@
             respondsBlock(RespondsStatusDataError, resultMsg, nil);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        [MBProgressHUD showError:@"网络错误(未连接)" toView:KeyWindow];
+        [MBProgressHUD showError:error.localizedDescription toView:KeyWindow];
+        
         respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
     }];
 }
@@ -194,7 +201,7 @@
 
 + (NSURLSessionDataTask *)getNearProjectsRequestWithParameters:(NSDictionary *)parameters responds:(void (^)(RespondsStatus, NSString *, id))respondsBlock
 {
-    return [self requestPOST:kGetNearProjects parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [self requestPOST:kGetNearProjects parameters:parameters cachePolicy:RequestReloadIngnoringLocalCacheData success:^(NSURLSessionDataTask *task, id responseObject) {
         
         NSInteger resultCode = [responseObject[@"code"] integerValue];
         NSString *resultMsg = responseObject[@"msg"];
@@ -207,6 +214,7 @@
             respondsBlock(RespondsStatusDataError, resultMsg, nil);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
         respondsBlock(RespondsStatusNetworkError, error.localizedDescription, nil);
     }];
 }

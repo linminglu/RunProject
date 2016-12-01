@@ -19,7 +19,8 @@ NSString * const kContactReloadData = @"ContactReloadData";// 删除联系人 �
 NSString * const kProcurementInfoData = @"ProcurementInfoData";//收藏招标信息的通知
 NSString * const kSupplyInfoData = @"SupplyInfoData";//收藏供应信息的通知
 
-
+NSString * const kVIP_Alipay = @"VIP_Alipay";// 支付宝支付回调的通知
+NSString * const kVIP_WeChatPay = @"VIP_eChatPay ";// 微信支付回调的通知
 
 @implementation PGCIdentifier
 
