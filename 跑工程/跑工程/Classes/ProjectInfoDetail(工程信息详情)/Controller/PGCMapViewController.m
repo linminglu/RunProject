@@ -16,17 +16,16 @@
 #import "ProjectsAnnotation.h"
 #import "CurrentAnnotation.h"
 #import "SelectableOverlay.h"
+#import "NaviPointAnnotation.h"
+#import "GPSNaviViewController.h"
 
-@interface PGCMapViewController () <MAMapViewDelegate, AMapLocationManagerDelegate, AMapNaviDriveManagerDelegate>
+@interface PGCMapViewController () <MAMapViewDelegate, AMapLocationManagerDelegate>
 
 @property (strong, nonatomic) MAMapView *mapView;/** 地图视图 */
 @property (strong, nonatomic) UIButton *gpsButton;/** GPS定位按钮 */
 @property (strong, nonatomic) UIView *zoomPannelView;/** 比例缩放 */
 @property (strong, nonatomic) NSMutableArray *annotations;/** 项目标注数组 */
 @property (strong, nonatomic) AMapLocationManager *locationManager;/** 定位管理 */
-@property (strong, nonatomic) AMapNaviDriveManager *driveManager;/** 导航管理 */
-@property (strong, nonatomic) AMapNaviDriveView *driveView;/** 导航视图 */
-@property (strong, nonatomic) NSMutableArray *routeIndicatorInfoArray;/** 导航路径 */
 @property (strong, nonatomic) AMapNaviPoint *startPoint;
 @property (strong, nonatomic) AMapNaviPoint *endPoint;
 
@@ -35,6 +34,7 @@
 @end
 
 @implementation PGCMapViewController
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -88,7 +88,6 @@
             annotationView.name = customAnn.name;
             annotationView.desc = customAnn.desc;
             annotationView.annotation = customAnn;
-            annotationView.image = [UIImage imageNamed:@"地图定位"];
             annotationView.canShowCallout = true;// 设置是否显示弹出视图
             annotationView.draggable = false;// 设置支持拖动
             
@@ -109,90 +108,10 @@
     if ([view.annotation.title isKindOfClass:[NSNull class]]) {
         return;
     }
-//    // 起始位置
-//    
-//    MKPlacemark *currentPlacemark = [[MKPlacemark alloc] initWithCoordinate:mapView.userLocation.coordinate addressDictionary:nil];
-//    MKMapItem *currentItem = [[MKMapItem alloc] initWithPlacemark:currentPlacemark];
-//    // 目的地
-//    MKPlacemark *destinationPlacemark = [[MKPlacemark alloc] initWithCoordinate:view.annotation.coordinate addressDictionary:nil];
-//    MKMapItem *destinationItem = [[MKMapItem alloc] initWithPlacemark:destinationPlacemark];
-//    
-//    // 创建导航请求
-//    MKDirectionsRequest *request = [[MKDirectionsRequest alloc] init];
-//    // 设置起点
-//    request.source = currentItem;
-//    // 设置终点
-//    request.destination = destinationItem;
-//    
-//    // 创建导航
-//    MKDirections *direction = [[MKDirections alloc] initWithRequest:request];
-//    [direction calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse * _Nullable response, NSError * _Nullable error) {
-//        // routes: 路线信息
-//        // polyline: 路线
-//        // 此处添加的路径并不会呈现在地图上，需要通过对路线渲染显示路线
-//        [mapView addOverlay:response.routes[0].polyline];
-//    }];
-}
-
-- (void)mapView:(MAMapView *)mapView didAnnotationViewCalloutTapped:(MAAnnotationView *)view
-{
-    
-}
-
-
-#pragma mark - AMapNaviDriveManagerDelegate
-
-- (void)driveManager:(AMapNaviDriveManager *)driveManager error:(NSError *)error
-{
-    NSLog(@"error:{%ld - %@}", (long)error.code, error.localizedDescription);
-}
-
-- (void)driveManagerOnCalculateRouteSuccess:(AMapNaviDriveManager *)driveManager
-{
-    NSLog(@"onCalculateRouteSuccess");
-    
-    //算路成功后显示路径
-    [self showNaviRoutes];
-}
-
-- (void)driveManager:(AMapNaviDriveManager *)driveManager onCalculateRouteFailure:(NSError *)error
-{
-    NSLog(@"onCalculateRouteFailure:{%ld - %@}", (long)error.code, error.localizedDescription);
-}
-
-- (void)driveManager:(AMapNaviDriveManager *)driveManager didStartNavi:(AMapNaviMode)naviMode
-{
-    NSLog(@"didStartNavi");
-}
-
-- (void)driveManagerNeedRecalculateRouteForYaw:(AMapNaviDriveManager *)driveManager
-{
-    NSLog(@"needRecalculateRouteForYaw");
-}
-
-- (void)driveManagerNeedRecalculateRouteForTrafficJam:(AMapNaviDriveManager *)driveManager
-{
-    NSLog(@"needRecalculateRouteForTrafficJam");
-}
-
-- (void)driveManager:(AMapNaviDriveManager *)driveManager onArrivedWayPoint:(int)wayPointIndex
-{
-    NSLog(@"onArrivedWayPoint:%d", wayPointIndex);
-}
-
-- (void)driveManager:(AMapNaviDriveManager *)driveManager playNaviSoundString:(NSString *)soundString soundStringType:(AMapNaviSoundType)soundStringType
-{
-    NSLog(@"playNaviSoundString:{%ld:%@}", (long)soundStringType, soundString);
-}
-
-- (void)driveManagerDidEndEmulatorNavi:(AMapNaviDriveManager *)driveManager
-{
-    NSLog(@"didEndEmulatorNavi");
-}
-
-- (void)driveManagerOnArrivedDestination:(AMapNaviDriveManager *)driveManager
-{
-    NSLog(@"onArrivedDestination");
+    GPSNaviViewController *naviVC = [[GPSNaviViewController alloc] init];
+    naviVC.startPoint = self.startPoint;
+    naviVC.endPoint = self.endPoint;
+    [self.navigationController pushViewController:naviVC animated:true];
 }
 
 
@@ -215,111 +134,24 @@
     CLLocationDegrees longitude = location.coordinate.longitude;
     NSLog(@"(%f, %f)", latitude, longitude);
     
+    // 设置起始点
+    self.startPoint = [AMapNaviPoint locationWithLatitude:latitude longitude:longitude];
+    NaviPointAnnotation *beginAnnotation = [[NaviPointAnnotation alloc] init];
+    [beginAnnotation setCoordinate:CLLocationCoordinate2DMake(self.startPoint.latitude, self.startPoint.longitude)];
+    beginAnnotation.title = @"起始点";
+    beginAnnotation.navPointType = NaviPointAnnotationStart;
+    
+    // 设置当前位置的标注数据
     CurrentAnnotation *current = [[CurrentAnnotation alloc] init];
     current.coordinate = location.coordinate;
     [self.mapView addAnnotation:current];
     [self.annotations addObject:current];
-    [self.mapView showAnnotations:self.annotations animated:true];
     
+    // 在地图上显示标注视图
+    [self.mapView showAnnotations:self.annotations animated:true];
     [self.mapView setCenterCoordinate:location.coordinate animated:true];
     
     [self stopSerialLocation];
-}
-
-
-#pragma mark - Handle Navi Routes
-
-- (void)showNaviRoutes
-{
-    if ([self.driveManager.naviRoutes count] <= 0)
-    {
-        return;
-    }
-    
-    [self.mapView removeOverlays:self.mapView.overlays];
-    [self.routeIndicatorInfoArray removeAllObjects];
-    
-    //将路径显示到地图上
-    for (NSNumber *aRouteID in [self.driveManager.naviRoutes allKeys])
-    {
-        AMapNaviRoute *aRoute = [[self.driveManager naviRoutes] objectForKey:aRouteID];
-        int count = (int)[[aRoute routeCoordinates] count];
-        
-        //添加路径Polyline
-        CLLocationCoordinate2D *coords = (CLLocationCoordinate2D *)malloc(count * sizeof(CLLocationCoordinate2D));
-        for (int i = 0; i < count; i++)
-        {
-            AMapNaviPoint *coordinate = [[aRoute routeCoordinates] objectAtIndex:i];
-            coords[i].latitude = [coordinate latitude];
-            coords[i].longitude = [coordinate longitude];
-        }
-        
-        MAPolyline *polyline = [MAPolyline polylineWithCoordinates:coords count:count];
-        
-        SelectableOverlay *selectablePolyline = [[SelectableOverlay alloc] initWithOverlay:polyline];
-        [selectablePolyline setRouteID:[aRouteID integerValue]];
-        
-        [self.mapView addOverlay:selectablePolyline];
-        free(coords);
-        
-        //更新CollectonView的信息
-//        RouteCollectionViewInfo *info = [[RouteCollectionViewInfo alloc] init];
-//        info.routeID = [aRouteID integerValue];
-//        info.title = [NSString stringWithFormat:@"路径ID:%ld | 路径计算策略:%ld", (long)[aRouteID integerValue], (long)[self.preferenceView strategyWithIsMultiple:self.isMultipleRoutePlan]];
-//        info.subtitle = [NSString stringWithFormat:@"长度:%ld米 | 预估时间:%ld秒 | 分段数:%ld", (long)aRoute.routeLength, (long)aRoute.routeTime, (long)aRoute.routeSegments.count];
-//        
-//        [self.routeIndicatorInfoArray addObject:info];
-    }
-    
-    [self.mapView showAnnotations:self.mapView.annotations animated:NO];
-//    [self.routeIndicatorView reloadData];
-    
-    [self selectNaviRouteWithID:[[self.routeIndicatorInfoArray firstObject] routeID]];
-}
-
-- (void)selectNaviRouteWithID:(NSInteger)routeID
-{
-    //在开始导航前进行路径选择
-    if ([self.driveManager selectNaviRouteWithRouteID:routeID])
-    {
-        [self selecteOverlayWithRouteID:routeID];
-    }
-    else
-    {
-        NSLog(@"路径选择失败!");
-    }
-}
-
-- (void)selecteOverlayWithRouteID:(NSInteger)routeID
-{
-    [self.mapView.overlays enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id<MAOverlay> overlay, NSUInteger idx, BOOL *stop) {
-         if ([overlay isKindOfClass:[SelectableOverlay class]]) {
-             SelectableOverlay *selectableOverlay = (SelectableOverlay *)overlay;
-             
-             /* 获取overlay对应的renderer. */
-             MAPolylineRenderer * overlayRenderer = (MAPolylineRenderer *)[self.mapView rendererForOverlay:selectableOverlay];
-             
-             if (selectableOverlay.routeID == routeID) {
-                 /* 设置选中状态. */
-                 selectableOverlay.selected = true;
-                 
-                 /* 修改renderer选中颜色. */
-                 overlayRenderer.fillColor   = selectableOverlay.selectedColor;
-                 overlayRenderer.strokeColor = selectableOverlay.selectedColor;
-                 
-                 /* 修改overlay覆盖的顺序. */
-                 [self.mapView exchangeOverlayAtIndex:idx withOverlayAtIndex:self.mapView.overlays.count - 1];
-             } else {
-                 /* 设置选中状态. */
-                 selectableOverlay.selected = false;
-                 
-                 /* 修改renderer选中颜色. */
-                 overlayRenderer.fillColor   = selectableOverlay.regularColor;
-                 overlayRenderer.strokeColor = selectableOverlay.regularColor;
-             }
-             [overlayRenderer glRender];
-         }
-     }];
 }
 
 
@@ -413,6 +245,12 @@
         pointAnnotation.title = _projectInfo.name;
         pointAnnotation.subtitle = _projectInfo.desc;
         
+        self.endPoint = [AMapNaviPoint locationWithLatitude:lat longitude:lng];
+        NaviPointAnnotation *endAnnotation = [[NaviPointAnnotation alloc] init];
+        [endAnnotation setCoordinate:CLLocationCoordinate2DMake(self.endPoint.latitude, self.endPoint.longitude)];
+        endAnnotation.title = @"终点";
+        endAnnotation.navPointType = NaviPointAnnotationEnd;
+        
         [_annotations addObject:pointAnnotation];
     }
     return _annotations;
@@ -440,6 +278,7 @@
     if (!_locationManager) {
         _locationManager = [[AMapLocationManager alloc] init];
         _locationManager.delegate = self;
+        _locationManager.allowsBackgroundLocationUpdates = true;
         _locationManager.pausesLocationUpdatesAutomatically = false;
         // 带逆地理信息的一次定位（返回坐标和地址信息）
         [_locationManager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
@@ -449,14 +288,6 @@
         _locationManager.reGeocodeTimeout = 2;
     }
     return _locationManager;
-}
-
-- (AMapNaviDriveManager *)driveManager {
-    if (!_driveManager) {
-        _driveManager = [[AMapNaviDriveManager alloc] init];
-        _driveManager.delegate = self;
-    }
-    return _driveManager;
 }
 
 

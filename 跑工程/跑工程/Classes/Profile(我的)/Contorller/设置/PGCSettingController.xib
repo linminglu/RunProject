@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PGCSettingController">
             <connections>
                 <outlet property="logoutBtn" destination="65k-TL-ish" id="xHI-RI-VRf"/>
+                <outlet property="offPushSwitch" destination="qo4-gt-D5r" id="tk7-rC-esW"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -63,6 +64,9 @@
                                     <include reference="qJb-m0-4lc"/>
                                 </mask>
                             </variation>
+                            <connections>
+                                <action selector="notificationSwitchEvent:" destination="-1" eventType="valueChanged" id="UIH-5k-Jco"/>
+                            </connections>
                         </switch>
                     </subviews>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

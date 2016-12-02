@@ -90,6 +90,7 @@ typedef NS_ENUM(NSUInteger, ButtonTag) {
                     self.demand.collect_id = [resultData intValue];
                     [MBProgressHUD showSuccess:@"收藏成功" toView:KeyWindow];
                     [sender setTitle:@"取消收藏" forState:UIControlStateNormal];
+                    [sender layoutButtonWithEdgeInsetsStyle:ButtonEdgeInsetsStyleTop imageTitleSpace:5];
                     [PGCNotificationCenter postNotificationName:kProcurementInfoData object:self.demand userInfo:nil];
                     
                 } else {
@@ -107,6 +108,7 @@ typedef NS_ENUM(NSUInteger, ButtonTag) {
                     self.demand.collect_id = 0;
                     [MBProgressHUD showSuccess:@"已取消收藏" toView:KeyWindow];
                     [sender setTitle:@"收藏" forState:UIControlStateNormal];
+                    [sender layoutButtonWithEdgeInsetsStyle:ButtonEdgeInsetsStyleTop imageTitleSpace:5];
                     [PGCNotificationCenter postNotificationName:kProcurementInfoData object:self.demand userInfo:nil];
                 } else {
                     [MBProgressHUD showError:message toView:self.view];

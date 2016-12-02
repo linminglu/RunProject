@@ -156,6 +156,9 @@
 		845364411DF00DC300A4A4A2 /* PGCMyIntroduceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 845364401DF00DC300A4A4A2 /* PGCMyIntroduceViewController.m */; };
 		845364441DF0118E00A4A4A2 /* PGCTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 845364431DF0118E00A4A4A2 /* PGCTableViewCell.m */; };
 		845364471DF0154100A4A4A2 /* BackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 845364461DF0154100A4A4A2 /* BackgroundView.m */; };
+		8453644D1DF1030700A4A4A2 /* libGeTuiSdk-1.5.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8453644B1DF1030700A4A4A2 /* libGeTuiSdk-1.5.3.a */; };
+		8453644E1DF1030700A4A4A2 /* libGtExtensionSdk-1.0.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8453644C1DF1030700A4A4A2 /* libGtExtensionSdk-1.0.0.a */; };
+		8453644F1DF1034100A4A4A2 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 846C0B4F1DE2E46900EF2D53 /* UserNotifications.framework */; };
 		846C0B3D1DE2E3F800EF2D53 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 846C0B3C1DE2E3F800EF2D53 /* libc++.tbd */; };
 		846C0B3F1DE2E40500EF2D53 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 846C0B3E1DE2E40500EF2D53 /* libz.tbd */; };
 		846C0B411DE2E41100EF2D53 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 846C0B401DE2E41100EF2D53 /* libsqlite3.tbd */; };
@@ -281,7 +284,6 @@
 		84D845061DEEA238000B5F24 /* PGCAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D845051DEEA238000B5F24 /* PGCAnnotationView.m */; };
 		84D845091DEEA846000B5F24 /* PGCMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D845081DEEA846000B5F24 /* PGCMapViewController.m */; };
 		84D845101DEEB027000B5F24 /* PGCCalloutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D8450F1DEEB027000B5F24 /* PGCCalloutView.m */; };
-		84D8451E1DEED3B7000B5F24 /* SelectableOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D8451D1DEED3B7000B5F24 /* SelectableOverlay.m */; };
 		84D845221DEED8AC000B5F24 /* CurrentAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D845211DEED8AC000B5F24 /* CurrentAnnotation.m */; };
 		84D845251DEED8C2000B5F24 /* ProjectsAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D845241DEED8C2000B5F24 /* ProjectsAnnotation.m */; };
 		84D845291DEEDFF4000B5F24 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 84D845271DEEDFF4000B5F24 /* AlipaySDK.bundle */; };
@@ -291,6 +293,11 @@
 		84D845301DEEE02F000B5F24 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D8452F1DEEE02F000B5F24 /* CoreGraphics.framework */; };
 		84D845361DEEE047000B5F24 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D845351DEEE047000B5F24 /* CFNetwork.framework */; };
 		84D845381DEEE050000B5F24 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D845371DEEE050000B5F24 /* CoreMotion.framework */; };
+		84E05C821DF17EF70050766C /* SpeechSynthesizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E05C811DF17EF70050766C /* SpeechSynthesizer.m */; };
+		84E05C851DF1801C0050766C /* GPSNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E05C841DF1801C0050766C /* GPSNaviViewController.m */; };
+		84E05C891DF1803B0050766C /* MoreMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E05C881DF1803B0050766C /* MoreMenuView.m */; };
+		84E05C901DF184A20050766C /* NaviPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E05C8C1DF184A20050766C /* NaviPointAnnotation.m */; };
+		84E05C911DF184A20050766C /* SelectableOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E05C8F1DF184A20050766C /* SelectableOverlay.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -584,6 +591,10 @@
 		845364431DF0118E00A4A4A2 /* PGCTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCTableViewCell.m; sourceTree = "<group>"; };
 		845364451DF0154100A4A4A2 /* BackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundView.h; sourceTree = "<group>"; };
 		845364461DF0154100A4A4A2 /* BackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundView.m; sourceTree = "<group>"; };
+		845364491DF1030700A4A4A2 /* GeTuiExtSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeTuiExtSdk.h; sourceTree = "<group>"; };
+		8453644A1DF1030700A4A4A2 /* GeTuiSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeTuiSdk.h; sourceTree = "<group>"; };
+		8453644B1DF1030700A4A4A2 /* libGeTuiSdk-1.5.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libGeTuiSdk-1.5.3.a"; sourceTree = "<group>"; };
+		8453644C1DF1030700A4A4A2 /* libGtExtensionSdk-1.0.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libGtExtensionSdk-1.0.0.a"; sourceTree = "<group>"; };
 		845938801DBF48320086DD53 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		846C0B3C1DE2E3F800EF2D53 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		846C0B3E1DE2E40500EF2D53 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -836,8 +847,6 @@
 		84D845081DEEA846000B5F24 /* PGCMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCMapViewController.m; sourceTree = "<group>"; };
 		84D8450E1DEEB027000B5F24 /* PGCCalloutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCCalloutView.h; sourceTree = "<group>"; };
 		84D8450F1DEEB027000B5F24 /* PGCCalloutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCCalloutView.m; sourceTree = "<group>"; };
-		84D8451C1DEED3B7000B5F24 /* SelectableOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectableOverlay.h; sourceTree = "<group>"; };
-		84D8451D1DEED3B7000B5F24 /* SelectableOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectableOverlay.m; sourceTree = "<group>"; };
 		84D845201DEED8AC000B5F24 /* CurrentAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentAnnotation.h; sourceTree = "<group>"; };
 		84D845211DEED8AC000B5F24 /* CurrentAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrentAnnotation.m; sourceTree = "<group>"; };
 		84D845231DEED8C2000B5F24 /* ProjectsAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectsAnnotation.h; sourceTree = "<group>"; };
@@ -851,6 +860,16 @@
 		84D845331DEEE040000B5F24 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		84D845351DEEE047000B5F24 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		84D845371DEEE050000B5F24 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		84E05C801DF17EF70050766C /* SpeechSynthesizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeechSynthesizer.h; sourceTree = "<group>"; };
+		84E05C811DF17EF70050766C /* SpeechSynthesizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeechSynthesizer.m; sourceTree = "<group>"; };
+		84E05C831DF1801C0050766C /* GPSNaviViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPSNaviViewController.h; sourceTree = "<group>"; };
+		84E05C841DF1801C0050766C /* GPSNaviViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPSNaviViewController.m; sourceTree = "<group>"; };
+		84E05C871DF1803B0050766C /* MoreMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreMenuView.h; sourceTree = "<group>"; };
+		84E05C881DF1803B0050766C /* MoreMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreMenuView.m; sourceTree = "<group>"; };
+		84E05C8B1DF184A20050766C /* NaviPointAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NaviPointAnnotation.h; sourceTree = "<group>"; };
+		84E05C8C1DF184A20050766C /* NaviPointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NaviPointAnnotation.m; sourceTree = "<group>"; };
+		84E05C8E1DF184A20050766C /* SelectableOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectableOverlay.h; sourceTree = "<group>"; };
+		84E05C8F1DF184A20050766C /* SelectableOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectableOverlay.m; sourceTree = "<group>"; };
 		84ECF1CB1DD1674B00697207 /* PGCPrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCPrefixHeader.pch; sourceTree = "<group>"; };
 		BEA06E02B51C4C6B6E6C8727 /* Pods____.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods____.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -860,6 +879,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8453644F1DF1034100A4A4A2 /* UserNotifications.framework in Frameworks */,
 				84D845381DEEE050000B5F24 /* CoreMotion.framework in Frameworks */,
 				84D845361DEEE047000B5F24 /* CFNetwork.framework in Frameworks */,
 				84D845301DEEE02F000B5F24 /* CoreGraphics.framework in Frameworks */,
@@ -867,6 +887,7 @@
 				84D8452C1DEEE020000B5F24 /* QuartzCore.framework in Frameworks */,
 				846C0B491DE2E43F00EF2D53 /* CoreTelephony.framework in Frameworks */,
 				846C0B471DE2E43200EF2D53 /* SystemConfiguration.framework in Frameworks */,
+				8453644D1DF1030700A4A4A2 /* libGeTuiSdk-1.5.3.a in Frameworks */,
 				846C0B411DE2E41100EF2D53 /* libsqlite3.tbd in Frameworks */,
 				84175BE01DED975B00086E7B /* libstdc++.tbd in Frameworks */,
 				84175BDE1DED974600086E7B /* libicucore.tbd in Frameworks */,
@@ -874,6 +895,7 @@
 				84175BD51DED971A00086E7B /* TencentOpenAPI.framework in Frameworks */,
 				84175BD41DED971A00086E7B /* WechatConnector.framework in Frameworks */,
 				846C0B4D1DE2E45200EF2D53 /* JavaScriptCore.framework in Frameworks */,
+				8453644E1DF1030700A4A4A2 /* libGtExtensionSdk-1.0.0.a in Frameworks */,
 				846C0B4B1DE2E44B00EF2D53 /* AVFoundation.framework in Frameworks */,
 				84175BCD1DED971900086E7B /* ShareSDK.framework in Frameworks */,
 				84175BCF1DED971900086E7B /* ShareSDKConfigFile.framework in Frameworks */,
@@ -1480,6 +1502,8 @@
 				84175B3E1DEC324500086E7B /* PGCVIPServiceController.m */,
 				84D845071DEEA846000B5F24 /* PGCMapViewController.h */,
 				84D845081DEEA846000B5F24 /* PGCMapViewController.m */,
+				84E05C831DF1801C0050766C /* GPSNaviViewController.h */,
+				84E05C841DF1801C0050766C /* GPSNaviViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1487,10 +1511,11 @@
 		84175B3F1DEC324500086E7B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				84E05C8A1DF184A20050766C /* NaviPointAnnotation */,
+				84E05C8D1DF184A20050766C /* SelectableOverlay */,
+				84E05C7F1DF17EF60050766C /* SpeechSynthesizer */,
 				84175B401DEC324500086E7B /* PGCProjectContact.h */,
 				84175B411DEC324500086E7B /* PGCProjectContact.m */,
-				84D8451C1DEED3B7000B5F24 /* SelectableOverlay.h */,
-				84D8451D1DEED3B7000B5F24 /* SelectableOverlay.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1498,6 +1523,7 @@
 		84175B421DEC324500086E7B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				84E05C861DF1803B0050766C /* MoreMenuView */,
 				84175B561DEC324500086E7B /* 项目概况 */,
 				84175B511DEC324500086E7B /* 联系人 */,
 				84175BAD1DED61D000086E7B /* 自定义弹出框 */,
@@ -1774,6 +1800,17 @@
 			path = "我的收藏";
 			sourceTree = "<group>";
 		};
+		845364481DF1030700A4A4A2 /* GtSdkLib */ = {
+			isa = PBXGroup;
+			children = (
+				845364491DF1030700A4A4A2 /* GeTuiExtSdk.h */,
+				8453644A1DF1030700A4A4A2 /* GeTuiSdk.h */,
+				8453644B1DF1030700A4A4A2 /* libGeTuiSdk-1.5.3.a */,
+				8453644C1DF1030700A4A4A2 /* libGtExtensionSdk-1.0.0.a */,
+			);
+			path = GtSdkLib;
+			sourceTree = "<group>";
+		};
 		8459387F1DBF48310086DD53 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1882,6 +1919,7 @@
 		849C11D91DE70C98002EF937 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				845364481DF1030700A4A4A2 /* GtSdkLib */,
 				84D845261DEEDFF4000B5F24 /* AlipaySDK */,
 				84175BB21DED971900086E7B /* ShareSDK */,
 				84175B271DEC310600086E7B /* ProgressHUD */,
@@ -2201,6 +2239,42 @@
 			path = AlipaySDK;
 			sourceTree = "<group>";
 		};
+		84E05C7F1DF17EF60050766C /* SpeechSynthesizer */ = {
+			isa = PBXGroup;
+			children = (
+				84E05C801DF17EF70050766C /* SpeechSynthesizer.h */,
+				84E05C811DF17EF70050766C /* SpeechSynthesizer.m */,
+			);
+			path = SpeechSynthesizer;
+			sourceTree = "<group>";
+		};
+		84E05C861DF1803B0050766C /* MoreMenuView */ = {
+			isa = PBXGroup;
+			children = (
+				84E05C871DF1803B0050766C /* MoreMenuView.h */,
+				84E05C881DF1803B0050766C /* MoreMenuView.m */,
+			);
+			path = MoreMenuView;
+			sourceTree = "<group>";
+		};
+		84E05C8A1DF184A20050766C /* NaviPointAnnotation */ = {
+			isa = PBXGroup;
+			children = (
+				84E05C8B1DF184A20050766C /* NaviPointAnnotation.h */,
+				84E05C8C1DF184A20050766C /* NaviPointAnnotation.m */,
+			);
+			path = NaviPointAnnotation;
+			sourceTree = "<group>";
+		};
+		84E05C8D1DF184A20050766C /* SelectableOverlay */ = {
+			isa = PBXGroup;
+			children = (
+				84E05C8E1DF184A20050766C /* SelectableOverlay.h */,
+				84E05C8F1DF184A20050766C /* SelectableOverlay.m */,
+			);
+			path = SelectableOverlay;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2276,10 +2350,10 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
-								enabled = 0;
+								enabled = 1;
 							};
 							com.apple.Push = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
@@ -2413,7 +2487,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				849C13A01DE70E5E002EF937 /* PGCWebViewController.m in Sources */,
-				84D8451E1DEED3B7000B5F24 /* SelectableOverlay.m in Sources */,
 				84175BB11DED883700086E7B /* PGCSupplyInfoCell.m in Sources */,
 				84175A3B1DEC2FFD00086E7B /* PGCContactInfoCell.m in Sources */,
 				849C12E01DE70C99002EF937 /* RACEmptySignal.m in Sources */,
@@ -2476,6 +2549,7 @@
 				849C12C51DE70C99002EF937 /* NSObject+RACDeallocating.m in Sources */,
 				8453643E1DF00DAD00A4A4A2 /* PGCMyHeartViewController.m in Sources */,
 				849C12F01DE70C99002EF937 /* RACScopedDisposable.m in Sources */,
+				84E05C821DF17EF70050766C /* SpeechSynthesizer.m in Sources */,
 				849C12D71DE70C99002EF937 /* RACCompoundDisposable.m in Sources */,
 				849C12F31DE70C99002EF937 /* RACSignal+Operations.m in Sources */,
 				84175AD81DEC308100086E7B /* PGCProcurementViewController.m in Sources */,
@@ -2523,6 +2597,7 @@
 				84175B8C1DEC34EB00086E7B /* PGCNavigationController.m in Sources */,
 				849C131A1DE70C99002EF937 /* XHLaunchAd.m in Sources */,
 				849C12C81DE70C99002EF937 /* NSObject+RACLifting.m in Sources */,
+				84E05C911DF184A20050766C /* SelectableOverlay.m in Sources */,
 				849C13001DE70C99002EF937 /* RACTupleSequence.m in Sources */,
 				84175B1F1DEC30B800086E7B /* PGCProfileAPIManager.m in Sources */,
 				849C12BB1DE70C99002EF937 /* EXTRuntimeExtensions.m in Sources */,
@@ -2579,6 +2654,7 @@
 				84D845061DEEA238000B5F24 /* PGCAnnotationView.m in Sources */,
 				84175B361DEC31E400086E7B /* PGCSearchViewController.m in Sources */,
 				84175B831DEC32AC00086E7B /* PGCProjectType.m in Sources */,
+				84E05C901DF184A20050766C /* NaviPointAnnotation.m in Sources */,
 				849C12DC1DE70C99002EF937 /* RACDynamicSequence.m in Sources */,
 				849C12CA1DE70C99002EF937 /* NSObject+RACSelectorSignal.m in Sources */,
 				84175B261DEC30D900086E7B /* MZTimerLabel.m in Sources */,
@@ -2602,10 +2678,12 @@
 				84175B181DEC30B800086E7B /* PGCVIPServiceAPIManager.m in Sources */,
 				849C130A1DE70C99002EF937 /* UIControl+RACSignalSupportPrivate.m in Sources */,
 				849C12EC1DE70C99002EF937 /* RACQueueScheduler.m in Sources */,
+				84E05C851DF1801C0050766C /* GPSNaviViewController.m in Sources */,
 				849C13991DE70E55002EF937 /* PGCAppDelegate+AppLifeCircle.m in Sources */,
 				849C131C1DE70C99002EF937 /* XHWebImageDownload.m in Sources */,
 				84175B601DEC324500086E7B /* PGCAddContactTableCell.m in Sources */,
 				84175A851DEC305C00086E7B /* IntroduceSupplyTopCell.m in Sources */,
+				84E05C891DF1803B0050766C /* MoreMenuView.m in Sources */,
 				84175A371DEC2FFD00086E7B /* PGCContactInfoController.m in Sources */,
 				849C12BE1DE70C99002EF937 /* NSData+RACSupport.m in Sources */,
 				84175A271DEC2FFD00086E7B /* PGCUserInfoController.m in Sources */,
@@ -2785,7 +2863,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_ENTITLEMENTS = "跑工程/跑工程.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 3NQQS9APTM;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2806,8 +2885,9 @@
 					"$(PROJECT_DIR)/跑工程/UtilKits/Libs/GtSdkLib-noidfa",
 					"$(PROJECT_DIR)/跑工程/UtilKits/Libs/ShareSDK/Support/PlatformSDK/WeChatSDK",
 					"$(PROJECT_DIR)/跑工程/UtilKits/Libs/WeChatSDK",
+					"$(PROJECT_DIR)/跑工程/UtilKits/Libs/GtSdkLib",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "macaa.---";
+				PRODUCT_BUNDLE_IDENTIFIER = com.leco.gcb.project.user;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2821,7 +2901,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_ENTITLEMENTS = "跑工程/跑工程.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 3NQQS9APTM;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2842,8 +2923,9 @@
 					"$(PROJECT_DIR)/跑工程/UtilKits/Libs/GtSdkLib-noidfa",
 					"$(PROJECT_DIR)/跑工程/UtilKits/Libs/ShareSDK/Support/PlatformSDK/WeChatSDK",
 					"$(PROJECT_DIR)/跑工程/UtilKits/Libs/WeChatSDK",
+					"$(PROJECT_DIR)/跑工程/UtilKits/Libs/GtSdkLib",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "macaa.---";
+				PRODUCT_BUNDLE_IDENTIFIER = com.leco.gcb.project.user;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

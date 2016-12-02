@@ -8,14 +8,18 @@
 
 #import "PGCSettingController.h"
 #import "PGCRegisterOrLoginAPIManager.h"
+#import "PGCProfileAPIManager.h"
 #import "PGCLoginController.h"
 #import "PGCAboutUsViewController.h"
 #import "PGCFeedbackViewController.h"
+#import "GeTuiSdk.h"
 
 @interface PGCSettingController ()
 
+@property (weak, nonatomic) IBOutlet UISwitch *offPushSwitch;
 @property (weak, nonatomic) IBOutlet UIButton *logoutBtn;/** 退出账号按钮 */
 
+- (void)initializeDataSource; /** 初始化数据源 */
 - (void)initializeUserInterface; /** 初始化用户界面 */
 
 @end
@@ -25,7 +29,24 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self initializeDataSource];
     [self initializeUserInterface];
+}
+
+- (void)initializeDataSource
+{
+    PGCManager *manager = [PGCManager manager];
+    [manager readTokenData];
+    PGCUser *user = manager.token.user;
+    
+    NSString *modeOff = [PGCDataCache cacheForKey:@"ModeOff"];
+    NSLog(@"%@", modeOff);
+    
+    if (user.is_push == 1) {
+        [self.offPushSwitch setOn:false animated:false];
+    } else {
+        [self.offPushSwitch setOn:true animated:false];
+    }
 }
 
 - (void)initializeUserInterface
@@ -39,6 +60,30 @@
 
 
 #pragma mark - Events
+
+// 消息推送开关
+- (IBAction)notificationSwitchEvent:(UISwitch *)sender
+{
+    PGCManager *manager = [PGCManager manager];
+    [manager readTokenData];
+    PGCUser *user = manager.token.user;
+    if (user) {
+        [sender setOn:!sender.isOn animated:true];
+        NSDictionary *params = @{@"user_id":@(user.user_id),
+                                 @"client_type":@"iphone",
+                                 @"token":manager.token.token,
+                                 @"is_push":@(!sender.isOn)};
+        [PGCProfileAPIManager completeInfoRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
+            if (status == RespondsStatusSuccess) {                
+                if ([GeTuiSdk status] == SdkStatusStarted) {
+                    [GeTuiSdk setPushModeForOff:!sender.isOn];
+                } else {
+                    NSLog(@"GeTuiSDK未启动");
+                }
+            }
+        }];
+    }
+}
 
 // 关于我们按钮点击事件
 - (IBAction)aboutUsBtnClick:(UIButton *)sender

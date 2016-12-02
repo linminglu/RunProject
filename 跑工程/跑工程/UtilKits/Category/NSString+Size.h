@@ -10,9 +10,22 @@
 @interface NSString (Size)
 
 /**
+ 普通字符串转换为十六进制
+ */
++ (NSString *)stringFromHex:(NSString *)hexString;
+/**
+ 十六进制转换为普通字符串
+ */
++ (NSString *)hexFromString:(NSString *)string;
+/**
+ MD5加密
+ */
++ (NSString *)MD5:(NSString *)str;
+
+/**
  手机号的正则表达式
  */
-- (BOOL)isPhoneNumber;
++ (BOOL)valiMobile:(NSString *)mobile;
 
 /**
  时间格式转换

@@ -75,7 +75,7 @@
         return;
     }
     // 判断是否输入手机号
-    if (![self.phoneTF.text isPhoneNumber]) {
+    if (![NSString valiMobile:self.phoneTF.text]) {
         [MBProgressHUD showError:@"请输入正确的手机号" toView:self.view];
         return;
     }
@@ -132,8 +132,14 @@
 {    
     [self.view endEditing:true];
     
-    if ([self.phoneTF.text isPhoneNumber]) {
-        NSDictionary *params = @{@"phone":self.phoneTF.text, @"type":@0};
+    if ([NSString valiMobile:self.phoneTF.text]) {
+        // 电话号码加密签名
+        unichar ch = [self.phoneTF.text characterAtIndex:5];
+        NSString *sign = [self.phoneTF.text substringFromIndex:(ch % 9)];
+        NSString *signMD5 = [NSString MD5:sign];        
+        NSDictionary *params = @{@"phone":self.phoneTF.text,
+                                 @"type":@0,
+                                 @"sign":signMD5};
         MBProgressHUD *hud = [PGCProgressHUD showProgress:nil toView:self.view];
         [PGCRegisterOrLoginAPIManager sendVerifyCodeURLRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
             [hud hideAnimated:true];

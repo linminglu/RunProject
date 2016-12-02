@@ -9,9 +9,11 @@
 #import "PGCAppDelegate+AppLifeCircle.h"
 #import <AlipaySDK/AlipaySDK.h>
 #import <objc/runtime.h>
+#import "PGCDataCache.h"
 
 @implementation PGCAppDelegate (AppLifeCircle)
 
+#pragma mark - 微信支付回调
 //9.0前的方法，为了适配低版本 保留
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
@@ -91,23 +93,18 @@
  */
 - (void)onResp:(BaseResp *)resp
 {
-    NSString *strTitle;
+    NSString *strTitle = @"";
     // 判断是微信消息的回调
-    if ([resp isKindOfClass:[SendMessageToWXResp class]])
-    {
+    if ([resp isKindOfClass:[SendMessageToWXResp class]]) {
         strTitle = [NSString stringWithFormat:@"发送媒体消息的结果"];
     }
-    
     NSString *wxStrMsg;
     NSInteger wxResult;
     //判断是否是微信支付回调 (注意是PayResp 而不是PayReq)
-    if ([resp isKindOfClass:[PayResp class]])
-    {
+    if ([resp isKindOfClass:[PayResp class]]) {
         //支付返回的结果, 实际支付结果需要去微信服务器端查询
         strTitle = [NSString stringWithFormat:@"支付结果"];
-        
-        switch (resp.errCode)
-        {
+        switch (resp.errCode) {
             case WXSuccess:
             {
                 wxResult = 1;
@@ -131,17 +128,156 @@
             }
         }
     }
-    NSDictionary *dic = @{@"message":wxStrMsg,
-                          @"result":@(wxResult)};
+    NSDictionary *dic = @{@"message":wxStrMsg, @"result":@(wxResult)};
     [PGCNotificationCenter postNotificationName:kVIP_WeChatPay object:dic userInfo:@{@"WeChatPay":dic}];
 }
 
+
+#pragma mark - GeTuiSdkDelegate
+/** SDK启动成功返回cid */
+- (void)GeTuiSdkDidRegisterClient:(NSString *)clientId
+{
+    // 个推SDK已注册，返回clientId
+    NSLog(@"clientId:%@", clientId);
+}
+
+/** SDK收到透传消息回调 */
+- (void)GeTuiSdkDidReceivePayloadData:(NSData *)payloadData andTaskId:(NSString *)taskId andMsgId:(NSString *)msgId andOffLine:(BOOL)offLine fromGtAppId:(NSString *)appId
+{
+    // 数据转换
+    NSString *payloadMsg = nil;
+    if (payloadData) {
+        payloadMsg = [[NSString alloc] initWithBytes:payloadData.bytes length:payloadData.length encoding:NSUTF8StringEncoding];
+    }
+    // 控制台打印日志
+    NSString *msg = [NSString stringWithFormat:@"%@ : %@%@", [self formateTime:[NSDate date]], payloadMsg, offLine ? @"<离线消息>" : @""];
+    NSLog(@"[GTSdk ReceivePayload]:%@, taskId: %@, msgId :%@", msg, taskId, msgId);
+    
+    // 汇报个推自定义事件(反馈透传消息)
+    [GeTuiSdk sendFeedbackMessage:90001 andTaskId:taskId andMsgId:msgId];
+}
+
+/** SDK收到sendMessage消息回调 */
+- (void)GeTuiSdkDidSendMessage:(NSString *)messageId result:(int)result
+{
+    // 页面显示：上行消息结果反馈
+    NSLog(@"Received sendmessage:%@ result:%d", messageId, result);
+}
+
+/** SDK遇到错误回调 */
+- (void)GeTuiSdkDidOccurError:(NSError *)error
+{
+    // 个推错误报告，集成步骤发生的任何错误都在这里通知，如果集成后，无法正常收到消息，查看这里的通知。
+    NSLog(@"[GexinSdk error]:%@", error.localizedDescription);
+}
+
+/** SDK运行状态通知 */
+- (void)GeTuiSDkDidNotifySdkState:(SdkStatus)aStatus
+{
+    // 更新通知SDK运行状态
+    if (aStatus == SdkStatusStarted) {
+        NSLog(@"%@", @"已启动");
+    }
+    else if (aStatus == SdkStatusStarting) {
+        NSLog(@"%@", @"正在启动");
+    }
+    else {
+        NSLog(@"%@", @"已停止");
+    }
+}
+
+/** SDK设置推送模式回调  */
+- (void)GeTuiSdkDidSetPushMode:(BOOL)isModeOff error:(NSError *)error
+{
+    if (error) {
+        NSLog(@"%@", error.localizedDescription);
+        return;
+    }
+    NSString *modeOff = isModeOff ? @"关闭" : @"开启" ;
+    NSLog(@"推送状态：%@", modeOff);
+    [PGCDataCache setCache:modeOff forKey:@"ModeOff"];
+}
+
+
+#pragma mark - Background Fetch  唤醒
+
+- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    // [ GTSdk ]：Background Fetch 恢复SDK 运行
+    [GeTuiSdk resume];
+    
+    completionHandler(UIBackgroundFetchResultNewData);
+}
+
+
+#pragma mark - 远程通知(推送)回调
+
+/** 远程通知注册成功委托 */
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSLog(@"[DeviceToken Success]:%@", token);
+    [PGCDataCache setCache:token forKey:@"DeviceToken"];
+    // [ GTSdk ]：向个推服务器注册deviceToken
+    [GeTuiSdk registerDeviceToken:token];
+}
+
+/** 远程通知注册失败委托 */
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    NSLog(@"通知推送错误: %@", error.localizedDescription);
+}
+
+
+#pragma mark - APP运行中接收到通知(推送)处理 - iOS 10以下版本收到推送
+
+/** APP已经接收到“远程”通知(推送) - (App运行在后台/App运行在前台)  */
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler 
+{
+    // 收到远程通知
+    // [ GTSdk ]：将收到的APNs信息传给个推统计
+    [GeTuiSdk handleRemoteNotification:userInfo];
+    
+    // 显示APNs信息到页面
+    NSString *record = [NSString stringWithFormat:@"[APN]%@, %@", [NSDate date], userInfo];
+    NSLog(@"%@", record);
+    
+    completionHandler(UIBackgroundFetchResultNewData);
+}
+
+
+#pragma mark - iOS 10中收到推送消息
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
+//  iOS 10: App在前台获取到通知
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler
+{
+    NSLog(@"willPresentNotification：%@", notification.request.content.userInfo);
+    
+    // 根据APP需要，判断是否要提示用户Badge、Sound、Alert
+    completionHandler(UNNotificationPresentationOptionBadge | UNNotificationPresentationOptionSound | UNNotificationPresentationOptionAlert);
+}
+
+//  iOS 10: 点击通知进入App时触发
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler
+{
+    NSLog(@"didReceiveNotification：%@", response.notification.request.content.userInfo);
+    
+    // [ GTSdk ]：将收到的APNs信息传给个推统计
+    [GeTuiSdk handleRemoteNotification:response.notification.request.content.userInfo];
+    
+    completionHandler();
+}
+#endif
+
+
+#pragma mark - UIApplication LifeCircle
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }
-
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
@@ -166,42 +302,18 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    [GeTuiSdk resetBadge];
+    
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
-{
-    //禁止横屏
-    return UIInterfaceOrientationMaskPortrait;
-}
 
-/***
-- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification 
-{
-    // 收到本地通知
-    application.applicationIconBadgeNumber = 0;
-}
-
-- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error 
-{
-    NSLog(@"通知推送错误为: %@", error);
-}
-
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler 
-{
-    // 收到远程通知
-}
-
-- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings 
-{
-    // 注册远程通知
-    [application registerForRemoteNotifications];
-}
-***/
-
+#pragma mark - Associate
 // 定义常量 必须是C语言字符串
 static char *last = "last";
 
@@ -230,7 +342,16 @@ static char *last = "last";
     objc_setAssociatedObject(self, last, lastTime, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
+
 #pragma mark - Private
+
+- (NSString *)formateTime:(NSDate *)date
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"HH:mm:ss"];
+    NSString *dateTime = [formatter stringFromDate:date];
+    return dateTime;
+}
 
 - (NSString *)stringFromDate:(NSDate *)date
 {

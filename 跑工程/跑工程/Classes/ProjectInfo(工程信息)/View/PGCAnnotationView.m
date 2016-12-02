@@ -22,12 +22,12 @@
 {
     self = [super initWithAnnotation:annotation reuseIdentifier:reuseIdentifier];
     if (self) {
-        
+        self.image = [UIImage imageNamed:@"地图定位"];
     }
     return self;
 }
 
-//
+
 //- (void)setSelected:(BOOL)selected animated:(BOOL)animated
 //{
 //    if (self.selected == selected) {

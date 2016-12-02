@@ -112,6 +112,7 @@ static NSInteger const noDataDefaultDuration = 3;
     }
     return self;
 }
+
 -(void)viewWillAppear:(BOOL)animated
 {
     if(_skipButtonTimer&&_duration>0&&self.isClick)
@@ -119,18 +120,23 @@ static NSInteger const noDataDefaultDuration = 3;
       dispatch_resume(_skipButtonTimer);
     }
     self.isClick = NO;
+    [super viewWillAppear:animated];
 }
+
 -(void)viewWillDisappear:(BOOL)animated
 {
     if(_skipButtonTimer&&_duration>0&&self.isClick)
     {
         dispatch_suspend(_skipButtonTimer);
     }
+    [super viewWillDisappear:animated];
 }
+
 -(void)dealloc
 {
     //NSLog(@"广告视图销毁");
 }
+
 -(BOOL)imageUrlError:(NSString *)imageUrl
 {
     if(imageUrl==nil || imageUrl.length==0 || ![imageUrl hasPrefix:@"http"])

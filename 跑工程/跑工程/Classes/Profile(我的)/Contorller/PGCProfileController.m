@@ -17,6 +17,7 @@
 #import "PGCMyHeartViewController.h"
 #import "PGCMyIntroduceViewController.h"
 #import "PGCShareToFriendController.h"
+#import "PGCVIPServiceController.h"
 #import "PGCProfileAPIManager.h"
 #import "PGCRegisterOrLoginAPIManager.h"
 #import "PGCPhotoBrowser.h"
@@ -96,14 +97,11 @@
 }
 
 
-- (void)updateSession
+- (void)updateSession:(PGCToken *)token
 {
-    PGCManager *manager = [PGCManager manager];
-    [manager readTokenData];
-    PGCUser *user = manager.token.user;
-    NSDictionary *params = @{@"user_id":@(user.user_id),
+    NSDictionary *params = @{@"user_id":@(token.user.user_id),
                              @"client_type":@"iphone",
-                             @"token":manager.token.token};
+                             @"token":token.token};
     // 更新用户session
     [PGCRegisterOrLoginAPIManager updateSessionRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
         if (status == RespondsStatusSuccess) {
@@ -145,11 +143,12 @@
         [self.loginAndRegisterBtn setTitle:@"登录/注册" forState:UIControlStateNormal];
         return;
     }
-    [self updateSession];
     
     PGCManager *manager = [PGCManager manager];
     [manager readTokenData];
     PGCUser *user = manager.token.user;
+    // 更新用户session
+    [self updateSession:manager.token];
     
     if ([notifi.userInfo objectForKey:@"Login"]) {// 收到用户登录的通知
         _isLogin = true;
@@ -157,6 +156,17 @@
         self.headImageView.userInteractionEnabled = true;
         NSURL *url = [NSURL URLWithString:[kBaseImageURL stringByAppendingString:user.headimage]];
         [self.headImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"头像"]];
+        
+        NSString *deviceToken = [PGCDataCache cacheForKey:@"DeviceToken"];
+        // 上传推送信息
+        NSDictionary *params = @{@"user_id":@(user.user_id),
+                                 @"client_type":@"iphone",
+                                 @"token":manager.token.token,
+                                 @"device_type":@"ios",
+                                 @"push_id":deviceToken};
+        [PGCRegisterOrLoginAPIManager pushInfoRequestWithParameters:params responds:^(RespondsStatus status, NSString *message, id resultData) {
+            
+        }];        
         return;
     }
     if ([notifi.userInfo objectForKey:@"HeadImage"]) {// 收到用户修改头像的通知
@@ -174,9 +184,7 @@
  */
 - (void)iconGesture:(UITapGestureRecognizer *)sender
 {
-    if (!_isLogin) {
-        return;
-    } else {
+    if (_isLogin) {
         PGCManager *manager = [PGCManager manager];
         [manager readTokenData];
         PGCUser *user = manager.token.user;
@@ -315,8 +323,12 @@
     PGCManager *manager = [PGCManager manager];
     [manager readTokenData];
     PGCUser *user = manager.token.user;
-    if (!user.is_vip) {
-        [MBProgressHUD showError:@"请先购买VIP" toView:self.view];
+    if (!user) {
+        [MBProgressHUD showError:@"请先登录" toView:self.view];
+    } else {
+        PGCVIPServiceController *vipVC = [[PGCVIPServiceController alloc] init];
+        
+        [self.navigationController pushViewController:vipVC animated:true];
     }
 }
 

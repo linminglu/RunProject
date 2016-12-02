@@ -58,7 +58,7 @@
 {    
     [self.view endEditing:true];
     
-    if (![self.userPhoneTF.text isPhoneNumber]) {
+    if (![NSString valiMobile:self.userPhoneTF.text]) {
         [MBProgressHUD showError:@"请输入正确的手机号" toView:self.view];
         return;
     }

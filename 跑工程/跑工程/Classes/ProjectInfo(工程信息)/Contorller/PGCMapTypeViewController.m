@@ -71,7 +71,6 @@
             annotationView.name = customAnn.title;
             annotationView.desc = customAnn.subtitle;
             annotationView.annotation = customAnn;
-            annotationView.image = [UIImage imageNamed:@"地图定位"];
             annotationView.canShowCallout = true;// 设置是否显示弹出视图
             annotationView.draggable = false;// 设置支持拖动
         }

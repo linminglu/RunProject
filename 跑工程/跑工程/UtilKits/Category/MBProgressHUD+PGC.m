@@ -10,7 +10,6 @@
 
 @implementation MBProgressHUD (PGC)
 
-
 #pragma mark - 显示信息
 
 + (void)show:(NSString *)text icon:(NSString *)icon view:(UIView *)view

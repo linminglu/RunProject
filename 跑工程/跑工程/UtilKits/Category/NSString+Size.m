@@ -7,19 +7,56 @@
 //
 
 #import "NSString+Size.h"
+#import <CommonCrypto/CommonCrypto.h>
 
 @implementation NSString (Size)
 
-
-- (BOOL)isPhoneNumber {
-    return [self match:@"^((13[0-9])|(15[3-5])|(18[07-9]))\\d{8}$"];
+/* 判断是否为合法的中国手机号 */
++ (BOOL)valiMobile:(NSString *)mobile
+{
+    mobile = [mobile stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    if (mobile.length != 11) {
+        return false;
+        
+    } else {
+        NSString *MOBILE = @"^1(3[0-9]|4[57]|5[0-35-9]|8[0-9]|7[0678])\\d{8}$";
+        
+        NSPredicate *regextestcm = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];
+        
+        return [regextestcm evaluateWithObject:mobile];
+    }
 }
 
-- (BOOL)match:(NSString *)string{
-    NSRegularExpression *regular = [[NSRegularExpression alloc] initWithPattern:string options:NSRegularExpressionCaseInsensitive error:nil];
-    //2.测试字符串
-    NSArray *results = [regular matchesInString:self options:0 range:NSMakeRange(0, self.length)];
-    return results.count;
+
+/* md5加密 */
++ (NSString *)MD5:(NSString *)str
+{
+    // 1.首先将字符串转换成UTF-8编码, 因为MD5加密是基于C语言的,所以要先把字符串转化成C语言的字符串
+    const char *fooData = [str UTF8String];
+    
+    // 2.然后创建一个字符串数组,接收MD5的值 (开辟一个16字节)
+    unsigned char result[CC_MD5_DIGEST_LENGTH];
+    
+    // 3.计算MD5的值, 这是官方封装好的加密方法:把我们输入的字符串转换成16进制的32位数,然后存储到result中
+    /**
+     第一个参数:要加密的字符串
+     第二个参数: 获取要加密字符串的长度
+     第三个参数: 接收结果的数组
+     */
+    CC_MD5(fooData, (CC_LONG)strlen(fooData), result);
+    
+    // 4.创建一个字符串保存加密结果
+    NSMutableString *saveResult = [NSMutableString string];
+    
+    // 5.从result 数组中获取加密结果并放到 saveResult中
+    for (int i = 0; i < CC_MD5_DIGEST_LENGTH; i++) {
+        /*
+         x表示十六进制，%02X  意思是不足两位将用0补齐，如果多余两位则不影响
+         */
+        [saveResult appendFormat:@"%02x", result[i]];
+    }
+    return saveResult;
 }
 
 
@@ -35,6 +72,43 @@
     
     return [formatter_2 stringFromDate:date];
 }
+
+
+/* 普通字符串转换为十六进制 */
++ (NSString *)hexFromString:(NSString *)string
+{
+    NSData *myD = [string dataUsingEncoding:NSUTF8StringEncoding];
+    Byte *bytes = (Byte *)[myD bytes];
+    //下面是Byte 转换为16进制。
+    NSString *hexStr = @"";
+    for (int i = 0; i < [myD length]; i++) {
+        NSString *newHexStr = [NSString stringWithFormat:@"%x", bytes[i]&0xff];///16进制数
+        if ([newHexStr length] == 1) {
+            hexStr = [NSString stringWithFormat:@"%@0%@", hexStr, newHexStr];
+            
+        } else {
+            hexStr = [NSString stringWithFormat:@"%@%@", hexStr, newHexStr];
+        }
+    }
+    return hexStr;
+}
+
+
+/* 十六进制转换为普通字符串 */
++ (NSString *)stringFromHex:(NSString *)hexString
+{
+    char *myBuffer = (char *)malloc((int)[hexString length] / 2 + 1);
+    bzero(myBuffer, [hexString length] / 2 + 1);
+    for (int i = 0; i < [hexString length] - 1; i += 2) {
+        unsigned int anInt;
+        NSString * hexCharStr = [hexString substringWithRange:NSMakeRange(i, 2)];
+        NSScanner * scanner = [[NSScanner alloc] initWithString:hexCharStr];
+        [scanner scanHexInt:&anInt];
+        myBuffer[i / 2] = (char)anInt;
+    }
+    return [NSString stringWithCString:myBuffer encoding:NSUTF8StringEncoding];
+} 
+
 
 - (CGSize)sizeWithFont:(UIFont *)font constrainedToSize:(CGSize)size
 {
